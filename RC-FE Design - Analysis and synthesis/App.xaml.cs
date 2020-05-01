@@ -1,4 +1,5 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.ViewModels;
+﻿using RC_FE_Design___Analysis_and_synthesis.Navigation;
+using RC_FE_Design___Analysis_and_synthesis.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -17,8 +18,11 @@ namespace RC_FE_Design___Analysis_and_synthesis
         protected override void OnStartup(StartupEventArgs e)
         {
             var window = new MainWindow();
-            var mvm = new MainViewModel();
-            window.DataContext = mvm;
+
+            Navigation.Navigation.Service = window.MainFrame.NavigationService;
+
+            window.DataContext = new MainViewModel(new ViewModelsResolver());
+
             window.Show();
         }
     }
