@@ -13,9 +13,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
     {
         #region Constants
 
-        public static readonly string MainPageAlias = "Page1";
-        public static readonly string Page2Alias = "Page2";
-        public static readonly string Page3Alias = "Page3";
+        public static readonly string MainPageAlias = "MainPage";
+        public static readonly string SynthesisPageAlias = "SynthesisPage";
+        public static readonly string AnalysisPageAlias = "AnalysisPage";
         public static readonly string NotFoundPageAlias = "404";
 
         #endregion

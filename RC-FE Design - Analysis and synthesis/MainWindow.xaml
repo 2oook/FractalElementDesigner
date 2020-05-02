@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RC_FE_Design___Analysis_and_synthesis"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" WindowState="Maximized">
+    
     <Window.Resources>
 
 
@@ -13,20 +14,8 @@
     </Window.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
 
-        <ScrollViewer Grid.Column="1"  HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
-            <StackPanel>
-                <Button Content="P 1 w/o data" Command="{Binding GoToPathCommand}" CommandParameter="pack://application:,,,/Pages;component/Page1.xaml"/>
-                <Button Content="Page 1" Command="{Binding GoToPage1Command}" CommandParameter="{Binding Page1ViewModel}"/>
-                <Button Content="Page 2" Command="{Binding GoToPage2Command}" CommandParameter="{Binding Page2ViewModel}"/>
-                <Button Content="Page 3" Command="{Binding GoToPage3Command}" CommandParameter="{Binding Page3ViewModel}"/>
-            </StackPanel>
-        </ScrollViewer>
-
-        <Frame x:Name="MainFrame" Grid.Column="0" NavigationUIVisibility="Hidden" Background="#CCCCCC"/>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Background="#CCCCCC"/>
+        
     </Grid>
 </Window>

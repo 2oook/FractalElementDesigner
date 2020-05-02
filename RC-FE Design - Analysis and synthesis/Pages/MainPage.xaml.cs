@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace RC_FE_Design___Analysis_and_synthesis.Pages
 {
     /// <summary>
-    /// Interaction logic for Page1.xaml
+    /// Interaction logic for MainPage.xaml
     /// </summary>
     public partial class MainPage : Page
     {

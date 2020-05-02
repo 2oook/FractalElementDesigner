@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace RC_FE_Design___Analysis_and_synthesis.Pages
 {
     /// <summary>
-    /// Interaction logic for Page3.xaml
+    /// Interaction logic for AnalysisPage.xaml
     /// </summary>
-    public partial class Page3 : Page
+    public partial class AnalysisPage : Page
     {
-        public Page3()
+        public AnalysisPage()
         {
             InitializeComponent();
         }

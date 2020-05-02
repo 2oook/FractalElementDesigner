@@ -16,85 +16,94 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="resolver">Ссылка на объект для определения ViewModel'ов</param>
         public MainViewModel(IViewModelsResolver resolver)
         {
             _resolver = resolver;
 
-            _MainPageViewModel = _resolver.GetViewModelInstance(MainPageViewModelAlias);
+            // Создать страницы 404
+            _NotFoundPageViewModel = _resolver.GetViewModelInstance(NotFoundPageViewModelAlias);
 
+            // Инициализировать команды
             InitializeCommands();
+
+            // Перейти на главную страницу
+            GoToMainPageCommandExecute();
         }
 
-        #region Constants
+        #region Константы
 
-        public static readonly string MainPageViewModelAlias = "MainPageVM";
         public static readonly string NotFoundPageViewModelAlias = "404VM";
 
         #endregion
 
         #region Глобальные переменные
 
+        /// <summary>
+        /// Ссылка на объект для разрешения ViewModel'ов
+        /// </summary>
         private readonly IViewModelsResolver _resolver;
 
-        private readonly INotifyPropertyChanged _MainPageViewModel;
+        /// <summary>
+        /// Ссылка на ViewModel пустой страницы
+        /// </summary>
+        private readonly INotifyPropertyChanged _NotFoundPageViewModel;
 
         #endregion
 
         #region Свойства
 
-        public INotifyPropertyChanged MainPageViewModel
-        {
-            get { return _MainPageViewModel; }
-        }
+
 
         #endregion
 
         #region Команды
 
-        private ICommand _goToPathCommand;
-        public ICommand GoToPathCommand
-        {
-            get { return _goToPathCommand; }
-            set
-            {
-                _goToPathCommand = value;
-                RaisePropertyChanged("GoToPathCommand");
-            }
-        }
-
-        private ICommand _goToPage1Command;
-        public ICommand GoToPage1Command
+        private ICommand _goToMainPageCommand;
+        /// <summary>
+        /// Команда для перемещения на главную страницу 
+        /// </summary>
+        public ICommand GoToMainPageCommand
         {
             get
             {
-                return _goToPage1Command;
+                return _goToMainPageCommand;
             }
             set
             {
-                _goToPage1Command = value;
-                RaisePropertyChanged("GoToPage1Command");
-            }
-        }
-
-        private ICommand _goToPage2Command;
-        public ICommand GoToPage2Command
-        {
-            get { return _goToPage2Command; }
-            set
-            {
-                _goToPage2Command = value;
-                RaisePropertyChanged("GoToPage2Command");
+                _goToMainPageCommand = value;
+                RaisePropertyChanged(nameof(GoToMainPageCommand));
             }
         }
 
-        private ICommand _goToPage3Command;
-        public ICommand GoToPage3Command
+        private ICommand _goToSynthesisPageCommand;
+        /// <summary>
+        /// Команда для перемещения на страницу синтеза
+        /// </summary>
+        public ICommand GoToSynthesisPageCommand
         {
-            get { return _goToPage3Command; }
+            get { return _goToSynthesisPageCommand; }
             set
             {
-                _goToPage3Command = value;
-                RaisePropertyChanged("GoToPage3Command");
+                _goToSynthesisPageCommand = value;
+                RaisePropertyChanged(nameof(GoToSynthesisPageCommand));
+            }
+        }
+
+        private ICommand _goToAnalysisPageCommand;
+        /// <summary>
+        /// Команда для перемещения на страницу анализа
+        /// </summary>
+        public ICommand GoToAnalysisPageCommand
+        {
+            get { return _goToAnalysisPageCommand; }
+            set
+            {
+                _goToAnalysisPageCommand = value;
+                RaisePropertyChanged(nameof(GoToAnalysisPageCommand));
             }
         }
 
@@ -102,38 +111,38 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
         #region Методы
 
+        /// <summary>
+        /// Метод для инициализации команд
+        /// </summary>
         private void InitializeCommands()
         {
-
-            GoToPathCommand = new RelayCommand<string>(GoToPathCommandExecute);
-            GoToPage1Command = new RelayCommand<INotifyPropertyChanged>(GoToPage1CommandExecute);
-            GoToPage2Command = new RelayCommand<INotifyPropertyChanged>(GoToPage2CommandExecute);
-            GoToPage3Command = new RelayCommand<INotifyPropertyChanged>(GoToPage3CommandExecute);
+            GoToMainPageCommand = new RelayCommand(GoToMainPageCommandExecute);
+            GoToSynthesisPageCommand = new RelayCommand(GoToSynthesisPageCommandExecute);
+            GoToAnalysisPageCommand = new RelayCommand(GoToAnalysisPageCommandExecute);
         }
 
-        private void GoToPathCommandExecute(string alias)
-        {
-            if (string.IsNullOrWhiteSpace(alias))
-            {
-                return;
-            }
-
-            Navigation.Navigation.Navigate(alias);
-        }
-
-        private void GoToPage1CommandExecute(INotifyPropertyChanged viewModel)
+        /// <summary>
+        /// Метод для перемещения на главную страницу 
+        /// </summary>
+        private void GoToMainPageCommandExecute()
         {
             Navigation.Navigation.Navigate(Navigation.Navigation.MainPageAlias, this);
         }
 
-        private void GoToPage2CommandExecute(INotifyPropertyChanged viewModel)
+        /// <summary>
+        /// Метод для перемещения на страницу синтеза 
+        /// </summary>
+        private void GoToSynthesisPageCommandExecute()
         {
-            Navigation.Navigation.Navigate(Navigation.Navigation.Page2Alias, this);
+            Navigation.Navigation.Navigate(Navigation.Navigation.SynthesisPageAlias, this);
         }
 
-        private void GoToPage3CommandExecute(INotifyPropertyChanged viewModel)
+        /// <summary>
+        /// Метод для перемещения на страницу анализа
+        /// </summary>
+        private void GoToAnalysisPageCommandExecute()
         {
-            Navigation.Navigation.Navigate(Navigation.Navigation.Page3Alias, this);
+            Navigation.Navigation.Navigate(Navigation.Navigation.AnalysisPageAlias, this);
         }
 
         #endregion
