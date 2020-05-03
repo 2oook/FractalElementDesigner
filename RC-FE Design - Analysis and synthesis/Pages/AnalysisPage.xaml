@@ -9,22 +9,163 @@
       Title="Page2">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="25*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
+        <Menu Grid.Row="0">
+            <MenuItem Header="Файл" >
+                <MenuItem x:Name="FileNew" Header="Новая структура" InputGestureText="Ctrl+N"/>
+                <MenuItem x:Name="FileOpen" Header="Открыть" InputGestureText="Ctrl+O"/>
+                <MenuItem x:Name="FileSave" Header="Сохранить" InputGestureText="Ctrl+S"/>
+            </MenuItem>
+        </Menu>
 
-            <Button Content="На главную" Command="{Binding GoToMainPageCommand}" Padding="5"  Margin="5"/>
+        <Grid Grid.Row="1" Grid.RowSpan="2">
 
-        </StackPanel>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Row="0">
+                <Button DockPanel.Dock="Left" HorizontalAlignment="Left" Content="На главную" Command="{Binding GoToMainPageCommand}" Padding="5"  Margin="5"/>
+                <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Пересчитать"  Padding="5"  Margin="5"/>
+            </DockPanel>
+
+            <Grid Grid.Row="1">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Expander Grid.Column="2" Grid.RowSpan="2" ExpandDirection="Left" IsExpanded="True">
+                    <TabControl Grid.IsSharedSizeScope="True" >
+                        <TabItem Header="Структура">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition SharedSizeGroup="tabItemWidth"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <StackPanel>
+                                    
+                                    <GroupBox Header="Сетка">
+                                        <StackPanel>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Количество ячеек по горизонтали"/>
+                                                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                    <ColumnDefinition Width="1*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Количество ячеек по вертикали"/>
+                                                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </GroupBox>
+
+                                    <GroupBox Header="Параметры">
+                                        <StackPanel>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="R"/>
+                                                <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                    <ColumnDefinition Width="1*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="C"/>
+                                                <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                    <ColumnDefinition Width="1*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Kf"/>
+                                                <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                    <ColumnDefinition Width="1*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="G"/>
+                                                <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                    <ColumnDefinition Width="1*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="H"/>
+                                                <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                    <ColumnDefinition Width="1*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="N"/>
+                                                <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                    <ColumnDefinition Width="1*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="P"/>
+                                                <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </GroupBox>
+
+                                    <GroupBox Header="Маска">
+                                        <StackPanel>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Режим редактирования"/>
+                                                <CheckBox Grid.Column="1" HorizontalAlignment="Center"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </GroupBox>
+
+                                </StackPanel>
+
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Настройки">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition SharedSizeGroup="tabItemWidth"/>
+                                </Grid.ColumnDefinitions>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Expander>
+
+            </Grid>
+
+        </Grid>
 
     </Grid>
+
+
 </Page>

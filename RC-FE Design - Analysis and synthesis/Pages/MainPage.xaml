@@ -22,8 +22,8 @@
 
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
 
-            <Button Content="Анализ" Command="{Binding GoToAnalysisPageCommand}" Padding="5"  Margin="5"/>
-            <Button Content="Синтез" Command="{Binding GoToSynthesisPageCommand}" Padding="5" Margin="5" />
+            <Button Content="Анализ" Command="{Binding GoToAnalysisPageCommand}" FontWeight="Bold" FontSize="14" Padding="5"  Margin="5"/>
+            <Button Content="Синтез" Command="{Binding GoToSynthesisPageCommand}" FontWeight="Bold" FontSize="14" Padding="5" Margin="5" />
 
         </StackPanel>
 
