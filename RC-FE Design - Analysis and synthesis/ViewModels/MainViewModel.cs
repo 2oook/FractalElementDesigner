@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
+using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -56,6 +57,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
         #region Свойства
 
+        private Project _project;
+
+        public Project Project
+        {
+            get { return _project; }
+            set { _project = value; }
+        }
 
 
         #endregion
