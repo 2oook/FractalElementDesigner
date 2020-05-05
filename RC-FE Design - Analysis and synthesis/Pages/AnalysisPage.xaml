@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RC_FE_Design___Analysis_and_synthesis.Pages"
-      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="RC_FE_Design___Analysis_and_synthesis.Pages.AnalysisPage"
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
+      x:Class="RC_FE_Design___Analysis_and_synthesis.Pages.AnalysisPage"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Page2">
@@ -21,6 +22,7 @@
                 <MenuItem x:Name="FileNew" Header="Новая структура" InputGestureText="Ctrl+N"/>
                 <MenuItem x:Name="FileOpen" Header="Открыть" InputGestureText="Ctrl+O"/>
                 <MenuItem x:Name="FileSave" Header="Сохранить" InputGestureText="Ctrl+S"/>
+                <MenuItem x:Name="Export" Header="Экспорт значений"/>
             </MenuItem>
         </Menu>
 
@@ -229,18 +231,38 @@
                                                 <GroupBox Header="Распределение точек">
                                                     <StackPanel Orientation="Horizontal">
                                                         <RadioButton Content="Линейно" Margin="0,0,5,0"/>
-                                                        <RadioButton Content="Логарифмически" Margin="0,0,5,0"/>
+                                                        <RadioButton Content="Логарифмически" Margin="0,0,5,0" IsChecked="True"/>
                                                     </StackPanel>
                                                 </GroupBox>
                                             </StackPanel>
                                         </GroupBox>
                                         <GroupBox Header="Схема включения">
                                             <StackPanel>
-                                                
-                                                <ComboBox Margin="0,0,0,5"/>
-
-                                                <TextBox Margin="0,0,0,5"/>
-
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <ComboBox Grid.Column="0" Margin="0,0,0,5"/>
+                                                    <ComboBox Grid.Column="1" Margin="0,0,0,5"/>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Число КП"/>
+                                                    <TextBlock Grid.Column="1" Margin="0,0,0,5"/>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Формула"/>
+                                                    <TextBox Grid.Column="1" Margin="0,0,0,5"/>
+                                                </Grid>
+                                                <Button Content="Редактор схем"/>
                                             </StackPanel>
                                         </GroupBox>
                                         <GroupBox Header="Годограф">
@@ -250,24 +272,26 @@
                                                         <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
                                                         <ColumnDefinition Width="1*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Минимальное значение частоты"/>
-                                                    <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Включить"/>
+                                                    <CheckBox x:Name="hodographSwitchCheckBox" Grid.Column="1" HorizontalAlignment="Center"/>
                                                 </Grid>
-                                                <Grid Margin="0,0,0,5">
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5" IsEnabled="{Binding Path=IsChecked, ElementName=hodographSwitchCheckBox}">
+                                                    <TextBlock Padding="0,0,5,0" Text="К: от"/>
+                                                    <TextBox MinWidth="50" MaxWidth="80"/>
+                                                    <TextBlock Padding="5,0,5,0" Text="до"/>
+                                                    <TextBox MinWidth="50" MaxWidth="80"/>
+                                                    <TextBlock Padding="5,0,5,0" Text="точек"/>
+                                                    <TextBox MinWidth="50" MaxWidth="80"/>
+                                                </StackPanel>
+                                                <Grid Margin="0,0,0,5" IsEnabled="{Binding Path=IsChecked, ElementName=hodographSwitchCheckBox}">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                        <ColumnDefinition Width="1*" />
+                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="1*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Максимальное значение частоты"/>
-                                                    <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-                                                </Grid>
-                                                <Grid Margin="0,0,0,5">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                        <ColumnDefinition Width="1*" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Число точек"/>
-                                                    <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                                                    <CheckBox Grid.Column="0" Content="Нули" Margin="0,0,5,0"/>
+                                                    <CheckBox Grid.Column="1" Content="Полюса" Margin="0,0,5,0"/>
+                                                    <CheckBox Grid.Column="2"  Content="Линии" Margin="0,0,5,0"/>
                                                 </Grid>
                                             </StackPanel>
                                         </GroupBox>
@@ -283,6 +307,5 @@
         </Grid>
 
     </Grid>
-
 
 </Page>
