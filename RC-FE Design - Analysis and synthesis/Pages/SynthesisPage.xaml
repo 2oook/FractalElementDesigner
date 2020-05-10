@@ -254,14 +254,10 @@
                                                                 <ColumnDefinition Width="1*"/>
                                                             </Grid.ColumnDefinitions>
                                                             <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Включить"/>
-                                                            <CheckBox Grid.Column="1"  x:Name="hodographSwitchCheckBox" HorizontalAlignment="Center"/>
+                                                            <CheckBox Grid.Column="1" IsChecked="{Binding x1}" x:Name="optionKEnableCheckBox" HorizontalAlignment="Center"/>
                                                         </Grid>
 
-                                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5" IsEnabled="{Binding Path=IsChecked, ElementName=hodographSwitchCheckBox}">
-                                                            
-                                                        </StackPanel>
-
-                                                        <Grid Margin="0,0,0,5" IsEnabled="{Binding Path=IsChecked, ElementName=hodographSwitchCheckBox}">
+                                                        <Grid Margin="0,0,0,5" IsEnabled="{Binding Path=IsChecked, ElementName=optionKEnableCheckBox}">
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="auto"/>
                                                                 <ColumnDefinition Width="auto"/>
@@ -283,7 +279,131 @@
                                                             <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,5,0,0" Text="при числе неулучшений"/>
                                                             <TextBox Grid.Column="3" Grid.Row="1" Margin="0,5,0,0" MinWidth="50" MaxWidth="80"/>
                                                         </Grid>
+                                                    </StackPanel>
+                                                </GroupBox>
+                                                <GroupBox Header="Регулировка N">
+                                                    <StackPanel>
+                                                        <Grid Margin="0,0,0,5">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                                <ColumnDefinition Width="1*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Включить"/>
+                                                            <CheckBox Grid.Column="1" IsChecked="{Binding x2}"  x:Name="optionNEnableCheckBox" HorizontalAlignment="Center"/>
+                                                        </Grid>
 
+                                                        <Grid Margin="0,0,0,5" IsEnabled="{Binding Path=IsChecked, ElementName=optionNEnableCheckBox}">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="auto"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="auto"/>
+                                                                <RowDefinition Height="auto"/>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Column="0" Grid.Row="0" Padding="0,0,5,0" Text="в диапазоне от"/>
+                                                            <TextBox Grid.Column="1" Grid.Row="0" MinWidth="50" MaxWidth="80"/>
+                                                            <TextBlock Grid.Column="2" Grid.Row="0" Padding="5,0,5,0" Text="до"/>
+                                                            <TextBox Grid.Column="3" Grid.Row="0" MinWidth="50" MaxWidth="80"/>
+                                                            <TextBlock Grid.Column="4" Grid.Row="0" Padding="5,0,5,0" Text="с шагом"/>
+                                                            <TextBox Grid.Column="5" Grid.Row="0" MinWidth="50" MaxWidth="80"/>
+                                                            <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,5,0,0" Text="при числе неулучшений"/>
+                                                            <TextBox Grid.Column="3" Grid.Row="1" Margin="0,5,0,0" MinWidth="50" MaxWidth="80"/>
+                                                        </Grid>
+                                                    </StackPanel>
+                                                </GroupBox>
+                                                <GroupBox Header="Регулировка wRC умножением на коэффициенты">
+                                                    <StackPanel>
+                                                        <Grid Margin="0,0,0,5">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                                <ColumnDefinition Width="1*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Включить"/>
+                                                            <CheckBox Grid.Column="1" IsChecked="{Binding x3}" x:Name="optionWRCEnableCheckBox" HorizontalAlignment="Center"/>
+                                                        </Grid>
+
+                                                        <Grid Margin="0,0,0,5" IsEnabled="{Binding Path=IsChecked, ElementName=optionWRCEnableCheckBox}">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="auto"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="auto"/>
+                                                                <RowDefinition Height="auto"/>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Column="0" Grid.Row="0" Padding="0,0,5,0" Text="в диапазоне от"/>
+                                                            <TextBox Grid.Column="1" Grid.Row="0" MinWidth="50" MaxWidth="80"/>
+                                                            <TextBlock Grid.Column="2" Grid.Row="0" Padding="5,0,5,0" Text="до"/>
+                                                            <TextBox Grid.Column="3" Grid.Row="0" MinWidth="50" MaxWidth="80"/>
+                                                            <TextBlock Grid.Column="4" Grid.Row="0" Padding="5,0,5,0" Text="с шагом"/>
+                                                            <TextBox Grid.Column="5" Grid.Row="0" MinWidth="50" MaxWidth="80"/>
+                                                            <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,5,0,0" Text="при числе неулучшений"/>
+                                                            <TextBox Grid.Column="3" Grid.Row="1" Margin="0,5,0,0" MinWidth="50" MaxWidth="80"/>
+                                                        </Grid>
+                                                    </StackPanel>
+                                                </GroupBox>
+                                                <GroupBox Header="Использовать направленный синтез">
+                                                    <StackPanel>
+                                                        <Grid Margin="0,0,0,5">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                                <ColumnDefinition Width="1*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Включить"/>
+                                                            <CheckBox Grid.Column="1"  x:Name="optionDirectionalSynthesisEnableCheckBox" HorizontalAlignment="Center"/>
+                                                        </Grid>
+
+                                                        <Grid Margin="0,0,0,5" IsEnabled="{Binding Path=IsChecked, ElementName=optionDirectionalSynthesisEnableCheckBox}">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="auto"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="auto"/>
+                                                                <RowDefinition Height="auto"/>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Column="0" Grid.Row="0" Padding="0,0,5,0" Text="Отменить направленный синтез при числе неулучшений"/>
+                                                            <TextBox Grid.Column="0" Grid.Row="1" Margin="0,5,0,0" MinWidth="50" MaxWidth="80"/>
+                                                        </Grid>
+                                                    </StackPanel>
+                                                </GroupBox>
+                                                <GroupBox Header="Использовать островную модель ГА">
+                                                    <StackPanel>
+                                                        <Grid Margin="0,0,0,5">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                                <ColumnDefinition Width="1*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Включить"/>
+                                                            <CheckBox Grid.Column="1" IsChecked="{Binding x4}" x:Name="optionGAEnableCheckBox" HorizontalAlignment="Center"/>
+                                                        </Grid>
+
+                                                        <Grid Margin="0,0,0,5" IsEnabled="{Binding Path=IsChecked, ElementName=optionGAEnableCheckBox}">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="auto"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="auto"/>
+                                                                <RowDefinition Height="auto"/>
+                                                                <RowDefinition Height="auto"/>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Column="0" Grid.Row="0" Padding="0,0,5,0" Text="Количество островов"/>
+                                                            <TextBox Grid.Column="1" Grid.Row="0" Margin="0,0,0,5" MinWidth="50" MaxWidth="80"/>
+                                                            <TextBlock Grid.Column="0" Grid.Row="1" Padding="0,0,5,0" Text="Синтез до отклонения"/>
+                                                            <TextBox Grid.Column="1" Grid.Row="1" Margin="0,0,0,5" MinWidth="50" MaxWidth="80"/>
+                                                            <TextBlock Grid.Column="0" Grid.Row="2" Padding="0,0,5,0" Text="Проводить миграцию при числе неулучшений"/>
+                                                            <TextBox Grid.Column="1" Grid.Row="2" MinWidth="50" MaxWidth="80"/>
+                                                        </Grid>
                                                     </StackPanel>
                                                 </GroupBox>
                                             </StackPanel>
@@ -300,14 +420,14 @@
                                     </Grid.ColumnDefinitions>
 
                                     <StackPanel>
-                                        <GroupBox Header="Частоты">
+                                        <GroupBox Header="Вероятности для родительских особей">
                                             <StackPanel>
                                                 <Grid Margin="0,0,0,5">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
                                                         <ColumnDefinition Width="1*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Минимальное значение частоты"/>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Вероятность мутации верхнего резистивного слоя"/>
                                                     <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
                                                 </Grid>
                                                 <Grid Margin="0,0,0,5">
@@ -315,7 +435,7 @@
                                                         <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
                                                         <ColumnDefinition Width="1*" />
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Максимальное значение частоты"/>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Вероятность мутации нижнего резистивного слоя"/>
                                                     <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
                                                 </Grid>
                                                 <Grid Margin="0,0,0,5">
@@ -323,66 +443,78 @@
                                                         <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
                                                         <ColumnDefinition Width="1*" />
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Число точек"/>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Вероятность изменения ширины КП"/>
                                                     <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
                                                 </Grid>
-                                                <GroupBox Header="Распределение точек">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <RadioButton Content="Линейно" Margin="0,0,5,0"/>
-                                                        <RadioButton Content="Логарифмически" Margin="0,0,5,0" IsChecked="True"/>
-                                                    </StackPanel>
-                                                </GroupBox>
+                                                <Grid Margin="0,0,0,5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                        <ColumnDefinition Width="1*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Вероятность смещения КП"/>
+                                                    <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                                                </Grid>
+                                                <Grid Margin="0,0,0,5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                        <ColumnDefinition Width="1*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Вероятность скрещивания одинаковых солоёв"/>
+                                                    <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                                                </Grid>
                                             </StackPanel>
                                         </GroupBox>
-                                        <GroupBox Header="Схема включения">
-                                            <StackPanel>
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <ComboBox Grid.Column="0" Margin="0,0,0,5"/>
-                                                    <ComboBox Grid.Column="1" Margin="0,0,0,5"/>
-                                                </Grid>
+                                        <GroupBox Header="Максимальная площадь мутации">
+                                            <StackPanel HorizontalAlignment="Center">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="auto"/>
-                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Число КП"/>
-                                                    <TextBlock Grid.Column="1" Margin="0,0,0,5"/>
+
+                                                    <TextBlock HorizontalAlignment="Center" Margin="0,0,5,0" Grid.Column="0" Grid.Row="0" Text="X"/>
+                                                    <TextBox Grid.Column="1" Margin="0,0,5,5" MinWidth="30" MaxWidth="50"/>
+                                                    <TextBlock HorizontalAlignment="Center" Margin="0,0,5,0" Grid.Column="2" Grid.Row="0" Text="Y"/>
+                                                    <TextBox Grid.Column="3" Margin="0,0,5,5" MinWidth="30" MaxWidth="50"/>
                                                 </Grid>
+                                            </StackPanel>
+                                        </GroupBox>
+                                        <GroupBox Header="Максимальная площадь скрещивания">
+                                            <StackPanel HorizontalAlignment="Center">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="auto"/>
-                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Формула"/>
-                                                    <TextBox Grid.Column="1" Margin="0,0,0,5"/>
+
+                                                    <TextBlock HorizontalAlignment="Center" Margin="0,0,5,0" Grid.Column="0" Grid.Row="0" Text="X"/>
+                                                    <TextBox Grid.Column="1" Margin="0,0,5,5" MinWidth="30" MaxWidth="50"/>
+                                                    <TextBlock HorizontalAlignment="Center" Margin="0,0,5,0" Grid.Column="2" Grid.Row="0" Text="Y"/>
+                                                    <TextBox Grid.Column="3" Margin="0,0,5,5" MinWidth="30" MaxWidth="50"/>
                                                 </Grid>
-                                                <Button Content="Редактор схем"/>
                                             </StackPanel>
                                         </GroupBox>
-                                        <GroupBox Header="Годограф">
+                                        <GroupBox Header="Ограничения изменения КП">
                                             <StackPanel>
-                                               
-                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5" IsEnabled="{Binding Path=IsChecked, ElementName=hodographSwitchCheckBox}">
-                                                    <TextBlock Padding="0,0,5,0" Text="К: от"/>
-                                                    <TextBox MinWidth="50" MaxWidth="80"/>
-                                                    <TextBlock Padding="5,0,5,0" Text="до"/>
-                                                    <TextBox MinWidth="50" MaxWidth="80"/>
-                                                    <TextBlock Padding="5,0,5,0" Text="точек"/>
-                                                    <TextBox MinWidth="50" MaxWidth="80"/>
-                                                </StackPanel>
-                                                <Grid Margin="0,0,0,5" IsEnabled="{Binding Path=IsChecked, ElementName=hodographSwitchCheckBox}">
+                                                <Grid Margin="0,0,0,5">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="1*"/>
-                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
                                                         <ColumnDefinition Width="1*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <CheckBox Grid.Column="0" Content="Нули" Margin="0,0,5,0"/>
-                                                    <CheckBox Grid.Column="1" Content="Полюса" Margin="0,0,5,0"/>
-                                                    <CheckBox Grid.Column="2"  Content="Линии" Margin="0,0,5,0"/>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Максимальное изменения ширины КП за один цикл"/>
+                                                    <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                                                </Grid>
+                                                <Grid Margin="0,0,0,5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Максимальное смещение КП за один цикл"/>
+                                                    <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
                                                 </Grid>
                                             </StackPanel>
                                         </GroupBox>
