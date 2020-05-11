@@ -10,6 +10,19 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Page2">
 
+    <Page.Resources>
+        <Style x:Key="radioButtonStyle" TargetType="RadioButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <ToggleButton IsChecked="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                        Content="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -45,6 +58,49 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
 
+                <Grid x:Name="canvas" Visibility="{Binding CanvasVisibility}" Margin="5,0,5,0">
+                    
+                    <Grid.Resources>
+
+                    </Grid.Resources>
+                    
+                    <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+                        <StackPanel Orientation="Horizontal">
+                            <ToolBarTray Orientation="Vertical">
+                                <ToolBar>
+                                    <RadioButton Style="{StaticResource radioButtonStyle}">
+                                        <Image Margin="2" Height="38" Width="38" Source="pack://application:,,,/Resources/button0.png" />
+                                    </RadioButton>
+                                    <Separator />
+                                    <RadioButton Style="{StaticResource radioButtonStyle}">
+                                        <Image Margin="2" Height="38" Width="38" Source="pack://application:,,,/Resources/button1.png"  />
+                                    </RadioButton>
+                                    <Separator />
+                                    <RadioButton Style="{StaticResource radioButtonStyle}">
+                                        <Image  Margin="2" Height="38" Width="38" Source="pack://application:,,,/Resources/button2.png" />
+                                    </RadioButton>
+                                    <Separator />
+                                    <RadioButton Style="{StaticResource radioButtonStyle}">
+                                        <Image Margin="2" Height="38" Width="38" Source="pack://application:,,,/Resources/button3.png"  />
+                                    </RadioButton>
+                                    <Separator />
+                                    <RadioButton Style="{StaticResource radioButtonStyle}">
+                                        <Image Margin="2" Height="38" Width="38" Source="pack://application:,,,/Resources/button4.png"  />
+                                    </RadioButton>
+                                    <Separator />
+                                    <RadioButton Style="{StaticResource radioButtonStyle}">
+                                        <Image  Margin="2" Height="38" Width="38" Source="pack://application:,,,/Resources/button5.png" />
+                                    </RadioButton>
+                                    <Separator />
+                                    <RadioButton Style="{StaticResource radioButtonStyle}">
+                                        <Image Margin="2" Height="38" Width="38" Source="pack://application:,,,/Resources/button6.png"  />
+                                    </RadioButton>
+                                </ToolBar>
+                            </ToolBarTray>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -65,10 +121,19 @@
 
                     </StackPanel>
 
-                </Grid>
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Style.Triggers>
+                                <DataTrigger  Binding="{Binding ElementName=canvas, Path=Visibility}" Value="Collapsed" >
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                                <DataTrigger  Binding="{Binding ElementName=canvas, Path=Visibility}" Value="Visible" >
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
 
-                <Grid Visibility="{Binding CanvasVisibility}">
-                    
                 </Grid>
 
                 <Expander Grid.Column="2" Grid.RowSpan="2" ExpandDirection="Left" IsExpanded="True">

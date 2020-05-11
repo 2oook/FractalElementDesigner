@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
@@ -38,6 +39,21 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             set { _project = value; }
         }
 
+        private Visibility canvasVisibility = Visibility.Collapsed;
+
+        public Visibility CanvasVisibility
+        {
+            get 
+            { 
+                return canvasVisibility; 
+            }
+            set 
+            { 
+                canvasVisibility = value;
+                RaisePropertyChanged(nameof(CanvasVisibility));
+            }
+        }
+
         #endregion
 
         #region Команды
@@ -46,6 +62,23 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// Команда для перемещения на главную страницу 
         /// </summary>
         public ICommand GoToMainPageCommand { get; set; }
+
+        private ICommand newStructureCommand;
+        /// <summary>
+        /// Команда для создания новой структуры
+        /// </summary>
+        public ICommand NewStructureCommand
+        {
+            get
+            {
+                return newStructureCommand;
+            }
+            set
+            {
+                newStructureCommand = value;
+                RaisePropertyChanged(nameof(NewStructureCommand));
+            }
+        }
 
         #endregion
 
@@ -56,7 +89,19 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// </summary>
         private void InitializeCommands()
         {
-            
+            NewStructureCommand = new RelayCommand(CreateNewStructure);
+        }
+
+        private void CreateNewStructure() 
+        {
+            // создать проект
+
+
+            // вывести окно параметров структуры
+
+
+            // показать область проектирования
+            CanvasVisibility = Visibility.Visible;
         }
 
         #endregion
