@@ -27,7 +27,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
 
         #endregion
 
-
         #region Properties
 
         public static NavigationService Service

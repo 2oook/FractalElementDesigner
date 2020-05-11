@@ -4,11 +4,12 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces
 {
-    public interface IViewModelsResolver
+    public interface IPageViewModel : INotifyPropertyChanged
     {
-        IPageViewModel GetViewModelInstance(string alias);
+        ICommand GoToMainPageCommand { get; set; }
     }
 }

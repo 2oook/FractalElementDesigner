@@ -77,6 +77,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Navigation\Interfaces\IPageResolver.cs" />
+    <Compile Include="Navigation\Interfaces\IPageViewModel.cs" />
     <Compile Include="Navigation\Interfaces\IViewModelsResolver.cs" />
     <Compile Include="Navigation\Navigation.cs" />
     <Compile Include="Navigation\PagesResolver.cs" />
@@ -96,8 +97,10 @@
     <Compile Include="ProjectTree\Project.cs" />
     <Compile Include="RC-FE Model\Layer.cs" />
     <Compile Include="RC-FE Model\RCStructureBase.cs" />
+    <Compile Include="ViewModels\AnalysisViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Page404ViewModel.cs" />
+    <Compile Include="ViewModels\SynthesisViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

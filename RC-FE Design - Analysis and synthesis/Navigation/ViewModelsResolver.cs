@@ -17,7 +17,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
         /// <summary>
         /// Словарь ViewModel'ов
         /// </summary>
-        private readonly Dictionary<string, Func<INotifyPropertyChanged>> _vmResolvers = new Dictionary<string, Func<INotifyPropertyChanged>>();
+        private readonly Dictionary<string, Func<IPageViewModel>> _vmResolvers = new Dictionary<string, Func<IPageViewModel>>();
 
         /// <summary>
         /// Конструктор
@@ -25,6 +25,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
         public ViewModelsResolver()
         {
             _vmResolvers.Add(MainViewModel.NotFoundPageViewModelAlias, () => new Page404ViewModel());
+            _vmResolvers.Add(MainViewModel.AnalysisPageViewModelAlias, () => new AnalysisViewModel());
+            _vmResolvers.Add(MainViewModel.SynthesisPageViewModelAlias, () => new SynthesisViewModel());
         }
 
         /// <summary>
@@ -32,7 +34,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
         /// </summary>
         /// <param name="alias">Псевдоним страницы</param>
         /// <returns>ViewModel</returns>
-        public INotifyPropertyChanged GetViewModelInstance(string alias)
+        public IPageViewModel GetViewModelInstance(string alias)
         {
             if (_vmResolvers.ContainsKey(alias))
             {

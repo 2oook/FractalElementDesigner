@@ -25,11 +25,15 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         {
             _resolver = resolver;
 
-            // Создать страницы 404
             _NotFoundPageViewModel = _resolver.GetViewModelInstance(NotFoundPageViewModelAlias);
+            _SynthesisPageViewModel = _resolver.GetViewModelInstance(SynthesisPageViewModelAlias);
+            _AnalysisPageViewModel = _resolver.GetViewModelInstance(AnalysisPageViewModelAlias);
 
             // Инициализировать команды
             InitializeCommands();
+
+            _SynthesisPageViewModel.GoToMainPageCommand = GoToMainPageCommand;
+            _AnalysisPageViewModel.GoToMainPageCommand = GoToMainPageCommand;
 
             // Перейти на главную страницу
             GoToMainPageCommandExecute();
@@ -38,6 +42,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         #region Константы
 
         public static readonly string NotFoundPageViewModelAlias = "404VM";
+        public static readonly string SynthesisPageViewModelAlias = "SynthesisPageVM";
+        public static readonly string AnalysisPageViewModelAlias = "AnalysisPageVM";
 
         #endregion
 
@@ -51,19 +57,20 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// <summary>
         /// Ссылка на ViewModel пустой страницы
         /// </summary>
-        private readonly INotifyPropertyChanged _NotFoundPageViewModel;
+        private readonly IPageViewModel _NotFoundPageViewModel;
+        /// <summary>
+        /// Ссылка на ViewModel страницы синтеза
+        /// </summary>
+        private readonly IPageViewModel _SynthesisPageViewModel;
+        /// <summary>
+        /// Ссылка на ViewModel страницы анализа
+        /// </summary>
+        private readonly IPageViewModel _AnalysisPageViewModel;
 
         #endregion
 
         #region Свойства
 
-        private Project _project;
-
-        public Project Project
-        {
-            get { return _project; }
-            set { _project = value; }
-        }
 
 
         #endregion
@@ -142,7 +149,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// </summary>
         private void GoToSynthesisPageCommandExecute()
         {
-            Navigation.Navigation.Navigate(Navigation.Navigation.SynthesisPageAlias, this);
+            Navigation.Navigation.Navigate(Navigation.Navigation.SynthesisPageAlias, _SynthesisPageViewModel);
         }
 
         /// <summary>
@@ -150,7 +157,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// </summary>
         private void GoToAnalysisPageCommandExecute()
         {
-            Navigation.Navigation.Navigate(Navigation.Navigation.AnalysisPageAlias, this);
+            Navigation.Navigation.Navigate(Navigation.Navigation.AnalysisPageAlias, _AnalysisPageViewModel);
         }
 
         #endregion
