@@ -58,45 +58,67 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Grid x:Name="canvas" Visibility="{Binding CanvasVisibility}" Margin="5,0,5,0">
-                    
-                    <Grid.Resources>
+                <Grid x:Name="canvasContainer" Visibility="{Binding CanvasVisibility}" Margin="5,0,5,0">
 
-                    </Grid.Resources>
-                    
                     <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
                         <StackPanel Orientation="Horizontal">
                             <ToolBarTray Orientation="Vertical">
-                                <ToolBar>
+                                <ToolBar Margin="0,5,0,0">
                                     <RadioButton Style="{StaticResource radioButtonStyle}">
-                                        <Image Margin="2" Height="38" Width="38" Source="pack://application:,,,/Resources/button0.png" />
+                                        <Image Margin="0" Height="38" Width="38" Source="pack://application:,,,/Resources/button0.png" />
+                                        <RadioButton.ToolTip>
+                                            <TextBlock Text="Нумерация КП"/>
+                                        </RadioButton.ToolTip>
                                     </RadioButton>
-                                    <Separator />
+                                    
                                     <RadioButton Style="{StaticResource radioButtonStyle}">
-                                        <Image Margin="2" Height="38" Width="38" Source="pack://application:,,,/Resources/button1.png"  />
+                                        <Image Margin="0" Height="38" Width="38" Source="pack://application:,,,/Resources/button1.png"  />
+                                        <RadioButton.ToolTip>
+                                            <TextBlock Text="Разрез"/>
+                                        </RadioButton.ToolTip>
                                     </RadioButton>
-                                    <Separator />
+                                    
                                     <RadioButton Style="{StaticResource radioButtonStyle}">
-                                        <Image  Margin="2" Height="38" Width="38" Source="pack://application:,,,/Resources/button2.png" />
+                                        <Image  Margin="0" Height="38" Width="38" Source="pack://application:,,,/Resources/button2.png" />
+                                        <RadioButton.ToolTip>
+                                            <TextBlock Text="RC-ячейка"/>
+                                        </RadioButton.ToolTip>
                                     </RadioButton>
-                                    <Separator />
+                                    
                                     <RadioButton Style="{StaticResource radioButtonStyle}">
-                                        <Image Margin="2" Height="38" Width="38" Source="pack://application:,,,/Resources/button3.png"  />
+                                        <Image Margin="0" Height="38" Width="38" Source="pack://application:,,,/Resources/button3.png"  />
+                                        <RadioButton.ToolTip>
+                                            <TextBlock Text="R-ячейка"/>
+                                        </RadioButton.ToolTip>
                                     </RadioButton>
-                                    <Separator />
+                                    
                                     <RadioButton Style="{StaticResource radioButtonStyle}">
-                                        <Image Margin="2" Height="38" Width="38" Source="pack://application:,,,/Resources/button4.png"  />
+                                        <Image Margin="0" Height="38" Width="38" Source="pack://application:,,,/Resources/button4.png"  />
+                                        <RadioButton.ToolTip>
+                                            <TextBlock Text="Контактная площадка"/>
+                                        </RadioButton.ToolTip>
                                     </RadioButton>
-                                    <Separator />
+                                    
                                     <RadioButton Style="{StaticResource radioButtonStyle}">
-                                        <Image  Margin="2" Height="38" Width="38" Source="pack://application:,,,/Resources/button5.png" />
+                                        <Image  Margin="0" Height="38" Width="38" Source="pack://application:,,,/Resources/button5.png" />
+                                        <RadioButton.ToolTip>
+                                            <TextBlock Text="Запрет КП"/>
+                                        </RadioButton.ToolTip>
                                     </RadioButton>
-                                    <Separator />
+                                    
                                     <RadioButton Style="{StaticResource radioButtonStyle}">
-                                        <Image Margin="2" Height="38" Width="38" Source="pack://application:,,,/Resources/button6.png"  />
+                                        <Image Margin="0" Height="38" Width="38" Source="pack://application:,,,/Resources/button6.png"  />
+                                        <RadioButton.ToolTip>
+                                            <TextBlock Text="Шунт"/>
+                                        </RadioButton.ToolTip>
                                     </RadioButton>
                                 </ToolBar>
                             </ToolBarTray>
+                            
+                            <Canvas>
+
+                            </Canvas>
+                            
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -124,10 +146,10 @@
                     <Grid.Style>
                         <Style TargetType="Grid">
                             <Style.Triggers>
-                                <DataTrigger  Binding="{Binding ElementName=canvas, Path=Visibility}" Value="Collapsed" >
+                                <DataTrigger  Binding="{Binding ElementName=canvasContainer, Path=Visibility}" Value="Collapsed" >
                                     <Setter Property="Visibility" Value="Visible"/>
                                 </DataTrigger>
-                                <DataTrigger  Binding="{Binding ElementName=canvas, Path=Visibility}" Value="Visible" >
+                                <DataTrigger  Binding="{Binding ElementName=canvasContainer, Path=Visibility}" Value="Visible" >
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
                             </Style.Triggers>
