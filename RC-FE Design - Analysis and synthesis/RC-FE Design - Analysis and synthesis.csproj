@@ -76,6 +76,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FEEditor\Controls\FEControl.xaml.cs">
+      <DependentUpon>FEControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FEEditor\Controls\FECanvas.cs" />
     <Compile Include="Navigation\Interfaces\IPageResolver.cs" />
     <Compile Include="Navigation\Interfaces\IPageViewModel.cs" />
     <Compile Include="Navigation\Interfaces\IViewModelsResolver.cs" />
@@ -101,6 +105,18 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Page404ViewModel.cs" />
     <Compile Include="ViewModels\SynthesisViewModel.cs" />
+    <Page Include="Dictionaries\BaseDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dictionaries\ElementsDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FEEditor\Controls\FEControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
