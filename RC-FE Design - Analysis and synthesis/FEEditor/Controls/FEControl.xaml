@@ -10,23 +10,16 @@
              MouseDown="UserControl_MouseDown" 
              MouseUp="UserControl_MouseUp"
              Focusable="True" FocusVisualStyle="{x:Null}">
+    
     <UserControl.Resources>
 
         <ContextMenu x:Key="FECanvasContextMenuKey">
-            <MenuItem x:Name="InsertInput" Header="Insert _Input"  InputGestureText="I"/>
-            <MenuItem x:Name="InsertOutput" Header="Insert _Output"  InputGestureText="O"/>
+            <MenuItem Header="DO_SOMETHING_1"  InputGestureText="I"/>
+            <MenuItem Header="DO_SOMETHING_2"  InputGestureText="O"/>
             <Separator/>
-            <MenuItem x:Name="InsertFElement" Header="Insert _FElement"  InputGestureText="A"/>
-            <MenuItem x:Name="InsertAndGate" Header="Insert _AndGate"  InputGestureText="A"/>
-            <MenuItem x:Name="InsertOrGate" Header="Insert O_rGate"  InputGestureText="R"/>
-            <Separator/>
-            <MenuItem x:Name="EditCut" Header="Cu_t"  InputGestureText="Ctrl+X"/>
-            <MenuItem x:Name="EditCopy" Header="_Copy"  InputGestureText="Ctrl+C"/>
-            <MenuItem x:Name="EditPaste" Header="_Paste"  InputGestureText="Ctrl+V"/>
-            <MenuItem x:Name="EditDelete" Header="_Delete"  InputGestureText="Del"/>
-            <Separator/>
-            <MenuItem x:Name="InvertStart" Header="Invert _Start" InputGestureText="S"/>
-            <MenuItem x:Name="InvertEnd" Header="Invert _End"  InputGestureText="E"/>
+            <MenuItem Header="DO_SOMETHING_3"  InputGestureText="A"/>
+            <MenuItem Header="DO_SOMETHING_4"  InputGestureText="B"/>
+            <MenuItem Header="DO_SOMETHING_5"  InputGestureText="R"/>
         </ContextMenu>
 
     </UserControl.Resources>
@@ -68,16 +61,16 @@
                                     
                                     Grid.Column="0" Grid.Row="0"
                                     Background="{DynamicResource LogicTransparentColorKey}" 
-                                    ContextMenu="{StaticResource DiagramCanvasContextMenuKey}"
+                                    ContextMenu="{StaticResource FECanvasContextMenuKey}"
                                     AllowDrop="True"
-                                    MouseLeftButtonDown="Canvas_MouseLeftButtonDown"
-                                    MouseLeftButtonUp="Canvas_MouseLeftButtonUp"
-                                    PreviewMouseLeftButtonDown="Canvas_PreviewMouseLeftButtonDown"
-                                    MouseMove="Canvas_MouseMove"
-                                    PreviewMouseRightButtonDown="Canvas_PreviewMouseRightButtonDown"
-                                    ContextMenuOpening="Canvas_ContextMenuOpening"
-                                    Drop="DiagramCanvas_Drop"
-                                    DragEnter="DiagramCanvas_DragEnter">
+                                    MouseLeftButtonDown="FECanvas_MouseLeftButtonDown"
+                                    MouseLeftButtonUp="FECanvas_MouseLeftButtonUp"
+                                    PreviewMouseLeftButtonDown="FECanvas_PreviewMouseLeftButtonDown"
+                                    MouseMove="FECanvas_MouseMove"
+                                    PreviewMouseRightButtonDown="FECanvas_PreviewMouseRightButtonDown"
+                                    ContextMenuOpening="FECanvas_ContextMenuOpening"
+                                    Drop="FECanvas_Drop"
+                                    DragEnter="FECanvas_DragEnter">
             </controls:FECanvas>
 
         </Grid>

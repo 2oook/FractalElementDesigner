@@ -100,6 +100,16 @@
         <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
 
+    <Style x:Key="GridPathStyleKey" TargetType="Path">
+        <Setter Property="Stroke" Value="{DynamicResource LogicGridColorKey}"/>
+        <Setter Property="Fill" Value="Transparent"/>
+        <Setter Property="StrokeThickness" Value="{DynamicResource PageStrokeThicknessKey}"/>
+        <Setter Property="StrokeStartLineCap" Value="Flat"/>
+        <Setter Property="StrokeEndLineCap" Value="Flat"/>
+        <Setter Property="StrokeLineJoin" Value="Miter"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+    </Style>
+
     <!-- templates -->
 
     <ControlTemplate x:Key="PinThumbControlTemplateKey">
