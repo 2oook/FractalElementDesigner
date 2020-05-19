@@ -1,4 +1,5 @@
 ﻿using RC_FE_Design___Analysis_and_synthesis.FEEditor.Controls;
+using RC_FE_Design___Analysis_and_synthesis.FEEditor.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
         public FEControl()
         {
             InitializeComponent();
+
+            Editor = new FEEditor();
+            Editor.Context = new Context();
+            Editor.Context.CurrentCanvas = FECanvas;
         }
 
         #region Properties
@@ -111,8 +116,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
             tt.X = absoluteX - relative.X * zoom;
             tt.Y = absoluteY - relative.Y * zoom;
 
-            if (Adorner != null)
-                Adorner.Zoom = zoom;
+            if (Adorner != null) Adorner.Zoom = zoom;
         }
 
         private void ZoomToFit(Size viewport, Size source)
@@ -147,8 +151,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
 
             UpdateStrokeThickness(zoom);
 
-            if (Adorner != null)
-                Adorner.Zoom = zoom;
+            if (Adorner != null) Adorner.Zoom = zoom;
 
             CurrentZoom = 1.0;
         }
@@ -184,24 +187,89 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
 
         #endregion
 
-        private void RootBorder_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
+        #region Pan
 
+        public void ResetPan()
+        {
+            var st = GetZoomTranslateTransform();
+            st.X = 0.0;
+            st.Y = 0.0;
         }
+
+        private void BeginPan(Point point)
+        {
+            Editor.Context.PanStart = new PointEx(point.X, point.Y);
+            Editor.Context.PreviousScrollOffsetX = -1.0;
+            Editor.Context.PreviousScrollOffsetY = -1.0;
+
+            this.Cursor = Cursors.ScrollAll;
+            this.CaptureMouse();
+        }
+
+        private void EndPan()
+        {
+            if (this.IsMouseCaptured == true)
+            {
+                this.Cursor = Cursors.Arrow;
+                this.ReleaseMouseCapture();
+            }
+        }
+
+        private void PanToPoint(Point point)
+        {
+            double dX = point.X - Editor.Context.PanStart.X;
+            double dY = point.Y - Editor.Context.PanStart.Y;
+            var st = GetZoomTranslateTransform();
+            st.X += dX;
+            st.Y += dY;
+            Editor.Context.PanStart = new PointEx(point.X, point.Y);
+        }
+
+        #endregion
+
+        #region UserControl Events
 
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (e.ChangedButton == MouseButton.Middle && e.ClickCount == 1)
+                BeginPan(e.GetPosition(this));
+            else if (e.ChangedButton == MouseButton.Middle && e.ClickCount == 2)
+                ZoomToFit();
 
+            this.Focus();
         }
 
         private void UserControl_MouseMove(object sender, MouseEventArgs e)
         {
-
+            if (this.IsMouseCaptured == true)
+                PanToPoint(e.GetPosition(this));
         }
 
         private void UserControl_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (e.ChangedButton == MouseButton.Middle) EndPan();
+        }
 
+        #endregion
+
+        private void RootBorder_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Shift) return;
+
+            var canvas = Editor.Context.CurrentCanvas;
+            var point = e.GetPosition(canvas as FECanvas);
+            Editor.Context.ZoomPoint = new PointEx(point.X, point.Y);
+
+            if (e.Delta > 0)
+            {
+                ZoomIn();
+                e.Handled = true;
+            }
+            else if (e.Delta < 0)
+            {
+                ZoomOut();
+                e.Handled = true;
+            }
         }
 
         private void FECanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

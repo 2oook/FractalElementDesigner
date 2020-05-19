@@ -62,8 +62,9 @@
                 <Grid x:Name="canvasContainer" Visibility="{Binding CanvasVisibility}" Margin="5,0,5,0">
 
                     <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
-                        <StackPanel Orientation="Horizontal">
-                            <ToolBarTray Orientation="Vertical">
+                        <DockPanel>
+                            
+                            <ToolBarTray DockPanel.Dock="Left" Orientation="Vertical">
                                 <ToolBar Margin="0,5,0,0">
                                     <RadioButton Style="{StaticResource radioButtonStyle}">
                                         <Image Margin="0" Height="38" Width="38" Source="pack://application:,,,/Resources/button0.png" />
@@ -116,9 +117,9 @@
                                 </ToolBar>
                             </ToolBarTray>
 
-                            <editor:FEControl/>
+                            <editor:FEControl  DockPanel.Dock="Right"/>
 
-                        </StackPanel>
+                        </DockPanel>
                     </Border>
                 </Grid>
 

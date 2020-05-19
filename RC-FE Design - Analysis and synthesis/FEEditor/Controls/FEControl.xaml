@@ -38,8 +38,8 @@
             </Grid.RenderTransform>
 
             <Canvas x:Name="FEBackgroud"
-                    Width="{Binding ElementName=DiagramCanvas, Path=Width}"
-                    Height="{Binding ElementName=DiagramCanvas, Path=Height}" 
+                    Width="{Binding ElementName=FECanvas, Path=Width}"
+                    Height="{Binding ElementName=FECanvas, Path=Height}" 
                     Grid.Column="0" Grid.Row="0"
                     ClipToBounds="False"
                     Background="{DynamicResource LogicBackgroundColorKey}"
@@ -47,8 +47,8 @@
             </Canvas>
 
             <Canvas x:Name="FEGrid"
-                    Width="{Binding ElementName=DiagramCanvas, Path=Width}"
-                    Height="{Binding ElementName=DiagramCanvas, Path=Height}" 
+                    Width="{Binding ElementName=FECanvas, Path=Width}"
+                    Height="{Binding ElementName=FECanvas, Path=Height}" 
                     Grid.Column="0" Grid.Row="0"
                     ClipToBounds="False"
                     Background="{DynamicResource LogicTransparentColorKey}">

@@ -1,4 +1,5 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.FEEditor.Core;
+﻿using RC_FE_Design___Analysis_and_synthesis.FEEditor.Controls;
+using RC_FE_Design___Analysis_and_synthesis.FEEditor.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
         #endregion
 
         #region Fields
+
+        public FECanvas CurrentCanvas = null;
 
         public double DefaultGridSize = 30;
 

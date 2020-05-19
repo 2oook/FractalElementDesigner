@@ -47,8 +47,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Controls
 
         #region Constructor
 
-        public SelectionAdorner(UIElement adornedElement)
-            : base(adornedElement)
+        public SelectionAdorner(UIElement adornedElement): base(adornedElement)
         {
             brush = new SolidColorBrush(Color.FromArgb(0x90, 0xB0, 0xB0, 0xB0));
             pen = new Pen(new SolidColorBrush(Color.FromArgb(0x90, 0x70, 0x70, 0x70)), defaultThickness);
