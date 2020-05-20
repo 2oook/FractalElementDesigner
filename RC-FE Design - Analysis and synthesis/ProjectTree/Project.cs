@@ -1,4 +1,4 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.RC_FE_Model;
+﻿using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

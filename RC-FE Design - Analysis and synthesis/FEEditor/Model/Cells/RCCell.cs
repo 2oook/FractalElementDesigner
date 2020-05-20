@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RC_FE_Design___Analysis_and_synthesis.RC_FE_Model
+namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells
 {
-    public class Layer
+    public class RCCell : StructureCellBase
     {
-        public string Name { get; set; }
     }
 }

@@ -87,6 +87,11 @@
       <DependentUpon>PageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="FEEditor\FEEditor.cs" />
+    <Compile Include="FEEditor\Model\Cells\ContactCell.cs" />
+    <Compile Include="FEEditor\Model\Cells\CutCell.cs" />
+    <Compile Include="FEEditor\Model\Cells\ForbidContactCell.cs" />
+    <Compile Include="FEEditor\Model\Cells\RCCell.cs" />
+    <Compile Include="FEEditor\Model\Cells\ShuntCell.cs" />
     <Compile Include="FEEditor\ResourceConstants.cs" />
     <Compile Include="Navigation\Interfaces\IPageResolver.cs" />
     <Compile Include="Navigation\Interfaces\IPageViewModel.cs" />
@@ -107,8 +112,10 @@
       <DependentUpon>Page404.xaml</DependentUpon>
     </Compile>
     <Compile Include="ProjectTree\Project.cs" />
-    <Compile Include="RC-FE Model\Layer.cs" />
-    <Compile Include="RC-FE Model\RCStructureBase.cs" />
+    <Compile Include="FEEditor\Model\Layer.cs" />
+    <Compile Include="FEEditor\Model\RCStructure.cs" />
+    <Compile Include="FEEditor\Model\RCStructureBase.cs" />
+    <Compile Include="FEEditor\Model\Cells\StructureCellBase.cs" />
     <Compile Include="ViewModels\AnalysisViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Page404ViewModel.cs" />
@@ -188,6 +195,7 @@
   <ItemGroup>
     <Folder Include="Interfaces\" />
     <Folder Include="MathModel\" />
+    <Folder Include="RC-FE Model\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\button0.png" />

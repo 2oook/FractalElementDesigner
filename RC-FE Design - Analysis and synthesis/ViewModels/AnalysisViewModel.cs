@@ -1,5 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
+using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
 using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
 using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
 using System;
@@ -102,6 +104,17 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
             // показать область проектирования
             CanvasVisibility = Visibility.Visible;
+
+            var newStructure = new RCStructure();
+
+            newStructure.StructureCells = new StructureCellBase[,] 
+            {
+                { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() },
+                { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() }, 
+                { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() }, 
+                { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() }, 
+                { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() }
+            };
         }
 
         #endregion
