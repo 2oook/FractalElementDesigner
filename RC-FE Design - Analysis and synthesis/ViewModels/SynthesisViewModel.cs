@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using MahApps.Metro.Controls.Dialogs;
 using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
 using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
 using System;
@@ -18,12 +19,20 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
     {
         public SynthesisViewModel()
         {
+
+        }
+
+        public SynthesisViewModel(IDialogCoordinator dialogCoordinator)
+        {
             InitializeCommands();
         }
 
         #region Глобальные переменные
 
-
+        /// <summary>
+        /// Объект для вывода диалогов
+        /// </summary>
+        private IDialogCoordinator dialogCoordinator = null;
 
         #endregion
 

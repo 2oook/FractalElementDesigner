@@ -4,9 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        GlowBrush="{DynamicResource HighlightBrush}"
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        Dialog:DialogParticipation.Register="{Binding}"
         xmlns:local="clr-namespace:RC_FE_Design___Analysis_and_synthesis"
-        mc:Ignorable="d"
+        GlowBrush="{DynamicResource HighlightBrush}"       
+        mc:Ignorable="d"    
         Title="RC-FE Design - Analysis and synthesis" 
         Height="600" Width="800" 
         MinHeight="450"  MinWidth="800" 
@@ -22,4 +24,5 @@
         </Border>
    
     </Grid>
+    
 </mah:MetroWindow>

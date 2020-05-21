@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using MahApps.Metro.Controls.Dialogs;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
 using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
@@ -22,12 +23,22 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
     {
         public AnalysisViewModel()
         {
+
+        }
+
+        public AnalysisViewModel(IDialogCoordinator dialogCoordinator)
+        {
+            _dialogCoordinator = dialogCoordinator;
+
             InitializeCommands();
         }
 
         #region Глобальные переменные
 
-
+        /// <summary>
+        /// Объект для вывода диалогов
+        /// </summary>
+        private IDialogCoordinator _dialogCoordinator;
 
         #endregion
 
@@ -98,7 +109,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         {
             // создать проект
 
-
+            
             // вывести окно параметров структуры
 
 

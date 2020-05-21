@@ -1,4 +1,5 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
+﻿using MahApps.Metro.Controls.Dialogs;
+using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
 using RC_FE_Design___Analysis_and_synthesis.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,17 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
             _vmResolvers.Add(MainViewModel.NotFoundPageViewModelAlias, () => new Page404ViewModel());
             _vmResolvers.Add(MainViewModel.AnalysisPageViewModelAlias, () => new AnalysisViewModel());
             _vmResolvers.Add(MainViewModel.SynthesisPageViewModelAlias, () => new SynthesisViewModel());
+        }
+
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="dialogCoordinator">Объект для вывода диалогов</param>
+        public ViewModelsResolver(IDialogCoordinator dialogCoordinator)
+        {
+            _vmResolvers.Add(MainViewModel.NotFoundPageViewModelAlias, () => new Page404ViewModel());
+            _vmResolvers.Add(MainViewModel.AnalysisPageViewModelAlias, () => new AnalysisViewModel(dialogCoordinator));
+            _vmResolvers.Add(MainViewModel.SynthesisPageViewModelAlias, () => new SynthesisViewModel(dialogCoordinator));
         }
 
         /// <summary>
