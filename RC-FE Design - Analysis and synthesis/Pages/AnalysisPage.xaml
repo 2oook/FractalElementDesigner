@@ -35,7 +35,7 @@
 
         <Menu Grid.Row="0" Background="{DynamicResource AccentColorBrush2}">
             <MenuItem Header="Файл" >
-                <MenuItem x:Name="FileNew" Header="Новая структура" InputGestureText="Ctrl+N"/>
+                <MenuItem x:Name="FileNew" Command="{Binding NewStructureCommand}" Header="Новая структура" InputGestureText="Ctrl+N"/>
                 <MenuItem x:Name="FileOpen" Header="Открыть" InputGestureText="Ctrl+O"/>
                 <MenuItem x:Name="FileSave" Header="Сохранить" InputGestureText="Ctrl+S"/>
                 <MenuItem x:Name="Export" Header="Экспорт значений"/>

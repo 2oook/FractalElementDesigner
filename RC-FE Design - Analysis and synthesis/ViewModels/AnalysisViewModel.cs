@@ -5,6 +5,7 @@ using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
 using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
 using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
+using RC_FE_Design___Analysis_and_synthesis.Windows;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -109,9 +110,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         {
             // создать проект
 
-            
-            // вывести окно параметров структуры
 
+            // вывести окно параметров структуры
+            var window = new NewStructureWindow();
+            //window.Owner = Application.Current.MainWindow;
+            window.ShowDialog();
 
             // показать область проектирования
             CanvasVisibility = Visibility.Visible;

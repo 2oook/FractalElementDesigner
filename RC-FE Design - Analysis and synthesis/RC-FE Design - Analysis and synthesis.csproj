@@ -120,6 +120,9 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Page404ViewModel.cs" />
     <Compile Include="ViewModels\SynthesisViewModel.cs" />
+    <Compile Include="Windows\NewStructureWindow.xaml.cs">
+      <DependentUpon>NewStructureWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Dictionaries\BaseDictionary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -161,6 +164,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Page404.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\NewStructureWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

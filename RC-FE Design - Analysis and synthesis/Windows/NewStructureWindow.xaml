@@ -1,0 +1,113 @@
+﻿<mah:MetroWindow x:Class="RC_FE_Design___Analysis_and_synthesis.Windows.NewStructureWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:RC_FE_Design___Analysis_and_synthesis.Windows"
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        Dialog:DialogParticipation.Register="{Binding}"
+        GlowBrush="{DynamicResource HighlightBrush}"
+        mc:Ignorable="d"
+        Title="Задание параметров модели" SizeToContent="WidthAndHeight" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    
+    <Grid Margin="10">
+        <StackPanel Orientation="Vertical" Grid.IsSharedSizeScope="True">
+            <GroupBox Margin="0,0,0,10" Header="Тип модели">
+                <ComboBox>
+                    <ComboBoxItem Content="R-C-0"/>
+                    <ComboBoxItem Content="R-CG-0"/>
+                    <ComboBoxItem Content="R-C-NR"/>
+                    <ComboBoxItem Content="R-CG-NR"/>
+                    <ComboBoxItem Content="R-CG-NR+КП"/>
+                    <ComboBoxItem Content="(R+R)-C-NR"/>
+                    <ComboBoxItem Content="(R+R)-CG-NR"/>
+                    <ComboBoxItem Content="(R+R)-CG-NR+КП"/>
+                </ComboBox>
+            </GroupBox>
+            <Grid Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Удельное сопротивление ro"/>
+                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+            </Grid>
+            <Grid Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Полная емкость структуры C"/>
+                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+            </Grid>
+            <Grid Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Количество ячеек по горизонтали"/>
+                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+            </Grid>
+
+            <Grid Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Количество ячеек по вертикали"/>
+                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+            </Grid>
+            <Grid Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Коэффициент последовательного сопротивления G"/>
+                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+            </Grid>
+            <Grid Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Коэффициент параллельного сопротивления H"/>
+                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+            </Grid>
+            <Grid Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Коэффициент N"/>
+                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+            </Grid>
+            <Grid Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Коэффициент сопротивления КП P"/>
+                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+            </Grid>
+            <Grid Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Пропорции частей"/>
+                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+            </Grid>
+
+            <Grid Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Content="OK" Grid.Column="0" Margin="0,0,5,0"/>
+                <Button Content="ОТМЕНА" Grid.Column="1" Margin="5,0,0,0"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+    
+</mah:MetroWindow>
