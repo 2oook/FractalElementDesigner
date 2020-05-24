@@ -24,5 +24,30 @@ namespace RC_FE_Design___Analysis_and_synthesis.Windows
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// Обработчик нажатия кнопки ОК
+        /// </summary>
+        /// <param name="sender">Объект источник</param>
+        /// <param name="e">Параметры события</param>
+        private void OK_Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+        }
+
+        /// <summary>
+        /// Обработчик нажатия кнопки Cancel
+        /// </summary>
+        /// <param name="sender">Объект источник</param>
+        /// <param name="e">Параметры события</param>
+        private void Cancel_Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

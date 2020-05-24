@@ -106,29 +106,52 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             NewStructureCommand = new RelayCommand(CreateNewStructure);
         }
 
+        // Метод для создания новой структуры
         private void CreateNewStructure() 
         {
-            // создать проект
-
-
-            // вывести окно параметров структуры
-            var window = new NewStructureWindow();
-            //window.Owner = Application.Current.MainWindow;
-            window.ShowDialog();
-
-            // показать область проектирования
-            CanvasVisibility = Visibility.Visible;
-
-            var newStructure = new RCStructure();
-
-            newStructure.StructureCells = new StructureCellBase[,] 
+            try
             {
+                // создать проект
+
+
+                // вывести окно ввода параметров структуры
+                var window = new NewStructureWindow();
+                var dialogResult = window.ShowDialog();
+
+                // если не было подтверждения выйти
+                if (dialogResult.HasValue == false)
+                {
+                    return;
+                }
+                else 
+                {
+                    if (dialogResult.Value == false)
+                    {
+                        return;
+                    }
+                }
+
+                // показать область проектирования, если она скрыта
+                if (CanvasVisibility != Visibility.Visible)
+                {
+                    CanvasVisibility = Visibility.Visible;
+                }
+
+                var newStructure = new RCStructure();
+
+                newStructure.StructureCells = new StructureCellBase[,]
+                {
                 { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() },
-                { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() }, 
-                { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() }, 
-                { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() }, 
+                { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() },
+                { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() },
+                { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() },
                 { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() }
-            };
+                };
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         #endregion

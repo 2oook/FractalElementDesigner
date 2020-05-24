@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RC_FE_Design___Analysis_and_synthesis.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,30 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
         public AnalysisPage()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Обработчик нажатия клавиш клавиатуры
+        /// </summary>
+        /// <param name="e">Параметры события</param>
+        /// <param name="sender">Объект отправитель</param>
+        private void HandleKeyEvents(object sender, KeyEventArgs e)
+        {
+            var context = this.DataContext as AnalysisViewModel;
+            if (context == null) return;
+
+            bool isControl = Keyboard.Modifiers == ModifierKeys.Control;
+            var key = e.Key;
+
+            if (isControl == true)
+            {
+                switch (key)
+                {
+                    case Key.O: break;
+                    case Key.S: break;
+                    case Key.N: context.NewStructureCommand.Execute(null); break;
+                }
+            }            
         }
     }
 }
