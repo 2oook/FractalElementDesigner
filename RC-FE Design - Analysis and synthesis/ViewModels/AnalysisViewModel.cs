@@ -113,9 +113,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             {
                 // создать проект
 
-
+                // создать vm для окна создания новой структуры
+                var newStructureWindowViewModel = new NewStructureWindowViewModel();
                 // вывести окно ввода параметров структуры
                 var window = new NewStructureWindow();
+                window.DataContext = newStructureWindowViewModel;
                 var dialogResult = window.ShowDialog();
 
                 // если не было подтверждения выйти
@@ -141,11 +143,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                 newStructure.StructureCells = new StructureCellBase[,]
                 {
-                { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() },
-                { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() },
-                { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() },
-                { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() },
-                { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() }
+                    { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() },
+                    { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() },
+                    { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() },
+                    { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() },
+                    { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() }
                 };
             }
             catch (Exception ex)

@@ -118,6 +118,7 @@
     <Compile Include="FEEditor\Model\Cells\StructureCellBase.cs" />
     <Compile Include="ViewModels\AnalysisViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\NewStructureWindowViewModel.cs" />
     <Compile Include="ViewModels\Page404ViewModel.cs" />
     <Compile Include="ViewModels\SynthesisViewModel.cs" />
     <Compile Include="Windows\NewStructureWindow.xaml.cs">
@@ -200,6 +201,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="FEEditor\Model\Structures\" />
     <Folder Include="Interfaces\" />
     <Folder Include="MathModel\" />
     <Folder Include="RC-FE Model\" />

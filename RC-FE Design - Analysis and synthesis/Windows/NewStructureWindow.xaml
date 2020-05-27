@@ -14,7 +14,7 @@
     <Grid Margin="10">
         <StackPanel Orientation="Vertical" Grid.IsSharedSizeScope="True">
             <GroupBox Margin="0,0,0,10" Header="Тип модели">
-                <ComboBox SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBox SelectionChanged="ComboBox_SelectionChanged" IsReadOnly="True">
                     <ComboBoxItem Tag="R-C-0" Content="R-C-0"/>
                     <ComboBoxItem Tag="R-CG-0" Content="R-CG-0"/>
                     <ComboBoxItem Tag="R-C-NR" Content="R-C-NR"/>
@@ -31,7 +31,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Удельное сопротивление ro"/>
-                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                <TextBox Text="{Binding Path=R0}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
             </Grid>
             <Grid Margin="0,0,0,5">
                 <Grid.ColumnDefinitions>
@@ -39,7 +39,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Полная емкость структуры C"/>
-                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                <TextBox Text="{Binding Path=C}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
             </Grid>
             <Grid Margin="0,0,0,5">
                 <Grid.ColumnDefinitions>
@@ -47,7 +47,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Количество ячеек по горизонтали"/>
-                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                <TextBox Text="{Binding Path=HorizontalCellsCount}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
             </Grid>
 
             <Grid Margin="0,0,0,5">
@@ -56,7 +56,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Количество ячеек по вертикали"/>
-                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                <TextBox Text="{Binding Path=VerticalCellsCount}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
             </Grid>
             <Grid Margin="0,0,0,5">
                 <Grid.ColumnDefinitions>
@@ -64,7 +64,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Коэффициент последовательного сопротивления G"/>
-                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                <TextBox Text="{Binding Path=G}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
             </Grid>
             <Grid Margin="0,0,0,5">
                 <Grid.ColumnDefinitions>
@@ -72,7 +72,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Коэффициент параллельного сопротивления H"/>
-                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                <TextBox Text="{Binding Path=H}"  Grid.Column="1" MinWidth="50" MaxWidth="80"/>
             </Grid>
             <Grid Margin="0,0,0,5">
                 <Grid.ColumnDefinitions>
@@ -80,7 +80,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Коэффициент N"/>
-                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                <TextBox Text="{Binding Path=N}"  Grid.Column="1" MinWidth="50" MaxWidth="80"/>
             </Grid>
             <Grid Margin="0,0,0,5">
                 <Grid.ColumnDefinitions>
@@ -88,7 +88,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Коэффициент сопротивления КП P"/>
-                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                <TextBox Text="{Binding Path=P}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
             </Grid>
             <Grid Margin="0,0,0,5">
                 <Grid.ColumnDefinitions>
@@ -96,7 +96,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Пропорции частей"/>
-                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                <TextBox Text="{Binding Path=Proportions}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
             </Grid>
 
             <Grid Margin="0,10,0,0">

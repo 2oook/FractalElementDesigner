@@ -9,6 +9,15 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
 {
     public class RCStructure : RCStructureBase
     {
+        static RCStructure() 
+        {
+
+        }
+
+        public static List<RCStructure> AllStructures;
+
+        public string Name { get; set; }
+
         public StructureCellBase[,] StructureCells { get; set; } = null;
     }
 }

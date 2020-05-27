@@ -47,7 +47,17 @@ namespace RC_FE_Design___Analysis_and_synthesis.Windows
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var cmb = sender as ComboBox;
 
+            if (cmb != null)
+            {
+
+                //switch (cmb.SelectedItem)
+                //{
+                //    case 
+                //    default:
+                //}
+            }
         }
     }
 }
