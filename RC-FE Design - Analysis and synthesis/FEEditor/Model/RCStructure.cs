@@ -1,4 +1,5 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
+﻿using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
+using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,17 +8,259 @@ using System.Threading.Tasks;
 
 namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
 {
+    /// <summary>
+    /// Класс структуры
+    /// </summary>
     public class RCStructure : RCStructureBase
     {
-        static RCStructure() 
+        /// <summary>
+        /// Статический конструктор класса структуры
+        /// </summary>
+        static RCStructure()
         {
+            // определить шаблоны доступных для создания структур
+            AllTemplateStructures = new Dictionary<string, RCStructureTemplate>();
 
+            var commonProperties = new Dictionary<string, StructureProperty>()
+            {
+                {
+                    "R0",
+                    new StructureProperty()
+                    {
+                        Name = "Удельное сопротивление ro",
+                        Type = typeof(double),
+                        Value = 1.0
+                    }
+                },
+                {
+                    "C",
+                    new StructureProperty()
+                    {
+                        Name = "Полная емкость структуры C",
+                        Type = typeof(double),
+                        Value = 1.0
+                    }
+                },
+                {
+                    "HorizontalCellsCount",
+                    new StructureProperty()
+                    {
+                        Name = "Количество ячеек по горизонтали",
+                        Type = typeof(int),
+                        Value = 10
+                    }
+                },
+                {
+                    "VerticalCellsCount",
+                    new StructureProperty()
+                    {
+                        Name = "Количество ячеек по вертикали",
+                        Type = typeof(int),
+                        Value = 10
+                    }
+                }
+            };
+
+            var G_H_Properties = new Dictionary<string, StructureProperty>()
+            {
+                {
+                    "G",
+                    new StructureProperty()
+                    {
+                        Name = "Коэффициент последовательного сопротивления G",
+                        Type = typeof(double),
+                        Value = 0.001
+                    }
+                },
+                {
+                    "H",
+                    new StructureProperty()
+                    {
+                        Name = "Коэффициент параллельного сопротивления H",
+                        Type = typeof(double),
+                        Value = 100.0
+                    }
+                }
+            };
+
+            var N_Property = new Dictionary<string, StructureProperty>()
+            {
+                {
+                    "N",
+                    new StructureProperty()
+                    {
+                        Name = "Коэффициент N",
+                        Type = typeof(double),
+                        Value = 0.218
+                    }
+                }
+            };
+
+            var P_Property = new Dictionary<string, StructureProperty>()
+            {
+                {
+                    "P",
+                    new StructureProperty()
+                    {
+                        Name = "Коэффициент сопротивления КП P",
+                        Type = typeof(double),
+                        Value = 0.01
+                    }
+                }
+            };
+
+            var Proportions_Property = new Dictionary<string, StructureProperty>()
+            {
+                {
+                    "Proportions",
+                    new StructureProperty()
+                    {
+                        Name = "Пропорции частей",
+                        Type = typeof(double),
+                        Value = 0.5
+                    }
+                }
+            };
+
+            var R_C_0 = new RCStructureTemplate()
+            {
+                Name = "R-C-0",
+                StructureProperties = commonProperties
+            };
+
+            AllTemplateStructures.Add(R_C_0.Name, R_C_0);
+
+            var R_CG_0 = new RCStructureTemplate()
+            {
+                Name = "R-CG-0",
+                StructureProperties = commonProperties.Concat(N_Property).ToDictionary(x => x.Key, x => x.Value)
+            };
+
+            AllTemplateStructures.Add(R_CG_0.Name, R_CG_0);
+
+            var R_C_NR = new RCStructureTemplate()
+            {
+                Name = "R-C-NR",
+                StructureProperties = commonProperties.Concat(N_Property).ToDictionary(x => x.Key, x => x.Value)
+            };
+
+            AllTemplateStructures.Add(R_C_NR.Name, R_C_NR);
+
+            var R_CG_NR = new RCStructureTemplate()
+            {
+                Name = "R-CG-NR",
+                StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).ToDictionary(x => x.Key, x => x.Value)
+            };
+
+            AllTemplateStructures.Add(R_CG_NR.Name, R_CG_NR);
+
+            var R_CG_NR_plus_CP = new RCStructureTemplate()
+            {
+                Name = "R-CG-NR+КП",
+                StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(P_Property).ToDictionary(x => x.Key, x => x.Value)
+            };
+
+            AllTemplateStructures.Add(R_CG_NR_plus_CP.Name, R_CG_NR_plus_CP);
+
+            var R_plus_R_C_NR = new RCStructureTemplate()
+            {
+                Name = "(R+R)-C-NR",
+                StructureProperties = commonProperties.Concat(N_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value)
+            };
+
+            AllTemplateStructures.Add(R_plus_R_C_NR.Name, R_plus_R_C_NR);
+
+            var R_plus_R_CG_NR = new RCStructureTemplate()
+            {
+                Name = "(R+R)-CG-NR",
+                StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value)
+            };
+
+            AllTemplateStructures.Add(R_plus_R_CG_NR.Name, R_plus_R_CG_NR);
+
+            var R_plus_R_CG_NR_plus_CP = new RCStructureTemplate()
+            {
+                Name = "(R+R)-CG-NR+КП",
+                StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(P_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value)
+            };
+
+            AllTemplateStructures.Add(R_plus_R_CG_NR_plus_CP.Name, R_plus_R_CG_NR_plus_CP);
         }
 
-        public static List<RCStructure> AllStructures;
+        /// <summary>
+        /// Конструктор экземпляра структуры
+        /// </summary>
+        /// <param name="structureName">Название структуры</param>
+        public RCStructure(string structureName)
+        {
+            Name = structureName;
+            var template = AllTemplateStructures.SingleOrDefault(x => x.Key == structureName).Value;
 
+            if (template == null)
+            {
+                throw new Exception("Не удается найти подходящего шаблона, невозможно создать объект структуры");
+            }
+
+            InitializeInstanceProperties(template);
+        }
+
+        public static Dictionary<string, RCStructureTemplate> AllTemplateStructures;
+
+        /// <summary>
+        /// Название структуры
+        /// </summary>
+        public string Name { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Словарь свойств структуры
+        /// </summary>
+        public Dictionary<string, StructureProperty> StructureProperties { get; set; } = null;
+
+        /// <summary>
+        /// Матрица ячеек структуры
+        /// </summary>
+        public StructureCellBase[,] StructureCells { get; set; } = null;
+
+        /// <summary>
+        /// Метод для инициализации свойств стуктуры в соответствии с шаблоном
+        /// </summary>
+        /// <param name="template">Шаблон структуры</param>
+        private void InitializeInstanceProperties(RCStructureTemplate template) 
+        {
+            StructureProperties = new Dictionary<string, StructureProperty>();
+
+            foreach (var property in template.StructureProperties)
+            {
+                var temp = new StructureProperty()
+                {
+                    Name = property.Value.Name,
+                    Type = property.Value.Type,
+                    Value = property.Value.Value
+                };
+
+                StructureProperties.Add(property.Key, temp);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Класс свойства структуры
+    /// </summary>
+    public class StructureProperty
+    {
+        /// <summary>
+        /// Название свойства
+        /// </summary>
         public string Name { get; set; }
 
-        public StructureCellBase[,] StructureCells { get; set; } = null;
+        /// <summary>
+        /// Тип значения свойства
+        /// </summary>
+        public Type Type { get; set; }
+
+        /// <summary>
+        /// Значение совйства
+        /// </summary>
+        public object Value { get; set; }
     }
 }

@@ -139,7 +139,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     CanvasVisibility = Visibility.Visible;
                 }
 
-                var newStructure = new RCStructure();
+                var newStructure = newStructureWindowViewModel.CurrentStructure;
 
                 newStructure.StructureCells = new StructureCellBase[,]
                 {

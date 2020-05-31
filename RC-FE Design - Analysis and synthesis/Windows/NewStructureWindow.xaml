@@ -14,91 +14,32 @@
     <Grid Margin="10">
         <StackPanel Orientation="Vertical" Grid.IsSharedSizeScope="True">
             <GroupBox Margin="0,0,0,10" Header="Тип модели">
-                <ComboBox SelectionChanged="ComboBox_SelectionChanged" IsReadOnly="True">
-                    <ComboBoxItem Tag="R-C-0" Content="R-C-0"/>
-                    <ComboBoxItem Tag="R-CG-0" Content="R-CG-0"/>
-                    <ComboBoxItem Tag="R-C-NR" Content="R-C-NR"/>
-                    <ComboBoxItem Tag="R-CG-NR" Content="R-CG-NR" IsSelected="True"/>
-                    <ComboBoxItem Tag="R-CG-NR+КП" Content="R-CG-NR+КП"/>
-                    <ComboBoxItem Tag="(R+R)-C-NR" Content="(R+R)-C-NR"/>
-                    <ComboBoxItem Tag="(R+R)-CG-NR" Content="(R+R)-CG-NR"/>
-                    <ComboBoxItem Tag="(R+R)-CG-NR+КП" Content="(R+R)-CG-NR+КП"/>
+                <ComboBox ItemsSource="{Binding Path=StructureTypes.Values}" 
+                          SelectedItem="{Binding Path=SelectedStructureType, UpdateSourceTrigger=PropertyChanged}"
+                          IsReadOnly="True">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                 </ComboBox>
             </GroupBox>
-            <Grid Margin="0,0,0,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Удельное сопротивление ro"/>
-                <TextBox Text="{Binding Path=R0}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-            </Grid>
-            <Grid Margin="0,0,0,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Полная емкость структуры C"/>
-                <TextBox Text="{Binding Path=C}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-            </Grid>
-            <Grid Margin="0,0,0,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Количество ячеек по горизонтали"/>
-                <TextBox Text="{Binding Path=HorizontalCellsCount}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-            </Grid>
-
-            <Grid Margin="0,0,0,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Количество ячеек по вертикали"/>
-                <TextBox Text="{Binding Path=VerticalCellsCount}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-            </Grid>
-            <Grid Margin="0,0,0,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Коэффициент последовательного сопротивления G"/>
-                <TextBox Text="{Binding Path=G}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-            </Grid>
-            <Grid Margin="0,0,0,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Коэффициент параллельного сопротивления H"/>
-                <TextBox Text="{Binding Path=H}"  Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-            </Grid>
-            <Grid Margin="0,0,0,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Коэффициент N"/>
-                <TextBox Text="{Binding Path=N}"  Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-            </Grid>
-            <Grid Margin="0,0,0,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Коэффициент сопротивления КП P"/>
-                <TextBox Text="{Binding Path=P}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-            </Grid>
-            <Grid Margin="0,0,0,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Пропорции частей"/>
-                <TextBox Text="{Binding Path=Proportions}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-            </Grid>
-
+            
+            <ListBox ItemsSource="{Binding Path=CurrentStructure.StructureProperties.Values}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Path=Name}" Grid.Column="0" Padding="0,0,5,0" />
+                            <TextBox Text="{Binding Path=Value, Mode=TwoWay}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            
             <Grid Margin="0,10,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
