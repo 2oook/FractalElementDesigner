@@ -142,14 +142,26 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                 var newStructure = newStructureWindowViewModel.CurrentStructure;
 
-                newStructure.StructureCells = new StructureCellBase[,]
+                newStructureWindowViewModel.CurrentStructure.StructureProperties.TryGetValue("HorizontalCellsCount", out var horizontalStructureDimension);
+                var horizontalStructureDimensionValue = horizontalStructureDimension.Value;
+
+                newStructureWindowViewModel.CurrentStructure.StructureProperties.TryGetValue("VerticalCellsCount", out var verticalStructureDimension);
+                var verticalStructureDimensionValue = verticalStructureDimension.Value;
+
+                newStructure.StructureCells = new List<List<StructureCellBase>>();
+
+                for (int r = 0; r < verticalStructureDimensionValue; r++)
                 {
-                    { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() },
-                    { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() },
-                    { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() },
-                    { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() },
-                    { new StructureCellBase(), new StructureCellBase(), new StructureCellBase(), new StructureCellBase() }
-                };
+                    var row = new List<StructureCellBase>();
+
+                    for (int c = 0; c < horizontalStructureDimensionValue; c++)
+                    {
+                        row.Add(new StructureCellBase());
+                    }
+
+                    newStructure.StructureCells.Add(row);
+                }
+
             }
             catch (Exception ex)
             {

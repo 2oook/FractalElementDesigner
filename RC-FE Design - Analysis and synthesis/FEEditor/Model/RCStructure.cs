@@ -28,7 +28,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
                     new StructureProperty()
                     {
                         Name = "Удельное сопротивление ro",
-                        Type = typeof(double),
                         Value = 1.0
                     }
                 },
@@ -37,7 +36,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
                     new StructureProperty()
                     {
                         Name = "Полная емкость структуры C",
-                        Type = typeof(double),
                         Value = 1.0
                     }
                 },
@@ -46,7 +44,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
                     new StructureProperty()
                     {
                         Name = "Количество ячеек по горизонтали",
-                        Type = typeof(int),
                         Value = 10
                     }
                 },
@@ -55,7 +52,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
                     new StructureProperty()
                     {
                         Name = "Количество ячеек по вертикали",
-                        Type = typeof(int),
                         Value = 10
                     }
                 }
@@ -68,7 +64,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
                     new StructureProperty()
                     {
                         Name = "Коэффициент последовательного сопротивления G",
-                        Type = typeof(double),
                         Value = 0.001
                     }
                 },
@@ -77,7 +72,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
                     new StructureProperty()
                     {
                         Name = "Коэффициент параллельного сопротивления H",
-                        Type = typeof(double),
                         Value = 100.0
                     }
                 }
@@ -90,7 +84,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
                     new StructureProperty()
                     {
                         Name = "Коэффициент N",
-                        Type = typeof(double),
                         Value = 0.218
                     }
                 }
@@ -103,7 +96,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
                     new StructureProperty()
                     {
                         Name = "Коэффициент сопротивления КП P",
-                        Type = typeof(double),
                         Value = 0.01
                     }
                 }
@@ -116,7 +108,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
                     new StructureProperty()
                     {
                         Name = "Пропорции частей",
-                        Type = typeof(double),
                         Value = 0.5
                     }
                 }
@@ -219,10 +210,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
         /// <summary>
         /// Матрица ячеек структуры
         /// </summary>
-        public StructureCellBase[,] StructureCells { get; set; } = null;
+        public List<List<StructureCellBase>> StructureCells { get; set; } = null;
 
         /// <summary>
-        /// Метод для инициализации свойств стуктуры в соответствии с шаблоном
+        /// Метод для инициализации свойств структуры в соответствии с шаблоном
         /// </summary>
         /// <param name="template">Шаблон структуры</param>
         private void InitializeInstanceProperties(RCStructureTemplate template) 
@@ -234,7 +225,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
                 var temp = new StructureProperty()
                 {
                     Name = property.Value.Name,
-                    Type = property.Value.Type,
                     Value = property.Value.Value
                 };
 
@@ -254,13 +244,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
         public string Name { get; set; }
 
         /// <summary>
-        /// Тип значения свойства
+        /// Значение свойства
         /// </summary>
-        public Type Type { get; set; }
-
-        /// <summary>
-        /// Значение совйства
-        /// </summary>
-        public object Value { get; set; }
+        public double Value { get; set; }
     }
 }
