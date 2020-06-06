@@ -1,8 +1,10 @@
 ﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,11 +28,17 @@ namespace RC_FE_Design___Analysis_and_synthesis.Windows
         }
 
         /// <summary>
-        /// Обработчик нажатия кнопки ОК
+        /// Метод для вывода сообщения ошибки валидации
         /// </summary>
-        /// <param name="sender">Объект источник</param>
-        /// <param name="e">Параметры события</param>
-        private void OK_Button_Click(object sender, RoutedEventArgs e)
+        internal void ShowValidationError() 
+        {
+            this.ShowMessageAsync("Ошибка", "Введённые значения некорректны");
+        }
+
+        /// <summary>
+        /// Метод для принятия корректного пользовательского ввода
+        /// </summary>
+        internal void AcceptUserInput() 
         {
             this.DialogResult = true;
         }

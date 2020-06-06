@@ -10,7 +10,7 @@
         GlowBrush="{DynamicResource HighlightBrush}"
         mc:Ignorable="d"
         Title="Задание параметров модели" SizeToContent="WidthAndHeight" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    
+
     <Grid Margin="10">
         <StackPanel Orientation="Vertical" Grid.IsSharedSizeScope="True">
             <GroupBox Margin="0,0,0,10" Header="Тип модели">
@@ -26,6 +26,15 @@
             </GroupBox>
             
             <ListBox ItemsSource="{Binding Path=CurrentStructure.StructureProperties.Values}">
+                <ListBox.Resources>
+                    <!--Стили для организации перехода по клавише tab-->
+                    <Style TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+                        <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue" />
+                    </Style>
+                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                        <Setter Property="IsTabStop" Value="False" />
+                    </Style>
+                </ListBox.Resources>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="5">
@@ -45,7 +54,7 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="OK" Grid.Column="0" Margin="0,0,5,0" Click="OK_Button_Click"/>
+                <Button Content="OK" Grid.Column="0" Command="{Binding Path=OkCommand}" Margin="0,0,5,0"/>
                 <Button Content="ОТМЕНА" Grid.Column="1" Margin="5,0,0,0" Click="Cancel_Button_Click"/>
             </Grid>
         </StackPanel>

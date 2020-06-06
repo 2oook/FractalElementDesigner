@@ -112,11 +112,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             try
             {
                 // создать проект
-
-                // создать vm для окна создания новой структуры
-                var newStructureWindowViewModel = new NewStructureWindowViewModel();
-                // вывести окно ввода параметров структуры
+                
+                // создать окно
                 var window = new NewStructureWindow();
+                // создать vm для окна создания новой структуры
+                var newStructureWindowViewModel = new NewStructureWindowViewModel(window);
+                // вывести окно ввода параметров структуры
                 window.DataContext = newStructureWindowViewModel;
                 var dialogResult = window.ShowDialog();
 
