@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro.Controls.Dialogs;
 using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
+using RC_FE_Design___Analysis_and_synthesis.Pages;
 using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
@@ -26,9 +28,16 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         {
             _resolver = resolver;
 
+            // создать страницы
+            _SynthesisPage = new SynthesisPage();
+            _AnalysisPage = new AnalysisPage();
+
             _NotFoundPageViewModel = _resolver.GetViewModelInstance(NotFoundPageViewModelAlias);
             _SynthesisPageViewModel = _resolver.GetViewModelInstance(SynthesisPageViewModelAlias);
             _AnalysisPageViewModel = _resolver.GetViewModelInstance(AnalysisPageViewModelAlias);
+
+            _SynthesisPageViewModel.SetPage(_SynthesisPage);
+            _AnalysisPageViewModel.SetPage(_AnalysisPage);
 
             // Инициализировать команды
             InitializeCommands();
@@ -67,6 +76,15 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// Ссылка на ViewModel страницы анализа
         /// </summary>
         private readonly IPageViewModel _AnalysisPageViewModel;
+
+        /// <summary>
+        /// Страница синтеза
+        /// </summary>
+        private readonly Page _SynthesisPage;
+        /// <summary>
+        /// Страница анализа
+        /// </summary>
+        private readonly Page _AnalysisPage;
 
         #endregion
 
@@ -150,7 +168,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// </summary>
         private void GoToSynthesisPageCommandExecute()
         {
-            Navigation.Navigation.Navigate(Navigation.Navigation.SynthesisPageAlias, _SynthesisPageViewModel);
+            Navigation.Navigation.Navigate(_SynthesisPage, _SynthesisPageViewModel);
         }
 
         /// <summary>
@@ -158,7 +176,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// </summary>
         private void GoToAnalysisPageCommandExecute()
         {
-            Navigation.Navigation.Navigate(Navigation.Navigation.AnalysisPageAlias, _AnalysisPageViewModel);
+            Navigation.Navigation.Navigate(_AnalysisPage, _AnalysisPageViewModel);
         }
 
         #endregion

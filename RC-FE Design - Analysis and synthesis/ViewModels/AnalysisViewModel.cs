@@ -1,9 +1,12 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro.Controls.Dialogs;
+using RC_FE_Design___Analysis_and_synthesis.FEEditor;
+using RC_FE_Design___Analysis_and_synthesis.FEEditor.Core;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
 using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
+using RC_FE_Design___Analysis_and_synthesis.Pages;
 using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
 using RC_FE_Design___Analysis_and_synthesis.Windows;
 using System;
@@ -13,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
@@ -67,6 +71,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 RaisePropertyChanged(nameof(CanvasVisibility));
             }
         }
+
+        /// <summary>
+        /// Ссылка на страницу
+        /// </summary>
+        private AnalysisPage _Page { get; set; }
 
         #endregion
 
@@ -140,15 +149,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     CanvasVisibility = Visibility.Visible;
                 }
 
-                var newStructure = newStructureWindowViewModel.CurrentStructure;
-
+                // извлечь число ячеек по горизонтали структуры
                 newStructureWindowViewModel.CurrentStructure.StructureProperties.TryGetValue("HorizontalCellsCount", out var horizontalStructureDimension);
-                var horizontalStructureDimensionValue = horizontalStructureDimension.Value;
-
+                var horizontalStructureDimensionValue = (int)horizontalStructureDimension.Value;
+                // извлечь число ячеек по вертикали структуры
                 newStructureWindowViewModel.CurrentStructure.StructureProperties.TryGetValue("VerticalCellsCount", out var verticalStructureDimension);
-                var verticalStructureDimensionValue = verticalStructureDimension.Value;
-
-                newStructure.StructureCells = new List<List<StructureCellBase>>();
+                var verticalStructureDimensionValue = (int)verticalStructureDimension.Value;
+                // новая структура
+                var newStructure = newStructureWindowViewModel.CurrentStructure;
 
                 for (int r = 0; r < verticalStructureDimensionValue; r++)
                 {
@@ -162,11 +170,22 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     newStructure.StructureCells.Add(row);
                 }
 
+                Insert.StructureLayer(_Page.FEControl.FECanvas, new PointEx(0, 0), newStructure);
+
             }
             catch (Exception ex)
             {
 
             }
+        }
+
+        /// <summary>
+        /// Метод для установки ссылки на страницу
+        /// </summary>
+        /// <param name="page"></param>
+        public void SetPage(Page page)
+        {
+            _Page = (AnalysisPage)page;
         }
 
         #endregion

@@ -120,7 +120,7 @@
                                 </ToolBar>
                             </ToolBarTray>
 
-                            <editor:FEControl  DockPanel.Dock="Right"/>
+                            <editor:FEControl x:Name="FEControl"  DockPanel.Dock="Right"/>
 
                         </DockPanel>
                     </Border>
