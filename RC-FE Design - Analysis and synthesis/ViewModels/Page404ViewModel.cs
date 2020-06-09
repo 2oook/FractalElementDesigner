@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
@@ -17,6 +18,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// Команда для перемещения на главную страницу 
         /// </summary>
         public ICommand GoToMainPageCommand { get; set; }
+
+        public void SetPage(Page page)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
     }

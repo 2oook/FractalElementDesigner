@@ -151,10 +151,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                 // извлечь число ячеек по горизонтали структуры
                 newStructureWindowViewModel.CurrentStructure.StructureProperties.TryGetValue("HorizontalCellsCount", out var horizontalStructureDimension);
-                var horizontalStructureDimensionValue = (int)horizontalStructureDimension.Value;
+                var horizontalStructureDimensionValue = (int)horizontalStructureDimension.Value + 2;// +2 добавляется для учёта контактных площадок
                 // извлечь число ячеек по вертикали структуры
                 newStructureWindowViewModel.CurrentStructure.StructureProperties.TryGetValue("VerticalCellsCount", out var verticalStructureDimension);
-                var verticalStructureDimensionValue = (int)verticalStructureDimension.Value;
+                var verticalStructureDimensionValue = (int)verticalStructureDimension.Value + 2;// +2 добавляется для учёта контактных площадок
                 // новая структура
                 var newStructure = newStructureWindowViewModel.CurrentStructure;
 

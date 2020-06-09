@@ -83,10 +83,14 @@
     <Compile Include="FEEditor\Controls\FECanvas.cs" />
     <Compile Include="FEEditor\Controls\SelectionAdorner.cs" />
     <Compile Include="FEEditor\Core\PointEx.cs" />
+    <Compile Include="FEEditor\Elements\CellControl.xaml.cs">
+      <DependentUpon>CellControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FEEditor\Elements\PageControl.xaml.cs">
       <DependentUpon>PageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="FEEditor\FEEditor.cs" />
+    <Compile Include="FEEditor\Insert.cs" />
     <Compile Include="FEEditor\Model\Cells\ContactCell.cs" />
     <Compile Include="FEEditor\Model\Cells\CutCell.cs" />
     <Compile Include="FEEditor\Model\Cells\ForbidContactCell.cs" />
@@ -134,6 +138,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="FEEditor\Controls\FEControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FEEditor\Elements\CellControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -8,6 +8,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells
 {
     public class StructureCellBase
     {
-        
+
     }
 }

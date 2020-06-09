@@ -37,7 +37,7 @@
                 </TransformGroup>
             </Grid.RenderTransform>
 
-            <Canvas x:Name="FEBackgroud"
+            <!--<Canvas x:Name="FEBackgroud"
                     Width="{Binding ElementName=FECanvas, Path=Width}"
                     Height="{Binding ElementName=FECanvas, Path=Height}" 
                     Grid.Column="0" Grid.Row="0"
@@ -53,12 +53,12 @@
                     ClipToBounds="False"
                     Background="{DynamicResource LogicTransparentColorKey}">
                 <Path x:Name="PathGrid" Style="{StaticResource GridPathStyleKey}"/>
-            </Canvas>
+            </Canvas>-->
 
-            <Control x:Name="FETemplate" Template="{StaticResource LandscapePageTemplateKey}"/>
+            <!--<Control x:Name="FETemplate" Template="{StaticResource LandscapePageTemplateKey}"/>-->
 
-            <controls:FECanvas x:Name="FECanvas"
-                                    
+            <controls:FECanvas x:Name="FECanvas"         
+                               
                                     Grid.Column="0" Grid.Row="0"
                                     Background="{DynamicResource LogicTransparentColorKey}" 
                                     ContextMenu="{StaticResource FECanvasContextMenuKey}"

@@ -205,12 +205,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
         /// <summary>
         /// Словарь свойств структуры
         /// </summary>
-        public Dictionary<string, StructureProperty> StructureProperties { get; set; } = null;
+        public Dictionary<string, StructureProperty> StructureProperties { get; set; } = new Dictionary<string, StructureProperty>();
 
         /// <summary>
         /// Матрица ячеек структуры
         /// </summary>
-        public List<List<StructureCellBase>> StructureCells { get; set; } = null;
+        public List<List<StructureCellBase>> StructureCells { get; set; } = new List<List<StructureCellBase>>();
 
         /// <summary>
         /// Метод для инициализации свойств структуры в соответствии с шаблоном
@@ -218,8 +218,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
         /// <param name="template">Шаблон структуры</param>
         private void InitializeInstanceProperties(RCStructureTemplate template) 
         {
-            StructureProperties = new Dictionary<string, StructureProperty>();
-
             foreach (var property in template.StructureProperties)
             {
                 var temp = new StructureProperty()
