@@ -72,26 +72,41 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
 
             var grid = new Grid();
 
-            grid.RowDefinitions.Add(new RowDefinition());
-            grid.RowDefinitions.Add(new RowDefinition());
-            grid.RowDefinitions.Add(new RowDefinition());
+            var row1 = new RowDefinition();
+            row1.Height = new GridLength(1, GridUnitType.Star);
+            var row2 = new RowDefinition();
+            row2.Height = new GridLength(1, GridUnitType.Auto);
+            var row3 = new RowDefinition();
+            row3.Height = new GridLength(1, GridUnitType.Star);
 
-            grid.ColumnDefinitions.Add(new ColumnDefinition());
-            grid.ColumnDefinitions.Add(new ColumnDefinition());
-            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            grid.RowDefinitions.Add(row1);
+            grid.RowDefinitions.Add(row2);
+            grid.RowDefinitions.Add(row3);
+
+            var col1 = new ColumnDefinition();
+            col1.Width = new GridLength(1, GridUnitType.Star);
+            var col2 = new ColumnDefinition();
+            col2.Width = new GridLength(1, GridUnitType.Auto);
+            var col3 = new ColumnDefinition();
+            col3.Width = new GridLength(1, GridUnitType.Star);
+
+            grid.ColumnDefinitions.Add(col1);
+            grid.ColumnDefinitions.Add(col2);
+            grid.ColumnDefinitions.Add(col3);
+
+            Grid.SetRow(_grid, 1);
+            Grid.SetColumn(_grid, 1);
 
             var widthBindind = new Binding();
             widthBindind.Source = canvas;
             widthBindind.Path = new PropertyPath("ActualWidth");
             widthBindind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-            //widthBindind.Mode = BindingMode.TwoWay;
             grid.SetBinding(Grid.WidthProperty, widthBindind);
 
             var heightBindind = new Binding();
             heightBindind.Source = canvas;
             heightBindind.Path = new PropertyPath("ActualHeight");
             heightBindind.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-            //heightBindind.Mode = BindingMode.TwoWay;
             grid.SetBinding(Grid.HeightProperty, heightBindind);
 
             grid.Children.Add(_grid);
