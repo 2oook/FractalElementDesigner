@@ -57,7 +57,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             set { _project = value; }
         }
 
-        private Visibility canvasVisibility = Visibility.Collapsed;
+        private Visibility canvasVisibility = Visibility.Hidden;
 
         public Visibility CanvasVisibility
         {
@@ -170,13 +170,19 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     newStructure.StructureCells.Add(row);
                 }
 
-                Insert.StructureLayer(_Page.FEControl.FECanvas, new PointEx(0, 0), newStructure);
+                Insert.StructureLayer(_Page.FEControl.FECanvas, newStructure);
 
+                _Page.FEControl.ZoomToFit();
             }
             catch (Exception ex)
             {
 
             }
+        }
+
+        private void ShowStructure() 
+        {
+
         }
 
         /// <summary>

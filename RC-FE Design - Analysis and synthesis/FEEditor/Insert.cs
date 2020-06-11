@@ -13,16 +13,22 @@ using System.Windows.Data;
 
 namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
 {
+    /// <summary>
+    /// Класс для вставки элементов в область редактирования
+    /// </summary>
     public static class Insert
     {
-
-        public static void StructureLayer(FECanvas canvas, PointEx point, RCStructure structure)
+        // Метод для вставки структуры в элемент Canvas
+        public static void StructureLayer(FECanvas canvas, RCStructure structure)
         {
             double _BorderCellHeight = 30;
             double _BorderCellWidth = 30;
 
             double _CommonCellHeight = 60;
             double _CommonCellWidth = 60;
+
+            double structureWidth = 0;
+            double structureHeight = 0;
 
             var _grid = new Grid();
 
@@ -38,13 +44,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
 
                 for (int j = 0; j < row.Count; j++)
                 {
-                    double width = _CommonCellWidth;
-
-                    if (i == 0)
-                    {
-                        _grid.ColumnDefinitions.Add(new ColumnDefinition());
-                        height = _BorderCellHeight;  
-                    }
+                    double width = _CommonCellWidth;               
 
                     if (j == 0)
                     {
@@ -61,6 +61,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
                         width = _BorderCellWidth;
                     }
 
+                    if (i == 0)
+                    {
+                        structureWidth += width;
+                        _grid.ColumnDefinitions.Add(new ColumnDefinition());
+                        height = _BorderCellHeight;
+                    }
+
                     var cell = new CellControl(height, width);
 
                     Grid.SetRow(cell, i);
@@ -68,8 +75,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
 
                     _grid.Children.Add(cell);               
                 }
+
+                structureHeight += height;
             }
 
+            canvas.Width = structureWidth;
+            canvas.Height = structureHeight;
+
+            // создать дополнительную сетку для размещения структуры в центре области редактирования
             var grid = new Grid();
 
             var row1 = new RowDefinition();
