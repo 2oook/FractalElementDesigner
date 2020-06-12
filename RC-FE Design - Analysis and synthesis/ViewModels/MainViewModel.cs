@@ -46,7 +46,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             _AnalysisPageViewModel.GoToMainPageCommand = GoToMainPageCommand;
 
             // Перейти на главную страницу
-            GoToMainPageCommandExecute();
+            GoToMainPageCommandExecute(); 
+            GoToAnalysisPageCommandExecute();// ДЛЯ ОТЛАДКИ
         }
 
         #region Константы

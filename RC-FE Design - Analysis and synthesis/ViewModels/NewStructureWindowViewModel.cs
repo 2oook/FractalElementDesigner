@@ -40,10 +40,20 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
         #region Свойства
 
+
+        private Dictionary<string, StructurePropertyForValidation> structureProperties;
         /// <summary>
-        /// Структуры для выбора и создания новоц структуры
+        /// Словарь свойств структуры для ввода и валидации
         /// </summary>
-        private Dictionary<string, RCStructure> StructuresForChoosing = new Dictionary<string, RCStructure>();
+        public Dictionary<string, StructurePropertyForValidation> StructureProperties
+        {
+            get => structureProperties;
+            set
+            {
+                structureProperties = value;
+                RaisePropertyChanged(nameof(StructureProperties));
+            }
+        }
 
         private Dictionary<string, RCStructureTemplate> structureTypes = RCStructure.AllTemplateStructures;
         /// <summary>
@@ -61,6 +71,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 RaisePropertyChanged(nameof(StructureTypes));
             }
         }
+
+        /// <summary>
+        /// Структуры для выбора и создания новой структуры
+        /// </summary>
+        private Dictionary<string, RCStructure> StructuresForChoosing = new Dictionary<string, RCStructure>();
 
         private RCStructureTemplate selectedStructureType = null;
         /// <summary>
@@ -80,11 +95,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     var structure = new RCStructure(value.Name);
                     StructuresForChoosing.Add(value.Name, structure);
                     CurrentStructure = structure;
+                    PreparePropertyDictionary();
                 }
                 else
                 {
                     StructuresForChoosing.TryGetValue(value.Name, out var structure);
                     CurrentStructure = structure;
+                    PreparePropertyDictionary();
                 }
 
                 selectedStructureType = value;
@@ -114,6 +131,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         #region Команды
 
         private ICommand okCommand;
+
         /// <summary>
         /// Команда для создания новой структуры
         /// </summary>
@@ -133,35 +151,58 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         #endregion
 
         #region Методы
+        
+        // метод для подготовки словаря свойств структуры 
+        private void PreparePropertyDictionary() 
+        {
+            StructureProperties = new Dictionary<string, StructurePropertyForValidation>();
+
+            foreach (var property in CurrentStructure.StructureProperties.Values)
+            {
+                StructureProperties.Add(property.Name, new StructurePropertyForValidation { Value = property.Value.ToString() });
+            }       
+        }
 
         /// <summary>
         /// Метод для обработки ОК
         /// </summary>
         private void OK_Handler()
         {
-            if (CurrentStructure == null) return;
-
-            bool flag = false;
-
-            // обойти все свойства структуры
-            foreach (var property in CurrentStructure.StructureProperties)
+            try
             {
-                if (!_realNumberRegex.IsMatch(property.Value.Value.ToString()))
+                if (CurrentStructure == null) return;
+
+                bool flag = false;
+
+                // обойти все свойства структуры
+                foreach (var property in StructureProperties)
                 {
-                    flag = true;
-                    break;
+                    if (!_realNumberRegex.IsMatch(property.Value.Value.ToString()))
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+
+                // если ввод некорректен
+                if (flag)
+                {
+                    _newStructureWindow.ShowValidationError();
+                }
+                else
+                {
+                    foreach (var value in CurrentStructure.StructureProperties.Values)
+                    {
+                        value.Value = double.Parse(StructureProperties[value.Name].Value);
+                    }
+
+                    _newStructureWindow.AcceptUserInput();
                 }
             }
+            catch (Exception)
+            {
 
-            // если ввод некорректен
-            if (flag)
-            {
-                _newStructureWindow.ShowValidationError();
-            }
-            else
-            {
-                _newStructureWindow.AcceptUserInput();
-            }
+            }            
         }
 
         /// <summary>
@@ -173,5 +214,22 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         }
 
         #endregion
+    }
+
+
+    /// <summary>
+    /// Класс свойства структуры для валидации
+    /// </summary>
+    public class StructurePropertyForValidation
+    {
+        /// <summary>
+        /// Название свойства
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Значение свойства
+        /// </summary>
+        public string Value { get; set; }
     }
 }
