@@ -79,8 +79,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
                 structureHeight += height;
             }
 
-            canvas.Width = structureWidth;
-            canvas.Height = structureHeight;
+            FitCanvasToStructure(structureWidth, structureHeight, canvas);
 
             // создать дополнительную сетку для размещения структуры в центре области редактирования
             var grid = new Grid();
@@ -125,6 +124,35 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
             grid.Children.Add(_grid);
 
             canvas.Add(grid);
+        }
+
+        // метод для подгонки размеров элемента Canvas для размещения структуры
+        private static void FitCanvasToStructure(double structureWidth, double structureHeight, FECanvas canvas) 
+        {
+            // если необходимая ширина больше фактической
+            if (structureWidth > canvas.ActualWidth)
+            {             
+                canvas.Width = structureWidth + 10;             
+                var k = structureWidth / canvas.ActualWidth;
+                canvas.Height = canvas.ActualHeight * k + 10;
+            }
+            else
+            {
+                canvas.Width = canvas.ActualWidth;
+            }
+
+            // если необходимая высота больше фактической
+            if (structureHeight > canvas.ActualHeight)
+            {
+                canvas.Height = structureHeight + 10;
+                // вычислить коэффициент пропорции высоты
+                var k = structureHeight / canvas.ActualHeight;
+                canvas.Width = canvas.ActualWidth * k + 10;
+            }
+            else
+            {
+                canvas.Height = canvas.ActualHeight;
+            }
         }
     }
 }

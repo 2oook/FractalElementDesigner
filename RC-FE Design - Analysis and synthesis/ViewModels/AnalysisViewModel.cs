@@ -169,6 +169,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                     newStructure.StructureCells.Add(row);
                 }
+                
+                ClearCanvasState(_Page.FEControl);
 
                 Insert.StructureLayer(_Page.FEControl.FECanvas, newStructure);
 
@@ -178,6 +180,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             {
 
             }
+        }
+
+        private void ClearCanvasState(FEControl control) 
+        {
+            control.FECanvas.Children.Clear();
+
+            control.FECanvas.Width = control.FECanvas.InitialWidth;
+            control.FECanvas.Height = control.FECanvas.InitialHeight;
         }
 
         private void ShowStructure() 

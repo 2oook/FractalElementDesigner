@@ -24,11 +24,19 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
     {
         public FEControl()
         {
-            InitializeComponent();
+            InitializeComponent();        
+
+            this.Loaded += FEControl_Loaded;
 
             Editor = new FEEditor();
             Editor.Context = new Context();
             Editor.Context.CurrentCanvas = FECanvas;
+        }
+
+        private void FEControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            FECanvas.InitialHeight = FECanvas.ActualHeight;
+            FECanvas.InitialWidth = FECanvas.ActualWidth;
         }
 
         #region Properties
