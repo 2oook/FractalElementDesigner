@@ -205,7 +205,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
         /// <summary>
         /// Словарь свойств структуры
         /// </summary>
-        public Dictionary<string, StructureProperty> StructureProperties { get; set; } = new Dictionary<string, StructureProperty>();
+        public Dictionary<string, StructureProperty> StructureProperties { get; set; } = new Dictionary<string, StructureProperty>();   
 
         /// <summary>
         /// Матрица ячеек структуры

@@ -2,9 +2,11 @@
 using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro.Controls.Dialogs;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor;
+using RC_FE_Design___Analysis_and_synthesis.FEEditor.Controls;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Core;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
+using RC_FE_Design___Analysis_and_synthesis.FEEditor.Tools;
 using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
 using RC_FE_Design___Analysis_and_synthesis.Pages;
 using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
@@ -28,14 +30,96 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
     {
         public AnalysisViewModel()
         {
+            InitializeCommands();
 
+            EditorTools = new Dictionary<string, Tool>()
+            {
+                {
+                    "Numerate",
+                    new Tool()
+                    {
+                        Name = "Нумерация КП",
+                        ImageURI = "pack://application:,,,/Resources/button0.png"
+                    }
+                },
+
+                {
+                    "Cut", new Tool()
+                    {
+                        Name = "Разрез",
+                        ImageURI = "pack://application:,,,/Resources/button1.png"
+                    }
+                },
+
+                {
+                    "RC",
+                    new Tool()
+                    {
+                        Name = "RC-ячейка",
+                        ImageURI = "pack://application:,,,/Resources/button2.png"
+                    }
+                },
+
+                {
+                    "R", new Tool()
+                    {
+                        Name = "R-ячейка",
+                        ImageURI = "pack://application:,,,/Resources/button3.png"
+                    }
+                },
+
+                {
+                    "Contact",
+                    new Tool()
+                    {
+                        Name = "Контактная площадка",
+                        ImageURI = "pack://application:,,,/Resources/button4.png"
+                    }
+                },
+
+                {
+                    "Forbid", new Tool()
+                    {
+                        Name = "Запрет КП",
+                        ImageURI = "pack://application:,,,/Resources/button5.png"
+                    }
+                },
+
+                {
+                    "Shunt",
+                    new Tool()
+                    {
+                        Name = "Шунт",
+                        ImageURI = "pack://application:,,,/Resources/button6.png"
+                    }
+                },
+            };
+
+            foreach (var tool in EditorTools.Values)
+            {
+                tool.PropertyChanged += Tool_PropertyChanged;
+            }
         }
 
-        public AnalysisViewModel(IDialogCoordinator dialogCoordinator)
+        private void Tool_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (sender as Tool != null)
+            {
+                var tool = (Tool)sender;
+
+                if (e.PropertyName == nameof(tool.IsChecked))
+                {
+                    if (tool.IsChecked == true)
+                    {
+                        SelectedTool = tool;
+                    }
+                }
+            }
+        }
+
+        public AnalysisViewModel(IDialogCoordinator dialogCoordinator) : this()
         {
             _dialogCoordinator = dialogCoordinator;
-
-            InitializeCommands();
         }
 
         #region Глобальные переменные
@@ -49,26 +133,50 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
         #region Свойства
 
-        private Project _project;
+        private Tool selectedTool = null;
+        /// <summary>
+        /// Выбранный инструмент
+        /// </summary>
+        public Tool SelectedTool 
+        { 
+            get => selectedTool;
+            set 
+            {
+                selectedTool = value;
+                RaisePropertyChanged(nameof(SelectedTool));
+            }
+        }
 
+        /// <summary>
+        /// Словарь инструментов для редактирования структуры
+        /// </summary>
+        public Dictionary<string, Tool> EditorTools { get; set; }
+
+        private Project _project;
+        /// <summary>
+        /// Проект
+        /// </summary>
         public Project Project
         {
             get { return _project; }
-            set { _project = value; }
-        }
-
-        private Visibility canvasVisibility = Visibility.Hidden;
-
-        public Visibility CanvasVisibility
-        {
-            get 
-            { 
-                return canvasVisibility; 
-            }
             set 
             { 
-                canvasVisibility = value;
-                RaisePropertyChanged(nameof(CanvasVisibility));
+                _project = value;
+            }
+        }
+
+        private Visibility editorVisibility = Visibility.Hidden;
+
+        public Visibility EditorVisibility
+        {
+            get
+            {
+                return editorVisibility;
+            }
+            set
+            {
+                editorVisibility = value;
+                RaisePropertyChanged(nameof(EditorVisibility));
             }
         }
 
@@ -87,6 +195,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         public ICommand GoToMainPageCommand { get; set; }
 
         private ICommand newStructureCommand;
+
         /// <summary>
         /// Команда для создания новой структуры
         /// </summary>
@@ -116,12 +225,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         }
 
         // Метод для создания новой структуры
-        private void CreateNewStructure() 
+        private void CreateNewStructure()
         {
             try
             {
                 // создать проект
-                
+
                 // создать окно
                 var window = new NewStructureWindow();
                 // создать vm для окна создания новой структуры
@@ -135,7 +244,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 {
                     return;
                 }
-                else 
+                else
                 {
                     if (dialogResult.Value == false)
                     {
@@ -144,33 +253,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 }
 
                 // показать область проектирования, если она скрыта
-                if (CanvasVisibility != Visibility.Visible)
+                if (EditorVisibility != Visibility.Visible)
                 {
-                    CanvasVisibility = Visibility.Visible;
+                    EditorVisibility = Visibility.Visible;
                 }
 
-                // извлечь число ячеек по горизонтали структуры
-                newStructureWindowViewModel.CurrentStructure.StructureProperties.TryGetValue("HorizontalCellsCount", out var horizontalStructureDimension);
-                var horizontalStructureDimensionValue = (int)horizontalStructureDimension.Value + 2;// +2 добавляется для учёта контактных площадок
-                // извлечь число ячеек по вертикали структуры
-                newStructureWindowViewModel.CurrentStructure.StructureProperties.TryGetValue("VerticalCellsCount", out var verticalStructureDimension);
-                var verticalStructureDimensionValue = (int)verticalStructureDimension.Value + 2;// +2 добавляется для учёта контактных площадок
-                // новая структура
-                var newStructure = newStructureWindowViewModel.CurrentStructure;
+                var newStructure = InitializeStructure(newStructureWindowViewModel.CurrentStructure);
 
-                for (int r = 0; r < verticalStructureDimensionValue; r++)
-                {
-                    var row = new List<StructureCellBase>();
-
-                    for (int c = 0; c < horizontalStructureDimensionValue; c++)
-                    {
-                        row.Add(new StructureCellBase());
-                    }
-
-                    newStructure.StructureCells.Add(row);
-                }
-                
-                ClearCanvasState(_Page.FEControl);
+                ClearCanvasState(_Page.FEControl.FECanvas);
 
                 Insert.StructureLayer(_Page.FEControl.FECanvas, newStructure);
 
@@ -182,15 +272,42 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             }
         }
 
-        private void ClearCanvasState(FEControl control) 
+        // Метод для инициализации структуры
+        private RCStructure InitializeStructure(RCStructure structure)
         {
-            control.FECanvas.Children.Clear();
+            // извлечь число ячеек по горизонтали структуры
+            structure.StructureProperties.TryGetValue("HorizontalCellsCount", out var horizontalStructureDimension);
+            var horizontalStructureDimensionValue = (int)horizontalStructureDimension.Value + 2;// +2 добавляется для учёта контактных площадок
+                                                                                                // извлечь число ячеек по вертикали структуры
+            structure.StructureProperties.TryGetValue("VerticalCellsCount", out var verticalStructureDimension);
+            var verticalStructureDimensionValue = (int)verticalStructureDimension.Value + 2;// +2 добавляется для учёта контактных площадок
+            // новая структура
+            var newStructure = structure;
 
-            control.FECanvas.Width = control.FECanvas.InitialWidth;
-            control.FECanvas.Height = control.FECanvas.InitialHeight;
+            for (int r = 0; r < verticalStructureDimensionValue; r++)
+            {
+                var row = new List<StructureCellBase>();
+
+                for (int c = 0; c < horizontalStructureDimensionValue; c++)
+                {
+                    row.Add(new StructureCellBase());
+                }
+
+                newStructure.StructureCells.Add(row);
+            }
+
+            return newStructure;
         }
 
-        private void ShowStructure() 
+        private void ClearCanvasState(FECanvas canvas)
+        {
+            canvas.Children.Clear();
+
+            canvas.Width = canvas.InitialWidth;
+            canvas.Height = canvas.InitialHeight;
+        }
+
+        private void ShowStructure()
         {
 
         }

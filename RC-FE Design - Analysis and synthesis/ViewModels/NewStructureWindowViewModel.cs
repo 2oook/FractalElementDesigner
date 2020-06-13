@@ -4,6 +4,7 @@ using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
 using RC_FE_Design___Analysis_and_synthesis.Windows;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -191,17 +192,18 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 }
                 else
                 {
-                    foreach (var value in CurrentStructure.StructureProperties.Values)
+                    // скопировать значения из словаря для валидации в словарь свойств структуры
+                    foreach (var property in CurrentStructure.StructureProperties.Values)
                     {
-                        value.Value = double.Parse(StructureProperties[value.Name].Value);
+                        property.Value = double.Parse(StructureProperties[property.Name].Value);
                     }
 
                     _newStructureWindow.AcceptUserInput();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Debug.WriteLine(ex.Message);
             }            
         }
 

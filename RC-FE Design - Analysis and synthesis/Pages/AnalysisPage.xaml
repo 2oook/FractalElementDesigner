@@ -62,61 +62,25 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Grid x:Name="canvasContainer" Visibility="{Binding CanvasVisibility}" Margin="5,0,5,0">
+                <Grid x:Name="canvasContainer" Visibility="{Binding EditorVisibility}" Margin="5,0,5,0">
 
                     <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
                         <DockPanel>
-                            
+
                             <ToolBarTray DockPanel.Dock="Left" Orientation="Vertical">
-                                <ToolBar Margin="0,5,0,0">
-                                    <RadioButton Style="{StaticResource radioButtonStyle}">
-                                        <Image Margin="0" Height="38" Width="38" Source="pack://application:,,,/Resources/button0.png" />
-                                        <RadioButton.ToolTip>
-                                            <TextBlock Text="Нумерация КП"/>
-                                        </RadioButton.ToolTip>
-                                    </RadioButton>
-                                    
-                                    <RadioButton Style="{StaticResource radioButtonStyle}">
-                                        <Image Margin="0" Height="38" Width="38" Source="pack://application:,,,/Resources/button1.png"  />
-                                        <RadioButton.ToolTip>
-                                            <TextBlock Text="Разрез"/>
-                                        </RadioButton.ToolTip>
-                                    </RadioButton>
-                                    
-                                    <RadioButton Style="{StaticResource radioButtonStyle}">
-                                        <Image  Margin="0" Height="38" Width="38" Source="pack://application:,,,/Resources/button2.png" />
-                                        <RadioButton.ToolTip>
-                                            <TextBlock Text="RC-ячейка"/>
-                                        </RadioButton.ToolTip>
-                                    </RadioButton>
-                                    
-                                    <RadioButton Style="{StaticResource radioButtonStyle}">
-                                        <Image Margin="0" Height="38" Width="38" Source="pack://application:,,,/Resources/button3.png"  />
-                                        <RadioButton.ToolTip>
-                                            <TextBlock Text="R-ячейка"/>
-                                        </RadioButton.ToolTip>
-                                    </RadioButton>
-                                    
-                                    <RadioButton Style="{StaticResource radioButtonStyle}">
-                                        <Image Margin="0" Height="38" Width="38" Source="pack://application:,,,/Resources/button4.png"  />
-                                        <RadioButton.ToolTip>
-                                            <TextBlock Text="Контактная площадка"/>
-                                        </RadioButton.ToolTip>
-                                    </RadioButton>
-                                    
-                                    <RadioButton Style="{StaticResource radioButtonStyle}">
-                                        <Image  Margin="0" Height="38" Width="38" Source="pack://application:,,,/Resources/button5.png" />
-                                        <RadioButton.ToolTip>
-                                            <TextBlock Text="Запрет КП"/>
-                                        </RadioButton.ToolTip>
-                                    </RadioButton>
-                                    
-                                    <RadioButton Style="{StaticResource radioButtonStyle}">
-                                        <Image Margin="0" Height="38" Width="38" Source="pack://application:,,,/Resources/button6.png"  />
-                                        <RadioButton.ToolTip>
-                                            <TextBlock Text="Шунт"/>
-                                        </RadioButton.ToolTip>
-                                    </RadioButton>
+                                <ToolBar Margin="0,5,0,0" ItemsSource="{Binding Path=EditorTools}">
+
+                                    <ToolBar.ItemTemplate>
+                                        <DataTemplate>
+                                            <RadioButton GroupName="group" Style="{StaticResource radioButtonStyle}" IsChecked="{Binding Value.IsChecked}">
+                                                <Image Margin="0" Height="38" Width="38" Source="{Binding Path=Value.ImageURI}" />
+                                                <RadioButton.ToolTip>
+                                                    <TextBlock Text="{Binding Path=Value.Name}"/>
+                                                </RadioButton.ToolTip>
+                                            </RadioButton>
+                                        </DataTemplate>
+                                    </ToolBar.ItemTemplate>
+                                   
                                 </ToolBar>
                             </ToolBarTray>
 

@@ -9,7 +9,7 @@
 
     <Canvas x:Name="canvas" Width="60" Height="60" Style="{StaticResource ControlCanvasStyleKey}">
 
-        <Canvas x:Name="RootElement" Width="60" Height="60" Style="{StaticResource RootCanvasStyleKey}">
+        <Canvas x:Name="RootElement" Width="60" Height="60" Style="{StaticResource CellControlStyleKey}">
             <Path x:Name="path" Style="{StaticResource ElementPathStyleKey}" />
             <Grid x:Name="grid" Width="60" Height="60">
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource LogicTextStyleKey}"/>
