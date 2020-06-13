@@ -4,14 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RC_FE_Design___Analysis_and_synthesis.FEEditor.Elements"
+             xmlns:converters="clr-namespace:RC_FE_Design___Analysis_and_synthesis.FEEditor.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="60">
+    
+    <UserControl.Resources>
 
+        <converters:CellTypeConverter x:Key="cellTypeConverter"/>
+
+        <Style x:Key="CellControlStyleKey" TargetType="Canvas">
+            <Setter Property="ClipToBounds" Value="False"/>
+            <Setter Property="Background" Value="{Binding Path=CellType, Converter={StaticResource cellTypeConverter}}"/>
+        </Style>
+    </UserControl.Resources>
+    
     <Canvas x:Name="canvas" Width="60" Height="60" Style="{StaticResource ControlCanvasStyleKey}">
 
-        <Canvas x:Name="RootElement" Width="60" Height="60" Style="{StaticResource CellControlStyleKey}">
+        <Canvas x:Name="RootElement" Width="60" Height="60" ClipToBounds="False" Style="{StaticResource CellControlStyleKey}">
             <Path x:Name="path" Style="{StaticResource ElementPathStyleKey}" />
-            <Grid x:Name="grid" Width="60" Height="60">
+            <Grid x:Name="grid" Width="60" Height="60" MouseLeftButtonDown="grid_MouseLeftButtonDown">
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource LogicTextStyleKey}"/>
             </Grid>
         </Canvas>

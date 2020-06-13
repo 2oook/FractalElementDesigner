@@ -4,13 +4,13 @@
              xmlns:local="clr-namespace:RC_FE_Design___Analysis_and_synthesis">
     <Application.Resources>
         <ResourceDictionary>
-            
             <ResourceDictionary.MergedDictionaries>
 
                 <ResourceDictionary Source="Dictionaries/ElementsDictionary.xaml"/>
+                <ResourceDictionary Source="Dictionaries/CellResourceDictionary.xaml"/>
 
                 <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
-                
+
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
@@ -69,35 +69,7 @@
                     <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorCheckedBrush.Win10" Color="{StaticResource IdealForegroundColor}" options:Freeze="True" />
                 </ResourceDictionary>
 
-                <ResourceDictionary>
-                    <Style x:Key="DataGridStyle" TargetType="DataGrid">
-                        <Style.Resources>
-                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FF33BCBA" />
-                            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#FF33BCBA" />
-                        </Style.Resources>
-                        <Style.Triggers>
-                            <Trigger Property="DataGrid.IsReadOnly" Value="True">
-                                <Setter Property="Background" Value="#FF33BCBA" />
-                                <Setter Property="TextElement.Background" Value="#FF33BCBA" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-
-                    <Style x:Key="DataGridCellStyle" TargetType="DataGridCell">
-                        <Setter Property="BorderThickness" Value="1" />
-                        <Style.Triggers>
-                            <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                <Setter Property="Foreground" Value="Black" />
-                                <Setter Property="Background" Value="#FF32B5B2" />
-                                <Setter Property="BorderThickness" Value="1" />
-                                <Setter Property="BorderBrush" Value="#FF32B5B2" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </ResourceDictionary>
-
             </ResourceDictionary.MergedDictionaries>
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>

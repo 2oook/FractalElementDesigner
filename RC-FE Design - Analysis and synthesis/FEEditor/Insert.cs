@@ -2,6 +2,7 @@
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Core;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Elements;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
+using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
     /// </summary>
     public static class Insert
     {
-        // Метод для вставки структуры в элемент Canvas
-        public static void StructureLayer(FECanvas canvas, RCStructure structure)
+        // Метод для вставки слоя структуры в элемент Canvas
+        public static void StructureLayer(FECanvas canvas, RCStructure structure, CellType layerType)
         {
             double _BorderCellHeight = 30;
             double _BorderCellWidth = 30;
@@ -44,31 +45,67 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
 
                 for (int j = 0; j < row.Count; j++)
                 {
-                    double width = _CommonCellWidth;               
+                    double width = _CommonCellWidth;
+                    CellType cellType = layerType;
 
+                    // первая колонка
                     if (j == 0)
                     {
                         width = _BorderCellWidth;
-                    }
 
-                    if (i == rows.Count -1)
-                    {
-                        height = _BorderCellHeight;
+                        // установить угловые ячейки как неактивные
+                        if (i == 0 | i == rows.Count - 1)
+                        {
+                            cellType = CellType.None;
+                        }
+                        else
+                        {
+                            cellType = CellType.PlaceForContact;
+                        }
                     }
-
+                    // последняя колонка
                     if (j == row.Count - 1)
                     {
                         width = _BorderCellWidth;
-                    }
 
+                        // установить угловые ячейки как неактивные
+                        if (i == 0 | i == rows.Count - 1)
+                        {
+                            cellType = CellType.None;
+                        }
+                        else
+                        {
+                            cellType = CellType.PlaceForContact;
+                        }
+                    }
+                    // первая строка
                     if (i == 0)
                     {
                         structureWidth += width;
                         _grid.ColumnDefinitions.Add(new ColumnDefinition());
                         height = _BorderCellHeight;
+
+                        if (j != 0 | j != row.Count - 1)
+                        {
+                            cellType = CellType.PlaceForContact;
+                        }
+                    }
+                    // последняя строка
+                    if (i == rows.Count - 1)
+                    {
+                        height = _BorderCellHeight;
+
+                        if (j != 0 | j != row.Count - 1)
+                        {
+                            cellType = CellType.PlaceForContact;
+                        }
                     }
 
+                    structure.StructureCells[i][j].CellType = cellType;
+
                     var cell = new CellControl(height, width);
+                    // связать отображение с объектом структуры
+                    cell.DataContext = structure.StructureCells[i][j];
 
                     Grid.SetRow(cell, i);
                     Grid.SetColumn(cell, j);

@@ -262,7 +262,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                 ClearCanvasState(_Page.FEControl.FECanvas);
 
-                Insert.StructureLayer(_Page.FEControl.FECanvas, newStructure);
+                Insert.StructureLayer(_Page.FEControl.FECanvas, newStructure, CellType.RС);
 
                 _Page.FEControl.ZoomToFit();
             }

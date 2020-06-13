@@ -25,10 +25,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Elements
             InitializeComponent();
         }
 
-        public CellControl(double height, double width)
+        public CellControl(double height, double width) : this()
         {
-            InitializeComponent();
-
             canvas.Width = width;
             canvas.Height = height;
 
@@ -40,6 +38,16 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Elements
 
             path.Data = Geometry.Parse("M 0,0 L 0," + height + " M 0," + height + " L " + width + "," + height +
                 "M " + width + "," + height + "L " + width + ",0 M " + width + ",0 L 0,0");
+        }
+
+        /// <summary>
+        /// Обработчик нажатия на ячейку
+        /// </summary>
+        /// <param name="sender">Объект источник события</param>
+        /// <param name="e">Объект параметров события</param>
+        private void grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

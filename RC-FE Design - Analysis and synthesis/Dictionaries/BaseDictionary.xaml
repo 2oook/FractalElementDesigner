@@ -30,11 +30,6 @@
         <Setter Property="SnapsToDevicePixels" Value="False"/>
     </Style>
 
-    <Style x:Key="CellControlStyleKey" TargetType="Canvas">
-        <Setter Property="ClipToBounds" Value="False"/>
-        <Setter Property="Background" Value="White"/>
-    </Style>
-
     <Style x:Key="ControlCanvasStyleKey" TargetType="Canvas">
         <Setter Property="ClipToBounds" Value="False"/>
         <Setter Property="Background" Value="{DynamicResource LogicBackgroundColorKey}"/>

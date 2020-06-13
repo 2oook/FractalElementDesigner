@@ -8,6 +8,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells
 {
     public class StructureCellBase
     {
-
+        /// <summary>
+        /// Тип ячейки структуры
+        /// </summary>
+        public CellType CellType { get; set; } = CellType.None;
     }
 }
