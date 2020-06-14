@@ -18,10 +18,12 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 {
@@ -134,6 +136,46 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         #endregion
 
         #region Свойства
+
+        private object selectedProjectTreeItem;
+
+        public object SelectedProjectTreeItem
+        {
+            get { return selectedProjectTreeItem; }
+            set 
+            {
+                if (value is Project project)
+                {
+
+                }
+                else if (value is RCStructure structure)
+                {
+
+                }
+                else if (value is Layer layer)
+                {
+                    SelectedLayer = layer;
+                }
+
+                selectedProjectTreeItem = value;
+                RaisePropertyChanged(nameof(SelectedProjectTreeItem));
+            }
+        }
+
+        private Layer selectedLayer;
+        /// <summary>
+        /// Выбранный слой структуры
+        /// </summary>
+        public Layer SelectedLayer
+        {
+            get { return selectedLayer; }
+            set 
+            {
+                _Page.FEControl.Editor = value.Editor;
+                selectedLayer = value;
+                RaisePropertyChanged(nameof(SelectedLayer));
+            }
+        }
 
         private Tool selectedTool = null;
         /// <summary>
@@ -268,27 +310,26 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                 Projects.Add(project);
 
-                ClearCanvasState(_Page.FEControl.FECanvas);
-
                 // вставить слои
                 foreach (var layer in newStructure.StructureLayers)
                 {
-                    Insert.StructureLayer(_Page.FEControl.FECanvas, layer, layer.CellsType);
+                    var editor = new Editor() { Context = new Context() };
+                    editor.Context.CurrentCanvas = _Page.FEControl.CreateFECanvas();
+
+                    layer.Editor = editor;
+
+                    _Page.FEControl.Editor = editor;
+
+                    Insert.StructureLayer(_Page.FEControl.Editor.Context.CurrentCanvas, layer, layer.CellsType);
                 }
+
+                _Page.FEControl.Editor = newStructure.StructureLayers.First().Editor;
 
                 _Page.FEControl.ZoomToFit();
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-            }
-
-            void ClearCanvasState(FECanvas canvas)
-            {
-                canvas.Children.Clear();
-
-                canvas.Width = canvas.InitialWidth;
-                canvas.Height = canvas.InitialHeight;
             }
         }
 

@@ -77,6 +77,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="FEEditor\Context.cs" />
+    <Compile Include="FEEditor\Controls\Behaviours\BindableSelectedItemBehavior.cs" />
     <Compile Include="FEEditor\Controls\FEControl.xaml.cs">
       <DependentUpon>FEControl.xaml</DependentUpon>
     </Compile>
@@ -90,7 +91,7 @@
     <Compile Include="FEEditor\Elements\PageControl.xaml.cs">
       <DependentUpon>PageControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FEEditor\FEEditor.cs" />
+    <Compile Include="FEEditor\Editor.cs" />
     <Compile Include="FEEditor\Insert.cs" />
     <Compile Include="FEEditor\Model\Cells\CellType.cs" />
     <Compile Include="FEEditor\Model\RCStructureTemplate.cs" />

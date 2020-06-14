@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
 {
-    public class FEEditor
+    /// <summary>
+    /// Редактор
+    /// </summary>
+    public class Editor
     {
         #region Properties
 
+        /// <summary>
+        /// Контекст редактора
+        /// </summary>
         public Context Context { get; set; }
 
         #endregion

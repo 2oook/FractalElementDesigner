@@ -27,5 +27,15 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
         /// Матрица ячеек слоя
         /// </summary>
         public ObservableCollection<ObservableCollection<StructureCellBase>> StructureCells { get; set; } = new ObservableCollection<ObservableCollection<StructureCellBase>>();
+
+        private Editor editor;
+        /// <summary>
+        /// Редактор
+        /// </summary>
+        public Editor Editor
+        {
+            get { return editor; }
+            set { editor = value; }
+        }
     }
 }

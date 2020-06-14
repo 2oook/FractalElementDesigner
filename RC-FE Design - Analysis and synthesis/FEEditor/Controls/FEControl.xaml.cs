@@ -24,24 +24,58 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
     {
         public FEControl()
         {
-            InitializeComponent();        
-
-            this.Loaded += FEControl_Loaded;
-
-            Editor = new FEEditor();
-            Editor.Context = new Context();
-            Editor.Context.CurrentCanvas = FECanvas;
+            InitializeComponent();
         }
 
-        private void FEControl_Loaded(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Метод для создания области проектирования
+        /// </summary>
+        /// <returns></returns>
+        public FECanvas CreateFECanvas()
         {
-            FECanvas.InitialHeight = FECanvas.ActualHeight;
-            FECanvas.InitialWidth = FECanvas.ActualWidth;
+            var canvas = new FECanvas() { Name = "FECanvas", Background = (SolidColorBrush)Application.Current.Resources["LogicTransparentColorKey"] };
+
+            canvas.MouseLeftButtonDown += FECanvas_MouseLeftButtonDown;
+            canvas.MouseLeftButtonUp += FECanvas_MouseLeftButtonUp;
+            canvas.PreviewMouseLeftButtonDown += FECanvas_PreviewMouseLeftButtonDown;
+            canvas.MouseMove += FECanvas_MouseMove;
+            canvas.PreviewMouseRightButtonDown += FECanvas_PreviewMouseRightButtonDown;
+            canvas.ContextMenuOpening += FECanvas_ContextMenuOpening;
+
+            canvas.Width = RootGrid.ActualWidth;
+            canvas.Height = RootGrid.ActualHeight;
+
+            Grid.SetColumn(canvas, 0);
+            Grid.SetRow(canvas, 0);
+
+            var tg = new TransformGroup() { Children = { new ScaleTransform() { ScaleX = 1, ScaleY = 1 }, new SkewTransform(), new RotateTransform(), new TranslateTransform() } };
+            RootGrid.RenderTransform = tg;
+            RootGrid.Children.Add(canvas);
+
+            return canvas;
         }
 
         #region Properties
 
-        public FEEditor Editor { get; set; }
+        private Editor editor;
+        /// <summary>
+        /// Редактор
+        /// </summary>
+        public Editor Editor
+        { 
+            get => editor;
+            set 
+            {
+                // если объект редактора не null очистить область редактирования и расположить в ней текущий редактор
+                if (editor != null)
+                {
+                    RootGrid.Children.Clear();
+                    RootGrid.Children.Add(value.Context.CurrentCanvas);
+                }
+
+                editor = value;
+            }
+        }
 
         private SelectionAdorner Adorner { get; set; }
 
@@ -167,7 +201,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
         public void ZoomToFit()
         {
             var viewport = new Size(this.ActualWidth + 0.0, this.ActualHeight + 0.0);
-            var source = new Size(this.FECanvas.Width + 6.0, this.FECanvas.Height + 6.0);
+            var source = new Size(this.Editor.Context.CurrentCanvas.Width + 6.0, this.Editor.Context.CurrentCanvas.Height + 6.0);
             ZoomToFit(viewport, source);
         }
 

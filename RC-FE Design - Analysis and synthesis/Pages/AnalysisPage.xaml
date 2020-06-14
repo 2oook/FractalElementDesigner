@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RC_FE_Design___Analysis_and_synthesis.Pages"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
         xmlns:editor="clr-namespace:RC_FE_Design___Analysis_and_synthesis.FEEditor"
-        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro" xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:behaviours="clr-namespace:RC_FE_Design___Analysis_and_synthesis.FEEditor.Controls.Behaviours"
         Dialog:DialogParticipation.Register="{Binding}"
         x:Class="RC_FE_Design___Analysis_and_synthesis.Pages.AnalysisPage"
         mc:Ignorable="d" 
@@ -135,6 +135,9 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TreeView ItemsSource="{Binding Path=Projects}">
+                                        <e:Interaction.Behaviors>
+                                            <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding SelectedProjectTreeItem, Mode=TwoWay}" />
+                                        </e:Interaction.Behaviors>
                                         <TreeView.ItemContainerStyle>
                                             <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
                                                 <Setter Property="IsExpanded" Value="True"/>
@@ -149,7 +152,7 @@
                                                         <!--структура-->
                                                         <TextBlock Text="{Binding Path=Name}"/>
                                                         <HierarchicalDataTemplate.ItemTemplate>
-                                                            <HierarchicalDataTemplate >
+                                                            <HierarchicalDataTemplate>
                                                                 <!--слой-->
                                                                 <TextBlock Text="{Binding Path=Name}"/>
                                                             </HierarchicalDataTemplate>

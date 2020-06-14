@@ -26,54 +26,8 @@
 
     <Border x:Name="RootBorder" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" ClipToBounds="True" PreviewMouseWheel="RootBorder_PreviewMouseWheel">
 
-        <Grid x:Name="RootGrid" RenderTransformOrigin="0.0,0.0" ClipToBounds="False">
-
-            <Grid.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="1" ScaleY="1"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform X="0" Y="0"/>
-                </TransformGroup>
-            </Grid.RenderTransform>
-
-            <!--<Canvas x:Name="FEBackgroud"
-                    Width="{Binding ElementName=FECanvas, Path=Width}"
-                    Height="{Binding ElementName=FECanvas, Path=Height}" 
-                    Grid.Column="0" Grid.Row="0"
-                    ClipToBounds="False"
-                    Background="{DynamicResource LogicBackgroundColorKey}"
-                    Visibility="Visible">
-            </Canvas>
-
-            <Canvas x:Name="FEGrid"
-                    Width="{Binding ElementName=FECanvas, Path=Width}"
-                    Height="{Binding ElementName=FECanvas, Path=Height}" 
-                    Grid.Column="0" Grid.Row="0"
-                    ClipToBounds="False"
-                    Background="{DynamicResource LogicTransparentColorKey}">
-                <Path x:Name="PathGrid" Style="{StaticResource GridPathStyleKey}"/>
-            </Canvas>-->
-
-            <!--<Control x:Name="FETemplate" Template="{StaticResource LandscapePageTemplateKey}"/>-->
-
-            <controls:FECanvas x:Name="FECanvas"         
-                               
-                                    Grid.Column="0" Grid.Row="0"
-                                    Background="{DynamicResource LogicTransparentColorKey}" 
-                                    ContextMenu="{StaticResource FECanvasContextMenuKey}"
-                                    AllowDrop="True"
-                                    MouseLeftButtonDown="FECanvas_MouseLeftButtonDown"
-                                    MouseLeftButtonUp="FECanvas_MouseLeftButtonUp"
-                                    PreviewMouseLeftButtonDown="FECanvas_PreviewMouseLeftButtonDown"
-                                    MouseMove="FECanvas_MouseMove"
-                                    PreviewMouseRightButtonDown="FECanvas_PreviewMouseRightButtonDown"
-                                    ContextMenuOpening="FECanvas_ContextMenuOpening"
-                                    Drop="FECanvas_Drop"
-                                    DragEnter="FECanvas_DragEnter">
-            </controls:FECanvas>
-
-        </Grid>
+        <Grid x:Name="RootGrid" RenderTransformOrigin="0.0,0.0" ClipToBounds="False"/>
 
     </Border>
+    
 </UserControl>
