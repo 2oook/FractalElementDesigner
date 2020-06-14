@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -279,7 +280,15 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
+            }
 
+            void ClearCanvasState(FECanvas canvas)
+            {
+                canvas.Children.Clear();
+
+                canvas.Width = canvas.InitialWidth;
+                canvas.Height = canvas.InitialHeight;
             }
         }
 
@@ -311,19 +320,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             }
 
             return newStructure;
-        }
-
-        private void ClearCanvasState(FECanvas canvas)
-        {
-            canvas.Children.Clear();
-
-            canvas.Width = canvas.InitialWidth;
-            canvas.Height = canvas.InitialHeight;
-        }
-
-        private void ShowStructure()
-        {
-
         }
 
         /// <summary>
