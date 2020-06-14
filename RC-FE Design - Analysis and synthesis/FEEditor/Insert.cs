@@ -20,7 +20,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
     public static class Insert
     {
         // Метод для вставки слоя структуры в элемент Canvas
-        public static void StructureLayer(FECanvas canvas, RCStructure structure, CellType layerType)
+        public static void StructureLayer(FECanvas canvas, Layer structure, CellType layerType)
         {
             double _BorderCellHeight = 30;
             double _BorderCellWidth = 30;

@@ -192,6 +192,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 }
                 else
                 {
+                    // добавить слои в соответствии с шаблоном
+                    foreach (var layer in SelectedStructureType.StructureLayers)
+                    {
+                        CurrentStructure.StructureLayers.Add(new Layer() { Name = layer.Name, CellsType = layer.CellsType });
+                    }
+
                     // скопировать значения из словаря для валидации в словарь свойств структуры
                     foreach (var property in CurrentStructure.StructureProperties.Values)
                     {

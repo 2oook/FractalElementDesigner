@@ -13,6 +13,7 @@ using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
 using RC_FE_Design___Analysis_and_synthesis.Windows;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -152,16 +153,17 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// </summary>
         public Dictionary<string, Tool> EditorTools { get; set; }
 
-        private Project _project;
+        private ObservableCollection<Project> _projects = new ObservableCollection<Project>();
         /// <summary>
-        /// Проект
+        /// Список проектов
         /// </summary>
-        public Project Project
+        public ObservableCollection<Project> Projects
         {
-            get { return _project; }
+            get { return _projects; }
             set 
             { 
-                _project = value;
+                _projects = value;
+                RaisePropertyChanged(nameof(Projects));
             }
         }
 
@@ -228,9 +230,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         private void CreateNewStructure()
         {
             try
-            {
-                // создать проект
-
+            { 
                 // создать окно
                 var window = new NewStructureWindow();
                 // создать vm для окна создания новой структуры
@@ -258,11 +258,22 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     EditorVisibility = Visibility.Visible;
                 }
 
+                // создать проект
+                var project = new Project() { Name = "Проект_0" };             
+
                 var newStructure = InitializeStructure(newStructureWindowViewModel.CurrentStructure);
+
+                project.Structures.Add(newStructure);
+
+                Projects.Add(project);
 
                 ClearCanvasState(_Page.FEControl.FECanvas);
 
-                Insert.StructureLayer(_Page.FEControl.FECanvas, newStructure, CellType.RС);
+                // вставить слои
+                foreach (var layer in newStructure.StructureLayers)
+                {
+                    Insert.StructureLayer(_Page.FEControl.FECanvas, layer, layer.CellsType);
+                }
 
                 _Page.FEControl.ZoomToFit();
             }
@@ -284,16 +295,19 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             // новая структура
             var newStructure = structure;
 
-            for (int r = 0; r < verticalStructureDimensionValue; r++)
+            foreach (var layer in newStructure.StructureLayers)
             {
-                var row = new List<StructureCellBase>();
-
-                for (int c = 0; c < horizontalStructureDimensionValue; c++)
+                for (int r = 0; r < verticalStructureDimensionValue; r++)
                 {
-                    row.Add(new StructureCellBase());
-                }
+                    var row = new ObservableCollection<StructureCellBase>();
 
-                newStructure.StructureCells.Add(row);
+                    for (int c = 0; c < horizontalStructureDimensionValue; c++)
+                    {
+                        row.Add(new StructureCellBase());
+                    }
+
+                    layer.StructureCells.Add(row);
+                }
             }
 
             return newStructure;

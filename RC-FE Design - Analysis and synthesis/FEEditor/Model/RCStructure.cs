@@ -2,6 +2,7 @@
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -113,10 +114,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
                 }
             };
 
+            var layer_name = " слой";
+
             var R_C_0 = new RCStructureTemplate()
             {
                 Name = "R-C-0",
-                StructureProperties = commonProperties
+                StructureProperties = commonProperties,
+                StructureLayers = new ObservableCollection<Layer>() { 
+                    new Layer() { Name = "R-C" + layer_name, CellsType = CellType.RC } }
             };
 
             AllTemplateStructures.Add(R_C_0.Name, R_C_0);
@@ -124,7 +129,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
             var R_CG_0 = new RCStructureTemplate()
             {
                 Name = "R-CG-0",
-                StructureProperties = commonProperties.Concat(N_Property).ToDictionary(x => x.Key, x => x.Value)
+                StructureProperties = commonProperties.Concat(N_Property).ToDictionary(x => x.Key, x => x.Value),
+                StructureLayers = new ObservableCollection<Layer>() { 
+                    new Layer() { Name = "R-CG" + layer_name, CellsType = CellType.RC } }
             };
 
             AllTemplateStructures.Add(R_CG_0.Name, R_CG_0);
@@ -132,7 +139,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
             var R_C_NR = new RCStructureTemplate()
             {
                 Name = "R-C-NR",
-                StructureProperties = commonProperties.Concat(N_Property).ToDictionary(x => x.Key, x => x.Value)
+                StructureProperties = commonProperties.Concat(N_Property).ToDictionary(x => x.Key, x => x.Value),
+                StructureLayers = new ObservableCollection<Layer>() { 
+                    new Layer() { Name = "R-C" + layer_name, CellsType = CellType.RC },
+                    new Layer() { Name = "NR" + layer_name, CellsType = CellType.R } }
             };
 
             AllTemplateStructures.Add(R_C_NR.Name, R_C_NR);
@@ -140,7 +150,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
             var R_CG_NR = new RCStructureTemplate()
             {
                 Name = "R-CG-NR",
-                StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).ToDictionary(x => x.Key, x => x.Value)
+                StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).ToDictionary(x => x.Key, x => x.Value),
+                StructureLayers = new ObservableCollection<Layer>() { 
+                    new Layer() { Name = "R-CG" + layer_name, CellsType = CellType.RC }, 
+                    new Layer() { Name = "NR" + layer_name, CellsType = CellType.R } }
             };
 
             AllTemplateStructures.Add(R_CG_NR.Name, R_CG_NR);
@@ -148,7 +161,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
             var R_CG_NR_plus_CP = new RCStructureTemplate()
             {
                 Name = "R-CG-NR+КП",
-                StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(P_Property).ToDictionary(x => x.Key, x => x.Value)
+                StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(P_Property).ToDictionary(x => x.Key, x => x.Value),
+                StructureLayers = new ObservableCollection<Layer>() { 
+                    new Layer() { Name = "R-CG" + layer_name, CellsType = CellType.RC }, 
+                    new Layer() { Name = "NR" + layer_name, CellsType = CellType.R } }
             };
 
             AllTemplateStructures.Add(R_CG_NR_plus_CP.Name, R_CG_NR_plus_CP);
@@ -156,7 +172,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
             var R_plus_R_C_NR = new RCStructureTemplate()
             {
                 Name = "(R+R)-C-NR",
-                StructureProperties = commonProperties.Concat(N_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value)
+                StructureProperties = commonProperties.Concat(N_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value),
+                StructureLayers = new ObservableCollection<Layer>() { 
+                    new Layer() { Name = "R-C" + layer_name, CellsType = CellType.RC }, 
+                    new Layer() { Name = "NR" + layer_name, CellsType = CellType.R } }
             };
 
             AllTemplateStructures.Add(R_plus_R_C_NR.Name, R_plus_R_C_NR);
@@ -164,7 +183,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
             var R_plus_R_CG_NR = new RCStructureTemplate()
             {
                 Name = "(R+R)-CG-NR",
-                StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value)
+                StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value),
+                StructureLayers = new ObservableCollection<Layer>() { 
+                    new Layer() { Name = "R-CG" + layer_name, CellsType = CellType.RC }, 
+                    new Layer() { Name = "NR" + layer_name, CellsType = CellType.R } }
             };
 
             AllTemplateStructures.Add(R_plus_R_CG_NR.Name, R_plus_R_CG_NR);
@@ -172,7 +194,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
             var R_plus_R_CG_NR_plus_CP = new RCStructureTemplate()
             {
                 Name = "(R+R)-CG-NR+КП",
-                StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(P_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value)
+                StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(P_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value),
+                StructureLayers = new ObservableCollection<Layer>() { 
+                    new Layer() { Name = "R-CG" + layer_name, CellsType = CellType.RC }, 
+                    new Layer() { Name = "NR" + layer_name, CellsType = CellType.R } }
             };
 
             AllTemplateStructures.Add(R_plus_R_CG_NR_plus_CP.Name, R_plus_R_CG_NR_plus_CP);
@@ -185,6 +210,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
         public RCStructure(string structureName)
         {
             Name = structureName;
+
             var template = AllTemplateStructures.SingleOrDefault(x => x.Key == structureName).Value;
 
             if (template == null)
@@ -195,22 +221,15 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
             InitializeInstanceProperties(template);
         }
 
-        public static Dictionary<string, RCStructureTemplate> AllTemplateStructures;
-
         /// <summary>
-        /// Название структуры
+        /// Словарь шаблонов структур
         /// </summary>
-        public string Name { get; set; } = string.Empty;
+        public static Dictionary<string, RCStructureTemplate> AllTemplateStructures;
 
         /// <summary>
         /// Словарь свойств структуры
         /// </summary>
         public Dictionary<string, StructureProperty> StructureProperties { get; set; } = new Dictionary<string, StructureProperty>();   
-
-        /// <summary>
-        /// Матрица ячеек структуры
-        /// </summary>
-        public List<List<StructureCellBase>> StructureCells { get; set; } = new List<List<StructureCellBase>>();
 
         /// <summary>
         /// Метод для инициализации свойств структуры в соответствии с шаблоном
