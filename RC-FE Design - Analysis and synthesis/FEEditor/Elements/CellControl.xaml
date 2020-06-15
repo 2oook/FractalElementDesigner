@@ -16,17 +16,17 @@
             <Setter Property="ClipToBounds" Value="False"/>
             <Setter Property="Background" Value="{Binding Path=CellType, Converter={StaticResource cellTypeConverter}}"/>
         </Style>
-    </UserControl.Resources>
-    
-    <Canvas x:Name="canvas" Width="60" Height="60" Style="{StaticResource ControlCanvasStyleKey}">
 
-        <Canvas x:Name="RootElement" Width="60" Height="60" ClipToBounds="False" Style="{StaticResource CellControlStyleKey}">
-            <Path x:Name="path" Style="{StaticResource ElementPathStyleKey}" />
-            <Grid x:Name="grid" Width="60" Height="60" MouseLeftButtonDown="grid_MouseLeftButtonDown">
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource LogicTextStyleKey}"/>
-            </Grid>
-        </Canvas>
+    </UserControl.Resources>
+
+    <Canvas x:Name="canvas" Width="60" Height="60" Style="{StaticResource CellControlStyleKey}" MouseLeftButtonDown="canvas_MouseLeftButtonDown">
+
+        <Path x:Name="path" Style="{StaticResource ElementPathStyleKey}" />
         
+        <Grid x:Name="grid" Width="60" Height="60">
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource LogicTextStyleKey}"/>
+        </Grid>
+
     </Canvas>
     
 </UserControl>

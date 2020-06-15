@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,24 +31,25 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Elements
             canvas.Width = width;
             canvas.Height = height;
 
-            RootElement.Width = width;
-            RootElement.Height = height;
-
             grid.Width = width;
             grid.Height = height;
 
-            path.Data = Geometry.Parse("M 0,0 L 0," + height + " M 0," + height + " L " + width + "," + height +
-                "M " + width + "," + height + "L " + width + ",0 M " + width + ",0 L 0,0");
+            path.Data = Geometry.Parse("M 0,0 L 0," + height + " L " + width + "," + height + "L " + width + ",0 Z ");
         }
+
+        /// <summary>
+        /// Событие нажатия на контрол ячейки
+        /// </summary>
+        public event Action Click = delegate { };
 
         /// <summary>
         /// Обработчик нажатия на ячейку
         /// </summary>
         /// <param name="sender">Объект источник события</param>
         /// <param name="e">Объект параметров события</param>
-        private void grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            Click();
         }
     }
 }

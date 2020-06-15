@@ -97,6 +97,7 @@
     <Compile Include="FEEditor\Model\RCStructureTemplate.cs" />
     <Compile Include="FEEditor\ResourceConstants.cs" />
     <Compile Include="FEEditor\Tools\Tool.cs" />
+    <Compile Include="FEEditor\Tools\ToolType.cs" />
     <Compile Include="Navigation\Interfaces\IPageResolver.cs" />
     <Compile Include="Navigation\Interfaces\IPageViewModel.cs" />
     <Compile Include="Navigation\Interfaces\IViewModelsResolver.cs" />

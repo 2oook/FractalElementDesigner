@@ -24,6 +24,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Tools
         /// </summary>
         public string ImageURI { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Тип инструмента
+        /// </summary>
+        public ToolType Type { get; set; } = ToolType.None;
+
         private bool isChecked;
         /// <summary>
         /// Команда выбора инструмента редактирования
@@ -40,6 +45,5 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Tools
                 RaisePropertyChanged(nameof(IsChecked));
             }
         }
-
     }
 }

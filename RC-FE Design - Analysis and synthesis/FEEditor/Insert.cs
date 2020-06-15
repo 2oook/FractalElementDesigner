@@ -20,7 +20,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
     public static class Insert
     {
         // Метод для вставки слоя структуры в элемент Canvas
-        public static void StructureLayer(FECanvas canvas, Layer structure, CellType layerType)
+        public static void StructureLayer(FECanvas canvas, Layer layer, CellType layerType)
         {
             double _BorderCellHeight = 30;
             double _BorderCellWidth = 30;
@@ -33,7 +33,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
 
             var _grid = new Grid();
 
-            var rows = structure.StructureCells;
+            var rows = layer.StructureCells;
 
             for (int i = 0; i < rows.Count; i++)
             {
@@ -101,11 +101,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
                         }
                     }
 
-                    structure.StructureCells[i][j].CellType = cellType;
+                    layer.StructureCells[i][j].CellType = cellType;
 
+                    // создать контрол ячейки
                     var cell = new CellControl(height, width);
+                    // установить ячейке метод для применения инструмента
+                    cell.Click += layer.StructureCells[i][j].ApplyTool;
                     // связать отображение с объектом структуры
-                    cell.DataContext = structure.StructureCells[i][j];
+                    cell.DataContext = layer.StructureCells[i][j];
 
                     Grid.SetRow(cell, i);
                     Grid.SetColumn(cell, j);

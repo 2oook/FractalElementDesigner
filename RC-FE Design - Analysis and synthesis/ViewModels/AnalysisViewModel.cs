@@ -2,8 +2,6 @@
 using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro.Controls.Dialogs;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor;
-using RC_FE_Design___Analysis_and_synthesis.FEEditor.Controls;
-using RC_FE_Design___Analysis_and_synthesis.FEEditor.Core;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Tools;
@@ -17,13 +15,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 {
@@ -43,7 +37,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     new Tool()
                     {
                         Name = "Нумерация КП",
-                        ImageURI = "pack://application:,,,/Resources/button0.png"
+                        ImageURI = "pack://application:,,,/Resources/button0.png",
+                        Type = ToolType.ContactNumerator
                     }
                 },
 
@@ -51,7 +46,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     "Cut", new Tool()
                     {
                         Name = "Разрез",
-                        ImageURI = "pack://application:,,,/Resources/button1.png"
+                        ImageURI = "pack://application:,,,/Resources/button1.png",
+                        Type = ToolType.CutCellDisposer
                     }
                 },
 
@@ -60,7 +56,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     new Tool()
                     {
                         Name = "RC-ячейка",
-                        ImageURI = "pack://application:,,,/Resources/button2.png"
+                        ImageURI = "pack://application:,,,/Resources/button2.png",
+                        Type = ToolType.RCCellDisposer
                     }
                 },
 
@@ -68,7 +65,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     "R", new Tool()
                     {
                         Name = "R-ячейка",
-                        ImageURI = "pack://application:,,,/Resources/button3.png"
+                        ImageURI = "pack://application:,,,/Resources/button3.png",
+                        Type = ToolType.RCellDisposer
                     }
                 },
 
@@ -77,7 +75,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     new Tool()
                     {
                         Name = "Контактная площадка",
-                        ImageURI = "pack://application:,,,/Resources/button4.png"
+                        ImageURI = "pack://application:,,,/Resources/button4.png",
+                        Type = ToolType.ContactCellDisposer
                     }
                 },
 
@@ -85,7 +84,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     "Forbid", new Tool()
                     {
                         Name = "Запрет КП",
-                        ImageURI = "pack://application:,,,/Resources/button5.png"
+                        ImageURI = "pack://application:,,,/Resources/button5.png",
+                        Type = ToolType.ForbidContactDisposer
                     }
                 },
 
@@ -94,7 +94,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     new Tool()
                     {
                         Name = "Шунт",
-                        ImageURI = "pack://application:,,,/Resources/button6.png"
+                        ImageURI = "pack://application:,,,/Resources/button6.png",
+                        Type = ToolType.ShuntCellDisposer
                     }
                 },
             };
@@ -103,22 +104,42 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             {
                 tool.PropertyChanged += Tool_PropertyChanged;
             }
-        }
 
-        private void Tool_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (sender as Tool != null)
+            StructureCellBase.ApplyToolDelegate = (StructureCellBase cell) =>
             {
-                var tool = (Tool)sender;
-
-                if (e.PropertyName == nameof(tool.IsChecked))
+                if (SelectedTool != null && SelectedTool.IsChecked == true)
                 {
-                    if (tool.IsChecked == true)
+                    switch (SelectedTool.Type)
                     {
-                        SelectedTool = tool;
+                        case ToolType.None:
+                            cell.CellType = CellType.None;
+                            break;
+                        case ToolType.ContactNumerator:
+                            
+                            break;
+                        case ToolType.CutCellDisposer:
+                            cell.CellType = CellType.Cut;
+                            break;
+                        case ToolType.ContactCellDisposer:
+                            cell.CellType = CellType.Contact;
+                            break;
+                        case ToolType.ForbidContactDisposer:
+                            cell.CellType = CellType.Forbid;
+                            break;
+                        case ToolType.RCCellDisposer:
+                            cell.CellType = CellType.RC;
+                            break;
+                        case ToolType.RCellDisposer:
+                            cell.CellType = CellType.R;
+                            break;
+                        case ToolType.ShuntCellDisposer:
+                            cell.CellType = CellType.Shunt;
+                            break;
+                        default:
+                            break;
                     }
                 }
-            }
+            };
         }
 
         public AnalysisViewModel(IDialogCoordinator dialogCoordinator) : this()
@@ -138,7 +159,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         #region Свойства
 
         private object selectedProjectTreeItem;
-
+        /// <summary>
+        /// Выбранный элемент дерева проекта
+        /// </summary>
         public object SelectedProjectTreeItem
         {
             get { return selectedProjectTreeItem; }
@@ -182,8 +205,18 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// Выбранный инструмент
         /// </summary>
         public Tool SelectedTool 
-        { 
-            get => selectedTool;
+        {
+            get
+            {
+                if (selectedTool != null && selectedTool.IsChecked)
+                {
+                    return selectedTool;
+                }
+                else
+                {
+                    return null;    
+                }
+            }
             set 
             {
                 selectedTool = value;
@@ -211,7 +244,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         }
 
         private Visibility editorVisibility = Visibility.Hidden;
-
+        /// <summary>
+        /// Видимость редактора
+        /// </summary>
         public Visibility EditorVisibility
         {
             get
@@ -260,6 +295,27 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         #endregion
 
         #region Методы
+
+        /// <summary>
+        /// Обработчик изменения выбранного инструмента
+        /// </summary>
+        /// <param name="sender">Объект отправитель события</param>
+        /// <param name="e">Объект параметров события</param>
+        private void Tool_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (sender as Tool != null)
+            {
+                var tool = (Tool)sender;
+
+                if (e.PropertyName == nameof(tool.IsChecked))
+                {
+                    if (tool.IsChecked == true)
+                    {
+                        SelectedTool = tool;
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Метод для инициализации команд
