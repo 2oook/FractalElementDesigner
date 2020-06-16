@@ -109,6 +109,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             {
                 if (SelectedTool != null && SelectedTool.IsChecked == true)
                 {
+                    if (!CheckToolApplyPossibility(SelectedTool, cell))
+                    {
+                        return;
+                    }
+
                     switch (SelectedTool.Type)
                     {
                         case ToolType.None:
@@ -295,6 +300,43 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         #endregion
 
         #region Методы
+
+        // метод для проверки возможности применения инструмента к ячейке
+        private bool CheckToolApplyPossibility(Tool tool, StructureCellBase cell) 
+        {
+            var result = true;
+
+            switch (tool.Type)
+            {
+                case ToolType.None:
+                    break;
+                case ToolType.ContactNumerator:
+                    if (cell.CellType != CellType.Contact) result = false;
+                    break;
+                case ToolType.CutCellDisposer:
+                    if (cell.CellType != CellType.R && cell.CellType != CellType.RC) result = false;
+                    break;
+                case ToolType.ContactCellDisposer:
+                    if (cell.CellType != CellType.PlaceForContact && cell.CellType != CellType.Forbid && cell.CellType != CellType.Shunt) result = false;
+                    break;
+                case ToolType.ForbidContactDisposer:
+                    if (cell.CellType != CellType.PlaceForContact && cell.CellType != CellType.Contact && cell.CellType != CellType.Shunt) result = false;
+                    break;
+                case ToolType.RCCellDisposer:
+                    if (cell.CellType != CellType.R && cell.CellType != CellType.Cut) result = false;
+                    break;
+                case ToolType.RCellDisposer:
+                    if (cell.CellType != CellType.RC && cell.CellType != CellType.Cut) result = false;
+                    break;
+                case ToolType.ShuntCellDisposer:
+                    if (cell.CellType != CellType.PlaceForContact && cell.CellType != CellType.Forbid && cell.CellType != CellType.Contact) result = false;
+                    break;
+                default:
+                    break;
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// Обработчик изменения выбранного инструмента

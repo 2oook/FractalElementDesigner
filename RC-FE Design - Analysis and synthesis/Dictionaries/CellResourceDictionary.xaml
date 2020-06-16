@@ -5,11 +5,11 @@
     <!-- colors -->
     <SolidColorBrush x:Key="NoneColorKey" Color="#FF949090"/>
     <SolidColorBrush x:Key="PlaceForContactColorKey" Color="White"/>
-    <SolidColorBrush x:Key="ContactColorKey" Color="#FFBBD913"/>
-    <SolidColorBrush x:Key="CutColorKey" Color="#FFF71C14"/>
-    <SolidColorBrush x:Key="ForbidColorKey" Color="#FFFF14CE"/>
+    <SolidColorBrush x:Key="ContactColorKey" Color="#FFF93900"/>
+    <SolidColorBrush x:Key="CutColorKey" Color="White"/>
+    <SolidColorBrush x:Key="ForbidColorKey" Color="#FFFFFF14"/>
     <SolidColorBrush x:Key="RCColorKey" Color="#FF484646"/>
     <SolidColorBrush x:Key="RColorKey" Color="#FF45AB0F"/>
-    <SolidColorBrush x:Key="ShuntColorKey" Color="#FF866BF1"/>
+    <SolidColorBrush x:Key="ShuntColorKey" Color="#FF6B9CF1"/>
 
 </ResourceDictionary>

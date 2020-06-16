@@ -48,6 +48,28 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
                     double width = _CommonCellWidth;
                     CellType cellType = layerType;
 
+                    // первая строка
+                    if (i == 0)
+                    {
+                        structureWidth += width;
+                        _grid.ColumnDefinitions.Add(new ColumnDefinition());
+                        height = _BorderCellHeight;
+
+                        if (j != 0 | j != row.Count - 1)
+                        {
+                            cellType = CellType.PlaceForContact;
+                        }
+                    }
+                    // последняя строка
+                    if (i == rows.Count - 1)
+                    {
+                        height = _BorderCellHeight;
+
+                        if (j != 0 | j != row.Count - 1)
+                        {
+                            cellType = CellType.PlaceForContact;
+                        }
+                    }
                     // первая колонка
                     if (j == 0)
                     {
@@ -74,28 +96,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
                             cellType = CellType.None;
                         }
                         else
-                        {
-                            cellType = CellType.PlaceForContact;
-                        }
-                    }
-                    // первая строка
-                    if (i == 0)
-                    {
-                        structureWidth += width;
-                        _grid.ColumnDefinitions.Add(new ColumnDefinition());
-                        height = _BorderCellHeight;
-
-                        if (j != 0 | j != row.Count - 1)
-                        {
-                            cellType = CellType.PlaceForContact;
-                        }
-                    }
-                    // последняя строка
-                    if (i == rows.Count - 1)
-                    {
-                        height = _BorderCellHeight;
-
-                        if (j != 0 | j != row.Count - 1)
                         {
                             cellType = CellType.PlaceForContact;
                         }
