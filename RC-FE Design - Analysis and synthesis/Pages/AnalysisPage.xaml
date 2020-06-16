@@ -36,9 +36,9 @@
 
         <Menu Grid.Row="0" Background="{DynamicResource AccentColorBrush2}">
             <MenuItem Header="Файл" >
-                <MenuItem x:Name="FileNew" Command="{Binding NewStructureCommand}" Header="Новая структура" InputGestureText="Ctrl+N"/>
-                <MenuItem x:Name="FileOpen" Header="Открыть" InputGestureText="Ctrl+O"/>
-                <MenuItem x:Name="FileSave" Header="Сохранить" InputGestureText="Ctrl+S"/>
+                <MenuItem x:Name="FileNew" Command="{Binding NewProjectCommand}" Header="Новая структура" InputGestureText="Ctrl+N"/>
+                <MenuItem x:Name="FileOpen" Command="{Binding LoadProjectCommand}" Header="Открыть" InputGestureText="Ctrl+O"/>
+                <MenuItem x:Name="FileSave" Command="{Binding SaveProjectCommand}" Header="Сохранить" InputGestureText="Ctrl+S"/>
                 <MenuItem x:Name="Export" Header="Экспорт значений"/>
             </MenuItem>
         </Menu>
@@ -88,6 +88,7 @@
 
                         </DockPanel>
                     </Border>
+
                 </Grid>
 
                 <Grid>
@@ -104,9 +105,9 @@
 
                     <StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
 
-                        <Button Content="Новая структура" Command="{Binding NewStructureCommand}" FontWeight="Bold" FontSize="14" Padding="5"  Margin="5,5,5,2"/>
-                        <Button Content="Открыть структуру" Command="{Binding OpenStructureCommand}" FontWeight="Bold" FontSize="14" Padding="5" Margin="5,5,5,2" />
-                        <Button Content="Загрузить структуру из синтеза" Command="{Binding LoadStructureFromSynthesisCommand}" FontWeight="Bold" FontSize="14" Padding="5" Margin="5,5,5,2" />
+                        <Button Content="Новый проект" Command="{Binding NewProjectCommand}" FontWeight="Bold" FontSize="14" Padding="5"  Margin="5,5,5,2"/>
+                        <Button Content="Открыть проект" Command="{Binding LoadProjectCommand}" FontWeight="Bold" FontSize="14" Padding="5" Margin="5,5,5,2" />
+                        <Button Content="Загрузить проект из синтеза" Command="{Binding LoadProjectFromSynthesisCommand}" FontWeight="Bold" FontSize="14" Padding="5" Margin="5,5,5,2" />
 
                     </StackPanel>
 

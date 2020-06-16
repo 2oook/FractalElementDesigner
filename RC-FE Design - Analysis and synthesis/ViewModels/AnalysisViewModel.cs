@@ -280,11 +280,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         public ICommand GoToMainPageCommand { get; set; }
 
         private ICommand newStructureCommand;
-
         /// <summary>
-        /// Команда для создания новой структуры
+        /// Команда для создания нового проекта
         /// </summary>
-        public ICommand NewStructureCommand
+        public ICommand NewProjectCommand
         {
             get
             {
@@ -293,9 +292,45 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             set
             {
                 newStructureCommand = value;
-                RaisePropertyChanged(nameof(NewStructureCommand));
+                RaisePropertyChanged(nameof(NewProjectCommand));
             }
         }
+
+        private ICommand loadProjectCommand;
+        /// <summary>
+        /// Команда для загрузки проекта
+        /// </summary>
+        public ICommand LoadProjectCommand
+        {
+            get
+            {
+                return loadProjectCommand;
+            }
+            set
+            {
+                loadProjectCommand = value;
+                RaisePropertyChanged(nameof(LoadProjectCommand));
+            }
+        }
+
+        private ICommand saveProjectCommand;
+        /// <summary>
+        /// Команда для сохранения проекта
+        /// </summary>
+        public ICommand SaveProjectCommand
+        {
+            get
+            {
+                return saveProjectCommand;
+            }
+            set
+            {
+                saveProjectCommand = value;
+                RaisePropertyChanged(nameof(SaveProjectCommand));
+            }
+        }
+
+        
 
         #endregion
 
@@ -364,11 +399,18 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// </summary>
         private void InitializeCommands()
         {
-            NewStructureCommand = new RelayCommand(CreateNewStructure);
+            NewProjectCommand = new RelayCommand(CreateNewProject);
+            LoadProjectCommand = new RelayCommand(LoadProject);
+            //SaveProjectCommand = new RelayCommand(SaveProject);
         }
 
-        // Метод для создания новой структуры
-        private void CreateNewStructure()
+        private void LoadProject() 
+        { 
+
+        }
+
+        // Метод для создания нового проекта
+        private void CreateNewProject()
         {
             try
             { 

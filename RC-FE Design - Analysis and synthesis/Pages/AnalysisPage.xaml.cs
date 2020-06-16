@@ -43,9 +43,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             {
                 switch (key)
                 {
-                    case Key.O: break;
-                    case Key.S: break;
-                    case Key.N: context.NewStructureCommand.Execute(null); break;
+                    case Key.O: context.LoadProjectCommand.Execute(null); break;
+                    case Key.S: context.SaveProjectCommand.Execute(null); break;
+                    case Key.N: context.NewProjectCommand.Execute(null); break;
                 }
             }            
         }
