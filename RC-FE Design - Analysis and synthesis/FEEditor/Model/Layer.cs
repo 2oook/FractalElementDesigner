@@ -11,6 +11,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
     /// <summary>
     /// Слой структуры
     /// </summary>
+    [Serializable]
     public class Layer
     {
         /// <summary>

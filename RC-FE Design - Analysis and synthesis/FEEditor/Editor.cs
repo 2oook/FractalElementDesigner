@@ -9,6 +9,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
     /// <summary>
     /// Редактор
     /// </summary>
+    [Serializable]
     public class Editor
     {
         #region Properties

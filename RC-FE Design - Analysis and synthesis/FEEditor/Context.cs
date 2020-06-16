@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
 {
+    [Serializable]
     public class Context
     {
         #region Properties

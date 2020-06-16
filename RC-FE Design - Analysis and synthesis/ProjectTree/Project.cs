@@ -11,6 +11,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ProjectTree
     /// <summary>
     /// Проект
     /// </summary>
+    [Serializable]
     public class Project
     {
         private string name;
