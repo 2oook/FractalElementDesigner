@@ -9,6 +9,7 @@ using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
 using RC_FE_Design___Analysis_and_synthesis.Pages;
 using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
 using RC_FE_Design___Analysis_and_synthesis.Windows;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,6 +19,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using RC_FE_Design___Analysis_and_synthesis.IO;
 
 namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 {
@@ -145,7 +147,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     }
                 }
             };
-        }
+
+            }
 
         public AnalysisViewModel(IDialogCoordinator dialogCoordinator) : this()
         {
@@ -174,7 +177,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             {
                 if (value is Project project)
                 {
-
+                    SelectedProject = project;
                 }
                 else if (value is RCStructure structure)
                 {
@@ -187,6 +190,34 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                 selectedProjectTreeItem = value;
                 RaisePropertyChanged(nameof(SelectedProjectTreeItem));
+            }
+        }
+
+        private Project selectedProject = null;
+        /// <summary>
+        /// Выбранный проект
+        /// </summary>
+        public Project SelectedProject
+        {
+            get { return selectedProject; }
+            set 
+            { 
+                selectedProject = value;
+                RaisePropertyChanged(nameof(SelectedProject));
+            }
+        }
+
+        private RCStructure selectedStructure = null;
+        /// <summary>
+        /// Выбранная структура
+        /// </summary>
+        public RCStructure SelectedStructure
+        {
+            get { return selectedStructure; }
+            set
+            {
+                selectedStructure = value;
+                RaisePropertyChanged(nameof(SelectedStructure));
             }
         }
 
@@ -279,7 +310,24 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// </summary>
         public ICommand GoToMainPageCommand { get; set; }
 
-        private ICommand newStructureCommand;
+        private ICommand loadProjectFromSynthesisCommand;
+        /// <summary>
+        /// Команда для загрузки проекта из режима синтез
+        /// </summary>
+        public ICommand LoadProjectFromSynthesisCommand
+        {
+            get
+            {
+                return loadProjectFromSynthesisCommand;
+            }
+            set
+            {
+                loadProjectFromSynthesisCommand = value;
+                RaisePropertyChanged(nameof(LoadProjectFromSynthesisCommand));
+            }
+        }
+
+        private ICommand newProjectCommand;
         /// <summary>
         /// Команда для создания нового проекта
         /// </summary>
@@ -287,11 +335,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         {
             get
             {
-                return newStructureCommand;
+                return newProjectCommand;
             }
             set
             {
-                newStructureCommand = value;
+                newProjectCommand = value;
                 RaisePropertyChanged(nameof(NewProjectCommand));
             }
         }
@@ -401,12 +449,58 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         {
             NewProjectCommand = new RelayCommand(CreateNewProject);
             LoadProjectCommand = new RelayCommand(LoadProject);
-            //SaveProjectCommand = new RelayCommand(SaveProject);
+            SaveProjectCommand = new RelayCommand(SaveProject);
         }
 
-        private void LoadProject() 
-        { 
+        // Метод для сохранения проекта
+        private void SaveProject() 
+        {
+            try
+            {
+                var savingProject = SelectedProject;
 
+                if (SelectedProject == null)
+                {
+                    _dialogCoordinator.ShowMessageAsync(this, "", "Не выбран проект для сохранения");
+                    return;
+                }
+                else
+                {
+                    var dialog = new CommonSaveFileDialog();
+                    ConfigureDialogForProjectSaving(ref dialog);
+                    CommonFileDialogResult result = dialog.ShowDialog();
+
+                    if (result == CommonFileDialogResult.Ok)
+                    {
+                        ProjectSaver.SaveProject(savingProject, dialog.FileName);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _dialogCoordinator.ShowMessageAsync(this, "Ошибка", "Проект не сохранён" + Environment.NewLine + ex.Message);
+            }
+
+            void ConfigureDialogForProjectSaving(ref CommonSaveFileDialog dialog) 
+            {
+                dialog.Title = "Выберите путь для сохранения проекта";
+                dialog.InitialDirectory = Environment.CurrentDirectory;
+                dialog.DefaultFileName = "Project1" + "." + "feproj";
+                dialog.DefaultExtension = "feproj";
+            }
+        }
+
+        // Метод для загрузки проекта
+        private void LoadProject() 
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                _dialogCoordinator.ShowMessageAsync(this, "Ошибка", "Проект не загружен" + Environment.NewLine + ex.Message);
+            }
         }
 
         // Метод для создания нового проекта
@@ -442,7 +536,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 }
 
                 // создать проект
-                var project = new Project() { Name = "Проект_0" };             
+                var project = new Project() { Name = "Проект_0" };
+
+                SelectedProject = project;
 
                 var newStructure = InitializeStructure(newStructureWindowViewModel.CurrentStructure);
 
@@ -510,6 +606,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         public void SetPage(Page page)
         {
             _Page = (AnalysisPage)page;
+
+            // для теста _ для теста _ для теста _ для теста _ для теста _ для теста _ 
+
+            CreateNewProject();
+
+            // для теста _ для теста _ для теста _ для теста _ для теста _ для теста _
         }
 
         #endregion
