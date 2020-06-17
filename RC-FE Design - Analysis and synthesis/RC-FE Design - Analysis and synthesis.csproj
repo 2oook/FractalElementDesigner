@@ -128,6 +128,96 @@
     <Compile Include="FEEditor\Model\RCStructure.cs" />
     <Compile Include="FEEditor\Model\RCStructureBase.cs" />
     <Compile Include="FEEditor\Model\Cells\StructureCellBase.cs" />
+    <Compile Include="SchemeEditor\Controls\DiagramCanvas.cs" />
+    <Compile Include="SchemeEditor\Controls\Elements\AndGateControl.xaml.cs">
+      <DependentUpon>AndGateControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemeEditor\Controls\Elements\FElementControl.xaml.cs">
+      <DependentUpon>FElementControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemeEditor\Controls\Elements\PinControl.xaml.cs">
+      <DependentUpon>PinControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemeEditor\Controls\ElementThumb.cs" />
+    <Compile Include="SchemeEditor\Controls\LineEx.cs" />
+    <Compile Include="SchemeEditor\Controls\PinThumb.cs" />
+    <Compile Include="SchemeEditor\Controls\SelectionAdorner.cs" />
+    <Compile Include="SchemeEditor\Controls\SolutionTreeView.cs" />
+    <Compile Include="SchemeEditor\Controls\SolutionTreeViewItem.cs" />
+    <Compile Include="SchemeEditor\Controls\TableGrid.cs" />
+    <Compile Include="SchemeEditor\Core\DiagramProperties.cs" />
+    <Compile Include="SchemeEditor\Core\ICanvas.cs" />
+    <Compile Include="SchemeEditor\Core\IClipboard.cs" />
+    <Compile Include="SchemeEditor\Core\IData.cs" />
+    <Compile Include="SchemeEditor\Core\IdCounter.cs" />
+    <Compile Include="SchemeEditor\Core\IElement.cs" />
+    <Compile Include="SchemeEditor\Core\ILine.cs" />
+    <Compile Include="SchemeEditor\Core\IMargin.cs" />
+    <Compile Include="SchemeEditor\Core\IPoint.cs" />
+    <Compile Include="SchemeEditor\Core\IRect.cs" />
+    <Compile Include="SchemeEditor\Core\ISelected.cs" />
+    <Compile Include="SchemeEditor\Core\ITag.cs" />
+    <Compile Include="SchemeEditor\Core\IThumb.cs" />
+    <Compile Include="SchemeEditor\Core\ITree.cs" />
+    <Compile Include="SchemeEditor\Core\ITreeItem.cs" />
+    <Compile Include="SchemeEditor\Core\IUid.cs" />
+    <Compile Include="SchemeEditor\Core\MarginEx.cs" />
+    <Compile Include="SchemeEditor\Core\Model\Child.cs" />
+    <Compile Include="SchemeEditor\Core\Model\Connection.cs" />
+    <Compile Include="SchemeEditor\Core\Model\Diagram.cs" />
+    <Compile Include="SchemeEditor\Core\Model\IDiagramCreator.cs" />
+    <Compile Include="SchemeEditor\Core\Model\IDiagramParser.cs" />
+    <Compile Include="SchemeEditor\Core\Model\Pin.cs" />
+    <Compile Include="SchemeEditor\Core\Model\Solution.cs" />
+    <Compile Include="SchemeEditor\Core\Model\TreeDiagram.cs" />
+    <Compile Include="SchemeEditor\Core\Model\TreeDiagrams.cs" />
+    <Compile Include="SchemeEditor\Core\Model\TreeProject.cs" />
+    <Compile Include="SchemeEditor\Core\Model\TreeProjects.cs" />
+    <Compile Include="SchemeEditor\Core\Model\TreeSolution.cs" />
+    <Compile Include="SchemeEditor\Core\Model\UndoRedo.cs" />
+    <Compile Include="SchemeEditor\Core\Model\Wire.cs" />
+    <Compile Include="SchemeEditor\Core\ParseOptions.cs" />
+    <Compile Include="SchemeEditor\Core\PointEx.cs" />
+    <Compile Include="SchemeEditor\Core\RectEx.cs" />
+    <Compile Include="SchemeEditor\Core\Tag.cs" />
+    <Compile Include="SchemeEditor\Core\TreeItemType.cs" />
+    <Compile Include="SchemeEditor\Editor\Constants.cs" />
+    <Compile Include="SchemeEditor\Editor\Context.cs" />
+    <Compile Include="SchemeEditor\Editor\DiagramEditor.cs" />
+    <Compile Include="SchemeEditor\Editor\HistoryEditor.cs" />
+    <Compile Include="SchemeEditor\Editor\Insert.cs" />
+    <Compile Include="SchemeEditor\Editor\LineUtil.cs" />
+    <Compile Include="SchemeEditor\Editor\ModelEditor.cs" />
+    <Compile Include="SchemeEditor\Editor\Parser.cs" />
+    <Compile Include="SchemeEditor\Editor\Table.cs" />
+    <Compile Include="SchemeEditor\Editor\Tags.cs" />
+    <Compile Include="SchemeEditor\Editor\TreeEditor.cs" />
+    <Compile Include="SchemeEditor\Editor\WireEditor.cs" />
+    <Compile Include="SchemeEditor\Util\DipUtil.cs" />
+    <Compile Include="SchemeEditor\Util\PathUtil.cs" />
+    <Compile Include="SchemeEditor\Util\ResourceConstants.cs" />
+    <Compile Include="SchemeEditor\Util\SnapUtil.cs" />
+    <Compile Include="SchemeEditor\Util\StringUtil.cs" />
+    <Compile Include="SchemeEditor\Util\WindowsClipboard.cs" />
+    <Compile Include="SchemeEditor\Util\WpfDiagramCreator.cs" />
+    <Compile Include="SchemeEditor\Views\DiagramControl.xaml.cs">
+      <DependentUpon>DiagramControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemeEditor\Views\ExplorerControl.xaml.cs">
+      <DependentUpon>ExplorerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemeEditor\Views\HtmlWindow.xaml.cs">
+      <DependentUpon>HtmlWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemeEditor\Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemeEditor\Views\TableEditorControl.xaml.cs">
+      <DependentUpon>TableEditorControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemeEditor\Views\TagEditorControl.xaml.cs">
+      <DependentUpon>TagEditorControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\AnalysisViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\NewStructureWindowViewModel.cs" />
@@ -185,6 +275,50 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Page404.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SchemeEditor\Controls\Elements\AndGateControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SchemeEditor\Controls\Elements\FElementControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SchemeEditor\Controls\Elements\PinControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SchemeEditor\Dictionaries\BaseDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SchemeEditor\Dictionaries\ElementsDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SchemeEditor\Views\DiagramControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SchemeEditor\Views\ExplorerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SchemeEditor\Views\HtmlWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SchemeEditor\Views\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SchemeEditor\Views\TableEditorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SchemeEditor\Views\TagEditorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
