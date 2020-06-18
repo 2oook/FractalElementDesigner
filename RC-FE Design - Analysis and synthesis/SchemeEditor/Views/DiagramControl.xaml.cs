@@ -444,31 +444,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             }
         }
 
-        private void InsertInput_Click(object sender, RoutedEventArgs e)
-        {
-            var canvas = Editor.Context.CurrentCanvas;
-
-            Editor.Snapshot(canvas, true);
-
-            var point = new PointEx(Editor.Context.RightClick.X, Editor.Context.RightClick.Y);
-            Insert.Input(canvas, point, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
-
-            Editor.Context.LastInsert = Constants.TagElementInput;
-            Editor.Context.SkipLeftClick = false;
-        }
-
-        private void InsertOutput_Click(object sender, RoutedEventArgs e)
-        {
-            var canvas = Editor.Context.CurrentCanvas;
-
-            Editor.Snapshot(canvas, true);
-
-            var point = new PointEx(Editor.Context.RightClick.X, Editor.Context.RightClick.Y);
-            Insert.Output(canvas, point, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
-
-            Editor.Context.LastInsert = Constants.TagElementOutput;
-            Editor.Context.SkipLeftClick = false;
-        }
 
         private void InsertAndGate_Click(object sender, RoutedEventArgs e)
         {
@@ -493,19 +468,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             Insert.FElement(canvas, point, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
 
             Editor.Context.LastInsert = Constants.TagElementFElement;
-            Editor.Context.SkipLeftClick = false;
-        }
-
-        private void InsertOrGate_Click(object sender, RoutedEventArgs e)
-        {
-            var canvas = Editor.Context.CurrentCanvas;
-
-            Editor.Snapshot(canvas, true);
-
-            var point = new PointEx(Editor.Context.RightClick.X, Editor.Context.RightClick.Y);
-            Insert.OrGate(canvas, point, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
-
-            Editor.Context.LastInsert = Constants.TagElementOrGate;
             Editor.Context.SkipLeftClick = false;
         }
 
@@ -592,8 +554,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
                     {
                         Editor.Snapshot(canvas, true);
 
-                        var element = Insert.Input(DiagramCanvas, insertPoint, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
-                        element.SetData(tag);
+                        //var element = Insert.Input(DiagramCanvas, insertPoint, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
+                        //element.SetData(tag);
 
                         e.Handled = true;
                     }
@@ -601,8 +563,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
                     {
                         Editor.Snapshot(canvas, true);
 
-                        var element = Insert.Output(DiagramCanvas, insertPoint, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
-                        element.SetData(tag);
+                        //var element = Insert.Output(DiagramCanvas, insertPoint, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
+                        //element.SetData(tag);
 
                         e.Handled = true;
                     }

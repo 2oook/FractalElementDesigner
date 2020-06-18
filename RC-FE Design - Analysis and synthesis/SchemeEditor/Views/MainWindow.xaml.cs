@@ -20,7 +20,7 @@ using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model;
 
 namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
 {
-    public partial class MainWindow : Window
+    public partial class SchemeEditorWindow : Window
     {
         #region Fields
 
@@ -52,7 +52,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
 
         #region Constructor
 
-        public MainWindow()
+        public SchemeEditorWindow()
         {
             InitializeComponent();
 
@@ -62,7 +62,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             InitializeWindowEvents();
             InitializeFileMenuEvents();
             InitializeEditMenuEvents();
-            InitializeHelpMenuEvents();
         }
 
         #endregion
@@ -121,19 +120,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
 
         #endregion
 
-        #region Dxf Inspect
-
-        private void ShowHtml(string html, string title)
-        {
-            var window = new HtmlWindow();
-
-            window.Title = title;
-            window.Html.NavigateToString(html);
-            window.Show();
-        }
-
-        #endregion
-
         #region Initialize
 
         private void InitializeFileMenuEvents()
@@ -167,19 +153,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             EditClear.Click += (sender, e) => Editor.ClearCanvas();
             EditResetThumbTags.Click += (sender, e) => Editor.ResetThumbTags();
             EditConnect.Click += (sender, e) => Connect();
-        }
-
-        private void InitializeHelpMenuEvents()
-        {
-            HelpAbout.Click += (sender, e) =>
-            {
-                MessageBox.Show("Canvas \n\n" +
-                    "Copyright (C) \n" +
-                    "All Rights Reserved",
-                    "About Canvas ",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information);
-            };
         }
 
         private void InitializeDiagramControl()
@@ -544,9 +517,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
                     case Key.Down: if (canMove == true) { MoveDown(); e.Handled = true; } break;
                     case Key.Left: if (canMove == true) { MoveLeft(); e.Handled = true; } break;
                     case Key.Right: if (canMove == true) { MoveRight(); e.Handled = true; } break;
-                    case Key.I: InsertInput(canvas, GetInsertionPoint()); break;
-                    case Key.O: InsertOutput(canvas, GetInsertionPoint()); break;
-                    case Key.R: InsertOrGate(canvas, GetInsertionPoint()); break;
+                    case Key.I:  break;
+                    case Key.O:  break;
+                    case Key.R:  break;
                     case Key.A: InsertAndGate(canvas, GetInsertionPoint()); break;
                     case Key.S: Editor.ToggleWireStart(); break;
                     case Key.E: Editor.ToggleWireEnd(); break;
@@ -719,26 +692,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
         #endregion
 
         #region Insert
-
-        private void InsertInput(ICanvas canvas, PointEx point)
-        {
-            Editor.Snapshot(canvas, true);
-
-            var element = Insert.Input(canvas,
-                point != null ? point : InsertPointInput, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
-
-            Editor.SelectOneElement(element, true);
-        }
-
-        private void InsertOutput(ICanvas canvas, PointEx point)
-        {
-            Editor.Snapshot(canvas, true);
-
-            var element = Insert.Output(canvas,
-                point != null ? point : InsertPointOutput, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
-
-            Editor.SelectOneElement(element, true);
-        }
 
         private void InsertOrGate(ICanvas canvas, PointEx point)
         {

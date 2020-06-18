@@ -14,12 +14,11 @@
     <UserControl.Resources>
 
         <ContextMenu x:Key="DiagramCanvasContextMenuKey">
-            <MenuItem x:Name="InsertInput" Header="Insert _Input" Click="InsertInput_Click" InputGestureText="I"/>
-            <MenuItem x:Name="InsertOutput" Header="Insert _Output" Click="InsertOutput_Click" InputGestureText="O"/>
+
             <Separator/>
-            <MenuItem x:Name="InsertFElement" Header="Insert _FElement" Click="InsertFElement_Click" InputGestureText="A"/>
+            <MenuItem x:Name="InsertFElement" Header="Insert _FElement" Click="InsertFElement_Click" InputGestureText="F"/>
             <MenuItem x:Name="InsertAndGate" Header="Insert _AndGate" Click="InsertAndGate_Click" InputGestureText="A"/>
-            <MenuItem x:Name="InsertOrGate" Header="Insert O_rGate" Click="InsertOrGate_Click" InputGestureText="R"/>
+            
             <Separator/>
             <MenuItem x:Name="EditCut" Header="Cu_t" Click="EditCut_Click" InputGestureText="Ctrl+X"/>
             <MenuItem x:Name="EditCopy" Header="_Copy" Click="EditCopy_Click" InputGestureText="Ctrl+C"/>

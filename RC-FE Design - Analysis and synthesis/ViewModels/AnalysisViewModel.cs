@@ -20,6 +20,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using RC_FE_Design___Analysis_and_synthesis.IO;
+using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views;
 
 namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 {
@@ -181,7 +182,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 }
                 else if (value is RCStructure structure)
                 {
-
+                    SelectedStructure = structure;
                 }
                 else if (value is Layer layer)
                 {
@@ -309,6 +310,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// Команда для перемещения на главную страницу 
         /// </summary>
         public ICommand GoToMainPageCommand { get; set; }
+
+        /// <summary>
+        /// Команда для перехода к редактору схем включения
+        /// </summary>
+        public ICommand GoToSchemeEditorCommand { get; set; }
 
         private ICommand loadProjectFromSynthesisCommand;
         /// <summary>
@@ -450,6 +456,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             NewProjectCommand = new RelayCommand(CreateNewProject);
             LoadProjectCommand = new RelayCommand(LoadProject);
             SaveProjectCommand = new RelayCommand(SaveProject);
+            GoToSchemeEditorCommand = new RelayCommand(OpenSchemeEditor);
+        }
+
+        // Метод для открытия режима редактирования схем включения
+        private void OpenSchemeEditor() 
+        {
+            var schemeEditorWindow = new SchemeEditorWindow();
+            schemeEditorWindow.Show();
         }
 
         // Метод для сохранения проекта
@@ -606,12 +620,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         public void SetPage(Page page)
         {
             _Page = (AnalysisPage)page;
-
-            // для теста _ для теста _ для теста _ для теста _ для теста _ для теста _ 
-
-            CreateNewProject();
-
-            // для теста _ для теста _ для теста _ для теста _ для теста _ для теста _
         }
 
         #endregion

@@ -1,4 +1,4 @@
-﻿<Window x:Class="RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views.MainWindow"
+﻿<Window x:Class="RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views.SchemeEditorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -17,8 +17,8 @@
     <Grid Background="{DynamicResource LogicBackgroundColorKey}">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="18*"/>
-            <RowDefinition Height="661*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="646*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -27,7 +27,7 @@
             <ColumnDefinition Width="330"/>
         </Grid.ColumnDefinitions>
 
-        <Menu Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Background="{DynamicResource LogicBackgroundColorKey}" Margin="0">
+        <Menu Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Background="{DynamicResource LogicBackgroundColorKey}" Margin="0,0,0.2,1.2">
             <MenuItem Header="_File">
                 <MenuItem x:Name="FileOpen" Header="_Open Solution..." InputGestureText="Ctrl+O"/>
                 <MenuItem x:Name="FileSave" Header="_Save Solution..." InputGestureText="Ctrl+S"/>
@@ -43,9 +43,6 @@
                 <Separator/>
                 <MenuItem x:Name="FileImportTags" Header="Import Tags..." InputGestureText="Ctrl+I"/>
                 <MenuItem x:Name="FileExportTags" Header="Export Tags..."/>
-                <Separator/>
-                <MenuItem x:Name="FileExportToDxf" Header="Export to _Dxf" InputGestureText="Ctrl+E"/>
-                <MenuItem x:Name="FileInspectDxf" Header="Inspe_ct Dxf"/>
                 <Separator/>
                 <MenuItem x:Name="FileExit" Header="E_xit" InputGestureText="Alt+F4"/>
             </MenuItem>
@@ -78,13 +75,13 @@
 
         <local:DiagramControl x:Name="DiagramControl"
                               Grid.Column="0" Grid.Row="1"
-                              Margin="4,4,0,4"                           
+                              Margin="4,6.8,0.2,3.8"                           
                               controls:LineEx.ShortenStart="{Binding ElementName=ShortenStart, Path=IsChecked}"
                               controls:LineEx.ShortenEnd="{Binding ElementName=ShortenEnd, Path=IsChecked}"/>
 
-        <GridSplitter Grid.Column="1" Grid.Row="1" Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        <GridSplitter Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Margin="695,22,0.2,-0.2" Grid.RowSpan="2"/>
 
-        <Grid Background="{DynamicResource LogicBackgroundColorKey}" Grid.Column="2" Grid.Row="1">
+        <Grid Background="{DynamicResource LogicBackgroundColorKey}" Grid.Column="1" Grid.ColumnSpan="2" Margin="3.8,22,-0.2,-0.2" Grid.RowSpan="2">
 
             <TabControl Margin="0,4,4,4">
 
@@ -258,5 +255,5 @@
         </Grid>
 
     </Grid>
-    
+
 </Window>

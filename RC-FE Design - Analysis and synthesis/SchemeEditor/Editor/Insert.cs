@@ -25,35 +25,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         #endregion
 
-        #region Input
-
-        public static IElement Input(ICanvas canvas, IPoint point, IDiagramCreator creator, bool snap)
-        {
-            var thumb = creator.CreateElement(Constants.TagElementInput,
-                new object[] { canvas.GetCounter().Next(), -1 },
-                point.X, point.Y, snap) as IThumb;
-
-            canvas.Add(thumb);
-
-            return thumb;
-        }
-
-        #endregion
-
-        #region Output
-
-        public static IElement Output(ICanvas canvas, IPoint point, IDiagramCreator creator, bool snap)
-        {
-            var thumb = creator.CreateElement(Constants.TagElementOutput,
-                new object[] { canvas.GetCounter().Next(), -1 },
-                point.X, point.Y, snap) as IThumb;
-
-            canvas.Add(thumb);
-
-            return thumb;
-        }
-
-        #endregion
 
         #region AndGate
 

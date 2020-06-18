@@ -206,9 +206,6 @@
     <Compile Include="SchemeEditor\Views\ExplorerControl.xaml.cs">
       <DependentUpon>ExplorerControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SchemeEditor\Views\HtmlWindow.xaml.cs">
-      <DependentUpon>HtmlWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SchemeEditor\Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -303,10 +300,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SchemeEditor\Views\ExplorerControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SchemeEditor\Views\HtmlWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
