@@ -31,12 +31,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core
             {
                 return new DiagramProperties()
                 {
-                    PageWidth = 1260,
-                    PageHeight = 891,
                     GridOriginX = 0,
                     GridOriginY = 0,
-                    GridWidth = 1260,
-                    GridHeight = 891,
                     GridSize = 30,
                     SnapX = 15,
                     SnapY = 15,

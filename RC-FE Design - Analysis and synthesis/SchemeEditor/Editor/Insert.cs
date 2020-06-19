@@ -41,22 +41,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         #endregion
 
-        #region OrGate
-
-        public static IElement OrGate(ICanvas canvas, IPoint point, IDiagramCreator creator, bool snap)
-        {
-            var counter = canvas.GetCounter();
-
-            var thumb = creator.CreateElement(Constants.TagElementOrGate,
-                new object[] { counter.Next() },
-                point.X, point.Y, snap) as IThumb;
-
-            canvas.Add(thumb);
-
-            return thumb;
-        }
-
-        #endregion
 
         #region FElement
 

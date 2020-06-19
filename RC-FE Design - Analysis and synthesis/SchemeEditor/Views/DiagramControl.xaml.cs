@@ -43,6 +43,20 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
         public DiagramControl()
         {
             InitializeComponent();
+
+            Loaded += DiagramControl_Loaded;  
+        }
+
+        private void DiagramControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            DiagramCanvas.Width = RootGrid.ActualWidth;
+            DiagramCanvas.Height = RootGrid.ActualHeight;
+
+            DiagramBackgroud.Width = RootGrid.ActualWidth;
+            DiagramBackgroud.Height = RootGrid.ActualHeight;
+
+            DiagramTemplate.Width = RootGrid.ActualWidth;
+            DiagramTemplate.Height = RootGrid.ActualHeight;
         }
 
         #endregion

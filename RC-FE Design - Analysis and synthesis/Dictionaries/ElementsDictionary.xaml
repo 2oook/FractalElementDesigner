@@ -7,8 +7,8 @@
         <ResourceDictionary Source="/RC-FE Design - Analysis and synthesis;component/Dictionaries/BaseDictionary.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <ControlTemplate x:Key="LandscapePageTemplateKey">
-        <elements:PageControl/>
+    <ControlTemplate x:Key="CellControlTemplateKey">
+        <elements:CellControl/>
     </ControlTemplate>
 
 </ResourceDictionary>

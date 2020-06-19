@@ -14,19 +14,17 @@
     <UserControl.Resources>
 
         <ContextMenu x:Key="DiagramCanvasContextMenuKey">
-
-            <Separator/>
+           
             <MenuItem x:Name="InsertFElement" Header="Insert _FElement" Click="InsertFElement_Click" InputGestureText="F"/>
             <MenuItem x:Name="InsertAndGate" Header="Insert _AndGate" Click="InsertAndGate_Click" InputGestureText="A"/>
             
             <Separator/>
+            
             <MenuItem x:Name="EditCut" Header="Cu_t" Click="EditCut_Click" InputGestureText="Ctrl+X"/>
             <MenuItem x:Name="EditCopy" Header="_Copy" Click="EditCopy_Click" InputGestureText="Ctrl+C"/>
             <MenuItem x:Name="EditPaste" Header="_Paste" Click="EditPaste_Click" InputGestureText="Ctrl+V"/>
             <MenuItem x:Name="EditDelete" Header="_Delete" Click="EditDelete_Click" InputGestureText="Del"/>
-            <Separator/>
-            <MenuItem x:Name="InvertStart" Header="Invert _Start" Click="InvertStart_Click" InputGestureText="S"/>
-            <MenuItem x:Name="InvertEnd" Header="Invert _End" Click="InvertEnd_Click" InputGestureText="E"/>
+             
         </ContextMenu>
 
     </UserControl.Resources>
@@ -53,19 +51,13 @@
                     Visibility="Visible">
             </Canvas>
 
-            <Canvas x:Name="DiagramGrid"
-                    Width="{Binding ElementName=DiagramCanvas, Path=Width}"
-                    Height="{Binding ElementName=DiagramCanvas, Path=Height}" 
-                    Grid.Column="0" Grid.Row="0"
-                    ClipToBounds="False"
-                    Background="{DynamicResource LogicTransparentColorKey}">
-                <Path x:Name="PathGrid" Style="{StaticResource GridPathStyleKey}"/>
+            <Canvas x:Name="DiagramTemplate" ClipToBounds="False" Background="{DynamicResource LogicTransparentColorKey}">
+                <Rectangle Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}, Path=ActualWidth}"
+                   Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}, Path=ActualHeight}"
+                   Stroke="Black" StrokeThickness="2"/>
             </Canvas>
 
-            <Control x:Name="DiagramTemplate" Template="{StaticResource LandscapePageTemplateKey}"/>
-
-            <controls:DiagramCanvas x:Name="DiagramCanvas"
-                                    
+            <controls:DiagramCanvas x:Name="DiagramCanvas"                                  
                                     Grid.Column="0" Grid.Row="0"
                                     Background="{DynamicResource LogicTransparentColorKey}" 
                                     ContextMenu="{StaticResource DiagramCanvasContextMenuKey}"
@@ -78,6 +70,7 @@
                                     ContextMenuOpening="Canvas_ContextMenuOpening"
                                     Drop="DiagramCanvas_Drop"
                                     DragEnter="DiagramCanvas_DragEnter">
+                
             </controls:DiagramCanvas>
 
         </Grid>

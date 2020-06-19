@@ -368,19 +368,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         #region Grid
 
-        public static void SetGrid(ICanvas canvas, IDiagramCreator creator)
-        {
-            var prop = canvas.GetProperties();
-
-            creator.CreateGrid(prop.GridOriginX,
-                prop.GridOriginY,
-                prop.GridWidth,
-                prop.GridHeight,
-                prop.GridSize);
-
-            canvas.SetWidth(prop.PageWidth);
-            canvas.SetHeight(prop.PageHeight);
-        }
 
         #endregion
 

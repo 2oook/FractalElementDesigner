@@ -96,11 +96,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
             {
                 {  Constants.TagElementPin, CreatePin },
                 {  Constants.TagElementWire, CreateWire },
-                {  Constants.TagElementInput, CreateInput },
-                {  Constants.TagElementOutput, CreateOutput },
                 {  Constants.TagElementFElement, CreateFElement },
-                {  Constants.TagElementAndGate, CreateAndGate },
-                {  Constants.TagElementOrGate, CreateOrGate },
+                {  Constants.TagElementAndGate, CreateAndGate }
             };
         }
 
@@ -157,63 +154,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
             return line;
         }
 
-        private object CreateInput(object[] data, double x, double y, bool snap)
-        {
-            if (data == null || data.Length != 2)
-                return null;
-
-            int id = (int)data[0];
-            int tagId = (int)data[1];
-
-            var thumb = new ElementThumb()
-            {
-                Template = Application.Current.Resources[ResourceConstants.KeyTemplateInput] as ControlTemplate,
-                Style = Application.Current.Resources[ResourceConstants.KeySyleRootThumb] as Style,
-                Uid = Constants.TagElementInput + Constants.TagNameSeparator + id.ToString()
-            };
-
-            SetThumbEvents(thumb);
-            SetPosition(thumb, x, y, snap);
-
-            var tags = this.GetTags();
-            if (tags != null)
-            {
-                var tag = tags.Cast<Tag>().Where(t => t.Id == tagId).FirstOrDefault();
-                if (tag != null)
-                    ElementThumb.SetData(thumb, tag);
-            }
-
-            return thumb;
-        }
-
-        private object CreateOutput(object[] data, double x, double y, bool snap)
-        {
-            if (data == null || data.Length != 2)
-                return null;
-
-            int id = (int)data[0];
-            int tagId = (int)data[1];
-
-            var thumb = new ElementThumb()
-            {
-                Template = Application.Current.Resources[ResourceConstants.KeyTemplateOutput] as ControlTemplate,
-                Style = Application.Current.Resources[ResourceConstants.KeySyleRootThumb] as Style,
-                Uid = Constants.TagElementOutput + Constants.TagNameSeparator + id.ToString()
-            };
-
-            SetThumbEvents(thumb);
-            SetPosition(thumb, x, y, snap);
-
-            var tags = this.GetTags();
-            if (tags != null)
-            {
-                var tag = tags.Cast<Tag>().Where(t => t.Id == tagId).FirstOrDefault();
-                if (tag != null)
-                    ElementThumb.SetData(thumb, tag);
-            }
-
-            return thumb;
-        }
 
         private object CreateFElement(object[] data, double x, double y, bool snap)
         {
@@ -256,25 +196,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
             return thumb;
         }
 
-        private object CreateOrGate(object[] data, double x, double y, bool snap)
-        {
-            if (data == null || data.Length != 1)
-                return null;
-
-            int id = (int)data[0];
-
-            var thumb = new ElementThumb()
-            {
-                Template = Application.Current.Resources[ResourceConstants.KeyTemplateOrGate] as ControlTemplate,
-                Style = Application.Current.Resources[ResourceConstants.KeySyleRootThumb] as Style,
-                Uid = Constants.TagElementOrGate + Constants.TagNameSeparator + id.ToString()
-            };
-
-            SetThumbEvents(thumb);
-            SetPosition(thumb, x, y, snap);
-
-            return thumb;
-        } 
         
 #endregion
 
@@ -302,35 +223,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
 
         public object CreateDiagram(DiagramProperties properties)
         {
-            if (ParserPath != null)
-            {
-                CreateGrid(properties.GridOriginX, properties.GridOriginY,
-                    properties.GridWidth, properties.GridHeight,
-                    properties.GridSize);
-            }
 
             if (ParserCanvas != null)
             {
                 ParserCanvas.SetWidth(properties.PageWidth);
                 ParserCanvas.SetHeight(properties.PageHeight);
             }
-
-            return null;
-        }
-
-        public object CreateGrid(double originX,
-            double originY,
-            double width,
-            double height,
-            double size)
-        {
-            var path = this.ParserPath;
-            if (path == null)
-                return null;
-
-            string str = CreateGridGeometry(originX, originY, width, height, size);
-
-            path.Data = Geometry.Parse(str);
 
             return null;
         }

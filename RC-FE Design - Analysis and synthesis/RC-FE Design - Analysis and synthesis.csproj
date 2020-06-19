@@ -94,9 +94,6 @@
     <Compile Include="FEEditor\Elements\CellControl.xaml.cs">
       <DependentUpon>CellControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FEEditor\Elements\PageControl.xaml.cs">
-      <DependentUpon>PageControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="FEEditor\Editor.cs" />
     <Compile Include="FEEditor\Insert.cs" />
     <Compile Include="FEEditor\Model\Cells\CellType.cs" />
@@ -242,10 +239,6 @@
     <Page Include="FEEditor\Elements\CellControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FEEditor\Elements\PageControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

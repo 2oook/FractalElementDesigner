@@ -7,7 +7,6 @@
     <sys:Double x:Key="WireStrokeThicknessKey">2.0</sys:Double>
     <sys:Double x:Key="ElementStrokeThicknessKey">2.0</sys:Double>
     <sys:Double x:Key="IOStrokeThicknessKey">2.0</sys:Double>
-
     <sys:Double x:Key="PageStrokeThicknessKey">1.0</sys:Double>
 
     <!-- images -->
@@ -17,7 +16,7 @@
 
     <!-- colors -->
 
-    <SolidColorBrush x:Key="LogicBackgroundColorKey" Color="#FFDDDDDD"/>
+    <SolidColorBrush x:Key="LogicBackgroundColorKey" Color="White"/>
     <SolidColorBrush x:Key="LogicGridColorKey" Color="#FFB4B4B4"/>
     <SolidColorBrush x:Key="LogicTemplateColorKey" Color="#FF747474"/>
     <SolidColorBrush x:Key="LogicColorKey" Color="#FF000000"/>

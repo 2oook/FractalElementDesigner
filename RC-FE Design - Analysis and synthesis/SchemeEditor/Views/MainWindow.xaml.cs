@@ -219,8 +219,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             Editor.Context.CreateProject = () => this.ExplorerControl.CreateTreeProjectItem();
             Editor.Context.CreateDiagram = () => this.ExplorerControl.CreateTreeDiagramItem();
 
-            // update canvas grid
-            UpdateDiagramGrid(false);
         }
 
         private void InitializeHistory()
@@ -311,7 +309,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             creator.GetTags = () => Editor.Context.Tags;
             creator.GetCounter = () => Editor.Context.CurrentCanvas.GetCounter();
             creator.SetCanvas(this.DiagramControl.DiagramCanvas);
-            creator.ParserPath = this.DiagramControl.PathGrid;
+            
 
             return creator;
         }
@@ -376,17 +374,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             TextSnapOffsetY.Text = prop.SnapOffsetY.ToString();
         }
 
-        private void UpdateDiagramGrid(bool undo)
-        {
-            var canvas = Editor.Context.CurrentCanvas;
-            var creator = Editor.Context.DiagramCreator;
-
-            if (undo == true)
-                HistoryEditor.Add(canvas);
-
-            Editor.Context.UpdateProperties();
-            ModelEditor.SetGrid(canvas, creator);
-        }
 
         private void OpenSolution()
         {
@@ -398,7 +385,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
         {
             UpdateSolutionState(false, null);
             SetProperties(DiagramProperties.Default);
-            UpdateDiagramGrid(false);
+            
 
             ModelEditor.Clear(Editor.Context.CurrentCanvas);
 
@@ -566,13 +553,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
                 Visibility.Visible : Visibility.Collapsed;
         }
 
-        private void EnablePageGrid_Click(object sender, RoutedEventArgs e)
-        {
-            var grid = this.DiagramControl.DiagramGrid;
-            var visibility = grid.Visibility;
-            grid.Visibility = visibility == Visibility.Collapsed ?
-                Visibility.Visible : Visibility.Collapsed;
-        }
 
         private void EnablePageTemplate_Click(object sender, RoutedEventArgs e)
         {
@@ -620,10 +600,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             Editor.Paste(diagram, offsetX, offsetY, true);
         }
 
-        private void UpdateGrid_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateDiagramGrid(true);
-        }
 
         #endregion
 
@@ -693,11 +669,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
 
         #region Insert
 
-        private void InsertOrGate(ICanvas canvas, PointEx point)
+        private void InsertFEElement(ICanvas canvas, PointEx point)
         {
             Editor.Snapshot(canvas, true);
 
-            var element = Insert.OrGate(canvas,
+            var element = Insert.FElement(canvas,
                 point != null ? point : InsertPointGate, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
 
             Editor.SelectOneElement(element, true);

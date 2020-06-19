@@ -18,7 +18,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Elements
     /// <summary>
     /// Interaction logic for FElementControl.xaml
     /// </summary>
-    public partial class FElementControl : Page
+    public partial class FElementControl : UserControl
     {
         public FElementControl()
         {

@@ -6,7 +6,10 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
 
+                <ResourceDictionary Source="SchemeEditor/Dictionaries/ElementsDictionary.xaml"/>
+
                 <ResourceDictionary Source="Dictionaries/ElementsDictionary.xaml"/>
+                
                 <ResourceDictionary Source="Dictionaries/CellResourceDictionary.xaml"/>
 
                 <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->

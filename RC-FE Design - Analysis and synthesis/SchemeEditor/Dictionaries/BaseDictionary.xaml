@@ -147,6 +147,7 @@
         <Setter Property="StrokeEndLineCap" Value="Flat"/>
         <Setter Property="StrokeLineJoin" Value="Miter"/>
         <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        <Setter Property="SnapsToDevicePixels" Value="False"/>
     </Style>
 
     <Style x:Key="TemplatePathStyleKey" TargetType="Path">
