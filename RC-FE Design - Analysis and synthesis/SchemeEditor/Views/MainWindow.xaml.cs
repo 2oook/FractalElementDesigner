@@ -166,9 +166,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             {
                 this.DiagramControl.Focus();
 
-                SetCurrentTable();
                 InitializeTagEditor();
-                InitializeTableEditor();
             };
 
             this.PreviewKeyDown += (sender, e) =>
@@ -240,64 +238,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
         private void UpdateEditors()
         {
             InitializeTagEditor();
-            InitializeTableEditor();
-        }
-
-        private void SetCurrentTable()
-        {
-            var table = new DiagramTable()
-            {
-                Id = 0,
-                Revision1 = new Revision()
-                {
-                    Version = "",
-                    Date = "",
-                    Remarks = "",
-                },
-                Revision2 = new Revision()
-                {
-                    Version = "",
-                    Date = "",
-                    Remarks = "",
-                },
-                Revision3 = new Revision()
-                {
-                    Version = "",
-                    Date = "",
-                    Remarks = "",
-                },
-                PathLogo1 = "",
-                PathLogo2 = "",
-                Drawn = new Person()
-                {
-                    Name = "user",
-                    Date = DateTime.Today.ToString("yyyy-MM-dd")
-                },
-                Checked = new Person()
-                {
-                    Name = "user",
-                    Date = DateTime.Today.ToString("yyyy-MM-dd")
-                },
-                Approved = new Person()
-                {
-                    Name = "user",
-                    Date = DateTime.Today.ToString("yyyy-MM-dd")
-                },
-                Title = "LOGIC DIAGRAM",
-                SubTitle1 = "DIAGRAM",
-                SubTitle2 = "",
-                SubTitle3 = "",
-                Rev = "0",
-                Status = "-",
-                Page = "-",
-                Pages = "-",
-                Project = "Sample",
-                OrderNo = "",
-                DocumentNo = "",
-                ArchiveNo = ""
-            };
-
-            TableGrid.SetData(this, table);
         }
 
         private IDiagramCreator GetDiagramCreator()
@@ -515,7 +455,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
                     case Key.OemPeriod: TreeEditor.SelectNextItem(Editor.Context.CurrentTree, false); break;
                     case Key.F5: TabExplorer.IsSelected = true; break;
                     case Key.F6: TabTags.IsSelected = true; InitializeTagEditor(); break;
-                    case Key.F7: TabTables.IsSelected = true; InitializeTableEditor(); break;
+                    case Key.F7:  break;
                     case Key.F8: TabModel.IsSelected = true; break;
                     case Key.F9: TabOptions.IsSelected = true; break;
                 }
@@ -714,26 +654,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             {
                 control.Selected = GetSeletedIO();
                 control.UpdateSelected();
-            };
-        }
-
-        #endregion
-
-        #region Table Editor
-
-        private void InitializeTableEditor()
-        {
-            var control = this.TableEditorControl;
-
-            if (Editor.Context.Tables == null)
-                Editor.Context.Tables = new List<object>();
-
-            control.Tables = Editor.Context.Tables;
-            control.Initialize();
-
-            DiagramControl.SelectionChanged = () =>
-            {
-                // TODO: Updated current table.
             };
         }
 

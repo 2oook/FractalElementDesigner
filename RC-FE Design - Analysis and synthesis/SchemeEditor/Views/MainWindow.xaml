@@ -99,13 +99,6 @@
                     <local:TagEditorControl x:Name="TagEditorControl"/>
                 </TabItem>
 
-                <TabItem x:Name="TabTables" FocusVisualStyle="{x:Null}">
-                    <TabItem.Header>
-                        <TextBlock Text="Tables" ToolTip="Table Editor (F7)"/>
-                    </TabItem.Header>
-                    <local:TableEditorControl x:Name="TableEditorControl"/>
-                </TabItem>
-
                 <TabItem x:Name="TabModel" FocusVisualStyle="{x:Null}">
                     <TabItem.Header>
                         <TextBlock Text="Model" ToolTip="Model (F8)"/>

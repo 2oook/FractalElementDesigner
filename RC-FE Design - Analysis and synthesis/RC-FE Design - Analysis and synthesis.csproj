@@ -141,7 +141,6 @@
     <Compile Include="SchemeEditor\Controls\SelectionAdorner.cs" />
     <Compile Include="SchemeEditor\Controls\SolutionTreeView.cs" />
     <Compile Include="SchemeEditor\Controls\SolutionTreeViewItem.cs" />
-    <Compile Include="SchemeEditor\Controls\TableGrid.cs" />
     <Compile Include="SchemeEditor\Core\DiagramProperties.cs" />
     <Compile Include="SchemeEditor\Core\ICanvas.cs" />
     <Compile Include="SchemeEditor\Core\IClipboard.cs" />
@@ -186,7 +185,6 @@
     <Compile Include="SchemeEditor\Editor\LineUtil.cs" />
     <Compile Include="SchemeEditor\Editor\ModelEditor.cs" />
     <Compile Include="SchemeEditor\Editor\Parser.cs" />
-    <Compile Include="SchemeEditor\Editor\Table.cs" />
     <Compile Include="SchemeEditor\Editor\Tags.cs" />
     <Compile Include="SchemeEditor\Editor\TreeEditor.cs" />
     <Compile Include="SchemeEditor\Editor\WireEditor.cs" />
@@ -205,9 +203,6 @@
     </Compile>
     <Compile Include="SchemeEditor\Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SchemeEditor\Views\TableEditorControl.xaml.cs">
-      <DependentUpon>TableEditorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="SchemeEditor\Views\TagEditorControl.xaml.cs">
       <DependentUpon>TagEditorControl.xaml</DependentUpon>
@@ -297,10 +292,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SchemeEditor\Views\MainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SchemeEditor\Views\TableEditorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

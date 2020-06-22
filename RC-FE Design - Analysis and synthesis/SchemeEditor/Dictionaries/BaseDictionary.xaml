@@ -257,27 +257,6 @@
         <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
     </Style>
 
-    <Style x:Key="TableHeaderTextBlockStyleKey" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="Arial"/>
-        <Setter Property="FontSize" Value="9"/>
-        <Setter Property="FontWeight" Value="Thin"/>
-        <Setter Property="Foreground" Value="{DynamicResource LogicTemplateColorKey}"/>
-        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="Margin" Value="4,0,0,0"/>
-    </Style>
-
-    <Style x:Key="TableTextBlockStyleKey" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="Arial"/>
-        <Setter Property="FontSize" Value="9"/>
-        <Setter Property="FontWeight" Value="Normal"/>
-        <Setter Property="Foreground" Value="{DynamicResource LogicTemplateColorKey}"/>
-        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-    </Style>
-
     <!-- templates -->
 
     <ControlTemplate x:Key="PinThumbControlTemplateKey">

@@ -584,25 +584,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
                     }
                 }
             }
-
-            // Table
-            else if (e.Data.GetDataPresent("Table"))
-            {
-                var table = e.Data.GetData("Table") as DiagramTable;
-                if (table != null)
-                {
-                    var canvas = Editor.Context.CurrentCanvas;
-
-                    Editor.Snapshot(canvas, true);
-
-                    canvas.SetData(table);
-
-                    // TODO:
-                    TableGrid.SetData(this, table);
-
-                    e.Handled = true;
-                }
-            }
         }
 
         #endregion
