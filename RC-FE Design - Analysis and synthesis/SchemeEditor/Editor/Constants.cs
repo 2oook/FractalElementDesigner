@@ -19,11 +19,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         public const string TagElementPin = "Pin";
         public const string TagElementWire = "Wire";
-        public const string TagElementInput = "Input";
-        public const string TagElementOutput = "Output";
         public const string TagElementAndGate = "AndGate";
         public const string TagElementFElement = "FElement";
-        public const string TagElementOrGate = "OrGate";
 
         public const string WireStartType = "Start";
         public const string WireEndType = "End";

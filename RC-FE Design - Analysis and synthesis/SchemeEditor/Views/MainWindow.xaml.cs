@@ -130,10 +130,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             FileSaveAs.Click += (sender, e) => SaveSolutionAsDlg(true);
             FileOpenDiagram.Click += (sender, e) => OpenDiagramDlg();
             FileSaveDiagram.Click += (sender, e) => SaveDiagramDlg();
-            FileOpenTags.Click += (sender, e) => OpenTags();
-            FileSaveTags.Click += (sender, e) => TagsSaveDlg();
-            FileImportTags.Click += (sender, e) => ImportTags();
-            FileExportTags.Click += (sender, e) => TagsExportDlg();
+            
             FileExit.Click += (sender, e) => Application.Current.Shutdown();
         }
 
@@ -165,8 +162,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             this.Loaded += (sender, e) =>
             {
                 this.DiagramControl.Focus();
-
-                InitializeTagEditor();
             };
 
             this.PreviewKeyDown += (sender, e) =>
@@ -235,18 +230,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             UpdateWindowTitle();
         }
 
-        private void UpdateEditors()
-        {
-            InitializeTagEditor();
-        }
-
         private IDiagramCreator GetDiagramCreator()
         {
             var creator = new WpfDiagramCreator();
 
             creator.SetThumbEvents = (thumb) => SetThumbEvents(thumb);
             creator.SetPosition = (element, left, top, snap) => Editor.SetPosition(element, left, top, snap);
-            creator.GetTags = () => Editor.Context.Tags;
+
             creator.GetCounter = () => Editor.Context.CurrentCanvas.GetCounter();
             creator.SetCanvas(this.DiagramControl.DiagramCanvas);
             
@@ -318,7 +308,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
         private void OpenSolution()
         {
             OpenSolutionDlg();
-            UpdateEditors();
         }
 
         private void NewSolution()
@@ -338,20 +327,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
                 Editor.Context.CreateProject,
                 Editor.Context.CreateDiagram,
                 Editor.Context.CurrentCanvas.GetCounter());
-
-            UpdateEditors();
-        }
-
-        private void OpenTags()
-        {
-            TagsOpenDlg();
-            UpdateEditors();
-        }
-
-        private void ImportTags()
-        {
-            TagsImportDlg();
-            InitializeTagEditor();
         }
 
         private void DeselectAll()
@@ -392,7 +367,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
         private void Delete()
         {
             Editor.Delete();
-            InitializeTagEditor();
         }
 
         #endregion
@@ -413,8 +387,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
                     case Key.O: OpenSolution(); break;
                     case Key.S: SaveSolutionAsDlg(false); break;
                     case Key.N: NewSolution(); break;
-                    case Key.T: OpenTags(); break;
-                    case Key.I: ImportTags(); break;
                     case Key.R: Editor.ResetThumbTags(); break;
                     case Key.E:  break;
                     case Key.Z: Editor.Undo(); break;
@@ -454,7 +426,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
                     case Key.OemComma: TreeEditor.SelectPreviousItem(Editor.Context.CurrentTree, false); break;
                     case Key.OemPeriod: TreeEditor.SelectNextItem(Editor.Context.CurrentTree, false); break;
                     case Key.F5: TabExplorer.IsSelected = true; break;
-                    case Key.F6: TabTags.IsSelected = true; InitializeTagEditor(); break;
+                    case Key.F6: break;
                     case Key.F7:  break;
                     case Key.F8: TabModel.IsSelected = true; break;
                     case Key.F9: TabOptions.IsSelected = true; break;
@@ -631,34 +603,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
 
         #endregion
 
-        #region Tag Editor
-
-        public List<IElement> GetSeletedIO()
-        {
-            var selected = Editor.GetSelectedInputOutputElements();
-            return (selected.Count() == 0) ? null : selected.ToList();
-        }
-
-        private void InitializeTagEditor()
-        {
-            var control = this.TagEditorControl;
-
-            if (Editor.Context.Tags == null)
-                Editor.Context.Tags = new List<object>();
-
-            control.Selected = GetSeletedIO();
-            control.Tags = Editor.Context.Tags;
-            control.Initialize();
-
-            DiagramControl.SelectionChanged = () =>
-            {
-                control.Selected = GetSeletedIO();
-                control.UpdateSelected();
-            };
-        }
-
-        #endregion
-
         #region File Dialogs
 
         private void OpenDiagramDlg()
@@ -738,8 +682,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
         {
             var tree = Editor.Context.CurrentTree;
 
-            TagsUpdate(saveAs);
-
             Editor.SaveSolution(fileName);
 
             UpdateSolutionState(false, fileName);
@@ -761,94 +703,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
                 var canvas = Editor.Context.CurrentCanvas;
 
                 Editor.SaveDiagram(fileName, canvas);
-            }
-        }
-
-        private void TagsOpenDlg()
-        {
-            var dlg = new Microsoft.Win32.OpenFileDialog()
-            {
-                Filter = "Tags (*.txt)|*.txt|All Files (*.*)|*.*",
-                Title = "Open Tags"
-            };
-
-            var res = dlg.ShowDialog();
-            if (res == true)
-            {
-                var tagFileName = dlg.FileName;
-                var tags = Tags.Open(tagFileName);
-
-                Editor.Context.TagFileName = tagFileName;
-                Editor.Context.Tags = tags;
-            }
-        }
-
-        private void TagsUpdate(bool saveAs)
-        {
-            string tagFileName = Editor.Context.TagFileName;
-            var tags = Editor.Context.Tags;
-
-            if (tagFileName != null && tags != null && saveAs == false)
-                Tags.Export(tagFileName, tags);
-            else if ((tagFileName == null && tags != null) || saveAs == true)
-                TagsSaveDlg();
-        }
-
-        private void TagsSaveDlg()
-        {
-            var dlg = new Microsoft.Win32.SaveFileDialog()
-            {
-                Filter = "Tags (*.txt)|*.txt|All Files (*.*)|*.*",
-                Title = "Save Tags",
-                FileName = Editor.Context.TagFileName == null ? TagsNewFileName : System.IO.Path.GetFileName(Editor.Context.TagFileName)
-            };
-
-            var res = dlg.ShowDialog();
-            if (res == true)
-            {
-                var tagFileName = dlg.FileName;
-
-                Tags.Export(tagFileName, Editor.Context.Tags);
-
-                Editor.Context.TagFileName = tagFileName;
-            }
-        }
-
-        private void TagsImportDlg()
-        {
-            var dlg = new Microsoft.Win32.OpenFileDialog()
-            {
-                Filter = "Tags (*.txt)|*.txt|All Files (*.*)|*.*",
-                Title = "Import Tags"
-            };
-
-            var res = dlg.ShowDialog();
-            if (res == true)
-            {
-                var tagFileName = dlg.FileName;
-
-                if (Editor.Context.Tags == null)
-                    Editor.Context.Tags = new List<object>();
-
-                Tags.Import(tagFileName, Editor.Context.Tags, true);
-            }
-        }
-
-        private void TagsExportDlg()
-        {
-            var dlg = new Microsoft.Win32.SaveFileDialog()
-            {
-                Filter = "Tags (*.txt)|*.txt|All Files (*.*)|*.*",
-                Title = "Export Tags",
-                FileName = "tags"
-            };
-
-            var res = dlg.ShowDialog();
-            if (res == true)
-            {
-                var tagFileName = dlg.FileName;
-
-                Tags.Export(tagFileName, Editor.Context.Tags);
             }
         }
 

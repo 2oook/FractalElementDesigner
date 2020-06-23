@@ -2,7 +2,6 @@
 {
     public static class ResourceConstants
     {
-
         public const string KeyLogicBackgroundColor = "LogicBackgroundColorKey";
         public const string KeLogicGridColory = "LogicGridColorKey";
         public const string KeyLogicTemplateColor = "LogicTemplateColorKey";
@@ -17,11 +16,8 @@
         public const string KeyPageStrokeThickness = "PageStrokeThicknessKey";
 
         public const string KeyTemplatePin = "PinControlTemplateKey";
-        public const string KeyTemplateInput = "InputControlTemplateKey";
-        public const string KeyTemplateOutput = "OutputControlTemplateKey";
         public const string KeyTemplateAndGate = "AndGateControlTemplateKey";
         public const string KeyTemplateFElement = "FElementControlTemplateKey";
-        public const string KeyTemplateOrGate = "OrGateControlTemplateKey";
 
         public const string KeyLandscapePageTemplate = "LandscapePageTemplateKey";
 

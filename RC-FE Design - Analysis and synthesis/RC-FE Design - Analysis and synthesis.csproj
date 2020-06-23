@@ -204,9 +204,6 @@
     <Compile Include="SchemeEditor\Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SchemeEditor\Views\TagEditorControl.xaml.cs">
-      <DependentUpon>TagEditorControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\AnalysisViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\NewStructureWindowViewModel.cs" />
@@ -292,10 +289,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SchemeEditor\Views\MainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SchemeEditor\Views\TagEditorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

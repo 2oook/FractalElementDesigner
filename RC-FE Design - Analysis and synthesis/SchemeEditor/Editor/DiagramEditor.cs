@@ -41,8 +41,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         {
             return ModelEditor.GenerateSolution(Context.CurrentTree,
                 fileName,
-                Context.TagFileName,
-                Context.TableFileName,
                 includeHistory);
         }
 
@@ -540,26 +538,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             return ModelEditor.GetAll(Context.CurrentCanvas);
         }
 
-        public IEnumerable<IElement> GetAllInputOutputElements()
-        {
-            return GetElementsAll().Where(x =>
-            {
-                string uid = x.GetUid();
-                return StringUtil.StartsWith(uid, Constants.TagElementInput) ||
-                    StringUtil.StartsWith(uid, Constants.TagElementOutput);
-            });
-        }
-
-        public IEnumerable<IElement> GetSelectedInputOutputElements()
-        {
-            return GetElementsSelected().Where(x =>
-            {
-                string uid = x.GetUid();
-                return StringUtil.StartsWith(uid, Constants.TagElementInput) ||
-                    StringUtil.StartsWith(uid, Constants.TagElementOutput);
-            });
-        }
-
         public void SelectAll()
         {
             ModelEditor.SelectAll(Context.CurrentCanvas);
@@ -862,11 +840,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             IdCounter counter,
             Func<ITreeItem> CreateTreeSolutionItem)
         {
-            string tagFileName = solution.TagFileName;
+            
             string solutionName = solution.Name;
             var projects = solution.Projects.Reverse();
 
-            TagsLoad(tagFileName);
+            
 
             var item = TreeEditor.CreateSolutionItem(solutionName, CreateTreeSolutionItem, counter);
             tree.Add(item);
@@ -878,7 +856,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         {
             TreeEditor.Clear(tree);
             counter.Reset();
-            TagsReset();
+            
             SelectedListReset();
             canvas.SetTags(null);
         }
@@ -902,38 +880,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         {
             foreach (var thumb in thumbs)
                 thumb.SetData(null);
-        }
-
-        private void TagsLoad(string tagFileName)
-        {
-            if (tagFileName != null)
-            {
-                Context.TagFileName = tagFileName;
-
-                try
-                {
-                    var tags = Tags.Open(tagFileName);
-
-                    Context.Tags = tags;
-                    Context.CurrentCanvas.SetTags(tags);
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.Print("Failed to load tags from file: {0}, error: {1}",
-                        tagFileName, ex.Message);
-                }
-            }
-        }
-
-        private void TagsReset()
-        {
-            if (Context.Tags != null)
-            {
-                Context.Tags.Clear();
-                Context.Tags = null;
-            }
-
-            Context.TagFileName = null;
         }
 
         #endregion

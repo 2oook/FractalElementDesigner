@@ -543,9 +543,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
 
         private void DiagramCanvas_DragEnter(object sender, DragEventArgs e)
         {
-            if (!e.Data.GetDataPresent("Tag") ||
-                !e.Data.GetDataPresent("Table") ||
-                sender == e.Source)
+            if (!e.Data.GetDataPresent("Tag") || sender == e.Source)
             {
                 e.Effects = DragDropEffects.None;
             }

@@ -20,12 +20,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         public string ClipboardText = null;
 
-        public string TagFileName = null;
-        public List<object> Tags = null;
-
-        public string TableFileName = null;
-        public List<object> Tables = null;
-
         public ITree CurrentTree = null;
         public ICanvas CurrentCanvas = null;
 
@@ -35,7 +29,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         public PointEx RightClick;
 
         public bool EnableInsertLast = false;
-        public string LastInsert = Constants.TagElementInput;
+        public string LastInsert = Constants.TagElementFElement;
 
         public double DefaultGridSize = 30;
 

@@ -32,15 +32,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             var counter = canvas.GetCounter();
             string rootUid = root.GetUid();
 
-            bool startIsIO = StringUtil.StartsWith(rootUid, Constants.TagElementInput)
-                || StringUtil.StartsWith(rootUid, Constants.TagElementOutput);
-
+            
             var line = creator.CreateElement(Constants.TagElementWire,
                 new object[] 
                 {
                     x, y, x, y,
                     false, false,
-                    startIsIO, false,
+                    false, false,
                     counter.Next()
                 },
                 0.0, 0.0, false) as ILine;
@@ -62,12 +60,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             line.SetX2(x - margin.Left);
             line.SetY2(y - margin.Top);
 
-            string rootUid = root.GetUid();
+            string rootUid = root.GetUid();;
 
-            bool endIsIO = StringUtil.StartsWith(rootUid, Constants.TagElementInput) ||
-                StringUtil.StartsWith(rootUid, Constants.TagElementOutput);
-
-            line.SetEndIO(endIsIO);
+            line.SetEndIO(false);
 
             var wire = new Wire(line, null, root);
             wires.Add(wire);

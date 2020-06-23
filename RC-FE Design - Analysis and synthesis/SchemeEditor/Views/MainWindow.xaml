@@ -92,13 +92,6 @@
                     <local:ExplorerControl x:Name="ExplorerControl"/>
                 </TabItem>
 
-                <TabItem x:Name="TabTags" FocusVisualStyle="{x:Null}">
-                    <TabItem.Header>
-                        <TextBlock Text="Tags" ToolTip="Tag Editor (F6)"/>
-                    </TabItem.Header>
-                    <local:TagEditorControl x:Name="TagEditorControl"/>
-                </TabItem>
-
                 <TabItem x:Name="TabModel" FocusVisualStyle="{x:Null}">
                     <TabItem.Header>
                         <TextBlock Text="Model" ToolTip="Model (F8)"/>

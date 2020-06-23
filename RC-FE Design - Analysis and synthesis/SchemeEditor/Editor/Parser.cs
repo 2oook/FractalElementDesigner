@@ -60,11 +60,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
                         total.Next();
 
-                        string tagFileName = (length == 3) ? args[2] : null;
-                        string tableFileName = (length == 4) ? args[3] : null;
-
                         projects = new TreeProjects();
-                        solution = new TreeSolution(name, tagFileName, tableFileName, projects);
+                        solution = new TreeSolution(name, projects);
                     }
 
                     // Project
@@ -153,70 +150,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                         }
                     }
 
-                    // Input
-                    else if (StringUtil.StartsWith(name, Constants.TagElementInput) &&
-                        (length == 4 || length == 5))
-                    {
-                        if (diagram != null)
-                            diagram.Push(line);
-
-                        total.Next();
-
-                        if (createElements == true)
-                        {
-                            double x = double.Parse(args[2]);
-                            double y = double.Parse(args[3]);
-                            int id = int.Parse(name.Split(Constants.TagNameSeparator)[1]);
-                            int tagId = (length == 5) ? int.Parse(args[4]) : -1;
-
-                            counter.Set(Math.Max(counter.Count, id + 1));
-
-                            var element = creator.CreateElement(Constants.TagElementInput,
-                                new object[] { id, tagId },
-                                x + offsetX, y + offsetY, false);
-                            elements.Add(element);
-
-                            child = new Child(element, new List<Pin>());
-
-                            if (dict.ContainsKey(name) == false)
-                                dict.Add(name, child);
-                            else
-                                System.Diagnostics.Debug.Print("Dictionary already contains name key: {0}", name);
-                        }
-                    }
-
-                    // Output
-                    else if (StringUtil.StartsWith(name, Constants.TagElementOutput) &&
-                        (length == 4 || length == 5))
-                    {
-                        if (diagram != null)
-                            diagram.Push(line);
-
-                        total.Next();
-
-                        if (createElements == true)
-                        {
-                            double x = double.Parse(args[2]);
-                            double y = double.Parse(args[3]);
-                            int id = int.Parse(name.Split(Constants.TagNameSeparator)[1]);
-                            int tagId = (length == 5) ? int.Parse(args[4]) : -1;
-
-                            counter.Set(Math.Max(counter.Count, id + 1));
-
-                            var element = creator.CreateElement(Constants.TagElementOutput,
-                                new object[] { id, tagId },
-                                x + offsetX, y + offsetY, false);
-                            elements.Add(element);
-
-                            child = new Child(element, new List<Pin>());
-
-                            if (dict.ContainsKey(name) == false)
-                                dict.Add(name, child);
-                            else
-                                System.Diagnostics.Debug.Print("Dictionary already contains name key: {0}", name);
-                        }
-                    }
-
                     // AndGate
                     else if (StringUtil.StartsWith(name, Constants.TagElementAndGate) &&
                         length == 4)
@@ -248,8 +181,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                         }
                     }
 
-                    // OrGate
-                    else if (StringUtil.StartsWith(name, Constants.TagElementOrGate) &&
+                    // FEElement
+                    else if (StringUtil.StartsWith(name, Constants.TagElementFElement) &&
                         length == 4)
                     {
                         if (diagram != null)
@@ -265,7 +198,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
                             counter.Set(Math.Max(counter.Count, id + 1));
 
-                            var element = creator.CreateElement(Constants.TagElementOrGate,
+                            var element = creator.CreateElement(Constants.TagElementFElement,
                                 new object[] { id },
                                 x + offsetX, y + offsetY, false);
                             elements.Add(element);
@@ -278,6 +211,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                                 System.Diagnostics.Debug.Print("Dictionary already contains name key: {0}", name);
                         }
                     }
+
 
                     // Wire
                     else if (StringUtil.StartsWith(name, Constants.TagElementWire) &&

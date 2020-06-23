@@ -22,8 +22,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
                 if (IsWire(uid))
                     GenerateWire(sb, element, uid);
-                else if (IsInputOutput(uid))
-                    GenerateInputOutput(sb, element, element.GetX(), element.GetY(), uid);
                 else
                     GenerateElement(sb, element.GetX(), element.GetY(), uid);
 
@@ -38,12 +36,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             return StringUtil.StartsWith(uid, Constants.TagElementWire);
         }
 
-        private static bool IsInputOutput(string uid)
-        {
-            return StringUtil.StartsWith(uid, Constants.TagElementInput) ||
-                StringUtil.StartsWith(uid, Constants.TagElementOutput);
-        }
-
         private static void GenerateElement(StringBuilder sb, double x, double y, string uid)
         {
             sb.Append(Constants.PrefixRoot);
@@ -53,23 +45,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             sb.Append(x);
             sb.Append(Constants.ArgumentSeparator);
             sb.Append(y);
-            sb.Append(Environment.NewLine);
-        }
-
-        private static void GenerateInputOutput(StringBuilder sb, IElement element, double x, double y, string uid)
-        {
-            var data = element.GetData();
-            Tag tag = (data != null && data is Tag) ? data as Tag : null;
-
-            sb.Append(Constants.PrefixRoot);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(uid);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(x);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(y);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(tag != null ? tag.Id : -1);
             sb.Append(Environment.NewLine);
         }
 
@@ -189,32 +164,20 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         public static Solution GenerateSolution(ITree tree,
             string fileName,
-            string tagFileName,
-            string tableFileName,
             bool includeHistory)
         {
             var models = new List<string>();
             var solution = tree.GetItems().First();
-            string relativeTagFileName = tagFileName;
-            string relativeTableFileName = tableFileName;
             var sb = new StringBuilder();
-
-            // tags file path is relative to solution file path
-            if (tagFileName != null && fileName != null)
-                relativeTagFileName = PathUtil.GetRelativeFileName(fileName, tagFileName);
-
-            // table file path is relative to solution file path
-            if (tableFileName != null && fileName != null)
-                relativeTableFileName = PathUtil.GetRelativeFileName(fileName, tableFileName);
 
             // Solution
             sb.Append(Constants.PrefixRoot);
             sb.Append(Constants.ArgumentSeparator);
             sb.Append(solution.GetUid());
             sb.Append(Constants.ArgumentSeparator);
-            sb.Append(relativeTagFileName);
+            
             sb.Append(Constants.ArgumentSeparator);
-            sb.Append(relativeTableFileName);
+            
             sb.Append(Environment.NewLine);
 
             foreach (var project in solution.GetItems())
