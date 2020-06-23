@@ -12,7 +12,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
     {
         #region Pin
 
-        public static IElement Pin(ICanvas canvas, IPoint point, IDiagramCreator creator, bool snap)
+        public static IElement Pin(ICanvas canvas, IPoint point, ISchemeCreator creator, bool snap)
         {
             var thumb = creator.CreateElement(Constants.TagElementPin,
                 new object[] { canvas.GetCounter().Next() },
@@ -28,7 +28,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         #region AndGate
 
-        public static IElement AndGate(ICanvas canvas, IPoint point, IDiagramCreator creator, bool snap)
+        public static IElement AndGate(ICanvas canvas, IPoint point, ISchemeCreator creator, bool snap)
         {
             var thumb = creator.CreateElement(Constants.TagElementAndGate,
                 new object[] { canvas.GetCounter().Next() },
@@ -44,7 +44,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         #region FElement
 
-        public static IElement FElement(ICanvas canvas, IPoint point, IDiagramCreator creator, bool snap)
+        public static IElement FElement(ICanvas canvas, IPoint point, ISchemeCreator creator, bool snap)
         {
             var thumb = creator.CreateElement(Constants.TagElementFElement,
                 new object[] { canvas.GetCounter().Next() },

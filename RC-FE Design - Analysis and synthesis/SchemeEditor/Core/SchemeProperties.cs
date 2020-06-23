@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core
 {
-    public class DiagramProperties
+    public class SchemeProperties
     {
         #region Properties
 
@@ -25,11 +25,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core
 
         #region Defaults
 
-        public static DiagramProperties Default
+        public static SchemeProperties Default
         {
             get
             {
-                return new DiagramProperties()
+                return new SchemeProperties()
                 {
                     GridOriginX = 0,
                     GridOriginY = 0,

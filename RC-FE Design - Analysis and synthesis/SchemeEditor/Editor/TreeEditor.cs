@@ -137,10 +137,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         }
 
         public static TreeItemType SwitchItems(ICanvas canvas,
-            IDiagramCreator creator,
+            ISchemeCreator creator,
             ITreeItem oldItem, 
             ITreeItem newItem,
-            Action<DiagramProperties> setProperties)
+            Action<SchemeProperties> setProperties)
         {
             if (newItem == null)
                 return TreeItemType.None;

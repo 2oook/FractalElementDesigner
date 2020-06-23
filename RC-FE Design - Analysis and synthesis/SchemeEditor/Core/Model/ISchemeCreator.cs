@@ -5,13 +5,13 @@ using System.Text;
 
 namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model
 {
-    public interface IDiagramCreator
+    public interface ISchemeCreator
     {
         void SetCanvas(ICanvas canvas);
         ICanvas GetCanvas();
 
         object CreateElement(string type, object[] data, double x, double y, bool snap);
-        object CreateDiagram(DiagramProperties properties);
+        object CreateDiagram(SchemeProperties properties);
 
         void UpdateConnections(IDictionary<string, Child> dict);
         void UpdateCounter(IdCounter original, IdCounter counter);

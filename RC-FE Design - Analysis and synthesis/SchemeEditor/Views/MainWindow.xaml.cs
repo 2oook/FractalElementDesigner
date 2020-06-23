@@ -26,7 +26,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
 
         private string ResourcesUri = "ElementsDictionary.xaml";
 
-        private DiagramEditor Editor { get; set; }
+        private Editor.SchemeEditor Editor { get; set; }
 
         private PointEx InsertPointInput = new PointEx(30, 30.0);
         private PointEx InsertPointOutput = new PointEx(930.0, 30.0);
@@ -176,7 +176,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
 
         private void InitializeEditor()
         {
-            Editor = new DiagramEditor();
+            Editor = new Editor.SchemeEditor();
             Editor.Context = new Context();
             Editor.Context.CurrentTree = this.ExplorerControl.SolutionTree;
             Editor.Context.CurrentCanvas = this.DiagramControl.DiagramCanvas;
@@ -185,7 +185,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             counter.Set(3);
             this.DiagramControl.DiagramCanvas.SetCounter(counter);
 
-            var prop = DiagramProperties.Default;
+            var prop = SchemeProperties.Default;
             this.DiagramControl.DiagramCanvas.SetProperties(prop);
             SetProperties(prop);
 
@@ -230,9 +230,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             UpdateWindowTitle();
         }
 
-        private IDiagramCreator GetDiagramCreator()
+        private ISchemeCreator GetDiagramCreator()
         {
-            var creator = new WpfDiagramCreator();
+            var creator = new WpfSchemeCreator();
 
             creator.SetThumbEvents = (thumb) => SetThumbEvents(thumb);
             creator.SetPosition = (element, left, top, snap) => Editor.SetPosition(element, left, top, snap);
@@ -274,7 +274,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             };
         }
 
-        private void UpdateProperties(DiagramProperties prop)
+        private void UpdateProperties(SchemeProperties prop)
         {
             prop.PageWidth = int.Parse(TextPageWidth.Text);
             prop.PageHeight = int.Parse(TextPageHeight.Text);
@@ -289,7 +289,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             prop.SnapOffsetY = double.Parse(TextSnapOffsetY.Text);
         }
 
-        private void SetProperties(DiagramProperties prop)
+        private void SetProperties(SchemeProperties prop)
         {
             TextPageWidth.Text = prop.PageWidth.ToString();
             TextPageHeight.Text = prop.PageHeight.ToString();
@@ -313,7 +313,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
         private void NewSolution()
         {
             UpdateSolutionState(false, null);
-            SetProperties(DiagramProperties.Default);
+            SetProperties(SchemeProperties.Default);
             
 
             ModelEditor.Clear(Editor.Context.CurrentCanvas);
@@ -377,7 +377,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
         {
             var canvas = Editor.Context.CurrentCanvas;
             bool isControl = Keyboard.Modifiers == ModifierKeys.Control;
-            bool canMove = e.OriginalSource is DiagramControl;
+            bool canMove = e.OriginalSource is SchemeControl;
             var key = e.Key;
 
             if (isControl == true)

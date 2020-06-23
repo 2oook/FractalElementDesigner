@@ -90,7 +90,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             });
         }
 
-        public static void Undo(ICanvas canvas, IDiagramCreator creator, bool pushRedo)
+        public static void Undo(ICanvas canvas, ISchemeCreator creator, bool pushRedo)
         {
             var history = Get(canvas);
             var undo = history.Undo;
@@ -123,7 +123,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             });
         }
 
-        public static void Redo(ICanvas canvas, IDiagramCreator creator, bool pushUndo)
+        public static void Redo(ICanvas canvas, ISchemeCreator creator, bool pushUndo)
         {
             var history = Get(canvas);
             var undo = history.Undo;

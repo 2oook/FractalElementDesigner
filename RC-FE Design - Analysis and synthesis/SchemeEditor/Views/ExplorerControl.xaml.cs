@@ -21,7 +21,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
     {
         #region Properties
 
-        public DiagramEditor Editor { get; set; }
+        public Editor.SchemeEditor Editor { get; set; }
         public FrameworkElement DiagramView { get; set; }
         public FrameworkElement ProjectView { get; set; }
         public FrameworkElement SolutionView { get; set; }

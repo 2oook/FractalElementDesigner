@@ -119,7 +119,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         private static string DefaultUid = Constants.TagHeaderDiagram + Constants.TagNameSeparator + (-1).ToString();
 
-        private static void GenerateHeader(StringBuilder sb, string uid, DiagramProperties prop)
+        private static void GenerateHeader(StringBuilder sb, string uid, SchemeProperties prop)
         {
             sb.Append(Constants.PrefixRoot);
             sb.Append(Constants.ArgumentSeparator);
@@ -149,7 +149,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             sb.Append(Environment.NewLine);
         }
 
-        public static string GenerateDiagram(ICanvas canvas, string uid, DiagramProperties properties)
+        public static string GenerateDiagram(ICanvas canvas, string uid, SchemeProperties properties)
         {
             var sb = new StringBuilder();
             var elements = (canvas == null) ? null : canvas.GetElements();
@@ -236,7 +236,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
                 if (isDiagram == true)
                 {
-                    var prop = (canvas == null) ? DiagramProperties.Default : canvas.GetProperties();
+                    var prop = (canvas == null) ? SchemeProperties.Default : canvas.GetProperties();
                     model = GenerateDiagram(canvas, uid, prop);
                     if (update == true)
                     {
@@ -257,7 +257,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         #region Parse
 
         public static TreeSolution Parse(string model,
-            ICanvas canvas, IDiagramCreator creator,
+            ICanvas canvas, ISchemeCreator creator,
             double offsetX, double offsetY,
             bool appendIds, bool updateIds,
             bool select,
@@ -329,14 +329,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         #endregion
 
-        #region Grid
-
-
-        #endregion
-
         #region Load
 
-        public static void Load(ICanvas canvas, IDiagramCreator creator, ITreeItem item)
+        public static void Load(ICanvas canvas, ISchemeCreator creator, ITreeItem item)
         {
             var tag = item.GetTag();
 
@@ -346,7 +341,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                 LoadFromTag(canvas, creator, tag);
         }
 
-        public static void LoadFromTag(ICanvas canvas, IDiagramCreator creator, object tag)
+        public static void LoadFromTag(ICanvas canvas, ISchemeCreator creator, object tag)
         {
             var diagram = tag as Diagram;
 

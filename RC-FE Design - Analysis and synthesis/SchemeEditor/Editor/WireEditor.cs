@@ -12,7 +12,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
     {
         #region Connect
 
-        public static ILine Connect(ICanvas canvas, IElement root, ILine line, double x, double y, IDiagramCreator creator)
+        public static ILine Connect(ICanvas canvas, IElement root, ILine line, double x, double y, ISchemeCreator creator)
         {
             var rootTag = root.GetTag();
             if (rootTag == null)
@@ -27,7 +27,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                 return SecondConnection(root, line, x, y, wires);
         }
 
-        private static ILine FirstConnection(ICanvas canvas, IElement root, double x, double y, List<Wire> wires, IDiagramCreator creator)
+        private static ILine FirstConnection(ICanvas canvas, IElement root, double x, double y, List<Wire> wires, ISchemeCreator creator)
         {
             var counter = canvas.GetCounter();
             string rootUid = root.GetUid();
@@ -87,7 +87,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             double x, double y,
             List<Connection> connections,
             ILine currentLine,
-            IDiagramCreator creator)
+            ISchemeCreator creator)
         {
             var wire1 = connections[0].Wires.FirstOrDefault();
             var wire2 = connections[1].Wires.FirstOrDefault();
@@ -152,7 +152,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         #region Split
 
-        public static bool Split(ICanvas canvas, ILine line, ILine currentLine, IPoint point, IDiagramCreator creator, bool snap)
+        public static bool Split(ICanvas canvas, ILine line, ILine currentLine, IPoint point, ISchemeCreator creator, bool snap)
         {
             var pin = Insert.Pin(canvas, point, creator, snap);
             double x = pin.GetX();

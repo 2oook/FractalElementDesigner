@@ -27,7 +27,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core
         IdCounter GetCounter();
         void SetCounter(IdCounter counter);
 
-        DiagramProperties GetProperties();
-        void SetProperties(DiagramProperties properties);
+        SchemeProperties GetProperties();
+        void SetProperties(SchemeProperties properties);
     }
 }

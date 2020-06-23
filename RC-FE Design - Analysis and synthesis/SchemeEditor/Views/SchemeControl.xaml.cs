@@ -17,12 +17,12 @@ using System.Windows.Shapes;
 
 namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
 {
-    public partial class DiagramControl : UserControl
+    public partial class SchemeControl : UserControl
     {
         #region Properties
 
         public Action SelectionChanged { get; set; }
-        public DiagramEditor Editor { get; set; }
+        public Editor.SchemeEditor Editor { get; set; }
         private SelectionAdorner Adorner { get; set; }
 
         #endregion
@@ -40,7 +40,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
 
         #region Constructor
 
-        public DiagramControl()
+        public SchemeControl()
         {
             InitializeComponent();
 
@@ -287,7 +287,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
                 return;
 
             var canvas = Editor.Context.CurrentCanvas;
-            var point = e.GetPosition(canvas as DiagramCanvas);
+            var point = e.GetPosition(canvas as SchemeCanvas);
             Editor.Context.ZoomPoint = new PointEx(point.X, point.Y);
 
             if (e.Delta > 0)
@@ -334,7 +334,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
 
         private void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var canvas = sender as DiagramCanvas;
+            var canvas = sender as SchemeCanvas;
             var point = e.GetPosition(canvas);
 
             if (Editor.Context.CurrentRoot == null &&
@@ -358,7 +358,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
 
         private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var canvas = sender as DiagramCanvas;
+            var canvas = sender as SchemeCanvas;
 
             if (canvas.IsMouseCaptured)
             {
@@ -395,7 +395,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
                 return;
             }
 
-            var canvas = sender as DiagramCanvas;
+            var canvas = sender as SchemeCanvas;
             var point = e.GetPosition(canvas);
             var pin = (e.OriginalSource as FrameworkElement).TemplatedParent as IThumb;
             var result = Editor.MouseEventPreviewLeftDown(canvas, new PointEx(point.X, point.Y), pin);
@@ -406,7 +406,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            var canvas = sender as DiagramCanvas;
+            var canvas = sender as SchemeCanvas;
             var point = e.GetPosition(canvas);
 
             if (canvas.IsMouseCaptured)
@@ -428,7 +428,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
 
         private void Canvas_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var canvas = sender as DiagramCanvas;
+            var canvas = sender as SchemeCanvas;
             var point = e.GetPosition(canvas);
 
             Editor.Context.RightClick = new PointEx(point.X, point.Y);

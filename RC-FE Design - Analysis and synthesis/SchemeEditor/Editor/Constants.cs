@@ -26,9 +26,5 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         public const string WireEndType = "End";
 
         public const string PinStandalone = "MiddlePin";
-        public const string PinLeft = "LeftPin";
-        public const string PinRight = "RightPin";
-        public const string PinTop = "TopPin";
-        public const string PinBottom = "BottomPin";
     }
 }

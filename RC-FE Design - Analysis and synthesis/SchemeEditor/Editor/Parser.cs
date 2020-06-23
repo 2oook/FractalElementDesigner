@@ -8,9 +8,9 @@ using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model;
 
 namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 {
-    public class Parser : IDiagramParser
+    public class Parser : ISchemeParser
     {
-        public TreeSolution Parse(string model, IDiagramCreator creator, ParseOptions options)
+        public TreeSolution Parse(string model, ISchemeCreator creator, ParseOptions options)
         {
             if (model == null || creator == null || options == null)
                 return null;
@@ -31,8 +31,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             TreeSolution solution = null;
             TreeProjects projects = null;
             TreeProject project = null;
-            TreeDiagrams diagrams = null;
-            TreeDiagram diagram = null;
+            TreeSchemes diagrams = null;
+            TreeScheme diagram = null;
 
             var lines = model.Split(Environment.NewLine.ToCharArray(),
                 StringSplitOptions.RemoveEmptyEntries);
@@ -75,7 +75,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
                         if (projects != null)
                         {
-                            diagrams = new TreeDiagrams();
+                            diagrams = new TreeSchemes();
                             project = new TreeProject(name, diagrams);
                             projects.Push(project);
                         }
@@ -92,14 +92,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
                         if (diagrams != null)
                         {
-                            diagram = new TreeDiagram();
+                            diagram = new TreeScheme();
                             diagrams.Push(diagram);
                             diagram.Push(line);
                         }
 
                         if (createElements == true)
                         {
-                            var prop = new DiagramProperties();
+                            var prop = new SchemeProperties();
 
                             prop.PageWidth = int.Parse(args[2]);
                             prop.PageHeight = int.Parse(args[3]);

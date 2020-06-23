@@ -9,12 +9,12 @@ using System.Windows.Media;
 
 namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls
 {
-    public class DiagramCanvas : Canvas, ICanvas
+    public class SchemeCanvas : Canvas, ICanvas
     {
         #region ICanvas
 
         private IdCounter Counter { get; set; }
-        private DiagramProperties Properties { get; set; }
+        private SchemeProperties Properties { get; set; }
 
         public IEnumerable<IElement> GetElements()
         {
@@ -78,12 +78,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls
             this.Counter = counter;
         }
 
-        public DiagramProperties GetProperties()
+        public SchemeProperties GetProperties()
         {
             return this.Properties;
         }
 
-        public void SetProperties(DiagramProperties properties)
+        public void SetProperties(SchemeProperties properties)
         {
             this.Properties = properties;
         }

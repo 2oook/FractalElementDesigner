@@ -8,7 +8,7 @@ using System.Text;
 
 namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 {
-    public class DiagramEditor
+    public class SchemeEditor
     {
         #region Properties
 
@@ -110,7 +110,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         }
 
         private void Parse(IdCounter counter,
-            IEnumerable<TreeDiagram> diagrams,
+            IEnumerable<TreeScheme> diagrams,
             ITreeItem project,
             List<ITreeItem> diagramList)
         {
@@ -119,7 +119,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         }
 
         private void Parse(IdCounter counter,
-            TreeDiagram diagram,
+            TreeScheme diagram,
             ITreeItem project,
             List<ITreeItem> diagrams)
         {
@@ -145,7 +145,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         #region Wire Connection
 
-        private void Connect(ICanvas canvas, IThumb pin, IDiagramCreator creator)
+        private void Connect(ICanvas canvas, IThumb pin, ISchemeCreator creator)
         {
             if (pin == null)
                 return;

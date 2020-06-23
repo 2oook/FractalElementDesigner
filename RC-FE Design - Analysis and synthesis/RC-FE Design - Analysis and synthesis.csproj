@@ -125,7 +125,7 @@
     <Compile Include="FEEditor\Model\RCStructure.cs" />
     <Compile Include="FEEditor\Model\RCStructureBase.cs" />
     <Compile Include="FEEditor\Model\Cells\StructureCellBase.cs" />
-    <Compile Include="SchemeEditor\Controls\DiagramCanvas.cs" />
+    <Compile Include="SchemeEditor\Controls\SchemeCanvas.cs" />
     <Compile Include="SchemeEditor\Controls\Elements\AndGateControl.xaml.cs">
       <DependentUpon>AndGateControl.xaml</DependentUpon>
     </Compile>
@@ -141,7 +141,7 @@
     <Compile Include="SchemeEditor\Controls\SelectionAdorner.cs" />
     <Compile Include="SchemeEditor\Controls\SolutionTreeView.cs" />
     <Compile Include="SchemeEditor\Controls\SolutionTreeViewItem.cs" />
-    <Compile Include="SchemeEditor\Core\DiagramProperties.cs" />
+    <Compile Include="SchemeEditor\Core\SchemeProperties.cs" />
     <Compile Include="SchemeEditor\Core\ICanvas.cs" />
     <Compile Include="SchemeEditor\Core\IClipboard.cs" />
     <Compile Include="SchemeEditor\Core\IData.cs" />
@@ -161,12 +161,12 @@
     <Compile Include="SchemeEditor\Core\Model\Child.cs" />
     <Compile Include="SchemeEditor\Core\Model\Connection.cs" />
     <Compile Include="SchemeEditor\Core\Model\Diagram.cs" />
-    <Compile Include="SchemeEditor\Core\Model\IDiagramCreator.cs" />
-    <Compile Include="SchemeEditor\Core\Model\IDiagramParser.cs" />
+    <Compile Include="SchemeEditor\Core\Model\ISchemeCreator.cs" />
+    <Compile Include="SchemeEditor\Core\Model\ISchemeParser.cs" />
     <Compile Include="SchemeEditor\Core\Model\Pin.cs" />
     <Compile Include="SchemeEditor\Core\Model\Solution.cs" />
-    <Compile Include="SchemeEditor\Core\Model\TreeDiagram.cs" />
-    <Compile Include="SchemeEditor\Core\Model\TreeDiagrams.cs" />
+    <Compile Include="SchemeEditor\Core\Model\TreeScheme.cs" />
+    <Compile Include="SchemeEditor\Core\Model\TreeSchemes.cs" />
     <Compile Include="SchemeEditor\Core\Model\TreeProject.cs" />
     <Compile Include="SchemeEditor\Core\Model\TreeProjects.cs" />
     <Compile Include="SchemeEditor\Core\Model\TreeSolution.cs" />
@@ -179,7 +179,7 @@
     <Compile Include="SchemeEditor\Core\TreeItemType.cs" />
     <Compile Include="SchemeEditor\Editor\Constants.cs" />
     <Compile Include="SchemeEditor\Editor\Context.cs" />
-    <Compile Include="SchemeEditor\Editor\DiagramEditor.cs" />
+    <Compile Include="SchemeEditor\Editor\SchemeEditor.cs" />
     <Compile Include="SchemeEditor\Editor\HistoryEditor.cs" />
     <Compile Include="SchemeEditor\Editor\Insert.cs" />
     <Compile Include="SchemeEditor\Editor\LineUtil.cs" />
@@ -194,9 +194,9 @@
     <Compile Include="SchemeEditor\Util\SnapUtil.cs" />
     <Compile Include="SchemeEditor\Util\StringUtil.cs" />
     <Compile Include="SchemeEditor\Util\WindowsClipboard.cs" />
-    <Compile Include="SchemeEditor\Util\WpfDiagramCreator.cs" />
-    <Compile Include="SchemeEditor\Views\DiagramControl.xaml.cs">
-      <DependentUpon>DiagramControl.xaml</DependentUpon>
+    <Compile Include="SchemeEditor\Util\WpfSchemeCreator.cs" />
+    <Compile Include="SchemeEditor\Views\SchemeControl.xaml.cs">
+      <DependentUpon>SchemeControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="SchemeEditor\Views\ExplorerControl.xaml.cs">
       <DependentUpon>ExplorerControl.xaml</DependentUpon>
@@ -280,7 +280,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SchemeEditor\Views\DiagramControl.xaml">
+    <Page Include="SchemeEditor\Views\SchemeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -18,7 +18,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
 {
     using FactoryFunc = Func<object[], double, double, bool, object>;
 
-    public class WpfDiagramCreator : IDiagramCreator
+    public class WpfSchemeCreator : ISchemeCreator
     {
         #region Properties
 
@@ -33,7 +33,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
 
         #region Constructor
 
-        public WpfDiagramCreator()
+        public WpfSchemeCreator()
         {
             InitializeFactory();
         }
@@ -221,7 +221,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
             return null;
         }
 
-        public object CreateDiagram(DiagramProperties properties)
+        public object CreateDiagram(SchemeProperties properties)
         {
 
             if (ParserCanvas != null)

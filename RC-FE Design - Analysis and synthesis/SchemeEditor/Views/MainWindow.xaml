@@ -73,7 +73,7 @@
             </MenuItem>
         </Menu>
 
-        <local:DiagramControl x:Name="DiagramControl"
+        <local:SchemeControl x:Name="DiagramControl"
                               Grid.Column="0" Grid.Row="1"
                               Margin="4,4,0,4"                           
                               controls:LineEx.ShortenStart="{Binding ElementName=ShortenStart, Path=IsChecked}"

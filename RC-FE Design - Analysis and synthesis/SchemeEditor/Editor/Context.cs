@@ -11,7 +11,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
     {
         #region Properties
 
-        public IDiagramCreator DiagramCreator { get; set; }
+        public ISchemeCreator DiagramCreator { get; set; }
         public IClipboard Clipboard { get; set; }
 
         #endregion
@@ -65,7 +65,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         #region Hooks
 
         public Action UpdateProperties { get; set; }
-        public Action<DiagramProperties> SetProperties { get; set; }
+        public Action<SchemeProperties> SetProperties { get; set; }
 
         public Func<ITreeItem> CreateSolution { get; set; }
         public Func<ITreeItem> CreateProject { get; set; }
