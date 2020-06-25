@@ -186,21 +186,16 @@
     <Compile Include="SchemeEditor\Editor\Tags.cs" />
     <Compile Include="SchemeEditor\Editor\TreeEditor.cs" />
     <Compile Include="SchemeEditor\Editor\WireEditor.cs" />
-    <Compile Include="SchemeEditor\Util\DipUtil.cs" />
-    <Compile Include="SchemeEditor\Util\PathUtil.cs" />
-    <Compile Include="SchemeEditor\Util\ResourceConstants.cs" />
-    <Compile Include="SchemeEditor\Util\SnapUtil.cs" />
-    <Compile Include="SchemeEditor\Util\StringUtil.cs" />
-    <Compile Include="SchemeEditor\Util\WindowsClipboard.cs" />
-    <Compile Include="SchemeEditor\Util\WpfSchemeCreator.cs" />
+    <Compile Include="SchemeEditor\ResourceConstants.cs" />
+    <Compile Include="SchemeEditor\Helpers\SnapHelper.cs" />
+    <Compile Include="SchemeEditor\Helpers\StringHelper.cs" />
+    <Compile Include="SchemeEditor\Helpers\WindowsClipboardHelper.cs" />
+    <Compile Include="SchemeEditor\WpfSchemeCreator.cs" />
     <Compile Include="SchemeEditor\Views\SchemeControl.xaml.cs">
       <DependentUpon>SchemeControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="SchemeEditor\Views\ExplorerControl.xaml.cs">
       <DependentUpon>ExplorerControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SchemeEditor\Views\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AnalysisAndSynthesisPageViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -278,10 +273,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SchemeEditor\Views\ExplorerControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SchemeEditor\Views\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

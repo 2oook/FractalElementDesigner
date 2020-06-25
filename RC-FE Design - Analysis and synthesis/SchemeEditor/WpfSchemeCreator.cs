@@ -2,7 +2,6 @@ using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;

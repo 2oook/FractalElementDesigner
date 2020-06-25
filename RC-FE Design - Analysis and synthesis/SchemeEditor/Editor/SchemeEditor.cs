@@ -1,6 +1,6 @@
 ﻿using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Util;
+using RC_FE_Design___Analysis_and_synthesis.SchemeEditor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -650,12 +650,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         public bool IsSameUid(string uid1, string uid2)
         {
-            return StringUtil.Compare(uid2, uid1) == false;
+            return StringHelper.Compare(uid2, uid1) == false;
         }
 
         public bool IsWire(string elementUid)
         {
-            return StringUtil.StartsWith(elementUid, Constants.TagElementWire) == true;
+            return StringHelper.StartsWith(elementUid, Constants.TagElementWire) == true;
         }
 
         public bool CanConnect()
@@ -688,7 +688,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         {
             return pin != null &&
             (
-                !StringUtil.Compare(pin.GetUid(), Constants.PinStandalone) ||
+                !StringHelper.Compare(pin.GetUid(), Constants.PinStandalone) ||
                 (Context.IsControlPressed != null && Context.IsControlPressed())
             );
         }
@@ -723,7 +723,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         private IElement MouseGetElementAtPoint(ICanvas canvas, IPoint point)
         {
             var element = canvas.HitTest(point, 6.0)
-                .Where(x => StringUtil.Compare(Context.CurrentLine.GetUid(), x.GetUid()) == false)
+                .Where(x => StringHelper.Compare(Context.CurrentLine.GetUid(), x.GetUid()) == false)
                 .FirstOrDefault() as IElement;
 
             return element;
@@ -922,25 +922,25 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         public double SnapOffsetX(double original, bool snap)
         {
             var prop = Context.CurrentCanvas.GetProperties();
-            return snap == true ? SnapUtil.Snap(original, prop.SnapX, prop.SnapOffsetX) : original;
+            return snap == true ? SnapHelper.Snap(original, prop.SnapX, prop.SnapOffsetX) : original;
         }
 
         public double SnapOffsetY(double original, bool snap)
         {
             var prop = Context.CurrentCanvas.GetProperties();
-            return snap == true ? SnapUtil.Snap(original, prop.SnapY, prop.SnapOffsetY) : original;
+            return snap == true ? SnapHelper.Snap(original, prop.SnapY, prop.SnapOffsetY) : original;
         }
 
         public double SnapX(double original, bool snap)
         {
             var prop = Context.CurrentCanvas.GetProperties();
-            return snap == true ? SnapUtil.Snap(original, prop.SnapX) : original;
+            return snap == true ? SnapHelper.Snap(original, prop.SnapX) : original;
         }
 
         public double SnapY(double original, bool snap)
         {
             var prop = Context.CurrentCanvas.GetProperties();
-            return snap == true ? SnapUtil.Snap(original, prop.SnapY) : original;
+            return snap == true ? SnapHelper.Snap(original, prop.SnapY) : original;
         }
 
         #endregion

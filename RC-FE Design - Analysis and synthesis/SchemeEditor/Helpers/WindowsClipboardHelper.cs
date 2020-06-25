@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
 {
-    public class WindowsClipboard : IClipboard
+    public class WindowsClipboardHelper : IClipboard
     {
         public bool ContainsText()
         {

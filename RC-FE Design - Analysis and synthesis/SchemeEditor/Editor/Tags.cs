@@ -1,5 +1,5 @@
 ﻿using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Util;
+using RC_FE_Design___Analysis_and_synthesis.SchemeEditor;
 using System;
 using System.Collections.Generic;
 using System.Linq;

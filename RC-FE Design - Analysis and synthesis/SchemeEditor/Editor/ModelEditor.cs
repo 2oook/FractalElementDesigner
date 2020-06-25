@@ -1,6 +1,6 @@
 ﻿using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Util;
+using RC_FE_Design___Analysis_and_synthesis.SchemeEditor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +33,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         private static bool IsWire(string uid)
         {
-            return StringUtil.StartsWith(uid, Constants.TagElementWire);
+            return StringHelper.StartsWith(uid, Constants.TagElementWire);
         }
 
         private static void GenerateElement(StringBuilder sb, double x, double y, string uid)
@@ -232,7 +232,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             if (item != null)
             {
                 string uid = item.GetUid();
-                bool isDiagram = StringUtil.StartsWith(uid, Constants.TagHeaderDiagram);
+                bool isDiagram = StringHelper.StartsWith(uid, Constants.TagHeaderDiagram);
 
                 if (isDiagram == true)
                 {
@@ -508,7 +508,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             string uid = element.GetUid();
 
             if (element is ILine && uid != null &&
-                StringUtil.StartsWith(uid, Constants.TagElementWire))
+                StringHelper.StartsWith(uid, Constants.TagElementWire))
             {
                 var line = element as ILine;
                 line.SetSelected(line.GetSelected() ? false : true);
@@ -596,14 +596,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         private static bool CanSelectStart(IElement root, HashSet<string> visited, IElement startRoot)
         {
             return startRoot != null &&
-                StringUtil.Compare(startRoot.GetUid(), root.GetUid()) == false &&
+                StringHelper.Compare(startRoot.GetUid(), root.GetUid()) == false &&
                 visited.Contains(startRoot.GetUid()) == false;
         }
 
         private static bool CanSelectEnd(IElement root, HashSet<string> visited, IElement endRoot)
         {
             return endRoot != null &&
-                StringUtil.Compare(endRoot.GetUid(), root.GetUid()) == false &&
+                StringHelper.Compare(endRoot.GetUid(), root.GetUid()) == false &&
                 visited.Contains(endRoot.GetUid()) == false;
         }
 
@@ -660,7 +660,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                 string name = pin.Name;
                 string type = pin.Type;
 
-                if (StringUtil.Compare(type, Constants.WireStartType))
+                if (StringHelper.Compare(type, Constants.WireStartType))
                 {
                     Child child = null;
                     if (dict.TryGetValue(name, out child) == true)
@@ -674,7 +674,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                     else
                         System.Diagnostics.Debug.Print("Failed to map wire Start: {0}", name);
                 }
-                else if (StringUtil.Compare(type, Constants.WireEndType))
+                else if (StringHelper.Compare(type, Constants.WireEndType))
                 {
                     Child child = null;
                     if (dict.TryGetValue(name, out child) == true)
@@ -748,7 +748,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         {
             string uid = element.GetUid();
 
-            if (element is ILine && uid != null && StringUtil.StartsWith(uid, Constants.TagElementWire))
+            if (element is ILine && uid != null && StringHelper.StartsWith(uid, Constants.TagElementWire))
                 DeleteWire(canvas, element as ILine);
             else
                 canvas.Remove(element);
@@ -790,7 +790,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         public static bool IsElementPin(string uid)
         {
             return uid != null &&
-                   StringUtil.StartsWith(uid, Constants.TagElementPin);
+                   StringHelper.StartsWith(uid, Constants.TagElementPin);
         }
 
         public static List<Connection> RemoveWireConnections(ICanvas canvas, ILine line)
@@ -824,7 +824,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
             foreach (var wire in wires)
             {
-                if (StringUtil.Compare((wire.Line as ILine).GetUid(), line.GetUid()))
+                if (StringHelper.Compare((wire.Line as ILine).GetUid(), line.GetUid()))
                     map.Add(wire);
             }
 
@@ -843,7 +843,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
             string uid = element.GetUid();
 
-            if (element is T && uid != null && StringUtil.StartsWith(uid, Constants.TagElementWire))
+            if (element is T && uid != null && StringHelper.StartsWith(uid, Constants.TagElementWire))
                 return element as T;
 
             return null;

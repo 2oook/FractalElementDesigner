@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text; 
 
-namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Util
+namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
 {
-    public static class StringUtil
+    public static class StringHelper
     {
         public static bool Compare(string strA, string strB)
         {

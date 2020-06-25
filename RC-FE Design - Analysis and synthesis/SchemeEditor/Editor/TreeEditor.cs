@@ -1,6 +1,6 @@
 ﻿using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Util;
+using RC_FE_Design___Analysis_and_synthesis.SchemeEditor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +13,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         public static TreeItemType GetTreeItemType(string uid)
         {
             return string.IsNullOrEmpty(uid) ? TreeItemType.None :
-                StringUtil.StartsWith(uid, Constants.TagHeaderSolution) ? TreeItemType.Solution :
-                StringUtil.StartsWith(uid, Constants.TagHeaderProject) ? TreeItemType.Project :
-                StringUtil.StartsWith(uid, Constants.TagHeaderDiagram) ? TreeItemType.Diagram :
+                StringHelper.StartsWith(uid, Constants.TagHeaderSolution) ? TreeItemType.Solution :
+                StringHelper.StartsWith(uid, Constants.TagHeaderProject) ? TreeItemType.Project :
+                StringHelper.StartsWith(uid, Constants.TagHeaderDiagram) ? TreeItemType.Diagram :
                 TreeItemType.None;
         }
 
@@ -25,7 +25,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             var selected = tree.GetSelectedItem() as ITreeItem;
 
             if (selected != null &&
-                StringUtil.StartsWith(selected.GetUid(), Constants.TagHeaderDiagram))
+                StringHelper.StartsWith(selected.GetUid(), Constants.TagHeaderDiagram))
             {
                 // get current project
                 var parent = selected.GetParent() as ITreeItem;
@@ -84,7 +84,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             // get current diagram
             var selected = tree.GetSelectedItem() as ITreeItem;
 
-            if (selected != null && StringUtil.StartsWith(selected.GetUid(), Constants.TagHeaderDiagram))
+            if (selected != null && StringHelper.StartsWith(selected.GetUid(), Constants.TagHeaderDiagram))
             {
                 // get current project
                 var parent = selected.GetParent() as ITreeItem;

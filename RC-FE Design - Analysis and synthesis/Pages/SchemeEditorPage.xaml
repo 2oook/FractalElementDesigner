@@ -65,9 +65,6 @@
                 <Separator/>
                 <MenuItem x:Name="EditConnect" Header="Connect" InputGestureText="C"/>
             </MenuItem>
-            <MenuItem Header="_Help">
-                <MenuItem x:Name="HelpAbout" Header="_About Canvas Diagram Editor"/>
-            </MenuItem>
         </Menu>
 
         <local:SchemeControl x:Name="DiagramControl"

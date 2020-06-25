@@ -1,4 +1,4 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Util;
+﻿using RC_FE_Design___Analysis_and_synthesis.SchemeEditor;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core;
 using System;
 using System.Collections.Generic;
@@ -49,10 +49,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                 name = args[1];
 
                 // root element
-                if (StringUtil.Compare(root, Constants.PrefixRoot))
+                if (StringHelper.Compare(root, Constants.PrefixRoot))
                 {
                     // Solution
-                    if (StringUtil.StartsWith(name, Constants.TagHeaderSolution) &&
+                    if (StringHelper.StartsWith(name, Constants.TagHeaderSolution) &&
                         (length == 2 || length == 3 || length == 4))
                     {
                         int id = int.Parse(name.Split(Constants.TagNameSeparator)[1]);
@@ -65,7 +65,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                     }
 
                     // Project
-                    else if (StringUtil.StartsWith(name, Constants.TagHeaderProject) &&
+                    else if (StringHelper.StartsWith(name, Constants.TagHeaderProject) &&
                         length == 2)
                     {
                         int id = int.Parse(name.Split(Constants.TagNameSeparator)[1]);
@@ -82,7 +82,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                     }
 
                     // Diagram
-                    else if (StringUtil.StartsWith(name, Constants.TagHeaderDiagram) &&
+                    else if (StringHelper.StartsWith(name, Constants.TagHeaderDiagram) &&
                         length == 13)
                     {
                         int id = int.Parse(name.Split(Constants.TagNameSeparator)[1]);
@@ -120,7 +120,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                     }
 
                     // Pin
-                    else if (StringUtil.StartsWith(name, Constants.TagElementPin) &&
+                    else if (StringHelper.StartsWith(name, Constants.TagElementPin) &&
                         length == 4)
                     {
                         if (diagram != null)
@@ -151,7 +151,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                     }
 
                     // AndGate
-                    else if (StringUtil.StartsWith(name, Constants.TagElementAndGate) &&
+                    else if (StringHelper.StartsWith(name, Constants.TagElementAndGate) &&
                         length == 4)
                     {
                         if (diagram != null)
@@ -182,7 +182,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                     }
 
                     // FEElement
-                    else if (StringUtil.StartsWith(name, Constants.TagElementFElement) &&
+                    else if (StringHelper.StartsWith(name, Constants.TagElementFElement) &&
                         length == 4)
                     {
                         if (diagram != null)
@@ -214,7 +214,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
 
                     // Wire
-                    else if (StringUtil.StartsWith(name, Constants.TagElementWire) &&
+                    else if (StringHelper.StartsWith(name, Constants.TagElementWire) &&
                         (length == 6 || length == 8 || length == 10))
                     {
                         if (diagram != null)
@@ -259,9 +259,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                 }
 
                 // child element
-                else if (StringUtil.Compare(root, Constants.PrefixChild))
+                else if (StringHelper.Compare(root, Constants.PrefixChild))
                 {
-                    if (StringUtil.StartsWith(name, Constants.TagElementWire) &&
+                    if (StringHelper.StartsWith(name, Constants.TagElementWire) &&
                         length == 3)
                     {
                         if (diagram != null)
