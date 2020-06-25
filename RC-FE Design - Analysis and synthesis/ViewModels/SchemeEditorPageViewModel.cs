@@ -11,14 +11,14 @@ using System.Windows.Input;
 
 namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 {
-    public class SchemeEditorViewModel : IPageViewModel
+    public class SchemeEditorPageViewModel : IPageViewModel
     {
-        public SchemeEditorViewModel()
+        public SchemeEditorPageViewModel()
         {
                 
         }
 
-        public SchemeEditorViewModel(IDialogCoordinator dialogCoordinator) : this()
+        public SchemeEditorPageViewModel(IDialogCoordinator dialogCoordinator) : this()
         {
             _dialogCoordinator = dialogCoordinator;
         }

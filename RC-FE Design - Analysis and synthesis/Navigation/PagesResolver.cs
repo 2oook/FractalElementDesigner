@@ -24,10 +24,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
         /// </summary>
         public PagesResolver()
         {
-            _pagesResolvers.Add(Navigation.MainPageAlias, () => new MainPage());
             _pagesResolvers.Add(Navigation.SchemeEditorPageAlias, () => new SchemeEditorPage());
-            _pagesResolvers.Add(Navigation.AnalysisPageAlias, () => new AnalysisPage());
-            _pagesResolvers.Add(Navigation.SynthesisPageAlias, () => new SynthesisPage());
+            _pagesResolvers.Add(Navigation.AnalysisAndSynthesisPageAlias, () => new AnalysisAndSynthesisPage());
         }
 
         /// <summary>

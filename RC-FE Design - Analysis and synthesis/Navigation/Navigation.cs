@@ -13,10 +13,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
     {
         #region Constants
 
-        public static readonly string MainPageAlias = "MainPage";
         public static readonly string SchemeEditorPageAlias = "SchemeEditorPage";
-        public static readonly string SynthesisPageAlias = "SynthesisPage";
-        public static readonly string AnalysisPageAlias = "AnalysisPage";
+        public static readonly string AnalysisAndSynthesisPageAlias = "AnalysisAndSynthesisPage";
 
         #endregion
 

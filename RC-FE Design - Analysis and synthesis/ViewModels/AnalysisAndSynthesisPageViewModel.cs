@@ -25,11 +25,11 @@ using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views;
 namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 {
     /// <summary>
-    /// ViewModel страницы анализа
+    /// ViewModel страницы анализа и синтеза
     /// </summary>
-    public class AnalysisViewModel : ViewModelBase, IPageViewModel
+    public class AnalysisAndSynthesisPageViewModel : ViewModelBase, IPageViewModel
     {
-        public AnalysisViewModel()
+        public AnalysisAndSynthesisPageViewModel()
         {
             InitializeCommands();
 
@@ -151,7 +151,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
         }
 
-        public AnalysisViewModel(IDialogCoordinator dialogCoordinator) : this()
+        public AnalysisAndSynthesisPageViewModel(IDialogCoordinator dialogCoordinator) : this()
         {
             _dialogCoordinator = dialogCoordinator;
         }
@@ -300,38 +300,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// <summary>
         /// Ссылка на страницу
         /// </summary>
-        private AnalysisPage _Page { get; set; }
+        private AnalysisAndSynthesisPage _Page { get; set; }
 
         #endregion
 
         #region Команды
-
-        /// <summary>
-        /// Команда для перемещения на главную страницу 
-        /// </summary>
-        public ICommand GoToMainPageCommand { get; set; }
-
-        /// <summary>
-        /// Команда для перехода к редактору схем включения
-        /// </summary>
-        public ICommand GoToSchemeEditorCommand { get; set; }
-
-        private ICommand loadProjectFromSynthesisCommand;
-        /// <summary>
-        /// Команда для загрузки проекта из режима синтез
-        /// </summary>
-        public ICommand LoadProjectFromSynthesisCommand
-        {
-            get
-            {
-                return loadProjectFromSynthesisCommand;
-            }
-            set
-            {
-                loadProjectFromSynthesisCommand = value;
-                RaisePropertyChanged(nameof(LoadProjectFromSynthesisCommand));
-            }
-        }
 
         private ICommand newProjectCommand;
         /// <summary>
@@ -456,14 +429,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             NewProjectCommand = new RelayCommand(CreateNewProject);
             LoadProjectCommand = new RelayCommand(LoadProject);
             SaveProjectCommand = new RelayCommand(SaveProject);
-            GoToSchemeEditorCommand = new RelayCommand(OpenSchemeEditor);
-        }
-
-        // Метод для открытия режима редактирования схем включения
-        private void OpenSchemeEditor() 
-        {
-            var schemeEditorWindow = new SchemeEditorWindow();
-            schemeEditorWindow.Show();
         }
 
         // Метод для сохранения проекта
@@ -619,7 +584,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// <param name="page"></param>
         public void SetPage(Page page)
         {
-            _Page = (AnalysisPage)page;
+            _Page = (AnalysisAndSynthesisPage)page;
         }
 
         #endregion

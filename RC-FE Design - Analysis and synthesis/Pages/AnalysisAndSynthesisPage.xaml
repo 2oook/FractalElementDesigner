@@ -4,13 +4,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:local="clr-namespace:RC_FE_Design___Analysis_and_synthesis.Pages"
+        xmlns:commands="clr-namespace:RC_FE_Design___Analysis_and_synthesis.Commands"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
         xmlns:editor="clr-namespace:RC_FE_Design___Analysis_and_synthesis.FEEditor"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro" 
         xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity" 
         xmlns:behaviours="clr-namespace:RC_FE_Design___Analysis_and_synthesis.FEEditor.Controls.Behaviours"
         Dialog:DialogParticipation.Register="{Binding}"
-        x:Class="RC_FE_Design___Analysis_and_synthesis.Pages.AnalysisPage"
+        x:Class="RC_FE_Design___Analysis_and_synthesis.Pages.AnalysisAndSynthesisPage"
         mc:Ignorable="d" 
         d:DesignHeight="450" d:DesignWidth="800"
         Title="Page2"
@@ -53,7 +54,7 @@
 
             <DockPanel Grid.Row="0">
                 <Button DockPanel.Dock="Left" HorizontalAlignment="Left" Content="На главную" Command="{Binding GoToMainPageCommand}" Padding="5"  Margin="5" FontSize="14"/>
-                <Button Content="Редактор схем"  Command="{Binding GoToSchemeEditorCommand}" Padding="5"  Margin="5" FontSize="14"/>
+                <Button Content="Редактор схем"  Command="{x:Static commands:StaticCommandContainer.GoToSchemeEditorPageCommand}" Padding="5"  Margin="5" FontSize="14"/>
                 <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Пересчитать"  Padding="5"  Margin="5" FontSize="14"/>
             </DockPanel>
 
@@ -109,7 +110,6 @@
 
                         <Button Content="Новый проект" Command="{Binding NewProjectCommand}" FontWeight="Bold" FontSize="14" Padding="5"  Margin="5,5,5,2"/>
                         <Button Content="Открыть проект" Command="{Binding LoadProjectCommand}" FontWeight="Bold" FontSize="14" Padding="5" Margin="5,5,5,2" />
-                        <Button Content="Загрузить проект из синтеза" Command="{Binding LoadProjectFromSynthesisCommand}" FontWeight="Bold" FontSize="14" Padding="5" Margin="5,5,5,2" />
 
                     </StackPanel>
 

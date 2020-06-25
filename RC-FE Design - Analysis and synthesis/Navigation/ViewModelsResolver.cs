@@ -25,9 +25,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
         /// </summary>
         public ViewModelsResolver()
         {
-            _vmResolvers.Add(MainViewModel.SchemeEditorPageViewModelAlias, () => new SchemeEditorViewModel());
-            _vmResolvers.Add(MainViewModel.AnalysisPageViewModelAlias, () => new AnalysisViewModel());
-            _vmResolvers.Add(MainViewModel.SynthesisPageViewModelAlias, () => new SynthesisViewModel());
+            _vmResolvers.Add(MainViewModel.SchemeEditorPageViewModelAlias, () => new SchemeEditorPageViewModel());
+            _vmResolvers.Add(MainViewModel.AnalysisAndSynthesisPageViewModelAlias, () => new AnalysisAndSynthesisPageViewModel());
         }
 
         /// <summary>
@@ -36,9 +35,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
         /// <param name="dialogCoordinator">Объект для вывода диалогов</param>
         public ViewModelsResolver(IDialogCoordinator dialogCoordinator)
         {
-            _vmResolvers.Add(MainViewModel.SchemeEditorPageViewModelAlias, () => new SchemeEditorViewModel(dialogCoordinator));
-            _vmResolvers.Add(MainViewModel.AnalysisPageViewModelAlias, () => new AnalysisViewModel(dialogCoordinator));
-            _vmResolvers.Add(MainViewModel.SynthesisPageViewModelAlias, () => new SynthesisViewModel(dialogCoordinator));
+            _vmResolvers.Add(MainViewModel.SchemeEditorPageViewModelAlias, () => new SchemeEditorPageViewModel(dialogCoordinator));
+            _vmResolvers.Add(MainViewModel.AnalysisAndSynthesisPageViewModelAlias, () => new AnalysisAndSynthesisPageViewModel(dialogCoordinator));
         }
 
         /// <summary>

@@ -82,6 +82,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\StaticCommandContainer.cs" />
     <Compile Include="FEEditor\Context.cs" />
     <Compile Include="FEEditor\Controls\Behaviours\BindableSelectedItemBehavior.cs" />
     <Compile Include="FEEditor\Controls\FEControl.xaml.cs">
@@ -108,20 +109,14 @@
     <Compile Include="Navigation\Navigation.cs" />
     <Compile Include="Navigation\PagesResolver.cs" />
     <Compile Include="Navigation\ViewModelsResolver.cs" />
-    <Compile Include="Pages\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\AnalysisPage.xaml.cs">
-      <DependentUpon>AnalysisPage.xaml</DependentUpon>
+    <Compile Include="Pages\AnalysisAndSynthesisPage.xaml.cs">
+      <DependentUpon>AnalysisAndSynthesisPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SchemeEditorPage.xaml.cs">
       <DependentUpon>SchemeEditorPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SynthesisPage.xaml.cs">
       <DependentUpon>SynthesisPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Page404.xaml.cs">
-      <DependentUpon>Page404.xaml</DependentUpon>
     </Compile>
     <Compile Include="ProjectTree\Project.cs" />
     <Compile Include="FEEditor\Model\Layer.cs" />
@@ -207,12 +202,10 @@
     <Compile Include="SchemeEditor\Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\AnalysisViewModel.cs" />
+    <Compile Include="ViewModels\AnalysisAndSynthesisPageViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\NewStructureWindowViewModel.cs" />
-    <Compile Include="ViewModels\Page404ViewModel.cs" />
-    <Compile Include="ViewModels\SchemeEditorViewModel.cs" />
-    <Compile Include="ViewModels\SynthesisViewModel.cs" />
+    <Compile Include="ViewModels\SchemeEditorPageViewModel.cs" />
     <Compile Include="Windows\NewStructureWindow.xaml.cs">
       <DependentUpon>NewStructureWindow.xaml</DependentUpon>
     </Compile>
@@ -248,11 +241,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\AnalysisPage.xaml">
+    <Page Include="Pages\AnalysisAndSynthesisPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -261,10 +250,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\SynthesisPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Page404.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
