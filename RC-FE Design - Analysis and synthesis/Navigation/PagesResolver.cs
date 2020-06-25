@@ -25,9 +25,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
         public PagesResolver()
         {
             _pagesResolvers.Add(Navigation.MainPageAlias, () => new MainPage());
+            _pagesResolvers.Add(Navigation.SchemeEditorPageAlias, () => new SchemeEditorPage());
             _pagesResolvers.Add(Navigation.AnalysisPageAlias, () => new AnalysisPage());
             _pagesResolvers.Add(Navigation.SynthesisPageAlias, () => new SynthesisPage());
-            _pagesResolvers.Add(Navigation.NotFoundPageAlias, () => new Page404());
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
                 return _pagesResolvers[alias]();
             }
 
-            return _pagesResolvers[Navigation.NotFoundPageAlias]();
+            return null;
         }
     }
 }

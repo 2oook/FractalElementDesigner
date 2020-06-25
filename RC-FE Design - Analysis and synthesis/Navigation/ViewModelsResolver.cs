@@ -25,7 +25,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
         /// </summary>
         public ViewModelsResolver()
         {
-            _vmResolvers.Add(MainViewModel.NotFoundPageViewModelAlias, () => new Page404ViewModel());
+            _vmResolvers.Add(MainViewModel.SchemeEditorPageViewModelAlias, () => new SchemeEditorViewModel());
             _vmResolvers.Add(MainViewModel.AnalysisPageViewModelAlias, () => new AnalysisViewModel());
             _vmResolvers.Add(MainViewModel.SynthesisPageViewModelAlias, () => new SynthesisViewModel());
         }
@@ -36,7 +36,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
         /// <param name="dialogCoordinator">Объект для вывода диалогов</param>
         public ViewModelsResolver(IDialogCoordinator dialogCoordinator)
         {
-            _vmResolvers.Add(MainViewModel.NotFoundPageViewModelAlias, () => new Page404ViewModel());
+            _vmResolvers.Add(MainViewModel.SchemeEditorPageViewModelAlias, () => new SchemeEditorViewModel(dialogCoordinator));
             _vmResolvers.Add(MainViewModel.AnalysisPageViewModelAlias, () => new AnalysisViewModel(dialogCoordinator));
             _vmResolvers.Add(MainViewModel.SynthesisPageViewModelAlias, () => new SynthesisViewModel(dialogCoordinator));
         }
@@ -53,7 +53,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
                 return _vmResolvers[alias]();
             }
 
-            return _vmResolvers[MainViewModel.NotFoundPageViewModelAlias]();
+            return null;
         }
     }
 }

@@ -114,6 +114,9 @@
     <Compile Include="Pages\AnalysisPage.xaml.cs">
       <DependentUpon>AnalysisPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SchemeEditorPage.xaml.cs">
+      <DependentUpon>SchemeEditorPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SynthesisPage.xaml.cs">
       <DependentUpon>SynthesisPage.xaml</DependentUpon>
     </Compile>
@@ -208,6 +211,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\NewStructureWindowViewModel.cs" />
     <Compile Include="ViewModels\Page404ViewModel.cs" />
+    <Compile Include="ViewModels\SchemeEditorViewModel.cs" />
     <Compile Include="ViewModels\SynthesisViewModel.cs" />
     <Compile Include="Windows\NewStructureWindow.xaml.cs">
       <DependentUpon>NewStructureWindow.xaml</DependentUpon>
@@ -249,6 +253,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\AnalysisPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SchemeEditorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

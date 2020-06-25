@@ -149,7 +149,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 }
             };
 
-            }
+        }
 
         public AnalysisViewModel(IDialogCoordinator dialogCoordinator) : this()
         {

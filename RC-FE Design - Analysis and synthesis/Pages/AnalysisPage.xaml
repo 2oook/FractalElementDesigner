@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:RC_FE_Design___Analysis_and_synthesis.Pages"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
         xmlns:editor="clr-namespace:RC_FE_Design___Analysis_and_synthesis.FEEditor"
-        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro" xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:behaviours="clr-namespace:RC_FE_Design___Analysis_and_synthesis.FEEditor.Controls.Behaviours"
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro" 
+        xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity" 
+        xmlns:behaviours="clr-namespace:RC_FE_Design___Analysis_and_synthesis.FEEditor.Controls.Behaviours"
         Dialog:DialogParticipation.Register="{Binding}"
         x:Class="RC_FE_Design___Analysis_and_synthesis.Pages.AnalysisPage"
         mc:Ignorable="d" 
@@ -30,8 +32,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="25*"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0" Background="{DynamicResource AccentColorBrush2}">
@@ -43,7 +44,7 @@
             </MenuItem>
         </Menu>
 
-        <Grid Grid.Row="1" Grid.RowSpan="2">
+        <Grid Grid.Row="1">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -81,7 +82,7 @@
                                             </RadioButton>
                                         </DataTemplate>
                                     </ToolBar.ItemTemplate>
-                                   
+
                                 </ToolBar>
                             </ToolBarTray>
 
@@ -170,111 +171,111 @@
                         </TabItem>
                         <TabItem Header="Структура" mah:ControlsHelper.HeaderFontSize="16">
                             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition SharedSizeGroup="tabItemWidth"/>
-                                </Grid.ColumnDefinitions>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition SharedSizeGroup="tabItemWidth"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <StackPanel>
+                                    <StackPanel>
 
-                                    <GroupBox Header="Сетка">
-                                        <StackPanel>
-                                            <Grid Margin="0,0,0,5">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                    <ColumnDefinition Width="1*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Количество ячеек по горизонтали"/>
-                                                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-                                            </Grid>
-                                            <Grid Margin="0,0,0,5">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                    <ColumnDefinition Width="1*" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Количество ячеек по вертикали"/>
-                                                <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-                                            </Grid>
-                                        </StackPanel>
-                                    </GroupBox>
-
-                                    <GroupBox Header="Параметры">
-                                        <StackPanel>
-                                            <Grid Margin="0,0,0,5">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                    <ColumnDefinition Width="1*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="R"/>
-                                                <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
-                                            </Grid>
-                                            <Grid Margin="0,0,0,5">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                    <ColumnDefinition Width="1*" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="C"/>
-                                                <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
-                                            </Grid>
-                                            <Grid Margin="0,0,0,5">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                    <ColumnDefinition Width="1*" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Kf"/>
-                                                <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
-                                            </Grid>
-                                            <Grid Margin="0,0,0,5">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                    <ColumnDefinition Width="1*" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="G"/>
-                                                <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
-                                            </Grid>
-                                            <Grid Margin="0,0,0,5">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                    <ColumnDefinition Width="1*" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="H"/>
-                                                <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
-                                            </Grid>
-                                            <Grid Margin="0,0,0,5">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                    <ColumnDefinition Width="1*" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="N"/>
-                                                <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
-                                            </Grid>
-                                            <Grid Margin="0,0,0,5">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                    <ColumnDefinition Width="1*" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="P"/>
-                                                <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
-                                            </Grid>
-                                        </StackPanel>
-                                    </GroupBox>
-
-                                    <GroupBox Header="Маска">
-                                        <StackPanel>
+                                        <GroupBox Header="Сетка">
+                                            <StackPanel>
                                                 <Grid Margin="0,0,0,5">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                    <ColumnDefinition Width="1*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Режим редактирования"/>
-                                                <CheckBox Grid.Column="1" HorizontalAlignment="Center"/>
-                                            </Grid>
-                                        </StackPanel>
-                                    </GroupBox>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Количество ячеек по горизонтали"/>
+                                                    <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                                                </Grid>
+                                                <Grid Margin="0,0,0,5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                        <ColumnDefinition Width="1*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Количество ячеек по вертикали"/>
+                                                    <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                                                </Grid>
+                                            </StackPanel>
+                                        </GroupBox>
 
-                                </StackPanel>
+                                        <GroupBox Header="Параметры">
+                                            <StackPanel>
+                                                <Grid Margin="0,0,0,5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="R"/>
+                                                    <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
+                                                </Grid>
+                                                <Grid Margin="0,0,0,5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                        <ColumnDefinition Width="1*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="C"/>
+                                                    <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
+                                                </Grid>
+                                                <Grid Margin="0,0,0,5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                        <ColumnDefinition Width="1*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Kf"/>
+                                                    <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
+                                                </Grid>
+                                                <Grid Margin="0,0,0,5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                        <ColumnDefinition Width="1*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="G"/>
+                                                    <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
+                                                </Grid>
+                                                <Grid Margin="0,0,0,5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                        <ColumnDefinition Width="1*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="H"/>
+                                                    <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
+                                                </Grid>
+                                                <Grid Margin="0,0,0,5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                        <ColumnDefinition Width="1*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="N"/>
+                                                    <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
+                                                </Grid>
+                                                <Grid Margin="0,0,0,5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                        <ColumnDefinition Width="1*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="P"/>
+                                                    <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
+                                                </Grid>
+                                            </StackPanel>
+                                        </GroupBox>
 
-                            </Grid>
+                                        <GroupBox Header="Маска">
+                                            <StackPanel>
+                                                <Grid Margin="0,0,0,5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Режим редактирования"/>
+                                                    <CheckBox Grid.Column="1" HorizontalAlignment="Center"/>
+                                                </Grid>
+                                            </StackPanel>
+                                        </GroupBox>
+
+                                    </StackPanel>
+
+                                </Grid>
                             </ScrollViewer>
                         </TabItem>
                         <TabItem Header="Настройки" mah:ControlsHelper.HeaderFontSize="16">

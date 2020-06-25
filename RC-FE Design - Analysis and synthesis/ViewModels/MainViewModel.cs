@@ -31,8 +31,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             // создать страницы
             _SynthesisPage = new SynthesisPage();
             _AnalysisPage = new AnalysisPage();
-
-            _NotFoundPageViewModel = _resolver.GetViewModelInstance(NotFoundPageViewModelAlias);
+            _SchemeEditorPage = new SchemeEditorPage();
+        
+            _SchemeEditorPageViewModel = _resolver.GetViewModelInstance(SchemeEditorPageViewModelAlias);
             _SynthesisPageViewModel = _resolver.GetViewModelInstance(SynthesisPageViewModelAlias);
             _AnalysisPageViewModel = _resolver.GetViewModelInstance(AnalysisPageViewModelAlias);
 
@@ -41,7 +42,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
             // Инициализировать команды
             InitializeCommands();
-
+            
             _SynthesisPageViewModel.GoToMainPageCommand = GoToMainPageCommand;
             _AnalysisPageViewModel.GoToMainPageCommand = GoToMainPageCommand;
 
@@ -52,7 +53,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
         #region Константы
 
-        public static readonly string NotFoundPageViewModelAlias = "404VM";
+        public static readonly string SchemeEditorPageViewModelAlias = "SchemeEditorPageVM";
         public static readonly string SynthesisPageViewModelAlias = "SynthesisPageVM";
         public static readonly string AnalysisPageViewModelAlias = "AnalysisPageVM";
 
@@ -66,9 +67,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         private readonly IViewModelsResolver _resolver;
 
         /// <summary>
-        /// Ссылка на ViewModel пустой страницы
+        /// Ссылка на ViewModel страницы редактора схем
         /// </summary>
-        private readonly IPageViewModel _NotFoundPageViewModel;
+        private readonly IPageViewModel _SchemeEditorPageViewModel;
         /// <summary>
         /// Ссылка на ViewModel страницы синтеза
         /// </summary>
@@ -86,6 +87,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// Страница анализа
         /// </summary>
         private readonly Page _AnalysisPage;
+        /// <summary>
+        /// Страница редактора схем
+        /// </summary>
+        private readonly Page _SchemeEditorPage;
 
         #endregion
 
@@ -96,6 +101,23 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         #endregion
 
         #region Команды
+
+        private ICommand _goToSchemeEditorPageCommand;
+        /// <summary>
+        /// Команда для перемещения на страницу редактора схем
+        /// </summary>
+        public ICommand GoToSchemeEditorPageCommand
+        {
+            get
+            {
+                return _goToSchemeEditorPageCommand;
+            }
+            set
+            {
+                _goToSchemeEditorPageCommand = value;
+                RaisePropertyChanged(nameof(GoToSchemeEditorPageCommand));
+            }
+        }
 
         private ICommand _goToMainPageCommand;
         /// <summary>
@@ -151,9 +173,18 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// </summary>
         private void InitializeCommands()
         {
+            GoToSchemeEditorPageCommand = new RelayCommand(GoToSchemeEditorPageCommandExecute);
             GoToMainPageCommand = new RelayCommand(GoToMainPageCommandExecute);
             GoToSynthesisPageCommand = new RelayCommand(GoToSynthesisPageCommandExecute);
             GoToAnalysisPageCommand = new RelayCommand(GoToAnalysisPageCommandExecute);
+        }
+
+        /// <summary>
+        /// Метод для перемещения на страницу редактора схем
+        /// </summary>
+        private void GoToSchemeEditorPageCommandExecute()
+        {
+            Navigation.Navigation.Navigate(_SchemeEditorPage, _SchemeEditorPageViewModel);
         }
 
         /// <summary>
