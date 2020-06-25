@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
 {
     /// <summary>
-    /// Базовый структуры 
+    /// Базовый класс структуры 
     /// </summary>
-    [Serializable]
     public class RCStructureBase : ViewModelBase
     {
         /// <summary>

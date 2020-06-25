@@ -4,7 +4,6 @@ using MahApps.Metro.Controls.Dialogs;
 using RC_FE_Design___Analysis_and_synthesis.Commands;
 using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
 using RC_FE_Design___Analysis_and_synthesis.Pages;
-using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -43,9 +42,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             CommandManager.RegisterClassCommandBinding(typeof(Page), new CommandBinding(StaticCommandContainer.GoToAnalysisAndSynthesisPageCommand, GoToAnalysisAndSynthesisPageCommandExecute));
 
             // Перейти на главную страницу
-            //GoToAnalysisAndSynthesisPageCommandExecute(null, null); 
+            GoToAnalysisAndSynthesisPageCommandExecute(null, null); 
 
-            GoToSchemeEditorPageCommandExecute(null, null); // ОТЛАДКА
+            //GoToSchemeEditorPageCommandExecute(null, null); // ОТЛАДКА
         }
 
         #region Константы

@@ -7,7 +7,6 @@ using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Tools;
 using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
 using RC_FE_Design___Analysis_and_synthesis.Pages;
-using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
 using RC_FE_Design___Analysis_and_synthesis.Windows;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
@@ -436,7 +435,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         {
             try
             {
-                var savingProject = SelectedProject;
+                var project = SelectedProject;
 
                 if (SelectedProject == null)
                 {
@@ -451,6 +450,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                     if (result == CommonFileDialogResult.Ok)
                     {
+                        var savingProject = ProjectConverter.Convert(project);
                         ProjectSaver.SaveProject(savingProject, dialog.FileName);
                     }
                 }
@@ -474,11 +474,26 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         {
             try
             {
+                var dialog = new CommonOpenFileDialog();
+                ConfigureDialogForProjectOpening(ref dialog);
+                CommonFileDialogResult result = dialog.ShowDialog();
 
+                if (result == CommonFileDialogResult.Ok)
+                {               
+                    var savingProject = ProjectSaver.LoadProject(dialog.FileName);
+                    var project = ProjectConverter.ConvertBack(savingProject);
+                }
             }
             catch (Exception ex)
             {
-                _dialogCoordinator.ShowMessageAsync(this, "Ошибка", "Проект не загружен" + Environment.NewLine + ex.Message);
+                _dialogCoordinator.ShowMessageAsync(this, "Ошибка", "Проект не может быть открыт" + Environment.NewLine + ex.Message);
+            }
+
+            void ConfigureDialogForProjectOpening(ref CommonOpenFileDialog dialog)
+            {
+                dialog.Title = "Выберите проект для открытия";
+                dialog.InitialDirectory = Environment.CurrentDirectory;
+                dialog.DefaultExtension = "feproj";
             }
         }
 

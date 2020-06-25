@@ -10,7 +10,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells
     /// <summary>
     /// Базовый класс ячейки структуры
     /// </summary>
-    [Serializable]
     public class StructureCellBase : ViewModelBase
     {
         /// <summary>

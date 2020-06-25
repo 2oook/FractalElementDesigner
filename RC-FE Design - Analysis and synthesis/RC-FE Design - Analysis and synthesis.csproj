@@ -102,6 +102,11 @@
     <Compile Include="FEEditor\ResourceConstants.cs" />
     <Compile Include="FEEditor\Tools\Tool.cs" />
     <Compile Include="FEEditor\Tools\ToolType.cs" />
+    <Compile Include="IO\ProjectConverter.cs" />
+    <Compile Include="IO\ProjectSaveModel\SavingLayer.cs" />
+    <Compile Include="IO\ProjectSaveModel\SavingProject.cs" />
+    <Compile Include="IO\ProjectSaveModel\SavingRCStructureBase.cs" />
+    <Compile Include="IO\ProjectSaveModel\SavingStructureCellBase.cs" />
     <Compile Include="IO\ProjectSaver.cs" />
     <Compile Include="Navigation\Interfaces\IPageResolver.cs" />
     <Compile Include="Navigation\Interfaces\IPageViewModel.cs" />
@@ -118,7 +123,7 @@
     <Compile Include="Pages\SynthesisPage.xaml.cs">
       <DependentUpon>SynthesisPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProjectTree\Project.cs" />
+    <Compile Include="FEEditor\Model\Project.cs" />
     <Compile Include="FEEditor\Model\Layer.cs" />
     <Compile Include="FEEditor\Model\RCStructure.cs" />
     <Compile Include="FEEditor\Model\RCStructureBase.cs" />
