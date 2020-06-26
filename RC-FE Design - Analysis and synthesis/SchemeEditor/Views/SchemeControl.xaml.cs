@@ -463,8 +463,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
         {
             var canvas = Editor.Context.CurrentCanvas;
 
-            Editor.Snapshot(canvas, true);
-
             var point = new PointEx(Editor.Context.RightClick.X, Editor.Context.RightClick.Y);
             Insert.AndGate(canvas, point, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
 
@@ -475,8 +473,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
         private void InsertFElement_Click(object sender, RoutedEventArgs e)
         {
             var canvas = Editor.Context.CurrentCanvas;
-
-            Editor.Snapshot(canvas, true);
 
             var point = new PointEx(Editor.Context.RightClick.X, Editor.Context.RightClick.Y);
             Insert.FElement(canvas, point, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
@@ -494,25 +490,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
         private void InvertEnd_Click(object sender, RoutedEventArgs e)
         {
             Editor.ToggleWireEnd();
-            Editor.Context.SkipLeftClick = false;
-        }
-
-        private void EditCut_Click(object sender, RoutedEventArgs e)
-        {
-            Editor.Cut();
-            Editor.Context.SkipLeftClick = false;
-        }
-
-        private void EditCopy_Click(object sender, RoutedEventArgs e)
-        {
-            Editor.Copy();
-            Editor.Context.SkipLeftClick = false;
-        }
-
-        private void EditPaste_Click(object sender, RoutedEventArgs e)
-        {
-            var point = new PointEx(Editor.Context.RightClick.X, Editor.Context.RightClick.Y);
-            Editor.Paste(point, true);
             Editor.Context.SkipLeftClick = false;
         }
 
@@ -564,8 +541,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
 
                     if (type == TagDragAndDropType.Input)
                     {
-                        Editor.Snapshot(canvas, true);
-
                         //var element = Insert.Input(DiagramCanvas, insertPoint, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
                         //element.SetData(tag);
 
@@ -573,8 +548,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
                     }
                     else if (type == TagDragAndDropType.Output)
                     {
-                        Editor.Snapshot(canvas, true);
-
                         //var element = Insert.Output(DiagramCanvas, insertPoint, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
                         //element.SetData(tag);
 

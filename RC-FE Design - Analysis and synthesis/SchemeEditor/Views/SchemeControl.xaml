@@ -20,9 +20,6 @@
             
             <Separator/>
             
-            <MenuItem x:Name="EditCut" Header="Cu_t" Click="EditCut_Click" InputGestureText="Ctrl+X"/>
-            <MenuItem x:Name="EditCopy" Header="_Copy" Click="EditCopy_Click" InputGestureText="Ctrl+C"/>
-            <MenuItem x:Name="EditPaste" Header="_Paste" Click="EditPaste_Click" InputGestureText="Ctrl+V"/>
             <MenuItem x:Name="EditDelete" Header="_Delete" Click="EditDelete_Click" InputGestureText="Del"/>
              
         </ContextMenu>

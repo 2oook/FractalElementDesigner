@@ -117,6 +117,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             sb.Append(Environment.NewLine);
         }
 
+        #endregion
+
         private static string DefaultUid = Constants.TagHeaderDiagram + Constants.TagNameSeparator + (-1).ToString();
 
         private static void GenerateHeader(StringBuilder sb, string uid, SchemeProperties prop)
@@ -162,140 +164,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             return sb.ToString();
         }
 
-        public static Solution GenerateSolution(ITree tree,
-            string fileName,
-            bool includeHistory)
-        {
-            var models = new List<string>();
-            var solution = tree.GetItems().First();
-            var sb = new StringBuilder();
-
-            // Solution
-            sb.Append(Constants.PrefixRoot);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(solution.GetUid());
-            sb.Append(Constants.ArgumentSeparator);
-            
-            sb.Append(Constants.ArgumentSeparator);
-            
-            sb.Append(Environment.NewLine);
-
-            foreach (var project in solution.GetItems())
-                sb.Append(GenerateProject(project, models, includeHistory));
-
-            return new Solution(sb.ToString(), models);
-        }
-
-        public static string GenerateProject(ITreeItem project,
-            List<string> models,
-            bool includeHistory)
-        {
-            var sb = new StringBuilder();
-
-            sb.Append(Constants.PrefixRoot);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(project.GetUid());
-            sb.Append(Environment.NewLine);
-
-            foreach (var diagram in project.GetItems())
-            {
-                if (diagram.GetTag() != null)
-                {
-                    var tag = diagram.GetTag() as Diagram;
-                    var model = tag.Model;
-                    var history = tag.History;
-
-                    if (model == null)
-                        model = GenerateItemModel(null, diagram, true);
-
-                    models.Add(model);
-                    sb.Append(model);
-
-                    if (includeHistory == true && history != null)
-                    {
-                        foreach (var m in history.Undo)
-                        {
-                            models.Add(m);
-                            sb.Append(m);
-                        }
-                    }
-                }
-            }
-
-            return sb.ToString();
-        }
-
-        public static string GenerateItemModel(ICanvas canvas, ITreeItem item, bool update)
-        {
-            string model = null;
-
-            if (item != null)
-            {
-                string uid = item.GetUid();
-                bool isDiagram = StringHelper.StartsWith(uid, Constants.TagHeaderDiagram);
-
-                if (isDiagram == true)
-                {
-                    var prop = (canvas == null) ? SchemeProperties.Default : canvas.GetProperties();
-                    model = GenerateDiagram(canvas, uid, prop);
-                    if (update == true)
-                    {
-                        UndoRedo undoRedo = (canvas == null) ? 
-                            new UndoRedo(new Stack<string>(), new Stack<string>()) :
-                            canvas.GetTag() as UndoRedo;
-
-                        item.SetTag(new Diagram(model, undoRedo));
-                    }
-                }
-            }
-
-            return model;
-        }
-
-        #endregion
-
-        #region Parse
-
-        public static TreeSolution Parse(string model,
-            ICanvas canvas, ISchemeCreator creator,
-            double offsetX, double offsetY,
-            bool appendIds, bool updateIds,
-            bool select,
-            bool createElements)
-        {
-            var parser = new Parser();
-
-            var options = new ParseOptions()
-            {
-                OffsetX = offsetX,
-                OffsetY = offsetY,
-                AppendIds = appendIds,
-                UpdateIds = updateIds,
-                Select = select,
-                CreateElements = createElements,
-                Counter = canvas != null ? canvas.GetCounter() : null,
-                Properties = canvas != null ? canvas.GetProperties() : null
-            };
-
-            var temp = creator.GetCanvas();
-
-            creator.SetCanvas(canvas);
-
-            var result = parser.Parse(model, creator, options);
-
-            creator.SetCanvas(temp);
-
-            if (updateIds == true)
-                canvas.SetCounter(options.Counter);
-
-            if (createElements == true)
-                canvas.SetProperties(options.Properties);
-
-            return result;
-        } 
-
-        #endregion
-
         #region Clear
 
         public static void Clear(ICanvas canvas)
@@ -314,57 +182,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                 return reader.ReadToEnd();
             }
         }
-
-        #endregion
-
-        #region Save
-
-        public static void Save(string fileName, string model)
-        {
-            using (var writer = new System.IO.StreamWriter(fileName))
-            {
-                writer.Write(model);
-            }
-        }
-
-        #endregion
-
-        #region Load
-
-        public static void Load(ICanvas canvas, ISchemeCreator creator, ITreeItem item)
-        {
-            var tag = item.GetTag();
-
-            Clear(canvas);
-
-            if (tag != null)
-                LoadFromTag(canvas, creator, tag);
-        }
-
-        public static void LoadFromTag(ICanvas canvas, ISchemeCreator creator, object tag)
-        {
-            var diagram = tag as Diagram;
-
-            canvas.SetTag(diagram.History);
-
-            Parse(diagram.Model,
-                canvas, creator,
-                0, 0,
-                false, true, false, true);
-        }
-
-        #endregion
-
-        #region Store
-
-        public static void Store(ICanvas canvas, ITreeItem item)
-        {
-            string model = (canvas == null) ? 
-                GenerateItemModel(null, item, true) :
-                GenerateDiagram(canvas, item.GetUid(), canvas == null ? null : canvas.GetProperties());
-  
-            item.SetTag(new Diagram(model, canvas != null ? canvas.GetTag() as UndoRedo : null));
-        } 
 
         #endregion
 

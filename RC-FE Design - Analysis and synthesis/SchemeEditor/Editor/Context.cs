@@ -12,7 +12,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         #region Properties
 
         public ISchemeCreator DiagramCreator { get; set; }
-        public IClipboard Clipboard { get; set; }
 
         #endregion
 
@@ -20,7 +19,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         public string ClipboardText = null;
 
-        public ITree CurrentTree = null;
         public ICanvas CurrentCanvas = null;
 
         public ILine CurrentLine = null;
@@ -66,10 +64,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         public Action UpdateProperties { get; set; }
         public Action<SchemeProperties> SetProperties { get; set; }
-
-        public Func<ITreeItem> CreateSolution { get; set; }
-        public Func<ITreeItem> CreateProject { get; set; }
-        public Func<ITreeItem> CreateDiagram { get; set; }
 
         public Func<bool> IsControlPressed { get; set; }
 

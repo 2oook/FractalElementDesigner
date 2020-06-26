@@ -142,11 +142,8 @@
     <Compile Include="SchemeEditor\Controls\LineEx.cs" />
     <Compile Include="SchemeEditor\Controls\PinThumb.cs" />
     <Compile Include="SchemeEditor\Controls\SelectionAdorner.cs" />
-    <Compile Include="SchemeEditor\Controls\SolutionTreeView.cs" />
-    <Compile Include="SchemeEditor\Controls\SolutionTreeViewItem.cs" />
     <Compile Include="SchemeEditor\Core\SchemeProperties.cs" />
     <Compile Include="SchemeEditor\Core\ICanvas.cs" />
-    <Compile Include="SchemeEditor\Core\IClipboard.cs" />
     <Compile Include="SchemeEditor\Core\IData.cs" />
     <Compile Include="SchemeEditor\Core\IdCounter.cs" />
     <Compile Include="SchemeEditor\Core\IElement.cs" />
@@ -157,50 +154,30 @@
     <Compile Include="SchemeEditor\Core\ISelected.cs" />
     <Compile Include="SchemeEditor\Core\ITag.cs" />
     <Compile Include="SchemeEditor\Core\IThumb.cs" />
-    <Compile Include="SchemeEditor\Core\ITree.cs" />
-    <Compile Include="SchemeEditor\Core\ITreeItem.cs" />
     <Compile Include="SchemeEditor\Core\IUid.cs" />
     <Compile Include="SchemeEditor\Core\MarginEx.cs" />
     <Compile Include="SchemeEditor\Core\Model\Child.cs" />
     <Compile Include="SchemeEditor\Core\Model\Connection.cs" />
-    <Compile Include="SchemeEditor\Core\Model\Diagram.cs" />
-    <Compile Include="SchemeEditor\Core\Model\ISchemeCreator.cs" />
-    <Compile Include="SchemeEditor\Core\Model\ISchemeParser.cs" />
+	<Compile Include="SchemeEditor\Core\Model\ISchemeCreator.cs" />
     <Compile Include="SchemeEditor\Core\Model\Pin.cs" />
-    <Compile Include="SchemeEditor\Core\Model\Solution.cs" />
-    <Compile Include="SchemeEditor\Core\Model\TreeScheme.cs" />
-    <Compile Include="SchemeEditor\Core\Model\TreeSchemes.cs" />
-    <Compile Include="SchemeEditor\Core\Model\TreeProject.cs" />
-    <Compile Include="SchemeEditor\Core\Model\TreeProjects.cs" />
-    <Compile Include="SchemeEditor\Core\Model\TreeSolution.cs" />
-    <Compile Include="SchemeEditor\Core\Model\UndoRedo.cs" />
     <Compile Include="SchemeEditor\Core\Model\Wire.cs" />
-    <Compile Include="SchemeEditor\Core\ParseOptions.cs" />
     <Compile Include="SchemeEditor\Core\PointEx.cs" />
     <Compile Include="SchemeEditor\Core\RectEx.cs" />
     <Compile Include="SchemeEditor\Core\Tag.cs" />
-    <Compile Include="SchemeEditor\Core\TreeItemType.cs" />
     <Compile Include="SchemeEditor\Editor\Constants.cs" />
     <Compile Include="SchemeEditor\Editor\Context.cs" />
     <Compile Include="SchemeEditor\Editor\SchemeEditor.cs" />
-    <Compile Include="SchemeEditor\Editor\HistoryEditor.cs" />
     <Compile Include="SchemeEditor\Editor\Insert.cs" />
     <Compile Include="SchemeEditor\Editor\LineUtil.cs" />
     <Compile Include="SchemeEditor\Editor\ModelEditor.cs" />
-    <Compile Include="SchemeEditor\Editor\Parser.cs" />
     <Compile Include="SchemeEditor\Editor\Tags.cs" />
-    <Compile Include="SchemeEditor\Editor\TreeEditor.cs" />
     <Compile Include="SchemeEditor\Editor\WireEditor.cs" />
     <Compile Include="SchemeEditor\ResourceConstants.cs" />
     <Compile Include="SchemeEditor\Helpers\SnapHelper.cs" />
     <Compile Include="SchemeEditor\Helpers\StringHelper.cs" />
-    <Compile Include="SchemeEditor\Helpers\WindowsClipboardHelper.cs" />
     <Compile Include="SchemeEditor\WpfSchemeCreator.cs" />
     <Compile Include="SchemeEditor\Views\SchemeControl.xaml.cs">
       <DependentUpon>SchemeControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SchemeEditor\Views\ExplorerControl.xaml.cs">
-      <DependentUpon>ExplorerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AnalysisAndSynthesisPageViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -274,10 +251,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SchemeEditor\Views\SchemeControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SchemeEditor\Views\ExplorerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

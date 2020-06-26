@@ -62,10 +62,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             InitializeComponent();
 
             InitializeEditor();
-            InitializeHistory();
             InitializeDiagramControl();
             InitializeWindowEvents();
-            InitializeFileMenuEvents();
             InitializeEditMenuEvents();
         }
 
@@ -127,25 +125,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
 
         #region Initialize
 
-        private void InitializeFileMenuEvents()
-        {
-            FileNew.Click += (sender, e) => NewSolution();
-            FileOpen.Click += (sender, e) => OpenSolution();
-            FileSave.Click += (sender, e) => SaveSolutionAsDlg(false);
-            FileSaveAs.Click += (sender, e) => SaveSolutionAsDlg(true);
-            FileOpenDiagram.Click += (sender, e) => OpenDiagramDlg();
-            FileSaveDiagram.Click += (sender, e) => SaveDiagramDlg();
-
-            FileExit.Click += (sender, e) => Application.Current.Shutdown();
-        }
-
         private void InitializeEditMenuEvents()
         {
-            EditUndo.Click += (sender, e) => Editor.Undo();
-            EditRedo.Click += (sender, e) => Editor.Redo();
-            EditCut.Click += (sender, e) => Editor.Cut();
-            EditCopy.Click += (sender, e) => Editor.Copy();
-            EditPaste.Click += (sender, e) => Editor.Paste(new PointEx(0.0, 0.0), true);
             EditDelete.Click += (sender, e) => Delete();
             EditSelectAll.Click += (sender, e) => Editor.SelectAll();
             EditDeselectAll.Click += (sender, e) => DeselectAll();
@@ -183,7 +164,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
         {
             Editor = new SchemeEditor.Editor.SchemeEditor();
             Editor.Context = new Context();
-            Editor.Context.CurrentTree = this.ExplorerControl.SolutionTree;
             Editor.Context.CurrentCanvas = this.DiagramControl.DiagramCanvas;
 
             var counter = new IdCounter();
@@ -198,8 +178,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             Editor.Context.UpdateProperties = () => UpdateProperties(Editor.Context.CurrentCanvas.GetProperties());
             Editor.Context.SetProperties = (p) => SetProperties(p);
 
-            Editor.Context.Clipboard = new WindowsClipboardHelper();
-
             // diagram creator
             Editor.Context.DiagramCreator = GetDiagramCreator();
 
@@ -207,32 +185,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             EnableInsertLast.IsChecked = Editor.Context.EnableInsertLast;
             EnableSnap.IsChecked = Editor.Context.EnableSnap;
             SnapOnRelease.IsChecked = Editor.Context.SnapOnRelease;
-
-            // explorer control
-            this.ExplorerControl.Editor = Editor;
-            this.ExplorerControl.DiagramView = this.DiagramControl.RootBorder;
-
-            // tree actions
-            Editor.Context.CreateSolution = () => this.ExplorerControl.CreateTreeSolutionItem();
-            Editor.Context.CreateProject = () => this.ExplorerControl.CreateTreeProjectItem();
-            Editor.Context.CreateDiagram = () => this.ExplorerControl.CreateTreeDiagramItem();
-
-        }
-
-        private void InitializeHistory()
-        {
-            HistoryEditor.CanvasHistoryChanged += (sender, e) =>
-            {
-                var canvas = e.Canvas;
-                var undo = e.Undo;
-                var redo = e.Redo;
-                int undoCount = undo != null ? undo.Count : 0;
-                int redoCount = redo != null ? redo.Count : 0;
-
-                UpdateSolutionState(undoCount > 0 ? true : false, SolutionFileName);
-            };
-
-            UpdateWindowTitle();
         }
 
         private ISchemeCreator GetDiagramCreator()
@@ -309,31 +261,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             TextSnapOffsetY.Text = prop.SnapOffsetY.ToString();
         }
 
-
-        private void OpenSolution()
-        {
-            OpenSolutionDlg();
-        }
-
-        private void NewSolution()
-        {
-            UpdateSolutionState(false, null);
-            SetProperties(SchemeProperties.Default);
-
-
-            ModelEditor.Clear(Editor.Context.CurrentCanvas);
-
-            Editor.Clear(Editor.Context.CurrentTree,
-                Editor.Context.CurrentCanvas,
-                Editor.Context.CurrentCanvas.GetCounter());
-
-            TreeEditor.CreateDefaultSolution(Editor.Context.CurrentTree,
-                Editor.Context.CreateSolution,
-                Editor.Context.CreateProject,
-                Editor.Context.CreateDiagram,
-                Editor.Context.CurrentCanvas.GetCounter());
-        }
-
         private void DeselectAll()
         {
             var canvas = Editor.Context.CurrentCanvas;
@@ -389,23 +316,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             {
                 switch (key)
                 {
-                    case Key.O: OpenSolution(); break;
-                    case Key.S: SaveSolutionAsDlg(false); break;
-                    case Key.N: NewSolution(); break;
                     case Key.R: Editor.ResetThumbTags(); break;
                     case Key.E: break;
-                    case Key.Z: Editor.Undo(); break;
-                    case Key.Y: Editor.Redo(); break;
-                    case Key.X: Editor.Cut(); break;
-                    case Key.C: Editor.Copy(); break;
-                    case Key.V: Editor.Paste(new PointEx(0.0, 0.0), true); break;
                     case Key.A: Editor.SelectAll(); break;
                     case Key.OemOpenBrackets: Editor.SelectPrevious(false); break;
                     case Key.OemCloseBrackets: Editor.SelectNext(false); break;
-                    case Key.J: Editor.CreateAndPaste(); break;
-                    case Key.M: Editor.Create(); break;
-                    case Key.OemComma: TreeEditor.SelectPreviousItem(Editor.Context.CurrentTree, true); break;
-                    case Key.OemPeriod: TreeEditor.SelectNextItem(Editor.Context.CurrentTree, true); break;
+                    case Key.J:  break;
+                    case Key.M: break;
                 }
             }
             else
@@ -428,12 +345,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
                     case Key.S: Editor.ToggleWireStart(); break;
                     case Key.E: Editor.ToggleWireEnd(); break;
                     case Key.C: Connect(); break;
-                    case Key.OemComma: TreeEditor.SelectPreviousItem(Editor.Context.CurrentTree, false); break;
-                    case Key.OemPeriod: TreeEditor.SelectNextItem(Editor.Context.CurrentTree, false); break;
-                    case Key.F5: TabExplorer.IsSelected = true; break;
+                    case Key.OemComma:  break;
+                    case Key.OemPeriod:  break;
+                    case Key.F5: break;
                     case Key.F6: break;
                     case Key.F7: break;
-                    case Key.F8: TabModel.IsSelected = true; break;
+                    case Key.F8: break;
                     case Key.F9: TabOptions.IsSelected = true; break;
                 }
             }
@@ -493,30 +410,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
         {
             DefaultZoom();
         }
-
-        private void GenerateModel_Click(object sender, RoutedEventArgs e)
-        {
-            Editor.GetCurrentModel();
-
-            var solution = Editor.GenerateSolution(System.IO.Directory.GetCurrentDirectory(), false);
-
-            this.TextModel.Text = solution.Model;
-        }
-
-        private void GenerateModelFromSelected_Click(object sender, RoutedEventArgs e)
-        {
-            this.TextModel.Text = ModelEditor.Generate(ModelEditor.GetSelected(Editor.Context.CurrentCanvas));
-        }
-
-        private void InsertModel_Click(object sender, RoutedEventArgs e)
-        {
-            var diagram = this.TextModel.Text;
-            double offsetX = double.Parse(TextOffsetX.Text);
-            double offsetY = double.Parse(TextOffsetY.Text);
-
-            Editor.Paste(diagram, offsetX, offsetY, true);
-        }
-
 
         #endregion
 
@@ -588,8 +481,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
 
         private void InsertFEElement(ICanvas canvas, PointEx point)
         {
-            Editor.Snapshot(canvas, true);
-
             var element = Insert.FElement(canvas,
                 point != null ? point : InsertPointGate, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
 
@@ -598,167 +489,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
 
         private void InsertAndGate(ICanvas canvas, PointEx point)
         {
-            Editor.Snapshot(canvas, true);
-
             var element = Insert.AndGate(canvas,
                 point != null ? point : InsertPointGate, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
 
             Editor.SelectOneElement(element, true);
-        }
-
-        #endregion
-
-        #region File Dialogs
-
-        private void OpenDiagramDlg()
-        {
-            var dlg = new Microsoft.Win32.OpenFileDialog()
-            {
-                Filter = "Diagram (*.txt)|*.txt|All Files (*.*)|*.*",
-                Title = "Open Diagram"
-            };
-
-            var res = dlg.ShowDialog();
-            if (res == true)
-            {
-                var fileName = dlg.FileName;
-                var canvas = Editor.Context.CurrentCanvas;
-
-                Editor.OpenDiagram(fileName, canvas);
-            }
-        }
-
-        private void OpenSolutionDlg()
-        {
-            var dlg = new Microsoft.Win32.OpenFileDialog()
-            {
-                Filter = "Solution (*.txt)|*.txt|All Files (*.*)|*.*",
-                Title = "Open Solution"
-            };
-
-            var res = dlg.ShowDialog();
-            if (res == true)
-            {
-                var fileName = dlg.FileName;
-                var canvas = Editor.Context.CurrentCanvas;
-
-                ModelEditor.Clear(canvas);
-
-                TreeSolution solution = Editor.OpenSolution(fileName);
-
-                if (solution != null)
-                {
-                    UpdateSolutionState(false, fileName);
-
-                    var tree = Editor.Context.CurrentTree;
-
-                    Editor.Clear(tree, canvas, canvas.GetCounter());
-                    Editor.Parse(tree, solution, canvas.GetCounter(), Editor.Context.CreateSolution);
-                }
-            }
-        }
-
-        private void SaveSolutionAsDlg(bool saveAs)
-        {
-            if (SolutionFileName == null || saveAs == true)
-                SaveSolutionDlg(saveAs);
-            else if (SolutionFileName != null)
-                SaveSolution(SolutionFileName, false);
-        }
-
-        private void SaveSolutionDlg(bool saveAs)
-        {
-            var dlg = new Microsoft.Win32.SaveFileDialog()
-            {
-                Filter = "Solution (*.txt)|*.txt|All Files (*.*)|*.*",
-                Title = "Save Solution",
-                FileName = SolutionFileName == null ? SolutionNewFileName : System.IO.Path.GetFileName(SolutionFileName)
-            };
-
-            var res = dlg.ShowDialog();
-            if (res == true)
-            {
-                var fileName = dlg.FileName;
-                SaveSolution(fileName, saveAs);
-            }
-        }
-
-        private void SaveSolution(string fileName, bool saveAs)
-        {
-            var tree = Editor.Context.CurrentTree;
-
-            Editor.SaveSolution(fileName);
-
-            UpdateSolutionState(false, fileName);
-        }
-
-        private void SaveDiagramDlg()
-        {
-            var dlg = new Microsoft.Win32.SaveFileDialog()
-            {
-                Filter = "Diagram (*.txt)|*.txt|All Files (*.*)|*.*",
-                Title = "Save Diagram",
-                FileName = "Diagram0"
-            };
-
-            var res = dlg.ShowDialog();
-            if (res == true)
-            {
-                var fileName = dlg.FileName;
-                var canvas = Editor.Context.CurrentCanvas;
-
-                Editor.SaveDiagram(fileName, canvas);
-            }
-        }
-
-        #endregion
-
-        #region History
-
-        private void GetHistory_Click(object sender, RoutedEventArgs e)
-        {
-            var history = Editor.Context.CurrentCanvas.GetTag() as UndoRedo;
-            if (history == null)
-                return;
-
-            ListHistory.Items.Clear();
-            int index = 0;
-
-            foreach (var model in history.Undo.Reverse())
-            {
-                AddHistoryItem(index, model);
-                index++;
-            }
-
-            var current = ModelEditor.GenerateDiagram(Editor.Context.CurrentCanvas, null, Editor.Context.CurrentCanvas.GetProperties());
-            AddHistoryItem(index, current);
-        }
-
-        private void AddHistoryItem(int index, string model)
-        {
-            var item = new ListBoxItem();
-            item.Content = index;
-            item.Tag = model;
-            item.Selected += Item_Selected;
-            ListHistory.Items.Add(item);
-        }
-
-        void Item_Selected(object sender, RoutedEventArgs e)
-        {
-            var item = sender as ListBoxItem;
-            var model = item.Tag as string;
-
-            ModelEditor.Clear(Editor.Context.CurrentCanvas);
-            ModelEditor.Parse(model,
-                Editor.Context.CurrentCanvas,
-                Editor.Context.DiagramCreator,
-                0, 0,
-                false, true, false, true);
-        }
-
-        private void ClearHistory_Click(object sender, RoutedEventArgs e)
-        {
-            ListHistory.Items.Clear();
         }
 
         #endregion

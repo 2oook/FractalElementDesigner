@@ -42,9 +42,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             CommandManager.RegisterClassCommandBinding(typeof(Page), new CommandBinding(StaticCommandContainer.GoToAnalysisAndSynthesisPageCommand, GoToAnalysisAndSynthesisPageCommandExecute));
 
             // Перейти на главную страницу
-            GoToAnalysisAndSynthesisPageCommandExecute(null, null); 
+            //GoToAnalysisAndSynthesisPageCommandExecute(null, null); 
 
-            //GoToSchemeEditorPageCommandExecute(null, null); // ОТЛАДКА
+            GoToSchemeEditorPageCommandExecute(null, null); // ОТЛАДКА
         }
 
         #region Константы

@@ -20,128 +20,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         public void ClearCanvas()
         {
-            Snapshot(Context.CurrentCanvas, true);
             ModelEditor.Clear(Context.CurrentCanvas);
         }
 
         public void ResetThumbTags()
         {
-            Snapshot(Context.CurrentCanvas, true);
             TagsResetThumbs(Context.CurrentCanvas);
         }
-
-        public string GetCurrentModel()
-        {
-            return ModelEditor.GenerateItemModel(Context.CurrentCanvas, 
-                Context.CurrentTree.GetSelectedItem() as ITreeItem, 
-                true);
-        }
-
-        public Solution GenerateSolution(string fileName, bool includeHistory)
-        {
-            return ModelEditor.GenerateSolution(Context.CurrentTree,
-                fileName,
-                includeHistory);
-        }
-
-        public static IEnumerable<string> GetCurrentProjectDiagrams(ITree tree)
-        {
-            var selected = tree.GetSelectedItem() as ITreeItem;
-            if (selected == null)
-                return null;
-
-            switch (TreeEditor.GetTreeItemType(selected.GetUid()))
-            {
-                case TreeItemType.Diagram:
-                    {
-                        var models = new List<string>();
-                        ModelEditor.GenerateProject(selected.GetParent() as ITreeItem, models, false);
-                        return models;
-                    }
-                case TreeItemType.Project:
-                    {
-                        var models = new List<string>();
-                        ModelEditor.GenerateProject(selected, models, false);
-                        return models;
-                    }
-                case TreeItemType.Solution:
-                    {
-                        var solution = tree.GetItems().FirstOrDefault();
-                        if (solution == null)
-                            return null;
-
-                        var project = solution.GetItems().FirstOrDefault();
-                        if (project != null)
-                            return null;
-
-                        var models = new List<string>();
-                        ModelEditor.GenerateProject(project, models, false);
-                        return models;
-                    }
-                default:
-                    return null;
-            }
-        }
-
-        private IEnumerable<ITreeItem> Parse(IEnumerable<TreeProject> projects,
-            IdCounter counter,
-            ITreeItem solution)
-        {
-            var items = new List<ITreeItem>();
-
-            foreach (var project in projects)
-            {
-                string name = project.Name;
-                var diagrams = project.Diagrams.Reverse();
-                var item = TreeEditor.CreateProjectItem(name, Context.CreateProject, counter);
-                solution.Add(item);
-
-                int id = int.Parse(name.Split(Constants.TagNameSeparator)[1]);
-                counter.Set(Math.Max(counter.Count, id + 1));
-
-                Parse(counter, diagrams, item, items);
-            }
-
-            var first = items.FirstOrDefault();
-            if (first != null)
-                first.SetSelected(true);
-
-            return items;
-        }
-
-        private void Parse(IdCounter counter,
-            IEnumerable<TreeScheme> diagrams,
-            ITreeItem project,
-            List<ITreeItem> diagramList)
-        {
-            foreach (var diagram in diagrams)
-                Parse(counter, diagram, project, diagramList);
-        }
-
-        private void Parse(IdCounter counter,
-            TreeScheme diagram,
-            ITreeItem project,
-            List<ITreeItem> diagrams)
-        {
-            var lines = diagram.Reverse();
-            var first = lines.First().Split(new char[] { Constants.ArgumentSeparator, '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            string name = first.Length >= 1 ? first[1] : null;
-            
-            var sb = new StringBuilder();
-            foreach (var line in lines)
-                sb.AppendLine(line);
-
-            var item = TreeEditor.CreateDiagramItem(name, Context.CreateDiagram, counter);
-            item.SetTag(new Diagram(sb.ToString(), null));
-
-            project.Add(item);
-            diagrams.Add(item);
-
-            int id = int.Parse(name.Split(Constants.TagNameSeparator)[1]);
-            counter.Set(Math.Max(counter.Count, id + 1));
-        }
-
-        #endregion
 
         #region Wire Connection
 
@@ -181,28 +66,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                 case Constants.TagElementPin: return Insert.Pin(canvas, point, context, snap);
                 default: return null;
             }
-        }
-
-        #endregion
-
-        #region History
-
-        public string Snapshot(ICanvas canvas, bool reset)
-        {
-            if (reset == true)
-                SelectedListReset();
-
-            return HistoryEditor.Add(canvas);
-        }
-
-        public void Undo()
-        {
-            HistoryEditor.Undo(Context.CurrentCanvas, Context.DiagramCreator, true);
-        }
-
-        public void Redo()
-        {
-            HistoryEditor.Redo(Context.CurrentCanvas, Context.DiagramCreator, true);
         }
 
         #endregion
@@ -275,25 +138,21 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         public void MoveLeft(ICanvas canvas)
         {
-            Snapshot(canvas, false);
             MoveSelectedElements(canvas, Context.EnableSnap ? -canvas.GetProperties().GridSize : -1.0, 0.0, false);
         }
 
         public void MoveRight(ICanvas canvas)
         {
-            Snapshot(canvas, false);
             MoveSelectedElements(canvas, Context.EnableSnap ? canvas.GetProperties().GridSize : 1.0, 0.0, false);
         }
 
         public void MoveUp(ICanvas canvas)
         {
-            Snapshot(canvas, false);
             MoveSelectedElements(canvas, 0.0, Context.EnableSnap ? -canvas.GetProperties().GridSize : -1.0, false);
         }
 
         public void MoveDown(ICanvas canvas)
         {
-            Snapshot(canvas, false);
             MoveSelectedElements(canvas, 0.0, Context.EnableSnap ? canvas.GetProperties().GridSize : 1.0, false);
         }
 
@@ -318,8 +177,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         public void DragStart(ICanvas canvas, IThumb element)
         {
-            Snapshot(canvas, false);
-
             Context.MoveAllSelected = element.GetSelected();
             if (Context.MoveAllSelected == false)
                 element.SetSelected(true);
@@ -358,8 +215,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             if (wires.Count() <= 0)
                 return;
 
-            Snapshot(Context.CurrentCanvas, false);
-
             foreach (var wire in wires.Cast<ILine>())
                 wire.SetStartVisible(wire.GetStartVisible() == true ? false : true);
         }
@@ -370,110 +225,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             if (wires.Count() <= 0)
                 return;
 
-            Snapshot(Context.CurrentCanvas, false);
-
             foreach (var wire in wires.Cast<ILine>())
                 wire.SetEndVisible(wire.GetEndVisible() == true ? false : true);
         }
 
         #endregion
 
-        #region Open/Save Diagram
-
-        public void OpenDiagram(string fileName, ICanvas canvas)
-        {
-            string diagram = ModelEditor.Open(fileName);
-
-            Snapshot(canvas, true);
-
-            ModelEditor.Clear(canvas);
-            ModelEditor.Parse(diagram,
-                canvas, Context.DiagramCreator, 
-                0, 0, 
-                false, true, false, true);
-        }
-
-        public void SaveDiagram(string fileName, ICanvas canvas)
-        {
-            ModelEditor.Save(fileName, ModelEditor.GenerateDiagram(canvas, null, canvas.GetProperties()));
-        }
-
-        #endregion
-
-        #region Open/Save Solution
-
-        public TreeSolution OpenSolution(string fileName)
-        {
-            using (var reader = new System.IO.StreamReader(fileName))
-            {
-                return ModelEditor.Parse(reader.ReadToEnd(),
-                    null, Context.DiagramCreator, 
-                    0, 0, 
-                    false, false, false, false);
-            }
-        }
-
-        public void SaveSolution(string fileName)
-        {
-            GetCurrentModel();
-            ModelEditor.Save(fileName, GenerateSolution(fileName, false).Model);
-        }
-
-        #endregion
-
         #region Edit
-
-        public void Cut()
-        {
-            var canvas = Context.CurrentCanvas;
-            string model = ModelEditor.Generate(ModelEditor.GetSelected(canvas));
-
-            if (model.Length == 0)
-            {
-                model = ModelEditor.GenerateDiagram(canvas, null, canvas.GetProperties());
-                Delete(canvas, ModelEditor.GetAll(canvas));
-            }
-            else
-            {
-                Delete();
-            }
-
-            ClipboardSetText(model);
-        }
-
-        public void Copy()
-        {
-            var canvas = Context.CurrentCanvas;
-            string model = ModelEditor.Generate(ModelEditor.GetSelected(canvas));
-
-            if (model.Length == 0)
-                model = ModelEditor.GenerateDiagram(canvas, null, canvas.GetProperties());
-
-            ClipboardSetText(model);
-        }
-
-        public void Paste(IPoint point, bool select)
-        {
-            var model = ClipboardGetText();
-
-            if (model != null && model.Length > 0)
-            {
-                double offsetX = point.X != 0.0 ? SnapOffsetX(point.X, Context.EnableSnap) : 0.0;
-                double offsetY = point.Y != 0.0 ? SnapOffsetY(point.Y, Context.EnableSnap) : 0.0;
-
-                Paste(model, offsetX, offsetY, select);
-            }
-        }
-
-        public void Paste(string model, double offsetX, double offsetY, bool select)
-        {
-            Snapshot(Context.CurrentCanvas, true);
-            SelectNone();
-            ModelEditor.Parse(model,
-                Context.CurrentCanvas, Context.DiagramCreator,
-                offsetX, offsetY,
-                true, true, select, true);
-        }
 
         public void Delete()
         {
@@ -482,7 +240,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         public void Delete(ICanvas canvas, IPoint point)
         {
-            Snapshot(canvas, true);
             ModelEditor.DeleteElement(canvas, point);
 
             Context.SkipLeftClick = false;
@@ -490,31 +247,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         public void Delete(ICanvas canvas, IEnumerable<IElement> elements)
         {
-            Snapshot(canvas, true);
-
             foreach (var element in elements)
                 ModelEditor.DeleteElement(canvas, element);
         }
 
         #endregion
 
-        #region Create
-
-        public TreeItemType Create()
-        {
-            return TreeEditor.AddNewItem(Context.CurrentTree,
-                Context.CreateProject,
-                Context.CreateDiagram,
-                Context.CurrentCanvas.GetCounter());
-        }
-
-        public void CreateAndPaste()
-        {
-            if (Create() == TreeItemType.Diagram)
-                Paste(new PointEx(0.0, 0.0), true);
-        }
-
-        #endregion
 
         #region Selection
 
@@ -761,7 +499,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             }
             else if (Context.EnableInsertLast == true)
             {
-                Snapshot(canvas, true);
                 Add(canvas, Context.LastInsert, point);
             }
         }
@@ -770,8 +507,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         {
             if (CanConnectToPin(pin))
             {
-                if (Context.CurrentLine == null)
-                    Snapshot(canvas, true);
+
 
                 Connect(canvas, pin, Context.DiagramCreator);
 
@@ -782,8 +518,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                 var element = MouseGetElementAtPoint(canvas, point);
                 if (CanSplitWire(element))
                 {
-                    if (Context.CurrentLine == null)
-                        Snapshot(canvas, true);
 
                     bool result = WireEditor.Split(canvas, element as ILine, Context.CurrentLine, point, Context.DiagramCreator, Context.EnableSnap);
 
@@ -820,8 +554,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         {
             if (Context.CurrentRoot != null && Context.CurrentLine != null)
             {
-                HistoryEditor.Undo(canvas, Context.DiagramCreator, false);
-
                 Context.CurrentLine = null;
                 Context.CurrentRoot = null;
 
@@ -829,36 +561,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             }
 
             return false;
-        }
-
-        #endregion
-
-        #region Solution
-
-        public void Parse(ITree tree,
-            TreeSolution solution,
-            IdCounter counter,
-            Func<ITreeItem> CreateTreeSolutionItem)
-        {
-            
-            string solutionName = solution.Name;
-            var projects = solution.Projects.Reverse();
-
-            
-
-            var item = TreeEditor.CreateSolutionItem(solutionName, CreateTreeSolutionItem, counter);
-            tree.Add(item);
-
-            Parse(projects, counter, item);
-        }
-
-        public void Clear(ITree tree, ICanvas canvas, IdCounter counter)
-        {
-            TreeEditor.Clear(tree);
-            counter.Reset();
-            
-            SelectedListReset();
-            canvas.SetTags(null);
         }
 
         #endregion
@@ -880,39 +582,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         {
             foreach (var thumb in thumbs)
                 thumb.SetData(null);
-        }
-
-        #endregion
-
-        #region Clipboard
-
-        public string ClipboardGetText()
-        {
-            try
-            {
-                if (Context.Clipboard.ContainsText())
-                    return Context.Clipboard.GetText();
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.Print(ex.Message);
-                return Context.ClipboardText;
-            }
-
-            return Context.ClipboardText;
-        }
-
-        public void ClipboardSetText(string model)
-        {
-            try
-            {
-                Context.ClipboardText = model;
-                Context.Clipboard.SetText(model);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.Print(ex.Message);
-            }
         }
 
         #endregion
@@ -943,6 +612,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             return snap == true ? SnapHelper.Snap(original, prop.SnapY) : original;
         }
 
+        #endregion
         #endregion
     }
 }
