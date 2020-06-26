@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor;
 using System.Collections.ObjectModel;
+using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
+using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
 
 namespace RC_FE_Design___Analysis_and_synthesis.IO
 {
@@ -62,8 +64,48 @@ namespace RC_FE_Design___Analysis_and_synthesis.IO
 
         public static Project ConvertBack(SavingProject savingProject) 
         {
-            var project = new Project();
+            var structures = new ObservableCollection<RCStructureBase>();
 
+            foreach (var structure in savingProject.Structures)
+            {
+                var structureLayers = new ObservableCollection<Layer>();
+
+                foreach (var layer in structure.StructureLayers)
+                {
+                    var structureCells = new ObservableCollection<ObservableCollection<StructureCellBase>>();
+
+                    foreach (var row in layer.StructureCells)
+                    {
+                        var _row = new ObservableCollection<StructureCellBase>();
+
+                        foreach (var col in row)
+                        {
+                            _row.Add(new StructureCellBase() { CellType = col.CellType });
+                        }
+
+                        structureCells.Add(_row);
+                    }
+
+                    structureLayers.Add(new Layer()
+                    {
+                        Name = layer.Name,
+                        CellsType = layer.CellsType,
+                        StructureCells = structureCells
+                    });
+                }
+
+                structures.Add(new RCStructureBase()
+                {
+                    Name = structure.Name,
+                    StructureLayers = structureLayers
+                });
+            }
+
+            var project = new Project()
+            {
+                Name = savingProject.Name,
+                Structures = structures
+            };
 
             return project;
         }

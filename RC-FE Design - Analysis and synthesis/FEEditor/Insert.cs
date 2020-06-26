@@ -121,6 +121,84 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
 
             FitCanvasToStructure(structureWidth, structureHeight, canvas);
 
+            PlaceCanvasInCenter(_grid, canvas);
+        }
+
+        // Метод для вставки слоя структуры в элемент Canvas
+        public static void ExistingStructureLayer(FECanvas canvas, Layer layer, CellType layerType)
+        {
+            double _BorderCellHeight = 30;
+            double _BorderCellWidth = 30;
+
+            double _CommonCellHeight = 60;
+            double _CommonCellWidth = 60;
+
+            double structureWidth = 0;
+            double structureHeight = 0;
+
+            var _grid = new Grid();
+
+            var rows = layer.StructureCells;
+
+            for (int i = 0; i < rows.Count; i++)
+            {
+                _grid.RowDefinitions.Add(new RowDefinition());
+
+                double height = _CommonCellHeight;
+
+                var row = rows[i];
+
+                for (int j = 0; j < row.Count; j++)
+                {
+                    double width = _CommonCellWidth;
+
+                    // первая строка
+                    if (i == 0)
+                    {
+                        structureWidth += width;
+                        _grid.ColumnDefinitions.Add(new ColumnDefinition());
+                        height = _BorderCellHeight;
+                    }
+                    // последняя строка
+                    if (i == rows.Count - 1)
+                    {
+                        height = _BorderCellHeight;
+                    }
+                    // первая колонка
+                    if (j == 0)
+                    {
+                        width = _BorderCellWidth;
+                    }
+                    // последняя колонка
+                    if (j == row.Count - 1)
+                    {
+                        width = _BorderCellWidth;
+                    }
+
+                    // создать контрол ячейки
+                    var cell = new CellControl(height, width);
+                    // установить ячейке метод для применения инструмента
+                    cell.Click += layer.StructureCells[i][j].ApplyTool;
+                    // связать отображение с объектом структуры
+                    cell.DataContext = layer.StructureCells[i][j];
+
+                    Grid.SetRow(cell, i);
+                    Grid.SetColumn(cell, j);
+
+                    _grid.Children.Add(cell);
+                }
+
+                structureHeight += height;
+            }
+
+            FitCanvasToStructure(structureWidth, structureHeight, canvas);
+
+            PlaceCanvasInCenter(_grid, canvas);
+        }
+
+        // Метод для позиционирования элемента canvas в центре экрана
+        private static void PlaceCanvasInCenter(Grid _grid, Canvas canvas) 
+        {
             // создать дополнительную сетку для размещения структуры в центре области редактирования
             var grid = new Grid();
 

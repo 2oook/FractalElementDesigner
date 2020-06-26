@@ -482,6 +482,31 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 {               
                     var savingProject = ProjectSaver.LoadProject(dialog.FileName);
                     var project = ProjectConverter.ConvertBack(savingProject);
+
+                    Projects.Add(project);
+
+                    foreach (var structure in project.Structures)
+                    {
+                        foreach (var layer in structure.StructureLayers)
+                        {
+                            var editor = new Editor() { Context = new Context() };
+                            editor.Context.CurrentCanvas = _Page.FEControl.CreateFECanvas();
+
+                            layer.Editor = editor;
+
+                            Insert.ExistingStructureLayer(editor.Context.CurrentCanvas, layer, layer.CellsType);
+                        }
+                    }
+
+                    // показать область проектирования, если она скрыта
+                    if (EditorVisibility != Visibility.Visible)
+                    {
+                        EditorVisibility = Visibility.Visible;
+                    }
+
+                    _Page.FEControl.Editor = project.Structures.First().StructureLayers.First().Editor;
+
+                    _Page.FEControl.ZoomToFit();
                 }
             }
             catch (Exception ex)
@@ -548,9 +573,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                     layer.Editor = editor;
 
-                    _Page.FEControl.Editor = editor;
-
-                    Insert.StructureLayer(_Page.FEControl.Editor.Context.CurrentCanvas, layer, layer.CellsType);
+                    Insert.StructureLayer(editor.Context.CurrentCanvas, layer, layer.CellsType);
                 }
 
                 _Page.FEControl.Editor = newStructure.StructureLayers.First().Editor;
