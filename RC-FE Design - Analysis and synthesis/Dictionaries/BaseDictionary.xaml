@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:RC_FE_Design___Analysis_and_synthesis.FEEditor.Controls"
+                    xmlns:controls="clr-namespace:RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <sys:Double x:Key="LogicStrokeThicknessKey">1.0</sys:Double>
@@ -8,11 +8,6 @@
     <sys:Double x:Key="ElementStrokeThicknessKey">2.0</sys:Double>
     <sys:Double x:Key="IOStrokeThicknessKey">2.0</sys:Double>
     <sys:Double x:Key="PageStrokeThicknessKey">1.0</sys:Double>
-
-    <!-- images -->
-
-    <ImageSource x:Key="TransparentImageSourceKey">/Images/TransparentLogo.png</ImageSource>
-    <ImageSource x:Key="WhiteImageSourceKey">/Images/WhiteLogo.png</ImageSource>
 
     <!-- colors -->
 
@@ -44,9 +39,194 @@
         <Setter Property="Background" Value="{DynamicResource LogicTransparentColorKey}"/>
         <Setter Property="Cursor" Value="Arrow"/>
         <Style.Triggers>
-            <!--<Trigger Property="IsMouseOver" Value="True">
+            <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Cursor" Value="SizeAll"/>
-            </Trigger>-->
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="PinEllipseStyleKey" TargetType="Ellipse">
+        <Setter Property="Width" Value="8"/>
+        <Setter Property="Height" Value="8"/>
+        <Setter Property="Fill" Value="{DynamicResource LogicTransparentColorKey}"/>
+        <Setter Property="Stroke" Value="{DynamicResource LogicTransparentColorKey}"/>
+        <Setter Property="Cursor" Value="Arrow"/>
+        <Setter Property="StrokeThickness" Value="{DynamicResource LogicStrokeThicknessKey}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=RootElement, Path=IsMouseOver}" Value="True">
+                <Setter Property="Fill" Value="{DynamicResource LogicColorKey}"/>
+                <Setter Property="Stroke" Value="{DynamicResource LogicColorKey}"/>
+            </DataTrigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Fill" Value="{DynamicResource LogicColorKey}"/>
+                <Setter Property="Stroke" Value="{DynamicResource LogicColorKey}"/>
+                <Setter Property="Cursor" Value="Cross"/>
+            </Trigger>
+            <Trigger Property="controls:ElementThumb.IsSelected" Value="True">
+                <Setter Property="Fill" Value="{DynamicResource LogicTransparentColorKey}"/>
+                <Setter Property="Stroke" Value="{DynamicResource LogicTransparentColorKey}"/>
+                <Setter Property="Cursor" Value="Arrow"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="PinControlEllipseStyleKey" TargetType="Ellipse">
+        <Setter Property="Width" Value="8"/>
+        <Setter Property="Height" Value="8"/>
+        <Setter Property="Fill" Value="{DynamicResource LogicTransparentColorKey}"/>
+        <Setter Property="Stroke" Value="{DynamicResource LogicTransparentColorKey}"/>
+        <!--<Setter Property="Cursor" Value="Arrow"/>-->
+        <Setter Property="StrokeThickness" Value="{DynamicResource LogicStrokeThicknessKey}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=RootElement, Path=IsMouseOver}" Value="True">
+                <Setter Property="Fill" Value="{DynamicResource LogicColorKey}"/>
+                <Setter Property="Stroke" Value="{DynamicResource LogicColorKey}"/>
+            </DataTrigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Fill" Value="{DynamicResource LogicColorKey}"/>
+                <Setter Property="Stroke" Value="{DynamicResource LogicColorKey}"/>
+                <!--<Setter Property="Cursor" Value="Cross"/>-->
+            </Trigger>
+            <Trigger Property="controls:ElementThumb.IsSelected" Value="True">
+                <Setter Property="Fill" Value="{DynamicResource LogicSelectedColorKey}"/>
+                <Setter Property="Stroke" Value="{DynamicResource LogicSelectedColorKey}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="RootThumbStyleKey" TargetType="Thumb">
+        <Setter Property="Panel.ZIndex" Value="2"/>
+        <Setter Property="Cursor" Value="Arrow"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="SizeAll"/>
+            </Trigger>
+            <Trigger Property="controls:ElementThumb.IsSelected" Value="True">
+                <Setter Property="Panel.ZIndex" Value="3"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="PinThumbStyleKey" TargetType="controls:PinThumb">
+        <Setter Property="Panel.ZIndex" Value="2"/>
+        <Setter Property="Margin" Value="-4,-4,0,0"/>
+    </Style>
+
+    <Style x:Key="LineStyleKey" TargetType="controls:LineEx">
+        <Setter Property="Panel.ZIndex" Value="1"/>
+        <Setter Property="Stroke" Value="{DynamicResource LogicColorKey}"/>
+        <Setter Property="StrokeThickness" Value="{DynamicResource WireStrokeThicknessKey}"/>
+        <Setter Property="StrokeStartLineCap" Value="Square"/>
+        <Setter Property="StrokeEndLineCap" Value="Square"/>
+        <Setter Property="StrokeLineJoin" Value="Miter"/>
+        <Setter Property="Fill" Value="Transparent"/>
+        <Setter Property="SnapsToDevicePixels" Value="False"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        <Setter Property="Radius" Value="4.0"/>
+        <Setter Property="IsStartVisible" Value="False"/>
+        <Setter Property="IsEndVisible" Value="False"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <!--<Setter Property="Stroke" Value="{DynamicResource LogicSelectedColorKey}"/>-->
+                <!--<Setter Property="Cursor" Value="SizeAll"/>-->
+            </Trigger>
+            <Trigger Property="controls:ElementThumb.IsSelected" Value="True">
+                <Setter Property="Stroke" Value="{DynamicResource LogicSelectedColorKey}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="GridPathStyleKey" TargetType="Path">
+        <Setter Property="Stroke" Value="{DynamicResource LogicGridColorKey}"/>
+        <Setter Property="Fill" Value="Transparent"/>
+        <Setter Property="StrokeThickness" Value="{DynamicResource PageStrokeThicknessKey}"/>
+        <Setter Property="StrokeStartLineCap" Value="Flat"/>
+        <Setter Property="StrokeEndLineCap" Value="Flat"/>
+        <Setter Property="StrokeLineJoin" Value="Miter"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        <Setter Property="SnapsToDevicePixels" Value="False"/>
+    </Style>
+
+    <Style x:Key="TemplatePathStyleKey" TargetType="Path">
+        <Setter Property="Stroke" Value="{DynamicResource LogicTemplateColorKey}"/>
+        <Setter Property="Fill" Value="Transparent"/>
+        <Setter Property="StrokeThickness" Value="{DynamicResource PageStrokeThicknessKey}"/>
+        <Setter Property="StrokeStartLineCap" Value="Square"/>
+        <Setter Property="StrokeEndLineCap" Value="Square"/>
+        <Setter Property="StrokeLineJoin" Value="Miter"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+    </Style>
+
+    <Style x:Key="LogicPathStyleKey" TargetType="Path">
+        <Setter Property="Stroke" Value="{DynamicResource LogicColorKey}"/>
+        <Setter Property="Fill" Value="Transparent"/>
+        <Setter Property="StrokeThickness" Value="{DynamicResource LogicStrokeThicknessKey}"/>
+        <Setter Property="StrokeStartLineCap" Value="Square"/>
+        <Setter Property="StrokeEndLineCap" Value="Square"/>
+        <Setter Property="StrokeLineJoin" Value="Miter"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        <Style.Triggers>
+            <Trigger Property="controls:ElementThumb.IsSelected" Value="True">
+                <Setter Property="Stroke" Value="{DynamicResource LogicSelectedColorKey}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="IOPathStyleKey" TargetType="Path">
+        <Setter Property="Stroke" Value="{DynamicResource LogicColorKey}"/>
+        <Setter Property="Fill" Value="Transparent"/>
+        <Setter Property="StrokeThickness" Value="{DynamicResource IOStrokeThicknessKey}"/>
+        <Setter Property="StrokeStartLineCap" Value="Square"/>
+        <Setter Property="StrokeEndLineCap" Value="Square"/>
+        <Setter Property="StrokeLineJoin" Value="Miter"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        <Style.Triggers>
+            <Trigger Property="controls:ElementThumb.IsSelected" Value="True">
+                <Setter Property="Stroke" Value="{DynamicResource LogicSelectedColorKey}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ElementPathStyleKey" TargetType="Path">
+        <Setter Property="Stroke" Value="{DynamicResource LogicColorKey}"/>
+        <Setter Property="Fill" Value="Transparent"/>
+        <Setter Property="StrokeThickness" Value="{DynamicResource ElementStrokeThicknessKey}"/>
+        <Setter Property="StrokeStartLineCap" Value="Square"/>
+        <Setter Property="StrokeEndLineCap" Value="Square"/>
+        <Setter Property="StrokeLineJoin" Value="Miter"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        <Style.Triggers>
+            <Trigger Property="controls:ElementThumb.IsSelected" Value="True">
+                <Setter Property="Stroke" Value="{DynamicResource LogicSelectedColorKey}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="LogicTextStyleKey" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource LogicColorKey}"/>
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        <Style.Triggers>
+            <Trigger Property="controls:ElementThumb.IsSelected" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource LogicSelectedColorKey}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="LogicSmallTextStyleKey" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource LogicColorKey}"/>
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        <Style.Triggers>
+            <Trigger Property="controls:ElementThumb.IsSelected" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource LogicSelectedColorKey}"/>
+            </Trigger>
         </Style.Triggers>
     </Style>
 
@@ -76,44 +256,6 @@
         <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
     </Style>
 
-    <Style x:Key="GridPathStyleKey" TargetType="Path">
-        <Setter Property="Stroke" Value="{DynamicResource LogicGridColorKey}"/>
-        <Setter Property="Fill" Value="Transparent"/>
-        <Setter Property="StrokeThickness" Value="{DynamicResource PageStrokeThicknessKey}"/>
-        <Setter Property="StrokeStartLineCap" Value="Flat"/>
-        <Setter Property="StrokeEndLineCap" Value="Flat"/>
-        <Setter Property="StrokeLineJoin" Value="Miter"/>
-        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
-    </Style>
-
-    <Style x:Key="ElementPathStyleKey" TargetType="Path">
-        <Setter Property="Stroke" Value="{DynamicResource LogicColorKey}"/>
-        <Setter Property="Fill" Value="Transparent"/>
-        <Setter Property="StrokeThickness" Value="{DynamicResource ElementStrokeThicknessKey}"/>
-        <Setter Property="StrokeStartLineCap" Value="Square"/>
-        <Setter Property="StrokeEndLineCap" Value="Square"/>
-        <Setter Property="StrokeLineJoin" Value="Miter"/>
-        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
-        <!--<Style.Triggers>
-            <Trigger Property="controls:ElementThumb.IsSelected" Value="True">
-                <Setter Property="Stroke" Value="{DynamicResource LogicSelectedColorKey}"/>
-            </Trigger>
-        </Style.Triggers>-->
-    </Style>
-
-    <Style x:Key="LogicTextStyleKey" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{DynamicResource LogicColorKey}"/>
-        <Setter Property="FontFamily" Value="Arial"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontWeight" Value="Normal"/>
-        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
-        <!--<Style.Triggers>
-            <Trigger Property="controls:ElementThumb.IsSelected" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource LogicSelectedColorKey}"/>
-            </Trigger>
-        </Style.Triggers>-->
-    </Style>
-
     <!-- templates -->
 
     <ControlTemplate x:Key="PinThumbControlTemplateKey">
@@ -123,5 +265,6 @@
     <ControlTemplate x:Key="PinControlThumbControlTemplateKey">
         <Ellipse Style="{StaticResource PinControlEllipseStyleKey}"/>
     </ControlTemplate>
+
 
 </ResourceDictionary>

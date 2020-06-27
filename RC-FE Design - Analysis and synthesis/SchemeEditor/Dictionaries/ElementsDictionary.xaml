@@ -3,7 +3,7 @@
                     xmlns:elements="clr-namespace:RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Elements" >
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/RC-FE Design - Analysis and synthesis;component/SchemeEditor/Dictionaries/BaseDictionary.xaml"/>
+        <ResourceDictionary Source="/RC-FE Design - Analysis and synthesis;component/Dictionaries/BaseDictionary.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <ControlTemplate x:Key="PinControlTemplateKey">

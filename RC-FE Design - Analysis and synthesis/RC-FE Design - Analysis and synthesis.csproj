@@ -158,7 +158,7 @@
     <Compile Include="SchemeEditor\Core\MarginEx.cs" />
     <Compile Include="SchemeEditor\Core\Model\Child.cs" />
     <Compile Include="SchemeEditor\Core\Model\Connection.cs" />
-	<Compile Include="SchemeEditor\Core\Model\ISchemeCreator.cs" />
+    <Compile Include="SchemeEditor\Core\Model\ISchemeCreator.cs" />
     <Compile Include="SchemeEditor\Core\Model\Pin.cs" />
     <Compile Include="SchemeEditor\Core\Model\Wire.cs" />
     <Compile Include="SchemeEditor\Core\PointEx.cs" />
@@ -239,10 +239,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SchemeEditor\Controls\Elements\PinControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SchemeEditor\Dictionaries\BaseDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

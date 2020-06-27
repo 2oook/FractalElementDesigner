@@ -17,7 +17,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views;
 
 namespace RC_FE_Design___Analysis_and_synthesis.Pages
@@ -268,13 +267,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             Editor.MouseEventRightDown(canvas);
         }
 
-        private double CalculateMoveSpeedUp(int delta)
-        {
-            return (delta > -200.0 && delta < -50.0) ?
-                GuideSpeedUpLevel1 : (delta > -50.0) ?
-                GuideSpeedUpLevel2 : 1.0;
-        }
-
         private void MoveUp()
         {
             Editor.MoveUp(Editor.Context.CurrentCanvas);
@@ -384,21 +376,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             var visibility = template.Visibility;
             template.Visibility = visibility == Visibility.Collapsed ?
                 Visibility.Visible : Visibility.Collapsed;
-        }
-
-        #endregion
-
-        #region Button Events
-
-        private void DefaultZoom()
-        {
-            DiagramControl.ResetZoom();
-            DiagramControl.ResetPan();
-        }
-
-        private void ResetZoom_Click(object sender, RoutedEventArgs e)
-        {
-            DefaultZoom();
         }
 
         #endregion

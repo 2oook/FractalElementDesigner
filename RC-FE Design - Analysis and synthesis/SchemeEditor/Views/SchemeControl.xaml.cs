@@ -92,12 +92,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             Adorner.InvalidateVisual();
         }
 
-        private void UpdateSelectedTags()
-        {
-            if (SelectionChanged != null)
-                SelectionChanged();
-        }
-
         #endregion
 
         #region Pan
@@ -344,8 +338,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
                 if (Keyboard.Modifiers != ModifierKeys.Control)
                     Editor.SelectNone();
 
-                UpdateSelectedTags();
-
                 canvas.CaptureMouse();
             }
             else
@@ -379,7 +371,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
                     }
 
                     RemoveAdorner(canvas);
-                    UpdateSelectedTags();
                 }
             }
         }
