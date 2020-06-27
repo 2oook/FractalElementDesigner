@@ -10,177 +10,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 {
     public static class ModelEditor
     {
-        #region Generate
-
-        public static string Generate(IEnumerable<IElement> elements)
-        {
-            var sb = new StringBuilder();
-
-            foreach (var element in elements)
-            {
-                string uid = element.GetUid();
-
-                if (IsWire(uid))
-                    GenerateWire(sb, element, uid);
-                else
-                    GenerateElement(sb, element.GetX(), element.GetY(), uid);
-
-                GenerateChildren(sb, element);
-            }
-
-            return sb.ToString();
-        }
-
-        private static bool IsWire(string uid)
-        {
-            return StringHelper.StartsWith(uid, Constants.TagElementWire);
-        }
-
-        private static void GenerateElement(StringBuilder sb, double x, double y, string uid)
-        {
-            sb.Append(Constants.PrefixRoot);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(uid);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(x);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(y);
-            sb.Append(Environment.NewLine);
-        }
-
-        private static void GenerateWire(StringBuilder sb, IElement element, string uid)
-        {
-            var line = element as ILine;
-            var margin = line.GetMargin();
-
-            sb.Append(Constants.PrefixRoot);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(uid);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(margin.Left); // line.X1
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(margin.Top); // line.Y1
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(line.GetX2() + margin.Left);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(line.GetY2() + margin.Top);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(line.GetStartVisible());
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(line.GetEndVisible());
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(line.GetStartIO());
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(line.GetEndIO());
-            sb.Append(Environment.NewLine);
-        }
-
-        private static void GenerateChildren(StringBuilder sb, IElement element)
-        {
-            var tag = element.GetTag();
-            if (tag != null && !(element is ILine))
-            {
-                var wires = (tag as Connection).Wires;
-
-                foreach (var wire in wires)
-                {
-                    var line = wire.Line as ILine;
-                    var start = wire.Start;
-                    var end = wire.End;
-
-                    if (start != null)
-                        GenerateWireStart(sb, line);
-                    
-                    if (end != null)
-                        GenerateWireEnd(sb, line);
-                }
-            }
-        }
-    
-        private static void GenerateWireStart(StringBuilder sb, ILine line)
-        {
-            sb.Append(Constants.PrefixChild);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(line.GetUid());
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(Constants.WireStartType);
-            sb.Append(Environment.NewLine);
-        }
-
-        private static void GenerateWireEnd(StringBuilder sb, ILine line)
-        {
-            sb.Append(Constants.PrefixChild);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(line.GetUid());
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(Constants.WireEndType);
-            sb.Append(Environment.NewLine);
-        }
-
-        #endregion
-
         private static string DefaultUid = Constants.TagHeaderDiagram + Constants.TagNameSeparator + (-1).ToString();
-
-        private static void GenerateHeader(StringBuilder sb, string uid, SchemeProperties prop)
-        {
-            sb.Append(Constants.PrefixRoot);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(uid == null ? DefaultUid : uid);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(prop.PageWidth);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(prop.PageHeight);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(prop.GridOriginX);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(prop.GridOriginY);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(prop.GridWidth);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(prop.GridHeight);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(prop.GridSize);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(prop.SnapX);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(prop.SnapY);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(prop.SnapOffsetX);
-            sb.Append(Constants.ArgumentSeparator);
-            sb.Append(prop.SnapOffsetY);
-            sb.Append(Environment.NewLine);
-        }
-
-        public static string GenerateDiagram(ICanvas canvas, string uid, SchemeProperties properties)
-        {
-            var sb = new StringBuilder();
-            var elements = (canvas == null) ? null : canvas.GetElements();
-
-            GenerateHeader(sb, uid, properties);
-
-            if (elements != null)
-                sb.Append(Generate(elements));
-
-            return sb.ToString();
-        }
 
         #region Clear
 
         public static void Clear(ICanvas canvas)
         {
             canvas.Clear();
-        }
-
-        #endregion
-
-        #region Open
-
-        public static string Open(string fileName)
-        {
-            using (var reader = new System.IO.StreamReader(fileName))
-            {
-                return reader.ReadToEnd();
-            }
         }
 
         #endregion
@@ -646,24 +482,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             }
 
             return map;
-        }
-
-        #endregion
-
-        #region Find
-
-        public static T Find<T>(ICanvas canvas, IPoint point, double radius) where T : class
-        {
-            var element = canvas.HitTest(point, radius).FirstOrDefault();
-            if (element == null)
-                return null;
-
-            string uid = element.GetUid();
-
-            if (element is T && uid != null && StringHelper.StartsWith(uid, Constants.TagElementWire))
-                return element as T;
-
-            return null;
         }
 
         #endregion

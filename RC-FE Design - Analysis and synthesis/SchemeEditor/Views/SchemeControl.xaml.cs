@@ -337,9 +337,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             var canvas = sender as SchemeCanvas;
             var point = e.GetPosition(canvas);
 
-            if (Editor.Context.CurrentRoot == null &&
-                Editor.Context.CurrentLine == null &&
-                Editor.Context.EnableInsertLast == false)
+            if (Editor.Context.CurrentRoot == null && Editor.Context.CurrentLine == null )
             {
                 Editor.Context.SelectionOrigin = new PointEx(point.X, point.Y);
 
@@ -464,9 +462,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             var canvas = Editor.Context.CurrentCanvas;
 
             var point = new PointEx(Editor.Context.RightClick.X, Editor.Context.RightClick.Y);
-            Insert.AndGate(canvas, point, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
+            Insert.AndGate(canvas, point, Editor.Context.SchemeCreator, Editor.Context.EnableSnap);
 
-            Editor.Context.LastInsert = Constants.TagElementAndGate;
             Editor.Context.SkipLeftClick = false;
         }
 
@@ -475,21 +472,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             var canvas = Editor.Context.CurrentCanvas;
 
             var point = new PointEx(Editor.Context.RightClick.X, Editor.Context.RightClick.Y);
-            Insert.FElement(canvas, point, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
+            Insert.FElement(canvas, point, Editor.Context.SchemeCreator, Editor.Context.EnableSnap);
 
-            Editor.Context.LastInsert = Constants.TagElementFElement;
-            Editor.Context.SkipLeftClick = false;
-        }
-
-        private void InvertStart_Click(object sender, RoutedEventArgs e)
-        {
-            Editor.ToggleWireStart();
-            Editor.Context.SkipLeftClick = false;
-        }
-
-        private void InvertEnd_Click(object sender, RoutedEventArgs e)
-        {
-            Editor.ToggleWireEnd();
             Editor.Context.SkipLeftClick = false;
         }
 

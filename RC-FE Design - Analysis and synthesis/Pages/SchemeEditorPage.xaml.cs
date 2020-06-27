@@ -179,10 +179,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             Editor.Context.SetProperties = (p) => SetProperties(p);
 
             // diagram creator
-            Editor.Context.DiagramCreator = GetDiagramCreator();
+            Editor.Context.SchemeCreator = GetDiagramCreator();
 
             // set checkbox states
-            EnableInsertLast.IsChecked = Editor.Context.EnableInsertLast;
             EnableSnap.IsChecked = Editor.Context.EnableSnap;
             SnapOnRelease.IsChecked = Editor.Context.SnapOnRelease;
         }
@@ -340,8 +339,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
                     case Key.Right: if (canMove == true) { MoveRight(); e.Handled = true; } break;
                     case Key.I: break;
                     case Key.O: break;
-                    case Key.R: break;
-                    case Key.A: InsertAndGate(canvas, GetInsertionPoint()); break;
+                    case Key.F: InsertFEElement(canvas, GetInsertionPoint()); break;
                     case Key.S: Editor.ToggleWireStart(); break;
                     case Key.E: Editor.ToggleWireEnd(); break;
                     case Key.C: Connect(); break;
@@ -355,7 +353,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
                 }
             }
         }
-
 
         #endregion
 
@@ -373,12 +370,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
                 SnapOnRelease.IsChecked == true ? true : false;
         }
 
-        private void EnableInsertLast_Click(object sender, RoutedEventArgs e)
-        {
-            Editor.Context.EnableInsertLast =
-                EnableInsertLast.IsChecked == true ? true : false;
-        }
-
         private void EnablePage_Click(object sender, RoutedEventArgs e)
         {
             var diagram = this.DiagramControl;
@@ -386,7 +377,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             diagram.Visibility = visibility == Visibility.Collapsed ?
                 Visibility.Visible : Visibility.Collapsed;
         }
-
 
         private void EnablePageTemplate_Click(object sender, RoutedEventArgs e)
         {
@@ -466,8 +456,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             double width = relativeTo.Width;
             double height = relativeTo.Height;
 
-            if (x >= 0.0 && x <= width &&
-                y >= 0.0 && y <= height)
+            if (x >= 0.0 && x <= width && y >= 0.0 && y <= height)
             {
                 insertionPoint = new PointEx(x, y);
             }
@@ -482,15 +471,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
         private void InsertFEElement(ICanvas canvas, PointEx point)
         {
             var element = Insert.FElement(canvas,
-                point != null ? point : InsertPointGate, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
-
-            Editor.SelectOneElement(element, true);
-        }
-
-        private void InsertAndGate(ICanvas canvas, PointEx point)
-        {
-            var element = Insert.AndGate(canvas,
-                point != null ? point : InsertPointGate, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
+                point != null ? point : InsertPointGate, Editor.Context.SchemeCreator, Editor.Context.EnableSnap);
 
             Editor.SelectOneElement(element, true);
         }

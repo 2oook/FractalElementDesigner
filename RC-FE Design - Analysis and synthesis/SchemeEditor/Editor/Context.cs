@@ -11,13 +11,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
     {
         #region Properties
 
-        public ISchemeCreator DiagramCreator { get; set; }
+        public ISchemeCreator SchemeCreator { get; set; }
 
         #endregion
 
         #region Fields
-
-        public string ClipboardText = null;
 
         public ICanvas CurrentCanvas = null;
 
@@ -25,9 +23,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         public IElement CurrentRoot = null;
 
         public PointEx RightClick;
-
-        public bool EnableInsertLast = false;
-        public string LastInsert = Constants.TagElementFElement;
 
         public double DefaultGridSize = 30;
 
@@ -51,7 +46,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         public PointEx ZoomPoint;
 
-        public double ReversePanDirection = -1.0; // reverse: 1.0, normal: -1.0
+        public double ReversePanDirection = -1.0;
 
         public PointEx SelectionOrigin;
 

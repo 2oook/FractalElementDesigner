@@ -94,8 +94,6 @@
                                     <CheckBox x:Name="ShortenStart" IsChecked="True" Content="Shorten Wire Start" Margin="2"/>
                                     <CheckBox x:Name="ShortenEnd" IsChecked="False" Content="Shorten Wire End" Margin="2"/>
                                     <Separator Margin="2"/>
-                                    <CheckBox x:Name="EnableInsertLast" Content="Insert Last on Left _Click" Margin="2" Click="EnableInsertLast_Click"/>
-                                    <Separator Margin="2"/>
                                     <CheckBox x:Name="EnablePage" IsChecked="True" Content="Enable Page" Margin="2" Click="EnablePage_Click"/>
                                     <CheckBox x:Name="EnablePageTemplate" IsChecked="True" Content="Enable Page Template" Margin="2" Click="EnablePageTemplate_Click"/>
                                 </StackPanel>

@@ -28,6 +28,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             TagsResetThumbs(Context.CurrentCanvas);
         }
 
+        #endregion
+
         #region Wire Connection
 
         private void Connect(ICanvas canvas, IThumb pin, ISchemeCreator creator)
@@ -56,7 +58,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         public IElement Add(ICanvas canvas, string type, IPoint point)
         {
-            var context = Context.DiagramCreator;
+            var context = Context.SchemeCreator;
             var snap = Context.EnableSnap;
             switch (type)
             {
@@ -253,7 +255,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         #endregion
 
-
         #region Selection
 
         public IEnumerable<IElement> GetElementsSelected()
@@ -443,19 +444,19 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         private void MouseCreateCanvasConnection(ICanvas canvas, IPoint point)
         {
-            var root = Insert.Pin(canvas, point, Context.DiagramCreator, Context.EnableSnap);
+            var root = Insert.Pin(canvas, point, Context.SchemeCreator, Context.EnableSnap);
 
             Context.CurrentRoot = root;
 
             double x = Context.CurrentRoot.GetX();
             double y = Context.CurrentRoot.GetY();
 
-            Context.CurrentLine = WireEditor.Connect(canvas, Context.CurrentRoot, Context.CurrentLine, x, y, Context.DiagramCreator);
+            Context.CurrentLine = WireEditor.Connect(canvas, Context.CurrentRoot, Context.CurrentLine, x, y, Context.SchemeCreator);
             if (Context.CurrentLine == null)
                 Context.CurrentRoot = null;
 
             Context.CurrentRoot = root;
-            Context.CurrentLine = WireEditor.Connect(canvas, Context.CurrentRoot, Context.CurrentLine, x, y, Context.DiagramCreator);
+            Context.CurrentLine = WireEditor.Connect(canvas, Context.CurrentRoot, Context.CurrentLine, x, y, Context.SchemeCreator);
         }
 
         private IElement MouseGetElementAtPoint(ICanvas canvas, IPoint point)
@@ -497,19 +498,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             {
                  MouseCreateCanvasConnection(canvas, point);
             }
-            else if (Context.EnableInsertLast == true)
-            {
-                Add(canvas, Context.LastInsert, point);
-            }
         }
 
         public bool MouseEventPreviewLeftDown(ICanvas canvas, IPoint point, IThumb pin)
         {
             if (CanConnectToPin(pin))
             {
-
-
-                Connect(canvas, pin, Context.DiagramCreator);
+                Connect(canvas, pin, Context.SchemeCreator);
 
                 return true;
             }
@@ -519,7 +514,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
                 if (CanSplitWire(element))
                 {
 
-                    bool result = WireEditor.Split(canvas, element as ILine, Context.CurrentLine, point, Context.DiagramCreator, Context.EnableSnap);
+                    bool result = WireEditor.Split(canvas, element as ILine, Context.CurrentLine, point, Context.SchemeCreator, Context.EnableSnap);
 
                     Context.CurrentRoot = null;
                     Context.CurrentLine = null;
@@ -612,7 +607,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             return snap == true ? SnapHelper.Snap(original, prop.SnapY) : original;
         }
 
-        #endregion
         #endregion
     }
 }
