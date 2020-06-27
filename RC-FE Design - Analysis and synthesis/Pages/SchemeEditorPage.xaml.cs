@@ -2,6 +2,8 @@
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor;
+using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model;
+using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +18,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views;
 
 namespace RC_FE_Design___Analysis_and_synthesis.Pages
 {
@@ -28,29 +28,16 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
     {
         #region Fields
 
-        private string ResourcesUri = "ElementsDictionary.xaml";
-
         private SchemeEditor.Editor.SchemeEditor Editor { get; set; }
 
-        private PointEx InsertPointInput = new PointEx(30, 30.0);
-        private PointEx InsertPointOutput = new PointEx(930.0, 30.0);
         private PointEx InsertPointGate = new PointEx(325.0, 30.0);
-
-        private double PageWidth = 1260.0;
-        private double PageHeight = 891.0;
 
         private double GuideSpeedUpLevel1 = 1.0;
         private double GuideSpeedUpLevel2 = 2.0;
 
-        private string WindowDefaultTitle = "Canvas Diagram Editor";
+        private string WindowDefaultTitle = "SchemeEditor";
         private string WindowTitleDirtyString = "*";
         private string WindowTitleSeparator = " - ";
-
-        private string SolutionNewFileName = "Solution0";
-        private bool SolutionIsDirty = false;
-        private string SolutionFileName = null;
-
-        private string TagsNewFileName = "Tags0";
 
         #endregion
 
@@ -64,60 +51,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             InitializeDiagramControl();
             InitializeWindowEvents();
             InitializeEditMenuEvents();
-        }
-
-        #endregion
-
-        #region Window Title
-
-        private void UpdateWindowTitle()
-        {
-            if (SolutionFileName == null && SolutionIsDirty == false)
-            {
-                string title = string.Concat(SolutionNewFileName,
-                    WindowTitleSeparator,
-                    WindowDefaultTitle);
-
-                this.Title = title;
-            }
-            else if (SolutionFileName == null && SolutionIsDirty == true)
-            {
-                string title = string.Concat(SolutionNewFileName,
-                    WindowTitleDirtyString,
-                    WindowTitleSeparator,
-                    WindowDefaultTitle);
-
-                this.Title = title;
-            }
-            else if (SolutionFileName != null && SolutionIsDirty == false)
-            {
-                string title = string.Concat(System.IO.Path.GetFileName(SolutionFileName),
-                    WindowTitleSeparator,
-                    WindowDefaultTitle);
-
-                this.Title = title;
-            }
-            else if (SolutionFileName != null && SolutionIsDirty == true)
-            {
-                string title = string.Concat(System.IO.Path.GetFileName(SolutionFileName),
-                    WindowTitleDirtyString,
-                    WindowTitleSeparator,
-                    WindowDefaultTitle);
-
-                this.Title = title;
-            }
-            else
-            {
-                this.Title = WindowDefaultTitle;
-            }
-        }
-
-        private void UpdateSolutionState(bool isDirty, string fileName)
-        {
-            SolutionIsDirty = isDirty;
-            SolutionFileName = fileName;
-
-            UpdateWindowTitle();
         }
 
         #endregion

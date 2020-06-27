@@ -6,8 +6,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
 
-                <ResourceDictionary Source="SchemeEditor/Dictionaries/ElementsDictionary.xaml"/>
-
                 <ResourceDictionary Source="Dictionaries/ElementsDictionary.xaml"/>
                 
                 <ResourceDictionary Source="Dictionaries/CellResourceDictionary.xaml"/>
