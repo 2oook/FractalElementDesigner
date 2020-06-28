@@ -198,7 +198,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
         
 #endregion
 
-#region IDiagramCreator
+#region ISchemeCreator
 
         public void SetCanvas(ICanvas canvas)
         {
@@ -220,7 +220,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
             return null;
         }
 
-        public object CreateDiagram(SchemeProperties properties)
+        public object CreateScheme(SchemeProperties properties)
         {
 
             if (ParserCanvas != null)

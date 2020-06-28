@@ -15,7 +15,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         public const string TagHeaderSolution = "Solution";
         public const string TagHeaderProject = "Project";
-        public const string TagHeaderDiagram = "Diagram";
+        public const string TagHeaderScheme = "Scheme";
 
         public const string TagElementPin = "Pin";
         public const string TagElementWire = "Wire";

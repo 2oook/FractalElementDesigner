@@ -44,19 +44,19 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
         {
             InitializeComponent();
 
-            Loaded += DiagramControl_Loaded;  
+            Loaded += SchemeControl_Loaded;  
         }
 
-        private void DiagramControl_Loaded(object sender, RoutedEventArgs e)
+        private void SchemeControl_Loaded(object sender, RoutedEventArgs e)
         {
-            DiagramCanvas.Width = RootGrid.ActualWidth;
-            DiagramCanvas.Height = RootGrid.ActualHeight;
+            SchemeCanvas.Width = RootGrid.ActualWidth;
+            SchemeCanvas.Height = RootGrid.ActualHeight;
 
-            DiagramBackgroud.Width = RootGrid.ActualWidth;
-            DiagramBackgroud.Height = RootGrid.ActualHeight;
+            SchemeBackgroud.Width = RootGrid.ActualWidth;
+            SchemeBackgroud.Height = RootGrid.ActualHeight;
 
-            DiagramTemplate.Width = RootGrid.ActualWidth;
-            DiagramTemplate.Height = RootGrid.ActualHeight;
+            SchemeTemplate.Width = RootGrid.ActualWidth;
+            SchemeTemplate.Height = RootGrid.ActualHeight;
         }
 
         #endregion
@@ -245,7 +245,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
         public void ZoomToFit()
         {
             var viewport = new Size(this.ActualWidth + 0.0, this.ActualHeight + 0.0);
-            var source = new Size(this.DiagramCanvas.Width + 6.0, this.DiagramCanvas.Height + 6.0);
+            var source = new Size(this.SchemeCanvas.Width + 6.0, this.SchemeCanvas.Height + 6.0);
             ZoomToFit(viewport, source);
         }
 
@@ -493,7 +493,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
                 return TagDragAndDropType.Output;
         }
 
-        private void DiagramCanvas_DragEnter(object sender, DragEventArgs e)
+        private void SchemeCanvas_DragEnter(object sender, DragEventArgs e)
         {
             if (!e.Data.GetDataPresent("Tag") || sender == e.Source)
             {
@@ -501,7 +501,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             }
         }
 
-        private void DiagramCanvas_Drop(object sender, DragEventArgs e)
+        private void SchemeCanvas_Drop(object sender, DragEventArgs e)
         {
             // Tag
             if (e.Data.GetDataPresent("Tag"))
@@ -509,21 +509,21 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
                 var tag = e.Data.GetData("Tag") as Tag;
                 if (tag != null)
                 {
-                    var point = e.GetPosition(DiagramCanvas);
+                    var point = e.GetPosition(SchemeCanvas);
                     var insertPoint = new PointEx(point.X, point.Y);
                     var canvas = Editor.Context.CurrentCanvas;
                     var type = IsTagInputOrOutput(canvas, insertPoint);
 
                     if (type == TagDragAndDropType.Input)
                     {
-                        //var element = Insert.Input(DiagramCanvas, insertPoint, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
+                        //var element = Insert.Input(SchemeCanvas, insertPoint, Editor.Context.SchemeCreator, Editor.Context.EnableSnap);
                         //element.SetData(tag);
 
                         e.Handled = true;
                     }
                     else if (type == TagDragAndDropType.Output)
                     {
-                        //var element = Insert.Output(DiagramCanvas, insertPoint, Editor.Context.DiagramCreator, Editor.Context.EnableSnap);
+                        //var element = Insert.Output(SchemeCanvas, insertPoint, Editor.Context.SchemeCreator, Editor.Context.EnableSnap);
                         //element.SetData(tag);
 
                         e.Handled = true;

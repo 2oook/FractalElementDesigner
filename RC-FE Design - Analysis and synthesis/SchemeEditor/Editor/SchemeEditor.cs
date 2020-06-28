@@ -23,11 +23,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             ModelEditor.Clear(Context.CurrentCanvas);
         }
 
-        public void ResetThumbTags()
-        {
-            TagsResetThumbs(Context.CurrentCanvas);
-        }
-
         #endregion
 
         #region Wire Connection
@@ -257,26 +252,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         #region Selection
 
-        public IEnumerable<IElement> GetElementsSelected()
-        {
-            return ModelEditor.GetSelected(Context.CurrentCanvas);
-        }
-
-        public IEnumerable<IElement> GetElementsSelectedThumb()
-        {
-            return ModelEditor.GetSelectedThumbs(Context.CurrentCanvas);
-        }
-
-        public IEnumerable<IElement> GetElementsThumb()
-        {
-            return ModelEditor.GetThumbs(Context.CurrentCanvas);
-        }
-
-        public IEnumerable<IElement> GetElementsAll()
-        {
-            return ModelEditor.GetAll(Context.CurrentCanvas);
-        }
-
         public void SelectAll()
         {
             ModelEditor.SelectAll(Context.CurrentCanvas);
@@ -285,83 +260,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         public void SelectNone()
         {
             ModelEditor.SelectNone(Context.CurrentCanvas);
-        }
-
-        public void SelectPrevious(bool deselect)
-        {
-            if (Context.SelectedThumbList == null)
-                SelectPreviousInitialize(deselect);
-            else
-                SelectPreviousElement(deselect);
-        }
-
-        private void SelectPreviousInitialize(bool deselect)
-        {
-            var elements = ModelEditor.GetAll(Context.CurrentCanvas);
-            if (elements == null)
-                return;
-
-            Context.SelectedThumbList = new LinkedList<IElement>(elements);
-            Context.CurrentThumbNode = Context.SelectedThumbList.Last;
-
-            if (Context.CurrentThumbNode != null)
-                SelectOneElement(Context.CurrentThumbNode.Value, deselect);
-        }
-
-        private void SelectPreviousElement(bool deselect)
-        {
-            if (Context.CurrentThumbNode == null)
-                return;
-
-            Context.CurrentThumbNode = Context.CurrentThumbNode.Previous;
-            if (Context.CurrentThumbNode == null)
-                Context.CurrentThumbNode = Context.SelectedThumbList.Last;
-
-            SelectOneElement(Context.CurrentThumbNode.Value, deselect);
-        }
-
-        public void SelectNext(bool deselect)
-        {
-            if (Context.SelectedThumbList == null)
-                SelectNextInitialize(deselect);
-            else
-                SelectNextElement(deselect);
-        }
-
-        private void SelectNextInitialize(bool deselect)
-        {
-            var elements = ModelEditor.GetAll(Context.CurrentCanvas);
-            if (elements == null)
-                return;
-
-            Context.SelectedThumbList = new LinkedList<IElement>(elements);
-            Context.CurrentThumbNode = Context.SelectedThumbList.First;
-
-            if (Context.CurrentThumbNode != null)
-                SelectOneElement(Context.CurrentThumbNode.Value, deselect);
-        }
-
-        private void SelectNextElement(bool deselect)
-        {
-            if (Context.CurrentThumbNode == null)
-                return;
-
-            Context.CurrentThumbNode = Context.CurrentThumbNode.Next;
-
-            if (Context.CurrentThumbNode == null)
-                Context.CurrentThumbNode = Context.SelectedThumbList.First;
-
-            SelectOneElement(Context.CurrentThumbNode.Value, deselect);
-        }
-
-        public void SelectedListReset()
-        {
-            if (Context.SelectedThumbList != null)
-            {
-                Context.SelectedThumbList.Clear();
-                Context.SelectedThumbList = null;
-                Context.CurrentThumbNode = null;
-            }
         }
 
         public void SelectOneElement(IElement element, bool deselect)
@@ -376,11 +274,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             }
             else
                 element.SetSelected(!element.GetSelected());
-        }
-
-        public void SelectConnected()
-        {
-            ModelEditor.SelectConnected(Context.CurrentCanvas);
         }
 
         #endregion
@@ -556,27 +449,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             }
 
             return false;
-        }
-
-        #endregion
-
-        #region Tags
-
-        public void TagsResetThumbs(ICanvas canvas)
-        {
-            var thumbs = canvas.GetElements().OfType<IThumb>().Where(x => x.GetTag() != null);
-            var selectedThumbs = thumbs.Where(x => x.GetSelected());
- 
-            if (selectedThumbs.Count() > 0)
-                ResetThumbs(selectedThumbs);
-            else
-                ResetThumbs(thumbs);
-        }
-
-        private static void ResetThumbs(IEnumerable<IThumb> thumbs)
-        {
-            foreach (var thumb in thumbs)
-                thumb.SetData(null);
         }
 
         #endregion

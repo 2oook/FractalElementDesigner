@@ -11,7 +11,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model
         ICanvas GetCanvas();
 
         object CreateElement(string type, object[] data, double x, double y, bool snap);
-        object CreateDiagram(SchemeProperties properties);
+        object CreateScheme(SchemeProperties properties);
 
         void UpdateConnections(IDictionary<string, Child> dict);
         void UpdateCounter(IdCounter original, IdCounter counter);

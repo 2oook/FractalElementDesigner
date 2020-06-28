@@ -13,7 +13,7 @@
 
     <UserControl.Resources>
 
-        <ContextMenu x:Key="DiagramCanvasContextMenuKey">
+        <ContextMenu x:Key="SchemeCanvasContextMenuKey">
            
             <MenuItem x:Name="InsertFElement" Header="Insert _FElement" Click="InsertFElement_Click" InputGestureText="F"/>
             <MenuItem x:Name="InsertAndGate" Header="Insert _AndGate" Click="InsertAndGate_Click" InputGestureText="A"/>
@@ -39,25 +39,25 @@
                 </TransformGroup>
             </Grid.RenderTransform>
 
-            <Canvas x:Name="DiagramBackgroud"
-                    Width="{Binding ElementName=DiagramCanvas, Path=Width}"
-                    Height="{Binding ElementName=DiagramCanvas, Path=Height}" 
+            <Canvas x:Name="SchemeBackgroud"
+                    Width="{Binding ElementName=SchemeCanvas, Path=Width}"
+                    Height="{Binding ElementName=SchemeCanvas, Path=Height}" 
                     Grid.Column="0" Grid.Row="0"
                     ClipToBounds="False"
                     Background="{DynamicResource LogicBackgroundColorKey}"
                     Visibility="Visible">
             </Canvas>
 
-            <Canvas x:Name="DiagramTemplate" ClipToBounds="False" Background="{DynamicResource LogicTransparentColorKey}">
+            <Canvas x:Name="SchemeTemplate" ClipToBounds="False" Background="{DynamicResource LogicTransparentColorKey}">
                 <Rectangle Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}, Path=ActualWidth}"
                    Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}, Path=ActualHeight}"
                    Stroke="Black" StrokeThickness="2"/>
             </Canvas>
 
-            <controls:SchemeCanvas x:Name="DiagramCanvas"                                  
+            <controls:SchemeCanvas x:Name="SchemeCanvas"                                  
                                     Grid.Column="0" Grid.Row="0"
                                     Background="{DynamicResource LogicTransparentColorKey}" 
-                                    ContextMenu="{StaticResource DiagramCanvasContextMenuKey}"
+                                    ContextMenu="{StaticResource SchemeCanvasContextMenuKey}"
                                     AllowDrop="True"
                                     MouseLeftButtonDown="Canvas_MouseLeftButtonDown"
                                     MouseLeftButtonUp="Canvas_MouseLeftButtonUp"
@@ -65,8 +65,8 @@
                                     MouseMove="Canvas_MouseMove"
                                     PreviewMouseRightButtonDown="Canvas_PreviewMouseRightButtonDown"
                                     ContextMenuOpening="Canvas_ContextMenuOpening"
-                                    Drop="DiagramCanvas_Drop"
-                                    DragEnter="DiagramCanvas_DragEnter">
+                                    Drop="SchemeCanvas_Drop"
+                                    DragEnter="SchemeCanvas_DragEnter">
                 
             </controls:SchemeCanvas>
 

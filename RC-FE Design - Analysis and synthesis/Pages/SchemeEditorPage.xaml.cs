@@ -32,13 +32,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
 
         private PointEx InsertPointGate = new PointEx(325.0, 30.0);
 
-        private double GuideSpeedUpLevel1 = 1.0;
-        private double GuideSpeedUpLevel2 = 2.0;
-
-        private string WindowDefaultTitle = "SchemeEditor";
-        private string WindowTitleDirtyString = "*";
-        private string WindowTitleSeparator = " - ";
-
         #endregion
 
         #region Constructor
@@ -48,7 +41,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             InitializeComponent();
 
             InitializeEditor();
-            InitializeDiagramControl();
+            InitializeSchemeControl();
             InitializeWindowEvents();
             InitializeEditMenuEvents();
         }
@@ -62,24 +55,20 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             EditDelete.Click += (sender, e) => Delete();
             EditSelectAll.Click += (sender, e) => Editor.SelectAll();
             EditDeselectAll.Click += (sender, e) => DeselectAll();
-            EditSelectPrevious.Click += (sender, e) => Editor.SelectPrevious(!(Keyboard.Modifiers == ModifierKeys.Control));
-            EditSelectNext.Click += (sender, e) => Editor.SelectNext(!(Keyboard.Modifiers == ModifierKeys.Control));
-            EditSelectConnected.Click += (sender, e) => Editor.SelectConnected();
             EditClear.Click += (sender, e) => Editor.ClearCanvas();
-            EditResetThumbTags.Click += (sender, e) => Editor.ResetThumbTags();
             EditConnect.Click += (sender, e) => Connect();
         }
 
-        private void InitializeDiagramControl()
+        private void InitializeSchemeControl()
         {
-            this.DiagramControl.Editor = this.Editor;
+            this.SchemeControl.Editor = this.Editor;
         }
 
         private void InitializeWindowEvents()
         {
             this.Loaded += (sender, e) =>
             {
-                this.DiagramControl.Focus();
+                this.SchemeControl.Focus();
             };
 
             this.PreviewKeyDown += (sender, e) =>
@@ -96,29 +85,29 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
         {
             Editor = new SchemeEditor.Editor.SchemeEditor();
             Editor.Context = new Context();
-            Editor.Context.CurrentCanvas = this.DiagramControl.DiagramCanvas;
+            Editor.Context.CurrentCanvas = this.SchemeControl.SchemeCanvas;
 
             var counter = new IdCounter();
             counter.Set(3);
-            this.DiagramControl.DiagramCanvas.SetCounter(counter);
+            this.SchemeControl.SchemeCanvas.SetCounter(counter);
 
             var prop = SchemeProperties.Default;
-            this.DiagramControl.DiagramCanvas.SetProperties(prop);
+            this.SchemeControl.SchemeCanvas.SetProperties(prop);
             SetProperties(prop);
 
             Editor.Context.IsControlPressed = () => Keyboard.Modifiers == ModifierKeys.Control;
             Editor.Context.UpdateProperties = () => UpdateProperties(Editor.Context.CurrentCanvas.GetProperties());
             Editor.Context.SetProperties = (p) => SetProperties(p);
 
-            // diagram creator
-            Editor.Context.SchemeCreator = GetDiagramCreator();
+            // Scheme creator
+            Editor.Context.SchemeCreator = GetSchemeCreator();
 
             // set checkbox states
             EnableSnap.IsChecked = Editor.Context.EnableSnap;
             SnapOnRelease.IsChecked = Editor.Context.SnapOnRelease;
         }
 
-        private ISchemeCreator GetDiagramCreator()
+        private ISchemeCreator GetSchemeCreator()
         {
             var creator = new WpfSchemeCreator();
 
@@ -126,7 +115,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             creator.SetPosition = (element, left, top, snap) => Editor.SetPosition(element, left, top, snap);
 
             creator.GetCounter = () => Editor.Context.CurrentCanvas.GetCounter();
-            creator.SetCanvas(this.DiagramControl.DiagramCanvas);
+            creator.SetCanvas(this.SchemeControl.SchemeCanvas);
 
 
             return creator;
@@ -240,11 +229,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             {
                 switch (key)
                 {
-                    case Key.R: Editor.ResetThumbTags(); break;
                     case Key.E: break;
                     case Key.A: Editor.SelectAll(); break;
-                    case Key.OemOpenBrackets: Editor.SelectPrevious(false); break;
-                    case Key.OemCloseBrackets: Editor.SelectNext(false); break;
                     case Key.J:  break;
                     case Key.M: break;
                 }
@@ -253,9 +239,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             {
                 switch (key)
                 {
-                    case Key.OemOpenBrackets: Editor.SelectPrevious(true); break;
-                    case Key.OemCloseBrackets: Editor.SelectNext(true); break;
-                    case Key.OemPipe: Editor.SelectConnected(); break;
                     case Key.Escape: DeselectAll(); break;
                     case Key.Delete: Delete(); break;
                     case Key.Up: if (canMove == true) { MoveUp(); e.Handled = true; } break;
@@ -297,15 +280,15 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
 
         private void EnablePage_Click(object sender, RoutedEventArgs e)
         {
-            var diagram = this.DiagramControl;
-            var visibility = diagram.Visibility;
-            diagram.Visibility = visibility == Visibility.Collapsed ?
+            var Scheme = this.SchemeControl;
+            var visibility = Scheme.Visibility;
+            Scheme.Visibility = visibility == Visibility.Collapsed ?
                 Visibility.Visible : Visibility.Collapsed;
         }
 
         private void EnablePageTemplate_Click(object sender, RoutedEventArgs e)
         {
-            var template = this.DiagramControl.DiagramTemplate;
+            var template = this.SchemeControl.SchemeTemplate;
             var visibility = template.Visibility;
             template.Visibility = visibility == Visibility.Collapsed ?
                 Visibility.Visible : Visibility.Collapsed;
@@ -317,7 +300,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
 
         private void Connect()
         {
-            var canvas = DiagramControl.DiagramCanvas;
+            var canvas = SchemeControl.SchemeCanvas;
             var point = GetInsertionPoint();
             if (point == null)
                 return;
@@ -359,7 +342,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
         {
             PointEx insertionPoint = null;
 
-            var relativeTo = DiagramControl.DiagramCanvas;
+            var relativeTo = SchemeControl.SchemeCanvas;
             var point = Mouse.GetPosition(relativeTo);
             double x = point.X;
             double y = point.Y;

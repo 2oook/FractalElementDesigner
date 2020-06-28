@@ -10,7 +10,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 {
     public static class ModelEditor
     {
-        private static string DefaultUid = Constants.TagHeaderDiagram + Constants.TagNameSeparator + (-1).ToString();
+        private static string DefaultUid = Constants.TagHeaderScheme + Constants.TagNameSeparator + (-1).ToString();
 
         #region Clear
 
