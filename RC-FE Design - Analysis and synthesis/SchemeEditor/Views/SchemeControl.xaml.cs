@@ -447,17 +447,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
             }
         }
 
-
-        private void InsertAndGate_Click(object sender, RoutedEventArgs e)
-        {
-            var canvas = Editor.Context.CurrentCanvas;
-
-            var point = new PointEx(Editor.Context.RightClick.X, Editor.Context.RightClick.Y);
-            Insert.AndGate(canvas, point, Editor.Context.SchemeCreator, Editor.Context.EnableSnap);
-
-            Editor.Context.SkipLeftClick = false;
-        }
-
         private void InsertFElement_Click(object sender, RoutedEventArgs e)
         {
             var canvas = Editor.Context.CurrentCanvas;

@@ -57,9 +57,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             var snap = Context.EnableSnap;
             switch (type)
             {
-                case Constants.TagElementFElement: return Insert.FElement(canvas, point, context, snap);
-                case Constants.TagElementAndGate: return Insert.AndGate(canvas, point, context, snap);
-                
+                case Constants.TagElementFElement: return Insert.FElement(canvas, point, context, snap);              
                 case Constants.TagElementPin: return Insert.Pin(canvas, point, context, snap);
                 default: return null;
             }

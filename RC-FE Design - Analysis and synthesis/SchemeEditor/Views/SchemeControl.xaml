@@ -14,10 +14,9 @@
     <UserControl.Resources>
 
         <ContextMenu x:Key="SchemeCanvasContextMenuKey">
-           
+
             <MenuItem x:Name="InsertFElement" Header="Insert _FElement" Click="InsertFElement_Click" InputGestureText="F"/>
-            <MenuItem x:Name="InsertAndGate" Header="Insert _AndGate" Click="InsertAndGate_Click" InputGestureText="A"/>
-            
+
             <Separator/>
             
             <MenuItem x:Name="EditDelete" Header="_Delete" Click="EditDelete_Click" InputGestureText="Del"/>

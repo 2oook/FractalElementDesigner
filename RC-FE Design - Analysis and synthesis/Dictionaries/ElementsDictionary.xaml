@@ -16,10 +16,6 @@
         <schemeElements:PinControl/>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="AndGateControlTemplateKey">
-        <schemeElements:AndGateControl/>
-    </ControlTemplate>
-
     <ControlTemplate x:Key="FElementControlTemplateKey">
         <schemeElements:FElementControl/>
     </ControlTemplate>

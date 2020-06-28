@@ -16,7 +16,6 @@
         public const string KeyPageStrokeThickness = "PageStrokeThicknessKey";
 
         public const string KeyTemplatePin = "PinControlTemplateKey";
-        public const string KeyTemplateAndGate = "AndGateControlTemplateKey";
         public const string KeyTemplateFElement = "FElementControlTemplateKey";
 
         public const string KeyLandscapePageTemplate = "LandscapePageTemplateKey";

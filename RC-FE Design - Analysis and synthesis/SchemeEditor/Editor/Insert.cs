@@ -26,22 +26,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         #endregion
 
 
-        #region AndGate
-
-        public static IElement AndGate(ICanvas canvas, IPoint point, ISchemeCreator creator, bool snap)
-        {
-            var thumb = creator.CreateElement(Constants.TagElementAndGate,
-                new object[] { canvas.GetCounter().Next() },
-                point.X, point.Y, snap) as IThumb;
-
-            canvas.Add(thumb);
-
-            return thumb;
-        }
-
-        #endregion
-
-
         #region FElement
 
         public static IElement FElement(ICanvas canvas, IPoint point, ISchemeCreator creator, bool snap)

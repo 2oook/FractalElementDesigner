@@ -129,9 +129,6 @@
     <Compile Include="FEEditor\Model\RCStructureBase.cs" />
     <Compile Include="FEEditor\Model\Cells\StructureCellBase.cs" />
     <Compile Include="SchemeEditor\Controls\SchemeCanvas.cs" />
-    <Compile Include="SchemeEditor\Controls\Elements\AndGateControl.xaml.cs">
-      <DependentUpon>AndGateControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SchemeEditor\Controls\Elements\FElementControl.xaml.cs">
       <DependentUpon>FElementControl.xaml</DependentUpon>
     </Compile>
@@ -170,7 +167,6 @@
     <Compile Include="SchemeEditor\Editor\Insert.cs" />
     <Compile Include="SchemeEditor\Editor\LineUtil.cs" />
     <Compile Include="SchemeEditor\Editor\ModelEditor.cs" />
-    <Compile Include="SchemeEditor\Editor\Tags.cs" />
     <Compile Include="SchemeEditor\Editor\WireEditor.cs" />
     <Compile Include="SchemeEditor\ResourceConstants.cs" />
     <Compile Include="SchemeEditor\Helpers\SnapHelper.cs" />
@@ -227,10 +223,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\SynthesisPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SchemeEditor\Controls\Elements\AndGateControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

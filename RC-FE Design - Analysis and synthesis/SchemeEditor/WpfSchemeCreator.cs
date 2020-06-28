@@ -96,7 +96,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
                 {  Constants.TagElementPin, CreatePin },
                 {  Constants.TagElementWire, CreateWire },
                 {  Constants.TagElementFElement, CreateFElement },
-                {  Constants.TagElementAndGate, CreateAndGate }
             };
         }
 
@@ -166,27 +165,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
                 Template = Application.Current.Resources[ResourceConstants.KeyTemplateFElement] as ControlTemplate,
                 Style = Application.Current.Resources[ResourceConstants.KeySyleRootThumb] as Style,
                 Uid = Constants.TagElementFElement + Constants.TagNameSeparator + id.ToString()
-            };
-
-            SetThumbEvents(thumb);
-            SetPosition(thumb, x, y, snap);
-
-            return thumb;
-        }
-
-
-        private object CreateAndGate(object[] data, double x, double y, bool snap)
-        {
-            if (data == null || data.Length != 1)
-                return null;
-
-            int id = (int)data[0];
-
-            var thumb = new ElementThumb()
-            {
-                Template = Application.Current.Resources[ResourceConstants.KeyTemplateAndGate] as ControlTemplate,
-                Style = Application.Current.Resources[ResourceConstants.KeySyleRootThumb] as Style,
-                Uid = Constants.TagElementAndGate + Constants.TagNameSeparator + id.ToString()
             };
 
             SetThumbEvents(thumb);
