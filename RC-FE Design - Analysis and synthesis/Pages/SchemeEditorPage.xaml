@@ -21,8 +21,6 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="4"/>
-            <ColumnDefinition Width="330"/>
         </Grid.ColumnDefinitions>
 
         <Menu Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Background="{DynamicResource LogicBackgroundColorKey}" Margin="0">
@@ -41,84 +39,7 @@
             </MenuItem>
         </Menu>
 
-        <local:SchemeControl x:Name="SchemeControl"
-                              Grid.Column="0" Grid.Row="1"
-                              Margin="4,4,0,4"/>
-
-        <GridSplitter Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1"/>
-
-        <Grid Background="{DynamicResource LogicBackgroundColorKey}" Grid.Column="2" Grid.Row="1">
-
-            <TabControl Margin="0,4,4,4">
-
-                <TabItem x:Name="TabOptions" FocusVisualStyle="{x:Null}">
-                    <TabItem.Header>
-                        <TextBlock Text="Options" ToolTip="Options (F9)"/>
-                    </TabItem.Header>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                  HorizontalScrollBarVisibility="Auto">
-                        <StackPanel>
-                            <Expander Header="_Options" IsExpanded="True">
-                                <StackPanel>
-                                    <CheckBox x:Name="EnableSnap" Content="Enable S_nap to Grid" Margin="2" Click="EnableSnap_Click"/>
-                                    <CheckBox x:Name="SnapOnRelease" Content="Snap to Gri_d on Release" Margin="2" Click="SnapOnRelease_Click"/>
-                                    <Separator Margin="2"/>
-                                    <CheckBox x:Name="EnablePage" IsChecked="True" Content="Enable Page" Margin="2" Click="EnablePage_Click"/>
-                                    <CheckBox x:Name="EnablePageTemplate" IsChecked="True" Content="Enable Page Template" Margin="2" Click="EnablePageTemplate_Click"/>
-                                </StackPanel>
-                            </Expander>
-                            <Separator Margin="2"/>
-                            <Expander Header="Scheme _Properties" IsExpanded="True">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="80"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="Page Width:" Grid.Column="0" Grid.Row="0" Margin="2" HorizontalAlignment="Right"/>
-                                    <TextBox x:Name="TextPageWidth" Text="" Grid.Column="1" Grid.Row="0" Margin="2"/>
-                                    <TextBlock Text="Page Height:" Grid.Column="0" Grid.Row="1" Margin="2" HorizontalAlignment="Right"/>
-                                    <TextBox x:Name="TextPageHeight" Text="" Grid.Column="1" Grid.Row="1" Margin="2"/>
-                                    <TextBlock Text="Grid Origin X:" Grid.Column="0" Grid.Row="2" Margin="2" HorizontalAlignment="Right"/>
-                                    <TextBox x:Name="TextGridOriginX" Text="" Grid.Column="1" Grid.Row="2" Margin="2"/>
-                                    <TextBlock Text="Grid Origin Y:" Grid.Column="0" Grid.Row="3" Margin="2" HorizontalAlignment="Right"/>
-                                    <TextBox x:Name="TextGridOriginY" Text="" Grid.Column="1" Grid.Row="3" Margin="2"/>
-                                    <TextBlock Text="Grid Width:" Grid.Column="0" Grid.Row="4" Margin="2" HorizontalAlignment="Right"/>
-                                    <TextBox x:Name="TextGridWidth" Text="" Grid.Column="1" Grid.Row="4" Margin="2"/>
-                                    <TextBlock Text="Grid Height:" Grid.Column="0" Grid.Row="5" Margin="2" HorizontalAlignment="Right"/>
-                                    <TextBox x:Name="TextGridHeight" Text="" Grid.Column="1" Grid.Row="5" Margin="2"/>
-                                    <TextBlock Text="Grid Size:" Grid.Column="0" Grid.Row="6" Margin="2" HorizontalAlignment="Right"/>
-                                    <TextBox x:Name="TextGridSize" Text="" Grid.Column="1" Grid.Row="6" Margin="2"/>
-                                    <TextBlock Text="SnapX:" Grid.Column="0" Grid.Row="7" Margin="2" HorizontalAlignment="Right"/>
-                                    <TextBox x:Name="TextSnapX" Text="" Grid.Column="1" Grid.Row="7" Margin="2"/>
-                                    <TextBlock Text="SnapY:" Grid.Column="0" Grid.Row="8" Margin="2" HorizontalAlignment="Right"/>
-                                    <TextBox x:Name="TextSnapY" Text="" Grid.Column="1" Grid.Row="8" Margin="2"/>
-                                    <TextBlock Text="SnapOffsetX:" Grid.Column="0" Grid.Row="9" Margin="2" HorizontalAlignment="Right"/>
-                                    <TextBox x:Name="TextSnapOffsetX" Text="" Grid.Column="1" Grid.Row="9" Margin="2"/>
-                                    <TextBlock Text="SnapOffsetY:" Grid.Column="0" Grid.Row="10" Margin="2" HorizontalAlignment="Right"/>
-                                    <TextBox x:Name="TextSnapOffsetY" Text="" Grid.Column="1" Grid.Row="10" Margin="2"/>
-                                </Grid>
-                            </Expander>
-                        </StackPanel>
-                    </ScrollViewer>
-                </TabItem>
-
-            </TabControl>
-
-        </Grid>
+        <local:SchemeControl x:Name="SchemeControl" Grid.Column="0" Grid.Row="1" Margin="5"/>
 
     </Grid>
 

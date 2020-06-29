@@ -26,16 +26,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
     /// </summary>
     public partial class SchemeEditorPage : Page
     {
-        #region Fields
-
-        public SchemeEditor.Editor.SchemeEditor Editor { get; private set; }
-
-        private PointEx InsertPointGate = new PointEx(325.0, 30.0);
-
-        #endregion
-
-        #region Constructor
-
         public SchemeEditorPage()
         {
             InitializeComponent();
@@ -45,6 +35,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             InitializeWindowEvents();
             InitializeEditMenuEvents();
         }
+
+        #region Fields
+
+        public SchemeEditor.Editor.SchemeEditor Editor { get; private set; }
+
+        private PointEx InsertDefaultPoint { get; set; } = new PointEx(325.0, 30.0);
 
         #endregion
 
@@ -93,18 +89,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
 
             var prop = SchemeProperties.Default;
             this.SchemeControl.SchemeCanvas.SetProperties(prop);
-            SetProperties(prop);
 
             Editor.Context.IsControlPressed = () => Keyboard.Modifiers == ModifierKeys.Control;
-            Editor.Context.UpdateProperties = () => UpdateProperties(Editor.Context.CurrentCanvas.GetProperties());
-            Editor.Context.SetProperties = (p) => SetProperties(p);
 
             // Scheme creator
             Editor.Context.SchemeCreator = GetSchemeCreator();
-
-            // set checkbox states
-            EnableSnap.IsChecked = Editor.Context.EnableSnap;
-            SnapOnRelease.IsChecked = Editor.Context.SnapOnRelease;
         }
 
         private ISchemeCreator GetSchemeCreator()
@@ -149,36 +138,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
 
                 Editor.DragEnd(canvas, element);
             };
-        }
-
-        private void UpdateProperties(SchemeProperties prop)
-        {
-            prop.PageWidth = int.Parse(TextPageWidth.Text);
-            prop.PageHeight = int.Parse(TextPageHeight.Text);
-            prop.GridOriginX = int.Parse(TextGridOriginX.Text);
-            prop.GridOriginY = int.Parse(TextGridOriginY.Text);
-            prop.GridWidth = int.Parse(TextGridWidth.Text);
-            prop.GridHeight = int.Parse(TextGridHeight.Text);
-            prop.GridSize = int.Parse(TextGridSize.Text);
-            prop.SnapX = double.Parse(TextSnapX.Text);
-            prop.SnapY = double.Parse(TextSnapY.Text);
-            prop.SnapOffsetX = double.Parse(TextSnapOffsetX.Text);
-            prop.SnapOffsetY = double.Parse(TextSnapOffsetY.Text);
-        }
-
-        private void SetProperties(SchemeProperties prop)
-        {
-            TextPageWidth.Text = prop.PageWidth.ToString();
-            TextPageHeight.Text = prop.PageHeight.ToString();
-            TextGridOriginX.Text = prop.GridOriginX.ToString();
-            TextGridOriginY.Text = prop.GridOriginY.ToString();
-            TextGridWidth.Text = prop.GridWidth.ToString();
-            TextGridHeight.Text = prop.GridHeight.ToString();
-            TextGridSize.Text = prop.GridSize.ToString();
-            TextSnapX.Text = prop.SnapX.ToString();
-            TextSnapY.Text = prop.SnapY.ToString();
-            TextSnapOffsetX.Text = prop.SnapOffsetX.ToString();
-            TextSnapOffsetY.Text = prop.SnapOffsetY.ToString();
         }
 
         private void DeselectAll()
@@ -257,41 +216,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
                     case Key.F6: break;
                     case Key.F7: break;
                     case Key.F8: break;
-                    case Key.F9: TabOptions.IsSelected = true; break;
                 }
             }
-        }
-
-        #endregion
-
-        #region CheckBox Events
-
-        private void EnableSnap_Click(object sender, RoutedEventArgs e)
-        {
-            Editor.Context.EnableSnap =
-                EnableSnap.IsChecked == true ? true : false;
-        }
-
-        private void SnapOnRelease_Click(object sender, RoutedEventArgs e)
-        {
-            Editor.Context.SnapOnRelease =
-                SnapOnRelease.IsChecked == true ? true : false;
-        }
-
-        private void EnablePage_Click(object sender, RoutedEventArgs e)
-        {
-            var Scheme = this.SchemeControl;
-            var visibility = Scheme.Visibility;
-            Scheme.Visibility = visibility == Visibility.Collapsed ?
-                Visibility.Visible : Visibility.Collapsed;
-        }
-
-        private void EnablePageTemplate_Click(object sender, RoutedEventArgs e)
-        {
-            var template = this.SchemeControl.SchemeTemplate;
-            var visibility = template.Visibility;
-            template.Visibility = visibility == Visibility.Collapsed ?
-                Visibility.Visible : Visibility.Collapsed;
         }
 
         #endregion
@@ -364,7 +290,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
         private void InsertFEElement(ICanvas canvas, PointEx point)
         {
             var element = Insert.FElement(canvas,
-                point != null ? point : InsertPointGate, Editor.Context.SchemeCreator, Editor.Context.EnableSnap);
+                point != null ? point : InsertDefaultPoint, Editor.Context.SchemeCreator, Editor.Context.EnableSnap);
 
             Editor.SelectOneElement(element, true);
         }
