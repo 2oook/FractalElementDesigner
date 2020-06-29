@@ -28,7 +28,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
     {
         #region Fields
 
-        private SchemeEditor.Editor.SchemeEditor Editor { get; set; }
+        public SchemeEditor.Editor.SchemeEditor Editor { get; private set; }
 
         private PointEx InsertPointGate = new PointEx(325.0, 30.0);
 

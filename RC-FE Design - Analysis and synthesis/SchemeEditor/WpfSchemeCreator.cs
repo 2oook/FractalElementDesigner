@@ -22,11 +22,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
         #region Properties
 
         public Action<ElementThumb> SetThumbEvents { get; set; }
-        public Action<IElement, double, double, bool> SetPosition { get; set; }
-        public Func<List<object>> GetTags { get; set; }
+        public Action<IElement, double, double, bool> SetPosition { get; set; }     
         public Func<IdCounter> GetCounter { get; set; }
         private ICanvas ParserCanvas { get; set; }
-        public Path ParserPath { get; set; }
+        
 
         #endregion
 

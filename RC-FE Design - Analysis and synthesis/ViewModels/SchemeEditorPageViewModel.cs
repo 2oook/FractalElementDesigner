@@ -57,6 +57,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
         #region Методы
 
+        private void Test() 
+        {
+            //_Page.Editor
+        }
+
         /// <summary>
         /// Метод для установки страницы
         /// </summary>
@@ -64,6 +69,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         public void SetPage(Page page)
         {
             _Page = (SchemeEditorPage)page;
+
+            Test();
         }
 
         #endregion

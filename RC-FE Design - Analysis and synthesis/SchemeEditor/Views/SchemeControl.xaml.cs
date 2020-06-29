@@ -19,6 +19,29 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
 {
     public partial class SchemeControl : UserControl
     {
+        #region Constructor
+
+        public SchemeControl()
+        {
+            InitializeComponent();
+
+            Loaded += SchemeControl_Loaded;
+        }
+
+        private void SchemeControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            SchemeCanvas.Width = RootGrid.ActualWidth;
+            SchemeCanvas.Height = RootGrid.ActualHeight;
+
+            SchemeBackgroud.Width = RootGrid.ActualWidth;
+            SchemeBackgroud.Height = RootGrid.ActualHeight;
+
+            SchemeTemplate.Width = RootGrid.ActualWidth;
+            SchemeTemplate.Height = RootGrid.ActualHeight;
+        }
+
+        #endregion
+
         #region Properties
 
         public Action SelectionChanged { get; set; }
@@ -35,29 +58,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
         public double DefaultIOStrokeThickness = 2.0;
         public double DefaultPageStrokeThickness = 1.0;
         private double CurrentZoom = 1.0;
-
-        #endregion
-
-        #region Constructor
-
-        public SchemeControl()
-        {
-            InitializeComponent();
-
-            Loaded += SchemeControl_Loaded;  
-        }
-
-        private void SchemeControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            SchemeCanvas.Width = RootGrid.ActualWidth;
-            SchemeCanvas.Height = RootGrid.ActualHeight;
-
-            SchemeBackgroud.Width = RootGrid.ActualWidth;
-            SchemeBackgroud.Height = RootGrid.ActualHeight;
-
-            SchemeTemplate.Width = RootGrid.ActualWidth;
-            SchemeTemplate.Height = RootGrid.ActualHeight;
-        }
 
         #endregion
 
