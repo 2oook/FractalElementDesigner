@@ -1,5 +1,7 @@
-﻿using MahApps.Metro.Controls.Dialogs;
+﻿using GalaSoft.MvvmLight;
+using MahApps.Metro.Controls.Dialogs;
 using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
+using RC_FE_Design___Analysis_and_synthesis.Pages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +13,10 @@ using System.Windows.Input;
 
 namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 {
-    public class SchemeEditorPageViewModel : IPageViewModel
+    /// <summary>
+    /// ViewModel страницы редактирования схем включения
+    /// </summary>
+    public class SchemeEditorPageViewModel : ViewModelBase, IPageViewModel
     {
         public SchemeEditorPageViewModel()
         {
@@ -23,18 +28,44 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             _dialogCoordinator = dialogCoordinator;
         }
 
+        #region Глобальные переменные
+
+
+        /// <summary>
+        /// Ссылка на страницу
+        /// </summary>
+        private SchemeEditorPage _Page { get; set; }
+
         /// <summary>
         /// Объект для вывода диалогов
         /// </summary>
         private IDialogCoordinator _dialogCoordinator;
 
-        public ICommand GoToMainPageCommand { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        #endregion
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        #region Свойства
 
+
+
+        #endregion
+
+        #region Команды
+
+
+
+        #endregion
+
+        #region Методы
+
+        /// <summary>
+        /// Метод для установки страницы
+        /// </summary>
+        /// <param name="page"></param>
         public void SetPage(Page page)
         {
-            throw new NotImplementedException();
+            _Page = (SchemeEditorPage)page;
         }
+
+        #endregion
     }
 }

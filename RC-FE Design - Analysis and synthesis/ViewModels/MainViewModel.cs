@@ -35,13 +35,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             _SchemeEditorPageViewModel = _resolver.GetViewModelInstance(SchemeEditorPageViewModelAlias);
             _AnalysisAndSynthesisPageViewModel = _resolver.GetViewModelInstance(AnalysisAndSynthesisPageViewModelAlias);
 
+            _SchemeEditorPageViewModel.SetPage(_SchemeEditorPage);
             _AnalysisAndSynthesisPageViewModel.SetPage(_AnalysisAndSynthesisPage);
 
             // Зарегистрировать статические команды
             CommandManager.RegisterClassCommandBinding(typeof(Page), new CommandBinding(StaticCommandContainer.GoToSchemeEditorPageCommand, GoToSchemeEditorPageCommandExecute));
             CommandManager.RegisterClassCommandBinding(typeof(Page), new CommandBinding(StaticCommandContainer.GoToAnalysisAndSynthesisPageCommand, GoToAnalysisAndSynthesisPageCommandExecute));
 
-            // Перейти на главную страницу
+            // Перейти на страницу анализа и синтеза
             //GoToAnalysisAndSynthesisPageCommandExecute(null, null); 
 
             GoToSchemeEditorPageCommandExecute(null, null); // ОТЛАДКА

@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:controls="clr-namespace:RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls"
+      xmlns:commands="clr-namespace:RC_FE_Design___Analysis_and_synthesis.Commands"
       xmlns:local="clr-namespace:RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views"
       xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
       Dialog:DialogParticipation.Register="{Binding}"
@@ -25,6 +26,9 @@
         </Grid.ColumnDefinitions>
 
         <Menu Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Background="{DynamicResource LogicBackgroundColorKey}" Margin="0">
+            <MenuItem Header="Режим">
+                <MenuItem Header="Редактор элемента"  Command="{x:Static commands:StaticCommandContainer.GoToAnalysisAndSynthesisPageCommand}" />
+            </MenuItem>
             <MenuItem Header="_Edit">
                 <MenuItem x:Name="EditDelete" Header="_Delete" InputGestureText="Del"/>
                 <Separator/>
