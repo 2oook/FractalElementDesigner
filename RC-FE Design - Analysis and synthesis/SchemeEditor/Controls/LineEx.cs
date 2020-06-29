@@ -118,41 +118,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls
 
         #region Attached Properties
 
-        public static bool GetShortenStart(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(ShortenStartProperty);
-        }
 
-        public static void SetShortenStart(DependencyObject obj, bool value)
-        {
-            obj.SetValue(ShortenStartProperty, value);
-        }
-
-        public static readonly DependencyProperty ShortenStartProperty =
-            DependencyProperty.RegisterAttached("ShortenStart", typeof(bool), typeof(LineEx),
-            new FrameworkPropertyMetadata(false,
-                FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
-
-        public static bool GetShortenEnd(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(ShortenEndProperty);
-        }
-
-        public static void SetShortenEnd(DependencyObject obj, bool value)
-        {
-            obj.SetValue(ShortenEndProperty, value);
-        }
-
-        public static readonly DependencyProperty ShortenEndProperty =
-            DependencyProperty.RegisterAttached("ShortenEnd", typeof(bool), typeof(LineEx),
-            new FrameworkPropertyMetadata(false,
-                FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
 
         #endregion
 
         #region Get DefiningGeometry
-
-        private const double ShortenLineSize = 15.0;
 
         public double GetThickness()
         {
@@ -176,24 +146,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls
             double width = LineUtil.Width(radius, thickness, zet);
             double height = LineUtil.Height(radius, thickness, zet);
 
-            bool shortenStart = GetShortenStart(this);
-            bool shortenEnd = GetShortenEnd(this);
             bool isStartIO = GetStartIO();
             bool isEndIO = GetEndIO();
-
-            // shorten start
-            if (isStartIO == true && isEndIO == false && shortenStart == true)
-            {
-                if (Math.Round(sy, 1) == Math.Round(ey, 1))
-                    sx = ex - ShortenLineSize;
-            }
-
-            // shorten end
-            if (isStartIO == false && isEndIO == true && shortenEnd == true)
-            {
-                if (Math.Round(sy, 1) == Math.Round(ey, 1))
-                    ex = sx + ShortenLineSize;
-            }
 
             // get ellipse position
             IPoint ellipseStart = LineUtil.EllipseStart(sx, sy, width, height, isStartVisible);

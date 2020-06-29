@@ -43,9 +43,7 @@
 
         <local:SchemeControl x:Name="SchemeControl"
                               Grid.Column="0" Grid.Row="1"
-                              Margin="4,4,0,4"                           
-                              controls:LineEx.ShortenStart="{Binding ElementName=ShortenStart, Path=IsChecked}"
-                              controls:LineEx.ShortenEnd="{Binding ElementName=ShortenEnd, Path=IsChecked}"/>
+                              Margin="4,4,0,4"/>
 
         <GridSplitter Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1"/>
 
@@ -64,9 +62,6 @@
                                 <StackPanel>
                                     <CheckBox x:Name="EnableSnap" Content="Enable S_nap to Grid" Margin="2" Click="EnableSnap_Click"/>
                                     <CheckBox x:Name="SnapOnRelease" Content="Snap to Gri_d on Release" Margin="2" Click="SnapOnRelease_Click"/>
-                                    <Separator Margin="2"/>
-                                    <CheckBox x:Name="ShortenStart" IsChecked="True" Content="Shorten Wire Start" Margin="2"/>
-                                    <CheckBox x:Name="ShortenEnd" IsChecked="False" Content="Shorten Wire End" Margin="2"/>
                                     <Separator Margin="2"/>
                                     <CheckBox x:Name="EnablePage" IsChecked="True" Content="Enable Page" Margin="2" Click="EnablePage_Click"/>
                                     <CheckBox x:Name="EnablePageTemplate" IsChecked="True" Content="Enable Page Template" Margin="2" Click="EnablePageTemplate_Click"/>
