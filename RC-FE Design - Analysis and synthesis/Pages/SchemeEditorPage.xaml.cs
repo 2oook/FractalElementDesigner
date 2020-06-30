@@ -188,10 +188,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             {
                 switch (key)
                 {
-                    case Key.E: break;
                     case Key.A: Editor.SelectAll(); break;
-                    case Key.J:  break;
-                    case Key.M: break;
                 }
             }
             else
@@ -204,18 +201,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
                     case Key.Down: if (canMove == true) { MoveDown(); e.Handled = true; } break;
                     case Key.Left: if (canMove == true) { MoveLeft(); e.Handled = true; } break;
                     case Key.Right: if (canMove == true) { MoveRight(); e.Handled = true; } break;
-                    case Key.I: break;
-                    case Key.O: break;
                     case Key.F: InsertFEElement(canvas, GetInsertionPoint()); break;
                     case Key.S: Editor.ToggleWireStart(); break;
                     case Key.E: Editor.ToggleWireEnd(); break;
                     case Key.C: Connect(); break;
-                    case Key.OemComma:  break;
-                    case Key.OemPeriod:  break;
-                    case Key.F5: break;
-                    case Key.F6: break;
-                    case Key.F7: break;
-                    case Key.F8: break;
                 }
             }
         }
@@ -235,8 +224,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
             var pin = elements.Where(x => x is PinThumb).FirstOrDefault();
 
             bool result = Editor.MouseEventPreviewLeftDown(canvas, point, pin as IThumb);
-            if (result == false)
-                Editor.MouseEventLeftDown(canvas, point);
+            if (result == false) Editor.MouseEventLeftDown(canvas, point);
         }
 
         public List<DependencyObject> HitTest(Visual visual, IPoint point, double radius)

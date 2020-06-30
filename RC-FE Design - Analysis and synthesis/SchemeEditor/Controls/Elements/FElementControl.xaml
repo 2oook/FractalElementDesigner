@@ -12,23 +12,23 @@
         <Canvas x:Name="RootElement" Width="120" Height="60" Style="{StaticResource RootCanvasStyleKey}">
             <Path Data="M 0,0 L 120,0 M 0,60 L 120,60 M 0,0 L 0,60 M 120,0 L 120,60" Style="{StaticResource ElementPathStyleKey}" />
             <Grid Width="120" Height="60">
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="element" Style="{StaticResource LogicTextStyleKey}"/>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Path=ElementText}" Style="{StaticResource LogicTextStyleKey}"/>
             </Grid>
         </Canvas>
 
-        <controls:PinThumb x:Name="LeftPin"  Uid="LeftPin" Canvas.Left="0" Canvas.Top="15"
+        <controls:PinThumb x:Name="LeftPin"  Uid="LeftTopPin" Canvas.Left="0" Canvas.Top="15"
                            Template="{StaticResource PinThumbControlTemplateKey}"
                            Style="{StaticResource PinThumbStyleKey}"/>
 
-        <controls:PinThumb x:Name="RightPin" Uid="RightPin" Canvas.Left="120" Canvas.Top="15" 
+        <controls:PinThumb x:Name="RightPin" Uid="RightTopPin" Canvas.Left="120" Canvas.Top="15" 
                            Template="{StaticResource PinThumbControlTemplateKey}"
                            Style="{StaticResource PinThumbStyleKey}"/>
 
-        <controls:PinThumb x:Name="TopPin" Uid="TopPin" Canvas.Left="0" Canvas.Top="45" 
+        <controls:PinThumb x:Name="TopPin" Uid="LeftBottomPin" Canvas.Left="0" Canvas.Top="45" 
                            Template="{StaticResource PinThumbControlTemplateKey}"
                            Style="{StaticResource PinThumbStyleKey}"/>
 
-        <controls:PinThumb x:Name="BottomPin" Uid="BottomPin" Canvas.Left="120" Canvas.Top="45" 
+        <controls:PinThumb x:Name="BottomPin" Uid="RightBottomPin" Canvas.Left="120" Canvas.Top="45" 
                            Template="{StaticResource PinThumbControlTemplateKey}"
                            Style="{StaticResource PinThumbStyleKey}"/>
 

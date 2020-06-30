@@ -1,7 +1,9 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro.Controls.Dialogs;
 using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
 using RC_FE_Design___Analysis_and_synthesis.Pages;
+using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +22,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
     {
         public SchemeEditorPageViewModel()
         {
-                
+            InitializeCommands();
         }
 
         public SchemeEditorPageViewModel(IDialogCoordinator dialogCoordinator) : this()
@@ -29,7 +31,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         }
 
         #region Глобальные переменные
-
 
         /// <summary>
         /// Ссылка на страницу
@@ -51,15 +52,50 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
         #region Команды
 
-
+        private ICommand testCommand;
+        /// <summary>
+        /// Команда 
+        /// </summary>
+        public ICommand TestCommand
+        {
+            get
+            {
+                return testCommand;
+            }
+            set
+            {
+                testCommand = value;
+                RaisePropertyChanged(nameof(TestCommand));
+            }
+        }
 
         #endregion
 
         #region Методы
 
+        /// <summary>
+        /// Метод для инициализации команд
+        /// </summary>
+        private void InitializeCommands()
+        {
+            TestCommand = new RelayCommand(Test);
+        }
+
         private void Test() 
         {
-            //_Page.Editor
+            var canvas = _Page.Editor.Context.CurrentCanvas;
+
+            var elements = canvas.GetElements();
+
+            foreach (var element in elements)
+            {
+                //element.SetSelected(true);
+
+                if (element.GetElementType() is Wire wire)
+                {
+                    element.SetSelected(true);
+                }
+            }
         }
 
         /// <summary>
@@ -69,8 +105,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         public void SetPage(Page page)
         {
             _Page = (SchemeEditorPage)page;
-
-            Test();
         }
 
         #endregion

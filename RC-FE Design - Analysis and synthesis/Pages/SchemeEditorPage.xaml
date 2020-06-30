@@ -15,8 +15,8 @@
     <Grid Background="{DynamicResource LogicBackgroundColorKey}">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="30*"/>
-            <RowDefinition Height="661*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -37,6 +37,7 @@
                 <Separator/>
                 <MenuItem x:Name="EditConnect" Header="Connect" InputGestureText="C"/>
             </MenuItem>
+            <MenuItem Header="TEST" Command="{Binding Path=TestCommand}"/>
         </Menu>
 
         <local:SchemeControl x:Name="SchemeControl" Grid.Column="0" Grid.Row="1" Margin="5"/>

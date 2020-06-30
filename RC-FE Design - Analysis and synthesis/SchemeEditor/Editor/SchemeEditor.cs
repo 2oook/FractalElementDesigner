@@ -81,10 +81,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         private void MoveLines(IElement element, double dX, double dY, bool snap)
         {
-            if (element == null || element.GetTag() == null)
+            if (element == null || element.GetElementType() == null)
                 return;
 
-            var connection = element.GetTag() as Connection;
+            var connection = element.GetElementType() as Connection;
             foreach (var wire in connection.Wires)
                 MoveLine(dX, dY, snap, wire);
         }
@@ -361,7 +361,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         private void MouseRemoveCurrentLine(ICanvas canvas)
         {
-            var connection = Context.CurrentRoot.GetTag() as Connection;
+            var connection = Context.CurrentRoot.GetElementType() as Connection;
             var wires = connection.Wires;
             var last = wires.LastOrDefault();
 
