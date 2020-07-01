@@ -125,11 +125,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         #region Insert
 
-        public static void Insert(ICanvas canvas, 
-            IEnumerable<IElement> elements, 
-            bool select, 
-            double offsetX, 
-            double offsetY)
+        public static void Insert(ICanvas canvas, IEnumerable<IElement> elements, bool select, double offsetX, double offsetY)
         {
             var thumbs = elements.Where(x => x is IThumb);
             int count = thumbs.Count();
@@ -262,121 +258,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         #endregion
 
-        #region IDs
-
-        public static void IdsAppend(IEnumerable<object> elements, IdCounter counter)
-        {
-            foreach (var element in elements.Cast<IElement>())
-                element.SetUid(GetUid(counter, element));
-        }
-
-        private static string GetUid(IdCounter counter, IElement element)
-        {
-            return string.Concat(element.GetUid().Split(Constants.TagNameSeparator)[0], 
-                Constants.TagNameSeparator, 
-                counter.Next().ToString());
-        }
-
-        public static void IdsUpdateCounter(IdCounter original, IdCounter counter)
-        {
-            original.Set(Math.Max(original.Count, counter.Count));
-        }
-
-        #endregion
-
         #region Connections
-
-        public static void ConnectionsUpdate(IDictionary<string, Child> dict)
-        {
-            foreach (var item in dict)
-            {
-                var element = item.Value.Element as IElement;
-                if (element == null)
-                    continue;
-
-                if (element.GetElementType() == null)
-                    element.SetElementType(new Connection(element, new List<Wire>()));
-
-                var pins = item.Value.Pins;
-                if (pins.Count > 0)
-                    UpdateWires(dict, element, pins);
-            }
-        }
-
-        private static void UpdateWires(IDictionary<string, Child> dict, IElement element, List<Pin> pins)
-        {
-            var connection = element.GetElementType() as Connection;
-            var wires = connection.Wires;
-
-            foreach (var pin in pins)
-            {
-                string name = pin.Name;
-                string type = pin.Type;
-
-                if (StringHelper.Compare(type, Constants.WireStartType))
-                {
-                    Child child = null;
-                    if (dict.TryGetValue(name, out child) == true)
-                    {
-                        var line = child.Element;
-                        if (line == null)
-                            continue;
-
-                        UpdateStartTag(element, wires, line);
-                    }
-                    else
-                        System.Diagnostics.Debug.Print("Failed to map wire Start: {0}", name);
-                }
-                else if (StringHelper.Compare(type, Constants.WireEndType))
-                {
-                    Child child = null;
-                    if (dict.TryGetValue(name, out child) == true)
-                    {
-                        var line = child.Element;
-                        if (line == null)
-                            continue;
-
-                        UpdateEndTag(element, wires, line);
-                    }
-                    else
-                        System.Diagnostics.Debug.Print("Failed to map wire End: {0}", name);
-                }
-            }
-        }
-
-        private static void UpdateStartTag(IElement element, List<Wire> wires, object line)
-        {
-            wires.Add(new Wire(line, element, null));
-
-            var lineEx = line as ILine;
-            if (lineEx.GetElementType() != null)
-            {
-                var root = lineEx.GetElementType() as IElement;
-                if (root != null)
-                    lineEx.SetElementType(new Wire(lineEx, element, root));
-            }
-            else
-            {
-                lineEx.SetElementType(element);
-            }
-        }
-
-        private static void UpdateEndTag(IElement element, List<Wire> wires, object line)
-        {
-            wires.Add(new Wire(line, null, element));
-
-            var lineEx = line as ILine;
-            if (lineEx.GetElementType() != null)
-            {
-                var root = lineEx.GetElementType() as IElement;
-                if (root != null)
-                    lineEx.SetElementType(new Wire(lineEx, root, element));
-            }
-            else
-            {
-                lineEx.SetElementType(element);
-            }
-        }
 
         public static void GetPinPosition(IElement root, IThumb pin, out double x, out double y)
         {

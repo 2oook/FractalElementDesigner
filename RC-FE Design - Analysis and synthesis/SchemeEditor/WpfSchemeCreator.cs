@@ -19,70 +19,15 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
 
     public class WpfSchemeCreator : ISchemeCreator
     {
-        #region Properties
-
-        public Action<ElementThumb> SetThumbEvents { get; set; }
-        public Action<IElement, double, double, bool> SetPosition { get; set; }     
-        public Func<IdCounter> GetCounter { get; set; }
-        private ICanvas ParserCanvas { get; set; }
-        
-
-        #endregion
-
-        #region Constructor
-
         public WpfSchemeCreator()
         {
             InitializeFactory();
         }
 
-        #endregion
-
-        #region Grid Geometry
-
-        private string CreateGridGeometry(double originX, 
-            double originY, 
-            double width, 
-            double height, 
-            double size)
-        {
-            var sb = new StringBuilder();
-
-            double sizeX = size;
-            double sizeY = size;
-
-            // horizontal lines
-            for (double y = sizeY + originY; y < height + originY; y += size)
-            {
-                sb.Append('M');
-                sb.Append(originX);
-                sb.Append(',');
-                sb.Append(y);
-
-                sb.Append('L');
-                sb.Append(width + originX);
-                sb.Append(',');
-                sb.Append(y);
-            }
-
-            // vertical lines
-            for (double x = sizeX + originX; x < width + originX; x += size)
-            {
-                sb.Append('M');
-                sb.Append(x);
-                sb.Append(',');
-                sb.Append(originY);
-
-                sb.Append('L');
-                sb.Append(x);
-                sb.Append(',');
-                sb.Append(height + originY);
-            }
-
-            return sb.ToString();
-        }
-
-        #endregion
+        public Action<ElementThumb> SetThumbEvents { get; set; }
+        public Action<IElement, double, double, bool> SetPosition { get; set; }     
+        public Func<IdCounter> GetCounter { get; set; }
+        private ICanvas ParserCanvas { get; set; }
 
         #region Factory
 
@@ -207,35 +152,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
             }
 
             return null;
-        }
-
-        public void InsertElements(IEnumerable<object> elements, 
-            bool select,
-            double offsetX,
-            double offsetY)
-        {
-            var canvas = ParserCanvas;
-
-            ModelEditor.Insert(canvas, 
-                elements.Cast<IElement>(), 
-                select,
-                offsetX,
-                offsetY);
-        }
-
-        public void UpdateCounter(IdCounter original, IdCounter counter)
-        {
-            ModelEditor.IdsUpdateCounter(original, counter);
-        }
-
-        public void UpdateConnections(IDictionary<string, Child> dict)
-        {
-            ModelEditor.ConnectionsUpdate(dict);
-        }
-
-        public void AppendIds(IEnumerable<object> elements)
-        {
-            ModelEditor.IdsAppend(elements, this.GetCounter());
         }
 
 #endregion
