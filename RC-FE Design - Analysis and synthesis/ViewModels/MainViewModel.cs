@@ -35,6 +35,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             _SchemeEditorPageViewModel = _resolver.GetViewModelInstance(SchemeEditorPageViewModelAlias);
             _AnalysisAndSynthesisPageViewModel = _resolver.GetViewModelInstance(AnalysisAndSynthesisPageViewModelAlias);
 
+            // методы используются так как нет доступа к конструкторам viewmodel'oв
             _SchemeEditorPageViewModel.SetPage(_SchemeEditorPage);
             _AnalysisAndSynthesisPageViewModel.SetPage(_AnalysisAndSynthesisPage);
 

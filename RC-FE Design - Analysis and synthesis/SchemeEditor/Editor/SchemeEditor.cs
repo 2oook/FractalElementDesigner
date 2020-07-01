@@ -27,6 +27,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         #region Wire Connection
 
+        // ВЫЗЫВАЕТСЯ ТОЛЬКО НА ВЫВОДАХ ЭЛЕМЕНТОВ
         private void Connect(ICanvas canvas, IThumb pin, ISchemeCreator creator)
         {
             if (pin == null)
@@ -38,10 +39,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             double y;
             ModelEditor.GetPinPosition(Context.CurrentRoot, pin, out x, out y);
 
-            Context.CurrentLine = WireEditor.Connect(canvas, 
-                Context.CurrentRoot, Context.CurrentLine, 
-                x, y,
-                creator);
+            Context.CurrentLine = WireEditor.Connect(canvas, Context.CurrentRoot, Context.CurrentLine, x, y, creator);
 
             if (Context.CurrentLine == null)
                 Context.CurrentRoot = null;

@@ -13,7 +13,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls
     {
         #region ICanvas
 
+        public Action<IElement> ElementAdded { get; set; }
+
         private IdCounter Counter { get; set; }
+
         private SchemeProperties Properties { get; set; }
 
         public IEnumerable<IElement> GetElements()
@@ -24,13 +27,18 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls
         public void Add(IElement element)
         {
             if (element != null)
+            {
                 this.Children.Add(element as FrameworkElement);
+                ElementAdded(element);
+            }
         }
 
         public void Remove(IElement element)
         {
-            if (element != null)
+            if (element != null) 
+            {
                 this.Children.Remove(element as FrameworkElement);
+            }     
         }
 
         public void Clear()

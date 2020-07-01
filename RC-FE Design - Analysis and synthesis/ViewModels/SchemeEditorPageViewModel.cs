@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro.Controls.Dialogs;
 using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
 using RC_FE_Design___Analysis_and_synthesis.Pages;
+using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,21 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// </summary>
         private SchemeEditorPage _Page { get; set; }
 
+        private ICanvas currentCanvas;
+        private ICanvas _CurrentCanvas 
+        { 
+            get => currentCanvas;
+            set 
+            {
+                currentCanvas = value;
+
+                if (currentCanvas.ElementAdded == null)
+                {
+                    currentCanvas.ElementAdded = ElementAddedHandler;
+                }
+            }
+        }
+
         /// <summary>
         /// Объект для вывода диалогов
         /// </summary>
@@ -53,6 +69,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         #region Команды
 
         private ICommand testCommand;
+
         /// <summary>
         /// Команда 
         /// </summary>
@@ -73,6 +90,16 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
         #region Методы
 
+        // Обработчик добавления элемента в 
+        private Action<IElement> ElementAddedHandler = (IElement element) => 
+        {
+            var t = element.GetElementType();
+            if (element.GetElementType() is ILine connection)
+            {
+
+            }
+        };
+
         /// <summary>
         /// Метод для инициализации команд
         /// </summary>
@@ -81,7 +108,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             TestCommand = new RelayCommand(Test);
         }
 
-        private void Test() 
+        private void Test()
         {
             var canvas = _Page.Editor.Context.CurrentCanvas;
 
@@ -105,6 +132,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         public void SetPage(Page page)
         {
             _Page = (SchemeEditorPage)page;
+            _CurrentCanvas = _Page.Editor.Context.CurrentCanvas;
         }
 
         #endregion
