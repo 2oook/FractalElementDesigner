@@ -160,7 +160,6 @@
     <Compile Include="SchemeEditor\Core\Model\Wire.cs" />
     <Compile Include="SchemeEditor\Core\PointEx.cs" />
     <Compile Include="SchemeEditor\Core\RectEx.cs" />
-    <Compile Include="SchemeEditor\Core\Tag.cs" />
     <Compile Include="SchemeEditor\Editor\Constants.cs" />
     <Compile Include="SchemeEditor\Editor\Context.cs" />
     <Compile Include="SchemeEditor\Editor\SchemeEditor.cs" />

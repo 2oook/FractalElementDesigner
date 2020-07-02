@@ -63,9 +63,7 @@
                                     PreviewMouseLeftButtonDown="Canvas_PreviewMouseLeftButtonDown"
                                     MouseMove="Canvas_MouseMove"
                                     PreviewMouseRightButtonDown="Canvas_PreviewMouseRightButtonDown"
-                                    ContextMenuOpening="Canvas_ContextMenuOpening"
-                                    Drop="SchemeCanvas_Drop"
-                                    DragEnter="SchemeCanvas_DragEnter">
+                                    ContextMenuOpening="Canvas_ContextMenuOpening">
                 
             </controls:SchemeCanvas>
 
