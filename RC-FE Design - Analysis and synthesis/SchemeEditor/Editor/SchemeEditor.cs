@@ -39,7 +39,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             double y;
             ModelEditor.GetPinPosition(Context.CurrentRoot, pin, out x, out y);
 
-            Context.CurrentLine = WireEditor.Connect(canvas, Context.CurrentRoot, Context.CurrentLine, x, y, creator);
+            Context.CurrentLine = WireEditor.Connect(canvas, Context.CurrentRoot, Context.CurrentLine, x, y, creator, pin);
 
             if (Context.CurrentLine == null)
                 Context.CurrentRoot = null;

@@ -12,7 +12,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
     {
         #region Connect
 
-        public static ILine Connect(ICanvas canvas, IElement root, ILine line, double x, double y, ISchemeCreator creator)
+        public static ILine Connect(ICanvas canvas, IElement root, ILine line, double x, double y, ISchemeCreator creator, IThumb pin = null)
         {
             var rootTag = root.GetTag();
             if (rootTag == null)
@@ -21,10 +21,17 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             var connection = root.GetTag() as Connection;
             var wires = connection.Wires;
 
+            var _root = root;
+
+            if (pin != null)
+            {
+                _root = pin;
+            }
+
             if (line == null)
-                return FirstConnection(canvas, root, x, y, wires, creator);
+                return FirstConnection(canvas, _root, x, y, wires, creator);
             else
-                return SecondConnection(root, line, x, y, wires);
+                return SecondConnection(_root, line, x, y, wires);
         }
 
         private static ILine FirstConnection(ICanvas canvas, IElement root, double x, double y, List<Wire> wires, ISchemeCreator creator)
