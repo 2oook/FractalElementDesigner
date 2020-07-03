@@ -14,11 +14,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         public static ILine Connect(ICanvas canvas, IElement root, ILine line, double x, double y, ISchemeCreator creator)
         {
-            var rootTag = root.GetElementType();
+            var rootTag = root.GetTag();
             if (rootTag == null)
-                root.SetElementType(new Connection(root, new List<Wire>()));
+                root.SetTag(new Connection(root, new List<Wire>()));
 
-            var connection = root.GetElementType() as Connection;
+            var connection = root.GetTag() as Connection;
             var wires = connection.Wires;
 
             if (line == null)
@@ -48,7 +48,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             canvas.Add(line);
 
             if (line != null || !(line is ILine))
-                line.SetElementType(root);
+                line.SetTag(root);
 
             return line;
         }
@@ -67,12 +67,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             var wire = new Wire(line, null, root);
             wires.Add(wire);
 
-            var lineTag = line.GetElementType();
+            var lineTag = line.GetTag();
             if (lineTag != null)
             {
                 var start = lineTag as IElement;
                 if (start != null)
-                    line.SetElementType(new Wire(line, start, root));
+                    line.SetTag(new Wire(line, start, root));
             }
 
             return null;

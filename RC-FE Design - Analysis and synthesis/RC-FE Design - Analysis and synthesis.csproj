@@ -149,7 +149,7 @@
     <Compile Include="SchemeEditor\Core\Interfaces\IPoint.cs" />
     <Compile Include="SchemeEditor\Core\Interfaces\IRect.cs" />
     <Compile Include="SchemeEditor\Core\Interfaces\ISelected.cs" />
-    <Compile Include="SchemeEditor\Core\Interfaces\IElementType.cs" />
+    <Compile Include="SchemeEditor\Core\Interfaces\ITag.cs" />
     <Compile Include="SchemeEditor\Core\Interfaces\IThumb.cs" />
     <Compile Include="SchemeEditor\Core\Interfaces\IUid.cs" />
     <Compile Include="SchemeEditor\Core\MarginEx.cs" />

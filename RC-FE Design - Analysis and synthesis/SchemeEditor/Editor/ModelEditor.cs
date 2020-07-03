@@ -215,7 +215,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             if (element == null)
                 return;
 
-            var tag = element.GetElementType();
+            var tag = element.GetTag();
             if (tag == null)
                 return;
 
@@ -229,7 +229,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         public static void SelectConnected(Wire wire, IElement root, HashSet<string> visited)
         {
             var line = wire.Line as ILine;
-            var tag = line.GetElementType() as Wire;
+            var tag = line.GetTag() as Wire;
 
             line.SetSelected(true);
             if (tag == null)
@@ -311,7 +311,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
             {
                 if (IsElementPin(element.GetUid()))
                 {
-                    var tag = element.GetElementType();
+                    var tag = element.GetTag();
                     if (tag == null)
                         empty.Add(element);
                     else if ((tag as Connection).Wires.Count <= 0)
@@ -334,7 +334,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
             foreach (var element in canvas.GetElements())
             {
-                if (element.GetElementType() != null && !(element is ILine))
+                if (element.GetTag() != null && !(element is ILine))
                     RemoveWireConnections(line, connections, element);
             }
 
@@ -343,7 +343,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
 
         public static void RemoveWireConnections(ILine line, List<Connection> connections, IElement element)
         {
-            var wires = (element.GetElementType() as Connection).Wires;
+            var wires = (element.GetTag() as Connection).Wires;
             var maps = CreateMapWire(line, wires);
 
             if (maps.Count > 0)

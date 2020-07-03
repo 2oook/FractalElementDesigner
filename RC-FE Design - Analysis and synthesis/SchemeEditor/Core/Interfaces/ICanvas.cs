@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core
 {
-    public interface ICanvas : IData, IUid, IElementType, ISelected
+    public interface ICanvas : IData, IUid, ITag, ISelected
     {
         Action<IElement> ElementAdded { get; set; }
 

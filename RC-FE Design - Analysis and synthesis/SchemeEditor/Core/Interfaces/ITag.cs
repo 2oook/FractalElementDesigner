@@ -5,9 +5,9 @@ using System.Text;
 
 namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core
 {
-    public interface IElementType
+    public interface ITag
     {
-        object GetElementType();
-        void SetElementType(object type);
+        object GetTag();
+        void SetTag(object type);
     }
 }

@@ -118,9 +118,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
         }
 
         
-#endregion
+        #endregion
 
-#region ISchemeCreator
+        #region ISchemeCreator
 
         public void SetCanvas(ICanvas canvas)
         {
@@ -154,7 +154,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
             return null;
         }
 
-#endregion
+        #endregion
     }
 
 }

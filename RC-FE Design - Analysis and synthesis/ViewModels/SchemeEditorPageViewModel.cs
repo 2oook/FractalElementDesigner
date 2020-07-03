@@ -5,6 +5,7 @@ using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
 using RC_FE_Design___Analysis_and_synthesis.Pages;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model;
+using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -91,16 +92,20 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         #region Методы
 
         // Обработчик добавления элемента в 
-        private Action<IElement> ElementAddedHandler = (IElement element) => 
+        private void ElementAddedHandler (IElement element)
         {
-            var t = element.GetElementType();
-            if (element.GetElementType() is ILine connection)
+            var uid = element.GetUid();
+
+            if (uid.Contains(Constants.TagElementFElement))
             {
 
             }
 
-            //element.
-        };
+            if (uid.Contains(Constants.TagElementWire))
+            {
+
+            }
+        }
 
         /// <summary>
         /// Метод для инициализации команд
@@ -120,7 +125,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             {
                 //element.SetSelected(true);
 
-                if (element.GetElementType() is Wire wire)
+                if (element.GetTag() is Wire wire)
                 {
                     element.SetSelected(true);
                 }

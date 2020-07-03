@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core
 {
-    public interface IElement : IData, IUid, IElementType, ISelected
+    public interface IElement : IData, IUid, ITag, ISelected
     {
         double GetX();
         double GetY();

@@ -243,12 +243,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls
 
         #region ITag
 
-        public object GetElementType()
+        public object GetTag()
         {
             return this.Tag;
         }
 
-        public void SetElementType(object tag)
+        public void SetTag(object tag)
         {
             this.Tag = tag;
         } 
