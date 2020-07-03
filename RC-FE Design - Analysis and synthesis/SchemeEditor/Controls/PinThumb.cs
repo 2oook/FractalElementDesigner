@@ -38,6 +38,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls
             return ((this.Parent as FrameworkElement).Parent as FrameworkElement).TemplatedParent;
         }
 
+        public ElementType ElementType { get; set; } = ElementType.Unknown;
+
         #endregion
 
         #region IUid

@@ -106,6 +106,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
 
             var thumb = new ElementThumb()
             {
+                ElementType = ElementType.SchemeElement,
                 Template = Application.Current.Resources[ResourceConstants.KeyTemplateFElement] as ControlTemplate,
                 Style = Application.Current.Resources[ResourceConstants.KeySyleRootThumb] as Style,
                 Uid = Constants.TagElementFElement + Constants.TagNameSeparator + id.ToString()

@@ -13,5 +13,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core
         void SetY(double y);
 
         object GetParent();
+
+        ElementType ElementType { get; set; }
     }
 }

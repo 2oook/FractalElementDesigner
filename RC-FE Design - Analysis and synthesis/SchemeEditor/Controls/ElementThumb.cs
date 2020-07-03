@@ -95,6 +95,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls
             return this.Parent;
         }
 
+        public ElementType ElementType { get; set; } = ElementType.Unknown;
+
         #endregion
 
         #region IUid

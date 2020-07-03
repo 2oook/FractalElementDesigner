@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro.Controls.Dialogs;
 using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
 using RC_FE_Design___Analysis_and_synthesis.Pages;
+using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor;
@@ -91,20 +92,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
         #region Методы
 
-        // Обработчик добавления элемента в 
+        // Обработчик добавления элемента схемы в Canvas
         private void ElementAddedHandler (IElement element)
         {
-            var uid = element.GetUid();
-
-            if (uid.Contains(Constants.TagElementFElement))
-            {
-
-            }
-
-            if (uid.Contains(Constants.TagElementWire))
-            {
-
-            }
+            
         }
 
         /// <summary>
@@ -121,15 +112,27 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
             var elements = canvas.GetElements();
 
+            var schemeElements = elements.Where(x => x.ElementType == ElementType.SchemeElement).ToList();
+
+            var tags = new List<object>();
+
+            var wires = new List<Wire>();
+
             foreach (var element in elements)
             {
+                tags.Add(element);
+
                 //element.SetSelected(true);
 
                 if (element.GetTag() is Wire wire)
                 {
-                    element.SetSelected(true);
+                    wires.Add(wire);
+                    //element.SetSelected(true);
                 }
             }
+
+
+            //var t = wires.Where(x => x.Start is PinThumb | x.End is PinThumb).Select(x => x.Start).Select(x => x.GetParent()).ToList();
         }
 
         /// <summary>

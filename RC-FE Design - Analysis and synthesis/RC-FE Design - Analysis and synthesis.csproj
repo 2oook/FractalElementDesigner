@@ -139,6 +139,7 @@
     <Compile Include="SchemeEditor\Controls\LineEx.cs" />
     <Compile Include="SchemeEditor\Controls\PinThumb.cs" />
     <Compile Include="SchemeEditor\Controls\SelectionAdorner.cs" />
+    <Compile Include="SchemeEditor\Core\ElementType.cs" />
     <Compile Include="SchemeEditor\Core\SchemeProperties.cs" />
     <Compile Include="SchemeEditor\Core\Interfaces\ICanvas.cs" />
     <Compile Include="SchemeEditor\Core\Interfaces\IData.cs" />

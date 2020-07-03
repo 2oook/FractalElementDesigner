@@ -38,7 +38,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
         {
             var counter = canvas.GetCounter();
             string rootUid = root.GetUid();
-
             
             var line = creator.CreateElement(Constants.TagElementWire,
                 new object[] 
