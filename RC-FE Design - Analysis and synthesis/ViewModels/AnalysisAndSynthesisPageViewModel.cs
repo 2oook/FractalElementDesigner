@@ -356,7 +356,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             }
         }
 
-        
+
+        /// <summary>
+        /// Команда для перемещения на главную страницу 
+        /// </summary>
+        public ICommand GoToMainPageCommand { get; set; }
 
         #endregion
 

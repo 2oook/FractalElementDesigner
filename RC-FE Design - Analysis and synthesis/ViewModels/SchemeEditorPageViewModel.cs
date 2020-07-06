@@ -70,6 +70,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
         #region Команды
 
+        /// <summary>
+        /// Команда для перемещения на главную страницу 
+        /// </summary>
+        public ICommand GoToMainPageCommand { get; set; }
+
         private ICommand testCommand;
 
         /// <summary>

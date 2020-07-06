@@ -39,14 +39,23 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             _SchemeEditorPageViewModel.SetPage(_SchemeEditorPage);
             _AnalysisAndSynthesisPageViewModel.SetPage(_AnalysisAndSynthesisPage);
 
+            // Инициализировать команды
+            InitializeCommands();
+
+            // установить команду возвращения на главную страницу
+            _AnalysisAndSynthesisPageViewModel.GoToMainPageCommand = GoToMainPageCommand;
+
             // Зарегистрировать статические команды
             CommandManager.RegisterClassCommandBinding(typeof(Page), new CommandBinding(StaticCommandContainer.GoToSchemeEditorPageCommand, GoToSchemeEditorPageCommandExecute));
             CommandManager.RegisterClassCommandBinding(typeof(Page), new CommandBinding(StaticCommandContainer.GoToAnalysisAndSynthesisPageCommand, GoToAnalysisAndSynthesisPageCommandExecute));
 
+            // Перейти на главную страницу
+            GoToMainPageCommandExecute();
+
             // Перейти на страницу анализа и синтеза
             //GoToAnalysisAndSynthesisPageCommandExecute(null, null); 
 
-            GoToSchemeEditorPageCommandExecute(null, null); // ОТЛАДКА
+            //GoToSchemeEditorPageCommandExecute(null, null); // ОТЛАДКА
         }
 
         #region Константы
@@ -91,11 +100,42 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
         #region Команды
 
-
+        private ICommand _goToMainPageCommand;
+        /// <summary>
+        /// Команда для перемещения на главную страницу 
+        /// </summary>
+        public ICommand GoToMainPageCommand
+        {
+            get
+            {
+                return _goToMainPageCommand;
+            }
+            set
+            {
+                _goToMainPageCommand = value;
+                RaisePropertyChanged(nameof(GoToMainPageCommand));
+            }
+        }
 
         #endregion
 
         #region Методы
+
+        /// <summary>
+        /// Метод для инициализации команд
+        /// </summary>
+        private void InitializeCommands()
+        {
+            GoToMainPageCommand = new RelayCommand(GoToMainPageCommandExecute);
+        }
+
+        /// <summary>
+        /// Метод для перемещения на главную страницу
+        /// </summary>
+        private void GoToMainPageCommandExecute()
+        {
+            Navigation.Navigation.Navigate(Navigation.Navigation.MainPageAlias, this);
+        }
 
         /// <summary>
         /// Метод для перемещения на страницу редактора схем
