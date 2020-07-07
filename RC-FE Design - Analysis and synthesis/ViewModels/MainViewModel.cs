@@ -52,10 +52,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             // Перейти на главную страницу
             GoToMainPageCommandExecute();
 
-            // Перейти на страницу проектирования
-            //GoToStructureDesigningPageCommandExecute(null, null); 
+            // Перейти на страницу проектирования // ОТЛАДКА
+            GoToStructureDesigningPageCommandExecute(null, null);
 
-            //GoToSchemeEditorPageCommandExecute(null, null); // ОТЛАДКА
+            //GoToSchemeEditorPageCommandExecute(null, null); 
         }
 
         #region Константы

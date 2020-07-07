@@ -532,6 +532,52 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             try
             { 
                 // создать окно
+                var window = new StructureSchemeSynthesisParametersWindow();
+                // создать vm для окна 
+                var structureSchemeSynthesisParametersViewModel = new StructureSchemeSynthesisParametersWindowViewModel(window);
+                // вывести окно ввода параметров 
+                window.DataContext = structureSchemeSynthesisParametersViewModel;
+                var dialogResult = window.ShowDialog();
+
+                // если не было подтверждения выйти
+                if (dialogResult.HasValue == false)
+                {
+                    return;
+                }
+                else
+                {
+                    if (dialogResult.Value == false)
+                    {
+                        return;
+                    }
+                }
+
+                // ??????????????????????????????????????????
+                // показать область проектирования, если она скрыта
+                if (EditorVisibility != Visibility.Visible)
+                {
+                    EditorVisibility = Visibility.Visible;
+                }
+
+                // создать проект
+                var project = new Project() { Name = "Проект №1" };
+
+                SelectedProject = project;
+
+                Projects.Add(project);
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private void CreateNewStructureProject()
+        {
+            try
+            {
+                // создать окно
                 var window = new NewStructureWindow();
                 // создать vm для окна создания новой структуры
                 var newStructureWindowViewModel = new NewStructureWindowViewModel(window);
