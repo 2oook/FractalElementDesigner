@@ -29,31 +29,31 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             _resolver = resolver;
 
             // создать страницы
-            _AnalysisAndSynthesisPage = new AnalysisAndSynthesisPage();
+            _StructureDesigningPage = new StructureDesigningPage();
             _SchemeEditorPage = new SchemeEditorPage();
         
             _SchemeEditorPageViewModel = _resolver.GetViewModelInstance(SchemeEditorPageViewModelAlias);
-            _AnalysisAndSynthesisPageViewModel = _resolver.GetViewModelInstance(AnalysisAndSynthesisPageViewModelAlias);
+            _StructureDesigningPageViewModel = _resolver.GetViewModelInstance(StructureDesigningPageViewModelAlias);
 
             // методы используются так как нет доступа к конструкторам viewmodel'oв
             _SchemeEditorPageViewModel.SetPage(_SchemeEditorPage);
-            _AnalysisAndSynthesisPageViewModel.SetPage(_AnalysisAndSynthesisPage);
+            _StructureDesigningPageViewModel.SetPage(_StructureDesigningPage);
 
             // Инициализировать команды
             InitializeCommands();
 
             // установить команду возвращения на главную страницу
-            _AnalysisAndSynthesisPageViewModel.GoToMainPageCommand = GoToMainPageCommand;
+            _StructureDesigningPageViewModel.GoToMainPageCommand = GoToMainPageCommand;
 
             // Зарегистрировать статические команды
             CommandManager.RegisterClassCommandBinding(typeof(Page), new CommandBinding(StaticCommandContainer.GoToSchemeEditorPageCommand, GoToSchemeEditorPageCommandExecute));
-            CommandManager.RegisterClassCommandBinding(typeof(Page), new CommandBinding(StaticCommandContainer.GoToAnalysisAndSynthesisPageCommand, GoToAnalysisAndSynthesisPageCommandExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(Page), new CommandBinding(StaticCommandContainer.GoToStructureDesigningPageCommand, GoToStructureDesigningPageCommandExecute));
 
             // Перейти на главную страницу
             GoToMainPageCommandExecute();
 
-            // Перейти на страницу анализа и синтеза
-            //GoToAnalysisAndSynthesisPageCommandExecute(null, null); 
+            // Перейти на страницу проектирования
+            //GoToStructureDesigningPageCommandExecute(null, null); 
 
             //GoToSchemeEditorPageCommandExecute(null, null); // ОТЛАДКА
         }
@@ -61,7 +61,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         #region Константы
 
         public static readonly string SchemeEditorPageViewModelAlias = "SchemeEditorPageVM";
-        public static readonly string AnalysisAndSynthesisPageViewModelAlias = "AnalysisAndSynthesisPageVM";
+        public static readonly string StructureDesigningPageViewModelAlias = "StructureDesigningPageVM";
 
         #endregion
 
@@ -77,14 +77,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// </summary>
         private readonly IPageViewModel _SchemeEditorPageViewModel;
         /// <summary>
-        /// Ссылка на ViewModel страницы анализа и синтеза
+        /// Ссылка на ViewModel страницы проектирования
         /// </summary>
-        private readonly IPageViewModel _AnalysisAndSynthesisPageViewModel;
+        private readonly IPageViewModel _StructureDesigningPageViewModel;
 
         /// <summary>
-        /// Страница анализа
+        /// Страница проектирования
         /// </summary>
-        private readonly Page _AnalysisAndSynthesisPage;
+        private readonly Page _StructureDesigningPage;
         /// <summary>
         /// Страница редактора схем
         /// </summary>
@@ -146,11 +146,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         }
 
         /// <summary>
-        /// Метод для перемещения на страницу анализа и синтеза
+        /// Метод для перемещения на страницу проектирования
         /// </summary>
-        private void GoToAnalysisAndSynthesisPageCommandExecute(object sender, ExecutedRoutedEventArgs e)
+        private void GoToStructureDesigningPageCommandExecute(object sender, ExecutedRoutedEventArgs e)
         {
-            Navigation.Navigation.Navigate(_AnalysisAndSynthesisPage, _AnalysisAndSynthesisPageViewModel);
+            Navigation.Navigation.Navigate(_StructureDesigningPage, _StructureDesigningPageViewModel);
         }
 
         #endregion

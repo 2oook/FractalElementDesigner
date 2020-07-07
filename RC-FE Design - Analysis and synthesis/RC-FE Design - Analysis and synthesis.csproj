@@ -114,8 +114,8 @@
     <Compile Include="Navigation\Navigation.cs" />
     <Compile Include="Navigation\PagesResolver.cs" />
     <Compile Include="Navigation\ViewModelsResolver.cs" />
-    <Compile Include="Pages\AnalysisAndSynthesisPage.xaml.cs">
-      <DependentUpon>AnalysisAndSynthesisPage.xaml</DependentUpon>
+    <Compile Include="Pages\StructureDesigningPage.xaml.cs">
+      <DependentUpon>StructureDesigningPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -178,7 +178,7 @@
     <Compile Include="SchemeEditor\Views\SchemeControl.xaml.cs">
       <DependentUpon>SchemeControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\AnalysisAndSynthesisPageViewModel.cs" />
+    <Compile Include="ViewModels\StructureDesigningPageViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\NewStructureWindowViewModel.cs" />
     <Compile Include="ViewModels\SchemeEditorPageViewModel.cs" />
@@ -217,7 +217,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\AnalysisAndSynthesisPage.xaml">
+    <Page Include="Pages\StructureDesigningPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

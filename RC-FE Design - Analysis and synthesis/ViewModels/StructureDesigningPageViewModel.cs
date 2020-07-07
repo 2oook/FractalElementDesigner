@@ -26,9 +26,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
     /// <summary>
     /// ViewModel страницы анализа и синтеза
     /// </summary>
-    public class AnalysisAndSynthesisPageViewModel : ViewModelBase, IPageViewModel
+    public class StructureDesigningPageViewModel : ViewModelBase, IPageViewModel
     {
-        public AnalysisAndSynthesisPageViewModel()
+        public StructureDesigningPageViewModel()
         {
             InitializeCommands();
 
@@ -150,7 +150,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
         }
 
-        public AnalysisAndSynthesisPageViewModel(IDialogCoordinator dialogCoordinator) : this()
+        public StructureDesigningPageViewModel(IDialogCoordinator dialogCoordinator) : this()
         {
             _dialogCoordinator = dialogCoordinator;
         }
@@ -299,7 +299,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// <summary>
         /// Ссылка на страницу
         /// </summary>
-        private AnalysisAndSynthesisPage _Page { get; set; }
+        private StructureDesigningPage _Page { get; set; }
 
         #endregion
 
@@ -626,7 +626,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// <param name="page"></param>
         public void SetPage(Page page)
         {
-            _Page = (AnalysisAndSynthesisPage)page;
+            _Page = (StructureDesigningPage)page;
         }
 
         #endregion

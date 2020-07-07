@@ -19,9 +19,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
     /// <summary>
     /// Interaction logic for AnalysisPage.xaml
     /// </summary>
-    public partial class AnalysisAndSynthesisPage : Page
+    public partial class StructureDesigningPage : Page
     {
-        public AnalysisAndSynthesisPage()
+        public StructureDesigningPage()
         {
             InitializeComponent();
         }
@@ -33,7 +33,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
         /// <param name="sender">Объект отправитель</param>
         private void HandleKeyEvents(object sender, KeyEventArgs e)
         {
-            var context = this.DataContext as AnalysisAndSynthesisPageViewModel;
+            var context = this.DataContext as StructureDesigningPageViewModel;
             if (context == null) return;
 
             bool isControl = Keyboard.Modifiers == ModifierKeys.Control;

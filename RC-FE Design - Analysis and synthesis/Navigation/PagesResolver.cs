@@ -26,7 +26,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
         {
             _pagesResolvers.Add(Navigation.MainPageAlias, () => new MainPage());
             _pagesResolvers.Add(Navigation.SchemeEditorPageAlias, () => new SchemeEditorPage());
-            _pagesResolvers.Add(Navigation.AnalysisAndSynthesisPageAlias, () => new AnalysisAndSynthesisPage());
+            _pagesResolvers.Add(Navigation.StructureDesigningPageAlias, () => new StructureDesigningPage());
         }
 
         /// <summary>

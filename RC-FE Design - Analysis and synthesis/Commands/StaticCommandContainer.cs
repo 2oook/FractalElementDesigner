@@ -21,13 +21,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.Commands
             get => goToSchemeEditorPageCommand;
         }
 
-        private static readonly RoutedUICommand goToAnalysisAndSynthesisPageCommand = new RoutedUICommand("goToAnalysisAndSynthesisPageCommand", "GoToAnalysisAndSynthesisPageCommand", typeof(StaticCommandContainer));
+        private static readonly RoutedUICommand goToStructureDesigningPageCommand = new RoutedUICommand("goToStructureDesigningPageCommand", "GoToStructureDesigningPageCommand", typeof(StaticCommandContainer));
         /// <summary>
-        /// Команда переключения на страницу анализа и синтеза
+        /// Команда переключения на страницу проектирования структуры
         /// </summary>
-        public static RoutedUICommand GoToAnalysisAndSynthesisPageCommand
+        public static RoutedUICommand GoToStructureDesigningPageCommand
         {
-            get => goToAnalysisAndSynthesisPageCommand;
+            get => goToStructureDesigningPageCommand;
         }
     }
 }

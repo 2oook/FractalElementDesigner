@@ -15,7 +15,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
 
         public static readonly string MainPageAlias = "MainPage";
         public static readonly string SchemeEditorPageAlias = "SchemeEditorPage";
-        public static readonly string AnalysisAndSynthesisPageAlias = "AnalysisAndSynthesisPage";
+        public static readonly string StructureDesigningPageAlias = "StructureDesigningPage";
 
         #endregion
 
@@ -44,7 +44,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
         }
 
         #endregion
-
 
         #region Public Methods
 
@@ -82,7 +81,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
 
         #endregion
 
-
         #region Private Methods
 
         void _navService_Navigated(object sender, NavigationEventArgs e)
@@ -98,7 +96,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.Navigation
         }
 
         #endregion
-
 
         #region Singleton
 

@@ -25,7 +25,7 @@
 
         <Menu Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Background="{DynamicResource LogicBackgroundColorKey}" Margin="0">
             <MenuItem Header="Режим">
-                <MenuItem Header="Редактор элемента"  Command="{x:Static commands:StaticCommandContainer.GoToAnalysisAndSynthesisPageCommand}" />
+                <MenuItem Header="Редактор элемента"  Command="{x:Static commands:StaticCommandContainer.GoToStructureDesigningPageCommand}" />
             </MenuItem>
             <MenuItem Header="_Edit">
                 <MenuItem x:Name="EditDelete" Header="_Delete" InputGestureText="Del"/>

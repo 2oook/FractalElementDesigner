@@ -23,7 +23,7 @@
 
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
 
-            <Button Content="Проектирование структуры" Command="{x:Static commands:StaticCommandContainer.GoToAnalysisAndSynthesisPageCommand}" FontWeight="Bold" FontSize="14" Padding="5"  Margin="5"/>
+            <Button Content="Проектирование структуры" Command="{x:Static commands:StaticCommandContainer.GoToStructureDesigningPageCommand}" FontWeight="Bold" FontSize="14" Padding="5"  Margin="5"/>
             <Button Content="Подгонка структуры" Command="{Binding GoToStructureFittingPageCommand}" FontWeight="Bold" FontSize="14" Padding="5" Margin="5" />
 
         </StackPanel>
