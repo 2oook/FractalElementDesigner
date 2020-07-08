@@ -83,6 +83,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\StaticCommandContainer.cs" />
+    <Compile Include="Controls\HomePageControl.xaml.cs">
+      <DependentUpon>HomePageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ProcessesIndicationControl.xaml.cs">
+      <DependentUpon>ProcessesIndicationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StructureEditorControl.xaml.cs">
+      <DependentUpon>StructureEditorControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FEEditor\Context.cs" />
     <Compile Include="FEEditor\Controls\Behaviours\BindableSelectedItemBehavior.cs" />
     <Compile Include="FEEditor\Controls\FEControl.xaml.cs">
@@ -191,6 +200,18 @@
     <Compile Include="Windows\StructureSchemeSynthesisParametersWindow.xaml.cs">
       <DependentUpon>StructureSchemeSynthesisParametersWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\HomePageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ProcessesIndicationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\StructureEditorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dictionaries\BaseDictionary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -231,7 +231,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             get { return selectedLayer; }
             set 
             {
-                _Page.FEControl.Editor = value.Editor;
+                _Page.structureEditorControl.FEControl.Editor = value.Editor;
                 selectedLayer = value;
                 RaisePropertyChanged(nameof(SelectedLayer));
             }
@@ -514,7 +514,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                         foreach (var layer in structure.StructureLayers)
                         {
                             var editor = new Editor() { Context = new Context() };
-                            editor.Context.CurrentCanvas = _Page.FEControl.CreateFECanvas();
+                            editor.Context.CurrentCanvas = _Page.structureEditorControl.FEControl.CreateFECanvas();
 
                             layer.Editor = editor;
 
@@ -530,7 +530,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                     //_Page.FEControl.Editor = project.Structures.First().StructureLayers.First().Editor;
 
-                    _Page.FEControl.ZoomToFit();
+                    _Page.structureEditorControl.FEControl.ZoomToFit();
                 }
             }
             catch (Exception ex)
@@ -637,16 +637,16 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 foreach (var layer in newStructure.StructureLayers)
                 {
                     var editor = new Editor() { Context = new Context() };
-                    editor.Context.CurrentCanvas = _Page.FEControl.CreateFECanvas();
+                    editor.Context.CurrentCanvas = _Page.structureEditorControl.FEControl.CreateFECanvas();
 
                     layer.Editor = editor;
 
                     Insert.StructureLayer(editor.Context.CurrentCanvas, layer, layer.CellsType);
                 }
 
-                _Page.FEControl.Editor = newStructure.StructureLayers.First().Editor;
+                _Page.structureEditorControl.FEControl.Editor = newStructure.StructureLayers.First().Editor;
 
-                _Page.FEControl.ZoomToFit();
+                _Page.structureEditorControl.FEControl.ZoomToFit();
             }
             catch (Exception ex)
             {

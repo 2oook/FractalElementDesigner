@@ -3,10 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        xmlns:local="clr-namespace:RC_FE_Design___Analysis_and_synthesis.Pages"
+        xmlns:controls="clr-namespace:RC_FE_Design___Analysis_and_synthesis.Controls"
         xmlns:commands="clr-namespace:RC_FE_Design___Analysis_and_synthesis.Commands"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
-        xmlns:editor="clr-namespace:RC_FE_Design___Analysis_and_synthesis.FEEditor"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro" 
         xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity" 
         xmlns:behaviours="clr-namespace:RC_FE_Design___Analysis_and_synthesis.FEEditor.Controls.Behaviours"
@@ -18,16 +17,7 @@
         PreviewKeyDown="HandleKeyEvents">
 
     <Page.Resources>
-        <Style x:Key="radioButtonStyle" TargetType="RadioButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <ToggleButton IsChecked="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                        Content="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+       
     </Page.Resources>
 
     <Grid>
@@ -65,54 +55,16 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Grid x:Name="canvasContainer" Visibility="{Binding StructureEditorVisibility, TargetNullValue=Hidden}" Margin="5,0,5,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
 
-                    <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
-                        <DockPanel>
+                <controls:StructureEditorControl x:Name="structureEditorControl" Visibility="{Binding StructureEditorVisibility, TargetNullValue=Hidden}" Margin="5,0,5,0"/>
 
-                            <ToolBarTray DockPanel.Dock="Left" Orientation="Vertical">
-                                <ToolBar Margin="0,5,0,0" ItemsSource="{Binding Path=EditorTools}">
+                <controls:HomePageControl Visibility="{Binding Path=HomePageVisibility}"/>
 
-                                    <ToolBar.ItemTemplate>
-                                        <DataTemplate>
-                                            <RadioButton GroupName="group" Style="{StaticResource radioButtonStyle}" IsChecked="{Binding Value.IsChecked}">
-                                                <Image Margin="0" Height="38" Width="38" Source="{Binding Path=Value.ImageURI}" />
-                                                <RadioButton.ToolTip>
-                                                    <TextBlock Text="{Binding Path=Value.Name}"/>
-                                                </RadioButton.ToolTip>
-                                            </RadioButton>
-                                        </DataTemplate>
-                                    </ToolBar.ItemTemplate>
-
-                                </ToolBar>
-                            </ToolBarTray>
-
-                            <editor:FEControl x:Name="FEControl"  DockPanel.Dock="Right"/>
-
-                        </DockPanel>
-                    </Border>
-
-                </Grid>
-
-                <Grid Visibility="{Binding Path=HomePageVisibility}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
-
-                        <Button Content="Новый проект" Command="{Binding NewProjectCommand}" FontWeight="Bold" FontSize="14" Padding="5"  Margin="5,5,5,2"/>
-                        <Button Content="Открыть проект" Command="{Binding LoadProjectCommand}" FontWeight="Bold" FontSize="14" Padding="5" Margin="5,5,5,2" />
-
-                    </StackPanel>
-                </Grid>
+                <controls:ProcessesIndicationControl Grid.Row="1"/>
 
                 <Expander Grid.Column="2" Grid.RowSpan="2" ExpandDirection="Left" IsExpanded="True">
                     <TabControl Grid.IsSharedSizeScope="True" >
