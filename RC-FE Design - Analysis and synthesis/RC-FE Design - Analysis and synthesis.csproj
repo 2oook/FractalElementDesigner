@@ -89,6 +89,7 @@
     <Compile Include="Controls\ProcessesIndicationControl.xaml.cs">
       <DependentUpon>ProcessesIndicationControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Selectors\ProjectTreeItemStyleSelector .cs" />
     <Compile Include="Controls\StructureEditorControl.xaml.cs">
       <DependentUpon>StructureEditorControl.xaml</DependentUpon>
     </Compile>
@@ -117,6 +118,8 @@
     <Compile Include="IO\ProjectSaveModel\SavingRCStructureBase.cs" />
     <Compile Include="IO\ProjectSaveModel\SavingStructureCellBase.cs" />
     <Compile Include="IO\ProjectSaver.cs" />
+    <Compile Include="MathModel\FElementScheme.cs" />
+    <Compile Include="MathModel\SchemeSynthesizer.cs" />
     <Compile Include="Navigation\Interfaces\IPageResolver.cs" />
     <Compile Include="Navigation\Interfaces\IPageViewModel.cs" />
     <Compile Include="Navigation\Interfaces\IViewModelsResolver.cs" />
@@ -311,7 +314,6 @@
   <ItemGroup>
     <Folder Include="FEEditor\Model\Structures\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="MathModel\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\button0.png" />

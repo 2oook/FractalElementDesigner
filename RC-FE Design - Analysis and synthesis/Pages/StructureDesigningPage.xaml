@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:controls="clr-namespace:RC_FE_Design___Analysis_and_synthesis.Controls"
+        xmlns:selectors="clr-namespace:RC_FE_Design___Analysis_and_synthesis.Controls.Selectors"
         xmlns:commands="clr-namespace:RC_FE_Design___Analysis_and_synthesis.Commands"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro" 
@@ -67,7 +68,7 @@
                 <controls:ProcessesIndicationControl Grid.Row="1"/>
 
                 <Expander Grid.Column="2" Grid.RowSpan="2" ExpandDirection="Left" IsExpanded="True">
-                    <TabControl Grid.IsSharedSizeScope="True" >
+                    <TabControl IsEnabled="{Binding Path=IsProjectTreeEnabled}" Grid.IsSharedSizeScope="True" >
                         <TabItem Header="Проект" mah:ControlsHelper.HeaderFontSize="16">
                             <ScrollViewer VerticalScrollBarVisibility="Auto">
                                 <Grid>
@@ -76,30 +77,45 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TreeView ItemsSource="{Binding Path=Projects}">
+                                        
+                                        <TreeView.Resources>
+
+                                            <HierarchicalDataTemplate x:Key="FElementSchemeStyle">
+                                                <!--схема-->
+                                                <TextBlock Text="{Binding Path=Name}"/>
+                                            </HierarchicalDataTemplate>
+
+                                            <HierarchicalDataTemplate x:Key="FElementStructureStyle" ItemsSource="{Binding Path=StructureLayers}">
+                                                <!--структура-->
+                                                <TextBlock Text="{Binding Path=Name}"/>
+                                                <HierarchicalDataTemplate.ItemTemplate>
+                                                    <HierarchicalDataTemplate>
+                                                        <!--слой-->
+                                                        <TextBlock Text="{Binding Path=Name}"/>
+                                                    </HierarchicalDataTemplate>
+                                                </HierarchicalDataTemplate.ItemTemplate>
+                                            </HierarchicalDataTemplate>
+                                            
+                                        </TreeView.Resources>
+                                        
                                         <e:Interaction.Behaviors>
                                             <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding SelectedProjectTreeItem, Mode=TwoWay}" />
                                         </e:Interaction.Behaviors>
+                                        
                                         <TreeView.ItemContainerStyle>
                                             <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
                                                 <Setter Property="IsExpanded" Value="True"/>
                                             </Style>
                                         </TreeView.ItemContainerStyle>
+                                        
                                         <TreeView.ItemTemplate>
-                                            <HierarchicalDataTemplate ItemsSource="{Binding Path=Structures}">
+                                            <HierarchicalDataTemplate ItemsSource="{Binding Path=Items}">
                                                 <!--проект-->
                                                 <TextBlock Text="{Binding Path=Name}"/>
-                                                <HierarchicalDataTemplate.ItemTemplate>
-                                                    <HierarchicalDataTemplate ItemsSource="{Binding Path=StructureLayers}">
-                                                        <!--структура-->
-                                                        <TextBlock Text="{Binding Path=Name}"/>
-                                                        <HierarchicalDataTemplate.ItemTemplate>
-                                                            <HierarchicalDataTemplate>
-                                                                <!--слой-->
-                                                                <TextBlock Text="{Binding Path=Name}"/>
-                                                            </HierarchicalDataTemplate>
-                                                        </HierarchicalDataTemplate.ItemTemplate>
-                                                    </HierarchicalDataTemplate>
-                                                </HierarchicalDataTemplate.ItemTemplate>
+                                                <HierarchicalDataTemplate.ItemTemplateSelector>
+                                                    <selectors:ProjectTreeItemStyleSelector FElementSchemeDataTemplate="{StaticResource ResourceKey=FElementSchemeStyle}"
+                                                                                            FElementStructureDataTemplate="{StaticResource ResourceKey=FElementStructureStyle}"/>
+                                                </HierarchicalDataTemplate.ItemTemplateSelector>
                                             </HierarchicalDataTemplate>
                                         </TreeView.ItemTemplate>
                                     </TreeView>

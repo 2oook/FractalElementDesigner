@@ -20,6 +20,11 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using RC_FE_Design___Analysis_and_synthesis.IO;
 using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views;
+using RC_FE_Design___Analysis_and_synthesis.MathModel;
+using System.Threading.Tasks;
+using RC_FE_Design___Analysis_and_synthesis.StructureSchemeSynthesis;
+using System.Windows.Threading;
+using GalaSoft.MvvmLight.Threading;
 
 namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 {
@@ -31,6 +36,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         public StructureDesigningPageViewModel()
         {
             InitializeCommands();
+
+            SchemeSynthesizer.OnDoWork += OnDoWork;
+            SchemeSynthesizer.OnStateChange += OnProgressStateChange;
 
             EditorTools = new Dictionary<string, Tool>()
             {
@@ -280,6 +288,34 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             }
         }
 
+        private double progressBarValue;
+        /// <summary>
+        /// Значение строки прогресса
+        /// </summary>
+        public double ProgressBarValue
+        {
+            get { return progressBarValue; }
+            set 
+            { 
+                progressBarValue = value;
+                RaisePropertyChanged(nameof(ProgressBarValue));
+            }
+        }
+
+        private string progressState = string.Empty;
+        /// <summary>
+        /// Статус прогресса
+        /// </summary>
+        public string ProgressState
+        {
+            get { return progressState; }
+            set
+            {
+                progressState = value;
+                RaisePropertyChanged(nameof(ProgressState));
+            }
+        }
+
         private Visibility structureEeditorVisibility = Visibility.Hidden;
         /// <summary>
         /// Видимость редактора структуры
@@ -313,6 +349,21 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 RaisePropertyChanged(nameof(HomePageVisibility));
             }
         }
+
+        private bool isProjectTreeEnabled = true;
+        /// <summary>
+        /// Разрешено ли манипулирование с деревом проекта 
+        /// </summary>
+        public bool IsProjectTreeEnabled
+        {
+            get { return isProjectTreeEnabled; }
+            set 
+            { 
+                isProjectTreeEnabled = value;
+                RaisePropertyChanged(nameof(IsProjectTreeEnabled));
+            }
+        }
+
 
         /// <summary>
         /// Ссылка на страницу
@@ -379,6 +430,28 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// Команда для перемещения на главную страницу 
         /// </summary>
         public ICommand GoToMainPageCommand { get; set; }
+
+        #endregion
+
+        #region Обработчики событий
+
+        /// <summary>
+        /// Обработчик выполнения части работы
+        /// </summary>
+        /// <param name="value">Процент выполнения</param>
+        private void OnDoWork(double value)
+        {
+            ProgressBarValue = value;
+        }
+
+        /// <summary>
+        /// Обработчик изменения статуса выполнения процесса
+        /// </summary>
+        /// <param name="state">Статус выполнения</param>
+        private void OnProgressStateChange(string state)
+        {
+            ProgressState = state;
+        }
 
         #endregion
 
@@ -584,11 +657,42 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                 Projects.Add(project);
 
+                StartSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
+        }
+
+        // Метод для запуска синтеза асинхронно
+        private async void StartSynthesisAsync(StructureSchemeSynthesisParameters structureSchemeSynthesisParametersInstance) 
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    IsProjectTreeEnabled = false;
+
+                    // синтезировать схему
+                    var scheme = SchemeSynthesizer.Synthesize(structureSchemeSynthesisParametersInstance);
+
+                    DispatcherHelper.CheckBeginInvokeOnUI(() => 
+                    {
+                        SelectedProject.Items.Add(scheme);
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+
+                    _dialogCoordinator.ShowMessageAsync(this, "", "Ошибка синтеза" + Environment.NewLine + ex.Message);
+                }
+                finally 
+                {
+                    IsProjectTreeEnabled = true;
+                }   
+            });
         }
 
         private void CreateNewStructureProject()
