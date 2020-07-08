@@ -12,6 +12,9 @@ using System.Windows.Input;
 
 namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 {
+    /// <summary>
+    /// ViewModel окна ввода параметров синтеза
+    /// </summary>
     public class StructureSchemeSynthesisParametersWindowViewModel : ViewModelBase
     {
         public StructureSchemeSynthesisParametersWindowViewModel(StructureSchemeSynthesisParametersWindow structureSchemeSynthesisParametersWindow)
@@ -29,7 +32,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         #region Свойства
 
         private StructureSchemeSynthesisParameters structureSchemeSynthesisParametersInstance = new StructureSchemeSynthesisParameters();
-
+        /// <summary>
+        /// Объект параметров синтеза
+        /// </summary>
         public StructureSchemeSynthesisParameters StructureSchemeSynthesisParametersInstance
         {
             get { return structureSchemeSynthesisParametersInstance; }
@@ -74,7 +79,15 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         {
             try
             {
-                _StructureSchemeSynthesisParametersWindow.AcceptUserInput();
+                // если нет ошибок принимаем ввод пользователя
+                if (StructureSchemeSynthesisParametersInstance.Error == null)
+                {
+                    _StructureSchemeSynthesisParametersWindow.AcceptUserInput();
+                }
+                else
+                {
+                    _StructureSchemeSynthesisParametersWindow.ShowValidationError();
+                }
             }
             catch (Exception ex)
             {

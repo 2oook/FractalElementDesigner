@@ -78,11 +78,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.StructureSchemeSynthesis
         /// </summary>
         private static readonly Regex _exponentNumberRegex = new Regex("^[-+]?[0-9]*[/^]?[0-9]+$");
 
+        private Dictionary<string, string> errorCollection = new Dictionary<string, string>();
+
+        // Индексатор ошибки валидации
         public string this[string columnName]
         {
             get
             {
-                string error = String.Empty;
+                string error = null;
 
                 switch (columnName)
                 {
@@ -142,13 +145,32 @@ namespace RC_FE_Design___Analysis_and_synthesis.StructureSchemeSynthesis
                         break;
                 }
 
+                if (error != null && !errorCollection.ContainsKey(columnName))
+                    errorCollection.Add(columnName, error);
+                if (error == null && errorCollection.ContainsKey(columnName))
+                    errorCollection.Remove(columnName);
+
                 return error;
             }
         }
 
+        /// <summary>
+        /// Общая ошибка валидации ввода
+        /// </summary>
         public string Error
         {
-            get { return "Некорректный ввод"; }
+            get 
+            {
+                if (errorCollection.Count == 0)
+                    return null;
+
+                StringBuilder errorList = new StringBuilder();
+                var errorMessages = errorCollection.Values.GetEnumerator();
+                while (errorMessages.MoveNext())
+                    errorList.AppendLine(errorMessages.Current);
+
+                return errorList.ToString();
+            }
         }
     }
 }
