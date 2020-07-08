@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +12,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Model
     /// <summary>
     /// Базовый класс структуры 
     /// </summary>
-    public class RCStructureBase : ViewModelBase
+    public class RCStructureBase : ViewModelBase, IProjectTreeItem
     {
         /// <summary>
         /// Порядковый номер структуры

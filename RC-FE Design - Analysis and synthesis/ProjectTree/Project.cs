@@ -1,4 +1,5 @@
 ﻿using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
+using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
+namespace RC_FE_Design___Analysis_and_synthesis
 {
     /// <summary>
     /// Проект
     /// </summary>
-    public class Project
+    public class Project : IProjectTreeItem
     {
         private string name;
         /// <summary>
@@ -23,14 +24,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
             set { name = value; }
         }
 
-        private ObservableCollection<RCStructureBase> structures = new ObservableCollection<RCStructureBase>();
+        private ObservableCollection<IProjectTreeItem> items = new ObservableCollection<IProjectTreeItem>();
         /// <summary>
-        /// Список структур проекта
+        /// Список элементов дерева проекта
         /// </summary>
-        public ObservableCollection<RCStructureBase> Structures 
-        { 
-            get => structures; 
-            set => structures = value; 
+        public ObservableCollection<IProjectTreeItem> Items
+        {
+            get => items;
+            set => items = value;
         }
     }
 }

@@ -148,6 +148,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 }
             };
 
+            HomePageVisibility = Visibility.Visible;
         }
 
         public StructureDesigningPageViewModel(IDialogCoordinator dialogCoordinator) : this()
@@ -279,20 +280,37 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             }
         }
 
-        private Visibility editorVisibility = Visibility.Hidden;
+        private Visibility structureEeditorVisibility = Visibility.Hidden;
         /// <summary>
-        /// Видимость редактора
+        /// Видимость редактора структуры
         /// </summary>
-        public Visibility EditorVisibility
+        public Visibility StructureEditorVisibility
         {
             get
             {
-                return editorVisibility;
+                return structureEeditorVisibility;
             }
             set
             {
-                editorVisibility = value;
-                RaisePropertyChanged(nameof(EditorVisibility));
+                structureEeditorVisibility = value;
+                RaisePropertyChanged(nameof(StructureEditorVisibility));
+            }
+        }
+
+        private Visibility homePageVisibility = Visibility.Hidden;
+        /// <summary>
+        /// Видимость домашней страницы
+        /// </summary>
+        public Visibility HomePageVisibility
+        {
+            get
+            {
+                return homePageVisibility;
+            }
+            set
+            {
+                homePageVisibility = value;
+                RaisePropertyChanged(nameof(HomePageVisibility));
             }
         }
 
@@ -489,7 +507,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                     Projects.Add(project);
 
-                    foreach (var structure in project.Structures)
+                    var _structures = project.Items.Where(x => x is RCStructureBase).Select(x => x as RCStructureBase).ToList();
+
+                    foreach (var structure in _structures)
                     {
                         foreach (var layer in structure.StructureLayers)
                         {
@@ -503,12 +523,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     }
 
                     // показать область проектирования, если она скрыта
-                    if (EditorVisibility != Visibility.Visible)
+                    if (StructureEditorVisibility != Visibility.Visible)
                     {
-                        EditorVisibility = Visibility.Visible;
+                        StructureEditorVisibility = Visibility.Visible;
                     }
 
-                    _Page.FEControl.Editor = project.Structures.First().StructureLayers.First().Editor;
+                    //_Page.FEControl.Editor = project.Structures.First().StructureLayers.First().Editor;
 
                     _Page.FEControl.ZoomToFit();
                 }
@@ -552,11 +572,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     }
                 }
 
-                // ??????????????????????????????????????????
-                // показать область проектирования, если она скрыта
-                if (EditorVisibility != Visibility.Visible)
+                if (HomePageVisibility == Visibility.Visible)
                 {
-                    EditorVisibility = Visibility.Visible;
+                    HomePageVisibility = Visibility.Hidden;
                 }
 
                 // создать проект
@@ -599,9 +617,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 }
 
                 // показать область проектирования, если она скрыта
-                if (EditorVisibility != Visibility.Visible)
+                if (StructureEditorVisibility != Visibility.Visible)
                 {
-                    EditorVisibility = Visibility.Visible;
+                    StructureEditorVisibility = Visibility.Visible;
                 }
 
                 // создать проект
@@ -611,7 +629,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                 var newStructure = InitializeStructure(newStructureWindowViewModel.CurrentStructure);
 
-                project.Structures.Add(newStructure);
+                project.Items.Add(newStructure);
 
                 Projects.Add(project);
 

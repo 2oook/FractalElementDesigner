@@ -126,7 +126,8 @@
     <Compile Include="Pages\SynthesisPage.xaml.cs">
       <DependentUpon>SynthesisPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FEEditor\Model\Project.cs" />
+    <Compile Include="ProjectTree\IProjectTreeItem.cs" />
+    <Compile Include="ProjectTree\Project.cs" />
     <Compile Include="FEEditor\Model\Layer.cs" />
     <Compile Include="FEEditor\Model\RCStructure.cs" />
     <Compile Include="FEEditor\Model\RCStructureBase.cs" />

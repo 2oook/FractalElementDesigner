@@ -9,6 +9,7 @@ using RC_FE_Design___Analysis_and_synthesis.FEEditor;
 using System.Collections.ObjectModel;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
 using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
+using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
 
 namespace RC_FE_Design___Analysis_and_synthesis.IO
 {
@@ -18,7 +19,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.IO
         {
             var structures = new ObservableCollection<SavingRCStructureBase>();
 
-            foreach (var structure in project.Structures)
+            var _structures = project.Items.Where(x => x is RCStructureBase).Select(x => x as RCStructureBase).ToList();
+
+            foreach (var structure in _structures)
             {
                 var structureLayers = new ObservableCollection<SavingLayer>();
 
@@ -64,7 +67,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.IO
 
         public static Project ConvertBack(SavingProject savingProject) 
         {
-            var structures = new ObservableCollection<RCStructureBase>();
+            var structures = new ObservableCollection<IProjectTreeItem>();
 
             foreach (var structure in savingProject.Structures)
             {
@@ -104,7 +107,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.IO
             var project = new Project()
             {
                 Name = savingProject.Name,
-                Structures = structures
+                Items = structures
             };
 
             return project;

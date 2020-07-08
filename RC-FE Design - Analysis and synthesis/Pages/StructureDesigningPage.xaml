@@ -65,7 +65,7 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Grid x:Name="canvasContainer" Visibility="{Binding EditorVisibility}" Margin="5,0,5,0">
+                <Grid x:Name="canvasContainer" Visibility="{Binding StructureEditorVisibility, TargetNullValue=Hidden}" Margin="5,0,5,0">
 
                     <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
                         <DockPanel>
@@ -94,7 +94,7 @@
 
                 </Grid>
 
-                <Grid>
+                <Grid Visibility="{Binding Path=HomePageVisibility}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="auto"/>
@@ -112,20 +112,6 @@
                         <Button Content="Открыть проект" Command="{Binding LoadProjectCommand}" FontWeight="Bold" FontSize="14" Padding="5" Margin="5,5,5,2" />
 
                     </StackPanel>
-
-                    <Grid.Style>
-                        <Style TargetType="Grid">
-                            <Style.Triggers>
-                                <DataTrigger  Binding="{Binding ElementName=canvasContainer, Path=Visibility}" Value="Collapsed" >
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                                <DataTrigger  Binding="{Binding ElementName=canvasContainer, Path=Visibility}" Value="Visible" >
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Grid.Style>
-
                 </Grid>
 
                 <Expander Grid.Column="2" Grid.RowSpan="2" ExpandDirection="Left" IsExpanded="True">
