@@ -49,5 +49,29 @@ namespace RC_FE_Design___Analysis_and_synthesis.Pages
                 }
             }            
         }
+
+        /// <summary>
+        /// Обработчик нажатия правой клавиши мыши для элемента дерева проекта
+        /// </summary>
+        /// <param name="sender">Объект отправитель</param>
+        /// <param name="e">Параметры события</param>
+        private void OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TreeViewItem treeViewItem = VisualUpwardSearch(e.OriginalSource as DependencyObject);
+
+            if (treeViewItem != null)
+            {
+                treeViewItem.Focus();
+                e.Handled = true;
+            }
+        }
+
+        static TreeViewItem VisualUpwardSearch(DependencyObject source)
+        {
+            while (source != null && !(source is TreeViewItem))
+                source = VisualTreeHelper.GetParent(source);
+
+            return source as TreeViewItem;
+        }
     }
 }

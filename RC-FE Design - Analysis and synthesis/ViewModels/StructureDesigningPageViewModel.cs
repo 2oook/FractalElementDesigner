@@ -184,19 +184,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             get { return selectedProjectTreeItem; }
             set 
             {
-                if (value is Project project)
-                {
-                    SelectedProject = project;
-                }
-                else if (value is RCStructure structure)
-                {
-                    SelectedStructure = structure;
-                }
-                else if (value is Layer layer)
-                {
-                    SelectedLayer = layer;
-                }
-
                 selectedProjectTreeItem = value;
                 RaisePropertyChanged(nameof(SelectedProjectTreeItem));
             }

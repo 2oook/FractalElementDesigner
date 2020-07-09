@@ -47,6 +47,7 @@
                 <Button DockPanel.Dock="Left" HorizontalAlignment="Left" Content="На главную" Command="{Binding GoToMainPageCommand}" Padding="5"  Margin="5" FontSize="14"/>
                 <Button DockPanel.Dock="Left" HorizontalAlignment="Left" Content="Редактор схем"  Command="{x:Static commands:StaticCommandContainer.GoToSchemeEditorPageCommand}" Padding="5"  Margin="5" FontSize="14"/>
                 <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Пересчитать"  Padding="5"  Margin="5" FontSize="14"/>
+                <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Синтез"  Command="{Binding SchemeSynthesisCommand}" Padding="5"  Margin="5" FontSize="14"/>
             </DockPanel>
 
             <Grid Grid.Row="1">
@@ -80,21 +81,25 @@
 
                                         <TreeView.Resources>
 
+                                            <Style x:Key="treeViewItemBaseStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                                                <Setter Property="IsExpanded" Value="True"/>
+                                                <EventSetter Event="PreviewMouseRightButtonDown" Handler="OnPreviewMouseRightButtonDown"/>
+                                            </Style>
+
                                             <ContextMenu x:Key="projectTreeFElementSchemeContextMenu">
-                                                <MenuItem Header="Синтез" Command="{Binding Path=SchemeSynthesisCommand}"/>
+                                                <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Синтез" Command="{Binding Path=SchemeSynthesisCommand}"/>
                                             </ContextMenu>
 
-                                            <Style x:Key="projectTreeFElementSchemeStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
-                                                <Setter Property="IsExpanded" Value="True"/>
+                                            <Style x:Key="projectTreeFElementSchemeStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
                                                 <Setter Property="ContextMenu" Value="{StaticResource projectTreeFElementSchemeContextMenu}"/>
                                             </Style>
 
-                                            <Style x:Key="projectTreeFElementStructureStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
-                                                <Setter Property="IsExpanded" Value="True"/>
+                                            <Style x:Key="projectTreeFElementStructureStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
+
                                             </Style>
 
-                                            <Style x:Key="projectTreeDefaultStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
-                                                <Setter Property="IsExpanded" Value="True"/>
+                                            <Style x:Key="projectTreeDefaultStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
+
                                             </Style>
 
                                             <HierarchicalDataTemplate x:Key="FElementSchemeDataTemplate">
@@ -114,7 +119,7 @@
                                             </HierarchicalDataTemplate>
 
                                         </TreeView.Resources>
-                                        
+
                                         <e:Interaction.Behaviors>
                                             <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding SelectedProjectTreeItem, Mode=TwoWay}" />
                                         </e:Interaction.Behaviors>
