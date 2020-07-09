@@ -89,7 +89,8 @@
     <Compile Include="Controls\ProcessesIndicationControl.xaml.cs">
       <DependentUpon>ProcessesIndicationControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Selectors\ProjectTreeItemStyleSelector .cs" />
+    <Compile Include="Controls\Selectors\ProjectTreeItemDataTemplateSelector.cs" />
+    <Compile Include="Controls\Selectors\ProjectTreeItemStyleSelector.cs" />
     <Compile Include="Controls\StructureEditorControl.xaml.cs">
       <DependentUpon>StructureEditorControl.xaml</DependentUpon>
     </Compile>

@@ -425,6 +425,22 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             }
         }
 
+        private ICommand schemeSynthesisCommand;
+        /// <summary>
+        /// Команда для синтеза схемы
+        /// </summary>
+        public ICommand SchemeSynthesisCommand
+        {
+            get
+            {
+                return schemeSynthesisCommand;
+            }
+            set
+            {
+                schemeSynthesisCommand = value;
+                RaisePropertyChanged(nameof(SchemeSynthesisCommand));
+            }
+        }
 
         /// <summary>
         /// Команда для перемещения на главную страницу 
@@ -523,6 +539,22 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             NewProjectCommand = new RelayCommand(CreateNewProject);
             LoadProjectCommand = new RelayCommand(LoadProject);
             SaveProjectCommand = new RelayCommand(SaveProject);
+
+            SchemeSynthesisCommand = new RelayCommand(SchemeSynthesize, IsSchemeSynthesisPossible);
+        }
+
+        private bool IsSchemeSynthesisPossible() 
+        {
+            bool res = true;
+
+
+
+            return res;
+        }
+
+        private void SchemeSynthesize() 
+        {
+
         }
 
         // Метод для сохранения проекта

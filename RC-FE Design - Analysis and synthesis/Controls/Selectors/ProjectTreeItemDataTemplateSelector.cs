@@ -14,7 +14,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Controls.Selectors
     /// <summary>
     /// Селектор шаблона узла дерева проекта
     /// </summary>
-    public class ProjectTreeItemStyleSelector : DataTemplateSelector
+    public class ProjectTreeItemDataTemplateSelector : DataTemplateSelector
     {
         public DataTemplate FElementSchemeDataTemplate { get; set; }
         public DataTemplate FElementStructureDataTemplate { get; set; }

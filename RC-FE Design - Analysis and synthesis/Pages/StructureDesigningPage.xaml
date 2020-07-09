@@ -77,15 +77,32 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TreeView ItemsSource="{Binding Path=Projects}">
-                                        
+
                                         <TreeView.Resources>
 
-                                            <HierarchicalDataTemplate x:Key="FElementSchemeStyle">
+                                            <ContextMenu x:Key="projectTreeFElementSchemeContextMenu">
+                                                <MenuItem Header="Синтез" Command="{Binding Path=SchemeSynthesisCommand}"/>
+                                            </ContextMenu>
+
+                                            <Style x:Key="projectTreeFElementSchemeStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                                                <Setter Property="IsExpanded" Value="True"/>
+                                                <Setter Property="ContextMenu" Value="{StaticResource projectTreeFElementSchemeContextMenu}"/>
+                                            </Style>
+
+                                            <Style x:Key="projectTreeFElementStructureStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                                                <Setter Property="IsExpanded" Value="True"/>
+                                            </Style>
+
+                                            <Style x:Key="projectTreeDefaultStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                                                <Setter Property="IsExpanded" Value="True"/>
+                                            </Style>
+
+                                            <HierarchicalDataTemplate x:Key="FElementSchemeDataTemplate">
                                                 <!--схема-->
                                                 <TextBlock Text="{Binding Path=Name}"/>
                                             </HierarchicalDataTemplate>
 
-                                            <HierarchicalDataTemplate x:Key="FElementStructureStyle" ItemsSource="{Binding Path=StructureLayers}">
+                                            <HierarchicalDataTemplate x:Key="FElementStructureDataTemplate" ItemsSource="{Binding Path=StructureLayers}">
                                                 <!--структура-->
                                                 <TextBlock Text="{Binding Path=Name}"/>
                                                 <HierarchicalDataTemplate.ItemTemplate>
@@ -95,26 +112,26 @@
                                                     </HierarchicalDataTemplate>
                                                 </HierarchicalDataTemplate.ItemTemplate>
                                             </HierarchicalDataTemplate>
-                                            
+
                                         </TreeView.Resources>
                                         
                                         <e:Interaction.Behaviors>
                                             <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding SelectedProjectTreeItem, Mode=TwoWay}" />
                                         </e:Interaction.Behaviors>
                                         
-                                        <TreeView.ItemContainerStyle>
-                                            <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
-                                                <Setter Property="IsExpanded" Value="True"/>
-                                            </Style>
-                                        </TreeView.ItemContainerStyle>
+                                        <TreeView.ItemContainerStyleSelector>
+                                            <selectors:ProjectTreeItemStyleSelector FElementSchemeStyle="{StaticResource ResourceKey=projectTreeFElementSchemeStyle}" 
+                                                                                    FElementStructureStyle ="{StaticResource ResourceKey=projectTreeFElementStructureStyle}"
+                                                                                    DefaultStyle="{StaticResource ResourceKey=projectTreeDefaultStyle}"/>
+                                        </TreeView.ItemContainerStyleSelector>
                                         
                                         <TreeView.ItemTemplate>
                                             <HierarchicalDataTemplate ItemsSource="{Binding Path=Items}">
                                                 <!--проект-->
                                                 <TextBlock Text="{Binding Path=Name}"/>
                                                 <HierarchicalDataTemplate.ItemTemplateSelector>
-                                                    <selectors:ProjectTreeItemStyleSelector FElementSchemeDataTemplate="{StaticResource ResourceKey=FElementSchemeStyle}"
-                                                                                            FElementStructureDataTemplate="{StaticResource ResourceKey=FElementStructureStyle}"/>
+                                                    <selectors:ProjectTreeItemDataTemplateSelector FElementSchemeDataTemplate="{StaticResource ResourceKey=FElementSchemeDataTemplate}"
+                                                                                            FElementStructureDataTemplate="{StaticResource ResourceKey=FElementStructureDataTemplate}"/>
                                                 </HierarchicalDataTemplate.ItemTemplateSelector>
                                             </HierarchicalDataTemplate>
                                         </TreeView.ItemTemplate>
