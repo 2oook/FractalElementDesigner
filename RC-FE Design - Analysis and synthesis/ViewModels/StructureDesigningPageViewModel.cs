@@ -256,6 +256,19 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             }
         }
 
+        private StructureSchemeSynthesisParameters currentStructureSchemeSynthesisParameters;
+
+        public StructureSchemeSynthesisParameters CurrentStructureSchemeSynthesisParameters
+        {
+            get { return currentStructureSchemeSynthesisParameters; }
+            set 
+            { 
+                currentStructureSchemeSynthesisParameters = value;
+                RaisePropertyChanged(nameof(CurrentStructureSchemeSynthesisParameters));
+            }
+        }
+
+
         /// <summary>
         /// Словарь инструментов для редактирования структуры
         /// </summary>
@@ -530,18 +543,54 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             SchemeSynthesisCommand = new RelayCommand(SchemeSynthesize, IsSchemeSynthesisPossible);
         }
 
+        /// <summary>
+        /// Метод определяющий возможность синтеза схемы
+        /// </summary>
+        /// <returns>Разрешающий флаг</returns>
         private bool IsSchemeSynthesisPossible() 
         {
-            bool res = true;
+            bool res = false;
 
-
+            if (SelectedProjectTreeItem is FElementScheme scheme)
+            {
+                res = true;
+            }
 
             return res;
         }
 
+        /// <summary>
+        /// Метод для запуска синтеща схемы
+        /// </summary>
         private void SchemeSynthesize() 
         {
+            if (SelectedProjectTreeItem is FElementScheme scheme)
+            {
+                // создать окно
+                var window = new StructureSchemeSynthesisParametersWindow();
+                // создать vm для окна 
+                var structureSchemeSynthesisParametersViewModel = new StructureSchemeSynthesisParametersWindowViewModel(window);
+                // вывести окно ввода параметров 
+                window.DataContext = structureSchemeSynthesisParametersViewModel;
+                var dialogResult = window.ShowDialog();
 
+                // если не было подтверждения выйти
+                if (dialogResult.HasValue == false)
+                {
+                    return;
+                }
+                else
+                {
+                    if (dialogResult.Value == false)
+                    {
+                        return;
+                    }
+                }
+
+                var project = Projects.SingleOrDefault(x => x.Items.Contains(scheme));
+
+                StartSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, scheme);
+            }
         }
 
         // Метод для сохранения проекта
@@ -672,11 +721,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 // создать проект
                 var project = new Project() { Name = "Проект №1" };
 
-                SelectedProject = project;
-
                 Projects.Add(project);
 
-                StartSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance);
+                StartSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, null);
             }
             catch (Exception ex)
             {
@@ -685,7 +732,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         }
 
         // Метод для запуска синтеза асинхронно
-        private async void StartSynthesisAsync(StructureSchemeSynthesisParameters structureSchemeSynthesisParametersInstance) 
+        private async void StartSynthesisAsync(StructureSchemeSynthesisParameters structureSchemeSynthesisParametersInstance, Project currentProject, FElementScheme currentScheme) 
         {
             await Task.Run(() =>
             {
@@ -694,12 +741,23 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     IsProjectTreeEnabled = false;
 
                     // синтезировать схему
-                    var scheme = SchemeSynthesizer.Synthesize(structureSchemeSynthesisParametersInstance);
+                    var synthesizedScheme = SchemeSynthesizer.Synthesize(structureSchemeSynthesisParametersInstance);
 
-                    DispatcherHelper.CheckBeginInvokeOnUI(() => 
+                    if (currentScheme != null)
                     {
-                        SelectedProject.Items.Add(scheme);
-                    });
+                        DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                        {
+                            currentProject.Items.Remove(currentScheme);
+                            currentProject.Items.Add(synthesizedScheme);
+                        });
+                    }
+                    else
+                    {
+                        DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                        {
+                            currentProject.Items.Add(synthesizedScheme);
+                        });
+                    }
                 }
                 catch (Exception ex)
                 {

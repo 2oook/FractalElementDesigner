@@ -35,7 +35,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             // для отладки
             for (int i = 0; i < 100; i++)
             {                
-                Thread.Sleep(1);
+                Thread.Sleep(10);
                 OnDoWork(i+1);
             }
             // для отладки
