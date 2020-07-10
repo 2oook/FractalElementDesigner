@@ -89,6 +89,9 @@
     <Compile Include="Controls\ProcessesIndicationControl.xaml.cs">
       <DependentUpon>ProcessesIndicationControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SchemeEditorControl.xaml.cs">
+      <DependentUpon>SchemeEditorControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Selectors\ProjectTreeItemDataTemplateSelector.cs" />
     <Compile Include="Controls\Selectors\ProjectTreeItemStyleSelector.cs" />
     <Compile Include="Controls\StructureEditorControl.xaml.cs">
@@ -209,6 +212,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ProcessesIndicationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SchemeEditorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

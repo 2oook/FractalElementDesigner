@@ -24,18 +24,20 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         public static event Action<string> OnStateChange;
 
         // Метод для синтезирования схемы включения элемента
-        public static FElementScheme Synthesize(StructureSchemeSynthesisParameters synthesisParameters) 
+        public static bool Synthesize(FElementScheme scheme, StructureSchemeSynthesisParameters synthesisParameters) 
         {
-            var scheme = new FElementScheme() { Name = "Схема включения" };
+            bool result = true;
 
             OnStateChange("Выполнение синтеза");
+
+            scheme.ClearState();
 
             // для отладки
             // для отладки
             // для отладки
             for (int i = 0; i < 100; i++)
             {                
-                Thread.Sleep(10);
+                Thread.Sleep(50);
                 OnDoWork(i+1);
             }
             // для отладки
@@ -44,7 +46,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
             OnStateChange("");
 
-            return scheme;
+            return result;
         }
     }
 }

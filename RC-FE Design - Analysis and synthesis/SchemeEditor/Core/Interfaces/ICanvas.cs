@@ -7,8 +7,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core
 {
     public interface ICanvas : IData, IUid, ITag, ISelected
     {
-        Action<IElement> ElementAdded { get; set; }
-
         IEnumerable<IElement> GetElements();
 
         void Add(IElement element);

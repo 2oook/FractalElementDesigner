@@ -184,6 +184,26 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             get { return selectedProjectTreeItem; }
             set 
             {
+                InvalidateAllVisualViewers();
+
+                if (value is Project project)
+                {
+                    
+                }
+                else if (value is FElementScheme scheme)
+                {
+                    SchemeEditorVisibility = Visibility.Visible;
+                }
+                else if (value is RCStructure structure)
+                {
+                    StructureEditorVisibility = Visibility.Visible;
+                }
+                else if (value is Layer layer)
+                {
+                    StructureEditorVisibility = Visibility.Visible;
+                    _Page.structureEditorControl.FEControl.Editor = layer.Editor;
+                }
+
                 selectedProjectTreeItem = value;
                 RaisePropertyChanged(nameof(SelectedProjectTreeItem));
             }
@@ -333,6 +353,23 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             }
         }
 
+        private Visibility schemeEditorVisibility = Visibility.Hidden;
+        /// <summary>
+        /// Видимость редактора схем
+        /// </summary>
+        public Visibility SchemeEditorVisibility
+        {
+            get
+            {
+                return schemeEditorVisibility;
+            }
+            set
+            {
+                schemeEditorVisibility = value;
+                RaisePropertyChanged(nameof(SchemeEditorVisibility));
+            }
+        }
+
         private Visibility homePageVisibility = Visibility.Hidden;
         /// <summary>
         /// Видимость домашней страницы
@@ -473,6 +510,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
         #region Методы
 
+        private void InvalidateAllVisualViewers() 
+        {
+            HomePageVisibility = Visibility.Hidden;
+            SchemeEditorVisibility = Visibility.Hidden;
+            StructureEditorVisibility = Visibility.Hidden;
+        }
+
         // метод для проверки возможности применения инструмента к ячейке
         private bool CheckToolApplyPossibility(Tool tool, StructureCellBase cell) 
         {
@@ -549,18 +593,26 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// <returns>Разрешающий флаг</returns>
         private bool IsSchemeSynthesisPossible() 
         {
-            bool res = false;
-
             if (SelectedProjectTreeItem is FElementScheme scheme)
             {
-                res = true;
+                if (scheme.IsLocked)
+                {
+                    return false;
+                }
+
+                var project = Projects.SingleOrDefault(x => x.Items.Contains(scheme));
+
+                if (project.Items.Count == 1)
+                {
+                    return true;
+                }              
             }
 
-            return res;
+            return false;
         }
 
         /// <summary>
-        /// Метод для запуска синтеща схемы
+        /// Метод для запуска синтеза схемы
         /// </summary>
         private void SchemeSynthesize() 
         {
@@ -721,9 +773,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 // создать проект
                 var project = new Project() { Name = "Проект №1" };
 
+                var scheme = new FElementScheme() { Name = "Схема включения" };
+
+                project.Items.Add(scheme);
+
                 Projects.Add(project);
 
-                StartSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, null);
+                StartSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, scheme);
             }
             catch (Exception ex)
             {
@@ -732,32 +788,16 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         }
 
         // Метод для запуска синтеза асинхронно
-        private async void StartSynthesisAsync(StructureSchemeSynthesisParameters structureSchemeSynthesisParametersInstance, Project currentProject, FElementScheme currentScheme) 
+        private async void StartSynthesisAsync(StructureSchemeSynthesisParameters structureSchemeSynthesisParametersInstance, Project currentProject, FElementScheme scheme) 
         {
             await Task.Run(() =>
             {
                 try
                 {
-                    IsProjectTreeEnabled = false;
+                    scheme.IsLocked = true;
 
                     // синтезировать схему
-                    var synthesizedScheme = SchemeSynthesizer.Synthesize(structureSchemeSynthesisParametersInstance);
-
-                    if (currentScheme != null)
-                    {
-                        DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                        {
-                            currentProject.Items.Remove(currentScheme);
-                            currentProject.Items.Add(synthesizedScheme);
-                        });
-                    }
-                    else
-                    {
-                        DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                        {
-                            currentProject.Items.Add(synthesizedScheme);
-                        });
-                    }
+                    SchemeSynthesizer.Synthesize(scheme, structureSchemeSynthesisParametersInstance);
                 }
                 catch (Exception ex)
                 {
@@ -767,8 +807,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 }
                 finally 
                 {
-                    IsProjectTreeEnabled = true;
-                }   
+                    scheme.IsLocked = false;
+                }    
             });
         }
 

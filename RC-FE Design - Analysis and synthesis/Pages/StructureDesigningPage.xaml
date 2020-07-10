@@ -66,6 +66,8 @@
 
                 <controls:HomePageControl Visibility="{Binding Path=HomePageVisibility}"/>
 
+                <controls:SchemeEditorControl Visibility="{Binding Path=SchemeEditorVisibility}"/>
+
                 <controls:ProcessesIndicationControl Grid.Row="1"/>
 
                 <Expander Grid.Column="2" Grid.RowSpan="2" ExpandDirection="Left" IsExpanded="True">

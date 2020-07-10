@@ -48,10 +48,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             {
                 currentCanvas = value;
 
-                if (currentCanvas.ElementAdded == null)
-                {
-                    currentCanvas.ElementAdded = ElementAddedHandler;
-                }
+                //if (currentCanvas.ElementAdded == null)
+                //{
+                //    currentCanvas.ElementAdded = ElementAddedHandler;
+                //}
             }
         }
 

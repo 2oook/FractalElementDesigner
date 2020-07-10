@@ -12,6 +12,22 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     /// </summary>
     public class FElementScheme : IProjectTreeItem
     {
+        /// <summary>
+        /// Название
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Заблокирована ли схема
+        /// </summary>
+        public bool IsLocked { get; set; } = false;
+
+        // Метод для очистки состояния схемы 
+        public bool ClearState() 
+        {
+            bool result = true;
+
+            return result;
+        }
     }
 }
