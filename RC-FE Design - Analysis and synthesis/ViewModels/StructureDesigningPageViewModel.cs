@@ -39,6 +39,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
             SchemeSynthesizer.OnDoWork += OnDoWork;
             SchemeSynthesizer.OnStateChange += OnProgressStateChange;
+            StructureCreator.OnDoWork += OnDoWork;
+            StructureCreator.OnStateChange += OnProgressStateChange;
 
             EditorTools = new Dictionary<string, Tool>()
             {
@@ -185,24 +187,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             set 
             {
                 InvalidateAllVisualViewers();
-
-                if (value is Project project)
-                {
-                    
-                }
-                else if (value is FElementScheme scheme)
-                {
-                    SchemeEditorVisibility = Visibility.Visible;
-                }
-                else if (value is RCStructure structure)
-                {
-                    StructureEditorVisibility = Visibility.Visible;
-                }
-                else if (value is Layer layer)
-                {
-                    StructureEditorVisibility = Visibility.Visible;
-                    _Page.structureEditorControl.FEControl.Editor = layer.Editor;
-                }
+                SetChosenProjectTreeItemEnvironment(value);
 
                 selectedProjectTreeItem = value;
                 RaisePropertyChanged(nameof(SelectedProjectTreeItem));
@@ -479,6 +464,23 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             }
         }
 
+        private ICommand сreateStructureCommand;
+        /// <summary>
+        /// Команда для создания конструкции элемента
+        /// </summary>
+        public ICommand CreateStructureCommand
+        {
+            get
+            {
+                return сreateStructureCommand;
+            }
+            set
+            {
+                сreateStructureCommand = value;
+                RaisePropertyChanged(nameof(CreateStructureCommand));
+            }
+        }
+        
         /// <summary>
         /// Команда для перемещения на главную страницу 
         /// </summary>
@@ -515,6 +517,27 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             HomePageVisibility = Visibility.Hidden;
             SchemeEditorVisibility = Visibility.Hidden;
             StructureEditorVisibility = Visibility.Hidden;
+        }
+
+        private void SetChosenProjectTreeItemEnvironment(object value) 
+        {
+            if (value is Project project)
+            {
+
+            }
+            else if (value is FElementScheme scheme)
+            {
+                SchemeEditorVisibility = Visibility.Visible;
+            }
+            else if (value is RCStructure structure)
+            {
+                StructureEditorVisibility = Visibility.Visible;
+            }
+            else if (value is Layer layer)
+            {
+                StructureEditorVisibility = Visibility.Visible;
+                _Page.structureEditorControl.FEControl.Editor = layer.Editor;
+            }
         }
 
         // метод для проверки возможности применения инструмента к ячейке
@@ -585,6 +608,63 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             SaveProjectCommand = new RelayCommand(SaveProject);
 
             SchemeSynthesisCommand = new RelayCommand(SchemeSynthesize, IsSchemeSynthesisPossible);
+            CreateStructureCommand = new RelayCommand(CreateStructure, IsStructureCreatingPossible);
+        }
+
+        /// <summary>
+        /// Метод определяющий возможность создания конструкции схемы
+        /// </summary>
+        /// <returns>Разрешающий флаг</returns>
+        private bool IsStructureCreatingPossible() 
+        {
+            if (SelectedProjectTreeItem is FElementScheme scheme)
+            {
+                if (scheme.IsLocked)
+                {
+                    return false;
+                }
+
+                var project = Projects.SingleOrDefault(x => x.Items.Contains(scheme));
+
+                if (project.Items.Count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        // Метод для создания конструкции
+        private void CreateStructure() 
+        {
+            if (SelectedProjectTreeItem is FElementScheme scheme) 
+            {
+                // создать окно
+                var window = new NewStructureWindow();
+                // создать vm для окна создания новой структуры
+                var newStructureWindowViewModel = new NewStructureWindowViewModel(window);
+                // вывести окно ввода параметров структуры
+                window.DataContext = newStructureWindowViewModel;
+                var dialogResult = window.ShowDialog();
+
+                // если не было подтверждения выйти
+                if (dialogResult.HasValue == false)
+                {
+                    return;
+                }
+                else
+                {
+                    if (dialogResult.Value == false)
+                    {
+                        return;
+                    }
+                }
+
+                var project = Projects.SingleOrDefault(x => x.Items.Contains(scheme));
+
+                CreateStructureAsync(project, scheme, newStructureWindowViewModel.CurrentStructure);
+            }
         }
 
         /// <summary>
@@ -787,6 +867,37 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             }
         }
 
+        // Метод для асинхронного создания конструкции элемента
+        private async void CreateStructureAsync(Project currentProject, FElementScheme scheme, RCStructure _structure) 
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    scheme.IsLocked = true;
+
+                    // создать конструкцию элемента
+                    var structure = StructureCreator.Create(scheme, _structure);
+
+                    DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                    {
+                        currentProject.Items.Add(structure);
+                        StructureCreator.InsertVisual(structure, _Page.structureEditorControl.FEControl);
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+
+                    _dialogCoordinator.ShowMessageAsync(this, "", "Ошибка создания конструкции" + Environment.NewLine + ex.Message);
+                }
+                finally
+                {
+                    scheme.IsLocked = false;
+                }
+            });
+        }
+
         // Метод для запуска синтеза асинхронно
         private async void StartSynthesisAsync(StructureSchemeSynthesisParameters structureSchemeSynthesisParametersInstance, Project currentProject, FElementScheme scheme) 
         {
@@ -848,7 +959,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                 SelectedProject = project;
 
-                var newStructure = InitializeStructure(newStructureWindowViewModel.CurrentStructure);
+                var newStructure = StructureCreator.InitializeStructure(newStructureWindowViewModel.CurrentStructure);
 
                 project.Items.Add(newStructure);
 
@@ -873,36 +984,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             {
                 Debug.WriteLine(ex.Message);
             }
-        }
-
-        // Метод для инициализации структуры
-        private RCStructure InitializeStructure(RCStructure structure)
-        {
-            // извлечь число ячеек по горизонтали структуры
-            structure.StructureProperties.TryGetValue("HorizontalCellsCount", out var horizontalStructureDimension);
-            var horizontalStructureDimensionValue = (int)horizontalStructureDimension.Value + 2;// +2 добавляется для учёта контактных площадок
-                                                                                                // извлечь число ячеек по вертикали структуры
-            structure.StructureProperties.TryGetValue("VerticalCellsCount", out var verticalStructureDimension);
-            var verticalStructureDimensionValue = (int)verticalStructureDimension.Value + 2;// +2 добавляется для учёта контактных площадок
-            // новая структура
-            var newStructure = structure;
-
-            foreach (var layer in newStructure.StructureLayers)
-            {
-                for (int r = 0; r < verticalStructureDimensionValue; r++)
-                {
-                    var row = new ObservableCollection<StructureCellBase>();
-
-                    for (int c = 0; c < horizontalStructureDimensionValue; c++)
-                    {
-                        row.Add(new StructureCellBase());
-                    }
-
-                    layer.StructureCells.Add(row);
-                }
-            }
-
-            return newStructure;
         }
 
         /// <summary>

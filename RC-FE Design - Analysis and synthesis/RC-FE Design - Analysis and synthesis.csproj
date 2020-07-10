@@ -124,6 +124,7 @@
     <Compile Include="IO\ProjectSaver.cs" />
     <Compile Include="MathModel\FElementScheme.cs" />
     <Compile Include="MathModel\SchemeSynthesizer.cs" />
+    <Compile Include="MathModel\StructureCreator.cs" />
     <Compile Include="Navigation\Interfaces\IPageResolver.cs" />
     <Compile Include="Navigation\Interfaces\IPageViewModel.cs" />
     <Compile Include="Navigation\Interfaces\IViewModelsResolver.cs" />
