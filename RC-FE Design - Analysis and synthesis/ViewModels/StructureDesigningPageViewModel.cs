@@ -853,7 +853,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 // создать проект
                 var project = new Project() { Name = "Проект №1" };
 
-                var scheme = new FElementScheme() { Name = "Схема включения" };
+                var scheme = new FElementScheme(4) { Name = "Схема включения" };
 
                 project.Items.Add(scheme);
 
