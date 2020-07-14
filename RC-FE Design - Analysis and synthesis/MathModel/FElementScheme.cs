@@ -22,6 +22,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// </summary>
         public static List<List<int[][]>> GroundMatrices_A;
 
+        /// <summary>
+        /// Статический конструктор
+        /// </summary>
         static FElementScheme()
         {
             IncidenceMatrices_E = new List<List<int[][]>>()
@@ -171,6 +174,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             };
         }
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="sectionCount">Число секций</param>
         public FElementScheme(int sectionCount)
         {
             for (int i = 0; i < sectionCount; i++)
@@ -179,7 +186,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             }
         }
 
+        /// <summary>
+        /// Секции ФРЭ
+        /// </summary>
         public List<FESection> FESections { get; set; } = new List<FESection>();
+
+        public PRPlot Plot { get; set; }
 
         /// <summary>
         /// Название

@@ -24,7 +24,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         public static event Action<string> OnStateChange;
 
         // Метод для синтезирования схемы включения элемента
-        public static bool Synthesize(FElementScheme scheme, StructureSchemeSynthesisParameters synthesisParameters) 
+        public static bool Synthesize(GeneticAlgorithm ga, FElementScheme scheme) 
         {
             bool result = true;
 
@@ -32,7 +32,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
             scheme.ClearState();
 
+            int n = scheme.FESections.Count;
 
+            for (int i = 0; i < n; i++)
+            {
+
+            }
 
             // для отладки
             // для отладки
