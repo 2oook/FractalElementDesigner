@@ -177,20 +177,19 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// <summary>
         /// Конструктор
         /// </summary>
-        /// <param name="sectionCount">Число секций</param>
-        public FElementScheme(int sectionCount)
+        public FElementScheme(List<FESection> sections)
         {
-            for (int i = 0; i < sectionCount; i++)
-            {
-                FESections.Add(new FESection(new FESectionParameters()));
-            }
+            FESections = sections;
         }
 
         /// <summary>
         /// Секции ФРЭ
         /// </summary>
-        public List<FESection> FESections { get; set; } = new List<FESection>();
+        public List<FESection> FESections { get; set; }
 
+        /// <summary>
+        /// График
+        /// </summary>
         public PRPlot Plot { get; set; }
 
         /// <summary>

@@ -845,6 +845,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     }
                 }
 
+                //////////////////////////////////////////////////
                 if (HomePageVisibility == Visibility.Visible)
                 {
                     HomePageVisibility = Visibility.Hidden;
@@ -853,18 +854,25 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 // создать проект
                 var project = new Project() { Name = "Проект №1" };
 
-                var scheme = new FElementScheme(4) { Name = "Схема включения" };
+                var scheme = new FElementScheme(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance.FESections) { Name = "Схема включения" };
 
                 project.Items.Add(scheme);
 
                 Projects.Add(project);
 
                 StartSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, scheme);
+
+                ShowPhaseResponsePlot(scheme);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
+        }
+
+        private void ShowPhaseResponsePlot(FElementScheme scheme) 
+        {
+
         }
 
         // Метод для асинхронного создания конструкции элемента

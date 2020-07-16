@@ -23,14 +23,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             MaxFrequency = synthesisParameters.MaxFrequency;
             MinLevelOfFrequencyCharacteristic = synthesisParameters.MinLevelOfFrequencyCharacteristic;
             MaxLevelOfFrequencyCharacteristic = synthesisParameters.MaxLevelOfFrequencyCharacteristic;
-            G = synthesisParameters.G;
-            Rk = synthesisParameters.Rk;
-
-            var val = synthesisParameters.Rp.Split('^');
-            var exp_base = double.Parse(val[0]);
-            var exp = double.Parse(val[1]);
-
-            Rp = Math.Pow(exp_base, exp);
         }
 
         /// <summary>
@@ -77,21 +69,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// Верхний предел диапазона изменения частот
         /// </summary>
         public double MaxLevelOfFrequencyCharacteristic { get; set; }
-
-        /// <summary>
-        /// Технологический параметр G
-        /// </summary>
-        public double G { get; set; }
-
-        /// <summary>
-        /// Технологический параметр Rp  
-        /// </summary>
-        public double Rp { get; set; }
-
-        /// <summary>
-        /// Технологический параметр Rk
-        /// </summary>
-        public double Rk { get; set; }
 
         private Random random = new Random();
 

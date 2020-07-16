@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RC_FE_Design___Analysis_and_synthesis.MathModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,6 +14,28 @@ namespace RC_FE_Design___Analysis_and_synthesis.StructureSchemeSynthesis
     /// </summary>
     public class StructureSchemeSynthesisParameters : IDataErrorInfo
     {
+        // TODO ---- этот конструктор не нужен
+        public StructureSchemeSynthesisParameters()
+        {
+            // TODO
+            // осуществить ввод из формы
+
+            var G = this.G;
+            var Rk = this.Rk;
+
+            var val = this.Rp.Split('^');
+            var exp_base = double.Parse(val[0]);
+            var exp = double.Parse(val[1]);
+
+            var Rp = Math.Pow(exp_base, exp);
+
+            FESections.Add(new FESection(new FESectionParameters() { C = 0.000_000_001, R = 100_000, N = 1, L = 1, G = G, Rk = Rk, Rp = Rp } ));
+            FESections.Add(new FESection(new FESectionParameters() { C = 0.000_000_001, R = 100_000, N = 1, L = 1, G = G, Rk = Rk, Rp = Rp } ));
+            FESections.Add(new FESection(new FESectionParameters() { C = 0.000_000_001, R = 100_000, N = 1, L = 1, G = G, Rk = Rk, Rp = Rp } ));
+            FESections.Add(new FESection(new FESectionParameters() { C = 0.000_000_001, R = 100_000, N = 1, L = 1, G = G, Rk = Rk, Rp = Rp } ));
+            // TODO
+        }
+
         /// <summary>
         /// Количество итераций 1-го такта ГА
         /// </summary>
@@ -72,6 +95,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.StructureSchemeSynthesis
         /// Технологический параметр Rk
         /// </summary>
         public double Rk { get; set; } = 5;
+
+        /// <summary>
+        /// Секции ФРЭ
+        /// </summary>
+        public List<FESection> FESections { get; set; } = new List<FESection>();
 
         /// <summary>
         /// Экземпляр регулярного выражения соответствующее целому числу в целой степени

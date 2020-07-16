@@ -122,6 +122,7 @@
     <Compile Include="IO\ProjectSaveModel\SavingRCStructureBase.cs" />
     <Compile Include="IO\ProjectSaveModel\SavingStructureCellBase.cs" />
     <Compile Include="IO\ProjectSaver.cs" />
+    <Compile Include="MathModel\FESectionTypeEnum.cs" />
     <Compile Include="MathModel\FElementScheme.cs" />
     <Compile Include="MathModel\FESection.cs" />
     <Compile Include="MathModel\FESectionParameters.cs" />

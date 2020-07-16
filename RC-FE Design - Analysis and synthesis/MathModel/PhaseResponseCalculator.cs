@@ -8,6 +8,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 {
     public class PhaseResponseCalculator
     {
+        public static void Calculate() 
+        {
 
+        }
     }
 }
