@@ -59,8 +59,16 @@
     <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAPICodePack-Shell.1.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
+    <Reference Include="OxyPlot, Version=2.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Core.2.0.0\lib\net45\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf, Version=2.0.0.0, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Wpf.2.0.0\lib\net45\OxyPlot.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net462\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -85,6 +93,9 @@
     <Compile Include="Commands\StaticCommandContainer.cs" />
     <Compile Include="Controls\HomePageControl.xaml.cs">
       <DependentUpon>HomePageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlotControl.xaml.cs">
+      <DependentUpon>PlotControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ProcessesIndicationControl.xaml.cs">
       <DependentUpon>ProcessesIndicationControl.xaml</DependentUpon>
@@ -215,6 +226,10 @@
       <DependentUpon>StructureSchemeSynthesisParametersWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\HomePageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PlotControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

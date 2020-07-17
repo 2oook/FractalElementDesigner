@@ -1,6 +1,7 @@
 ﻿using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -188,9 +189,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         public List<FESection> FESections { get; set; }
 
         /// <summary>
-        /// График
+        /// Графики
         /// </summary>
-        public PRPlot Plot { get; set; }
+        public ObservableCollection<PRPlot> Plots { get; set; }
 
         /// <summary>
         /// Название

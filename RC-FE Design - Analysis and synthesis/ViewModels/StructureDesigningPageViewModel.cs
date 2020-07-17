@@ -372,6 +372,23 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             }
         }
 
+        private Visibility plotVisibility = Visibility.Hidden;
+        /// <summary>
+        /// Видимость графика
+        /// </summary>
+        public Visibility PlotVisibility
+        {
+            get
+            {
+                return plotVisibility;
+            }
+            set
+            {
+                plotVisibility = value;
+                RaisePropertyChanged(nameof(PlotVisibility));
+            }
+        }
+
         private bool isProjectTreeEnabled = true;
         /// <summary>
         /// Разрешено ли манипулирование с деревом проекта 
@@ -517,6 +534,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             HomePageVisibility = Visibility.Hidden;
             SchemeEditorVisibility = Visibility.Hidden;
             StructureEditorVisibility = Visibility.Hidden;
+            PlotVisibility = Visibility.Hidden;
         }
 
         private void SetChosenProjectTreeItemEnvironment(object value) 
@@ -528,6 +546,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             else if (value is FElementScheme scheme)
             {
                 SchemeEditorVisibility = Visibility.Visible;
+            }
+            else if (value is PRPlot plot)
+            {
+                PlotVisibility = Visibility.Visible;
+                _Page.plotControl.plotView.Model = plot.Model;
             }
             else if (value is RCStructure structure)
             {
@@ -862,7 +885,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                 StartSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, scheme);
 
-                ShowPhaseResponsePlot(scheme);
+                ShowPhaseResponsePlot(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, scheme);
             }
             catch (Exception ex)
             {
@@ -870,9 +893,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             }
         }
 
-        private void ShowPhaseResponsePlot(FElementScheme scheme) 
-        {
+        private void ShowPhaseResponsePlot(StructureSchemeSynthesisParameters structureSchemeSynthesisParameters, FElementScheme scheme) 
+        {          
+            var plot = new PRPlot();
+            plot.Points = new List<List<double>>();
 
+
+            scheme.Plots = new ObservableCollection<PRPlot>() { plot };
         }
 
         // Метод для асинхронного создания конструкции элемента

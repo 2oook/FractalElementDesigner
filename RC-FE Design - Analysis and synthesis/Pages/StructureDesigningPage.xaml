@@ -68,6 +68,8 @@
 
                 <controls:SchemeEditorControl Visibility="{Binding Path=SchemeEditorVisibility}"/>
 
+                <controls:PlotControl x:Name="plotControl" Visibility="{Binding Path=PlotVisibility}"/>
+
                 <controls:ProcessesIndicationControl Grid.Row="1"/>
 
                 <Expander Grid.Column="2" Grid.RowSpan="2" ExpandDirection="Left" IsExpanded="True">
@@ -105,9 +107,15 @@
 
                                             </Style>
 
-                                            <HierarchicalDataTemplate x:Key="FElementSchemeDataTemplate">
+                                            <HierarchicalDataTemplate x:Key="FElementSchemeDataTemplate" ItemsSource="{Binding Path=Plots}">
                                                 <!--схема-->
                                                 <TextBlock Text="{Binding Path=Name}"/>
+                                                <HierarchicalDataTemplate.ItemTemplate>
+                                                    <HierarchicalDataTemplate>
+                                                        <!--график-->
+                                                        <TextBlock Text="{Binding Path=Name}"/>
+                                                    </HierarchicalDataTemplate>
+                                                </HierarchicalDataTemplate.ItemTemplate>
                                             </HierarchicalDataTemplate>
 
                                             <HierarchicalDataTemplate x:Key="FElementStructureDataTemplate" ItemsSource="{Binding Path=StructureLayers}">
