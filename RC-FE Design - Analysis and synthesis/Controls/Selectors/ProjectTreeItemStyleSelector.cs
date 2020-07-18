@@ -18,6 +18,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Controls.Selectors
     {
         public Style FElementSchemeStyle { get; set; }
         public Style FElementStructureStyle { get; set; }
+        public Style PRPlotStyle { get; set; }
         public Style DefaultStyle { get; set; }
 
         // Метод для переключения стиля узла дерева проекта
@@ -28,6 +29,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.Controls.Selectors
                 if (projectTreeItem is FElementScheme)
                 {
                     return FElementSchemeStyle;
+                }
+                else if (projectTreeItem is PRPlot)
+                {
+                    return PRPlotStyle;
                 }
                 else if (projectTreeItem is RCStructureBase)
                 {

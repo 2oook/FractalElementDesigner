@@ -90,6 +90,10 @@
                                                 <EventSetter Event="PreviewMouseRightButtonDown" Handler="OnPreviewMouseRightButtonDown"/>
                                             </Style>
 
+                                            <ContextMenu x:Key="projectTreeSchemePlotContextMenu" Visibility="Hidden">
+                                                
+                                            </ContextMenu>
+
                                             <ContextMenu x:Key="projectTreeFElementSchemeContextMenu">
                                                 <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Синтез" Command="{Binding Path=SchemeSynthesisCommand}"/>
                                                 <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Создать конструкцию" Command="{Binding Path=CreateStructureCommand}"/>
@@ -103,11 +107,15 @@
 
                                             </Style>
 
-                                            <Style x:Key="projectTreeDefaultStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
-
+                                            <Style x:Key="projectTreePRPlotStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
+                                                <Setter Property="ContextMenu" Value="{StaticResource projectTreeSchemePlotContextMenu}"/>
                                             </Style>
 
-                                            <HierarchicalDataTemplate x:Key="FElementSchemeDataTemplate" ItemsSource="{Binding Path=Plots}">
+                                            <Style x:Key="projectTreeDefaultStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
+                                                
+                                            </Style>
+
+                                            <HierarchicalDataTemplate x:Key="FElementSchemeDataTemplate" ItemsSource="{Binding Path=Plots}" ItemTemplateSelector="{x:Null}">
                                                 <!--схема-->
                                                 <TextBlock Text="{Binding Path=Name}"/>
                                                 <HierarchicalDataTemplate.ItemTemplate>
@@ -118,7 +126,7 @@
                                                 </HierarchicalDataTemplate.ItemTemplate>
                                             </HierarchicalDataTemplate>
 
-                                            <HierarchicalDataTemplate x:Key="FElementStructureDataTemplate" ItemsSource="{Binding Path=StructureLayers}">
+                                            <HierarchicalDataTemplate x:Key="FElementStructureDataTemplate" ItemsSource="{Binding Path=StructureLayers}" ItemTemplateSelector="{x:Null}">
                                                 <!--структура-->
                                                 <TextBlock Text="{Binding Path=Name}"/>
                                                 <HierarchicalDataTemplate.ItemTemplate>
@@ -138,6 +146,7 @@
                                         <TreeView.ItemContainerStyleSelector>
                                             <selectors:ProjectTreeItemStyleSelector FElementSchemeStyle="{StaticResource ResourceKey=projectTreeFElementSchemeStyle}" 
                                                                                     FElementStructureStyle ="{StaticResource ResourceKey=projectTreeFElementStructureStyle}"
+                                                                                    PRPlotStyle ="{StaticResource ResourceKey=projectTreePRPlotStyle}"
                                                                                     DefaultStyle="{StaticResource ResourceKey=projectTreeDefaultStyle}"/>
                                         </TreeView.ItemContainerStyleSelector>
                                         
