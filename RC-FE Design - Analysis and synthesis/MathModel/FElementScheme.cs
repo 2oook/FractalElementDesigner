@@ -194,6 +194,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         public ObservableCollection<PRPlot> Plots { get; set; }
 
         /// <summary>
+        /// Число выводов элемента //
+        /// </summary>
+        public int PinsCount { get; set; } = IncidenceMatrices_E[0][0].Length;
+
+        /// <summary>
         /// Название
         /// </summary>
         public string Name { get; set; }

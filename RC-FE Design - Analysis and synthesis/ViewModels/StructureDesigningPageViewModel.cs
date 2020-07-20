@@ -877,7 +877,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 // создать проект
                 var project = new Project() { Name = "Проект №1" };
 
-                var scheme = new FElementScheme(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance.FESections) { Name = "Схема включения" };
+                var scheme = new FElementScheme(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance.FESections) { Name = "Схема" };
 
                 project.Items.Add(scheme);
 
@@ -896,7 +896,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         private void ShowPhaseResponsePlot(StructureSchemeSynthesisParameters structureSchemeSynthesisParameters, FElementScheme scheme) 
         {          
             var plot = new PRPlot();
-            plot.Points = new List<List<double>>();
+            //plot.Points = new List<List<double>>();
 
 
             scheme.Plots = new ObservableCollection<PRPlot>() { plot };
@@ -945,7 +945,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     var ga = new GeneticAlgorithm(structureSchemeSynthesisParametersInstance);
 
                     // синтезировать схему
-                    SchemeSynthesizer.Synthesize(ga, scheme);
+                    SchemeSynthesizer.Synthesize(ga, structureSchemeSynthesisParametersInstance, scheme);
                 }
                 catch (Exception ex)
                 {
