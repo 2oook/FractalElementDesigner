@@ -181,6 +181,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         public FElementScheme(List<FESection> sections)
         {
             FESections = sections;
+
+            var array = new List<int>();
+
+            foreach (var section in sections)     
+                array = array.Concat(section.SectionParameters.PinsSchemeNumeration).ToList();
+
+            PinsNumbering = array.ToArray();
         }
 
         /// <summary>
@@ -189,14 +196,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         public List<FESection> FESections { get; set; }
 
         /// <summary>
+        /// Вектор перестановки нумерации выводов схемы
+        /// </summary>
+        public int[] PinsNumbering { get; set; }
+
+        /// <summary>
         /// Графики
         /// </summary>
         public ObservableCollection<PRPlot> Plots { get; set; }
-
-        /// <summary>
-        /// Число выводов элемента //
-        /// </summary>
-        public int PinsCount { get; set; } = IncidenceMatrices_E[0][0].Length;
 
         /// <summary>
         /// Название

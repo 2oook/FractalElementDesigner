@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathNet.Numerics.LinearAlgebra;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,15 +17,18 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         {
             double phase = 0;
 
-            var Y = new double[scheme.FESections.Count * scheme.PinsCount, scheme.FESections.Count * scheme.PinsCount];
+            int pinsCount = scheme.FESections.First().SectionParameters.PinsCount;
+
+            // глобальная матрица y-параметров
+            var Y = Matrix<double>.Build.DenseOfArray(new double[scheme.FESections.Count * pinsCount, scheme.FESections.Count * pinsCount]);
 
             // для всех секций фрэ
-            for (int i = 0; i < scheme.FESections.Count; i++)
+            for (int sectionNumber = 0; sectionNumber < scheme.FESections.Count; sectionNumber++)
             {
-                var y_start_col = (i + 1) * scheme.PinsCount;
-                var y_start_row = (i + 1) * scheme.PinsCount;
+                var y_start_col = (sectionNumber) * pinsCount;
+                var y_start_row = (sectionNumber) * pinsCount;
 
-                var parameters = scheme.FESections[i].SectionParameters;
+                var parameters = scheme.FESections[sectionNumber].SectionParameters;
 
                 var thetaFunc = FESection.ThetaFunctions.Single(x => x.Key == parameters.SectionType).Value;
                 var theta = thetaFunc(parameters.R, parameters.N, parameters.C, parameters.Rp, parameters.Rk, parameters.G, parameters.L, frequency);
@@ -34,9 +38,24 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
                 var coeficient = 1 / ((1 + parameters.N)*parameters.R);
 
-
+                // скопировать элементы матриц БКЭ в глобальную матрицу
+                for (int i = y_start_col, inner_i = 0; i < scheme.FESections[sectionNumber].YParametersMatrix.ColumnCount + y_start_col; i++, inner_i++)
+                {
+                    for (int j = y_start_row, inner_j = 0; j < scheme.FESections[sectionNumber].YParametersMatrix.RowCount + y_start_row; j++, inner_j++)
+                    {
+                        // поместить в матрицу y- параметров секции  
+                        scheme.FESections[sectionNumber].YParametersMatrix[inner_i, inner_j] = sectionNumber+1;
+                        Y[i, j] = scheme.FESections[sectionNumber].YParametersMatrix[inner_i, inner_j];
+                    }
+                }
             }
 
+            // привести матрицу в соответствие с нумерацией выводов элементов
+            Y.PermuteColumns(new MathNet.Numerics.Permutation(scheme.PinsNumbering));
+            Y.PermuteRows(new MathNet.Numerics.Permutation(scheme.PinsNumbering));
+
+            // TEST!!
+            var test = Y.ToArray();
             return phase;
         }
     }

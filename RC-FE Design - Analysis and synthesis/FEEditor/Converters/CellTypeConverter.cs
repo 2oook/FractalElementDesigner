@@ -31,28 +31,20 @@ namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Converters
                 {
                     case CellType.None:
                         return Application.Current.FindResource("NoneColorKey");
-                        break;
                     case CellType.PlaceForContact:
                         return Application.Current.FindResource("PlaceForContactColorKey");
-                        break;
                     case CellType.Contact:
                         return Application.Current.FindResource("ContactColorKey");
-                        break;
                     case CellType.Cut:
                         return Application.Current.FindResource("CutColorKey");
-                        break;
                     case CellType.Forbid:
                         return Application.Current.FindResource("ForbidColorKey");
-                        break;
                     case CellType.RC:
                         return Application.Current.FindResource("RCColorKey");
-                        break;
                     case CellType.R:
                         return Application.Current.FindResource("RColorKey");
-                        break;
                     case CellType.Shunt:
                         return Application.Current.FindResource("ShuntColorKey");
-                        break;
                 }
             }
 

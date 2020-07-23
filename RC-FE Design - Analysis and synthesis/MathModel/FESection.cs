@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Double;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -67,9 +69,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         public FESection(FESectionParameters sectionParameters)
         {
             SectionParameters = sectionParameters;
+            YParametersMatrix = DenseMatrix.OfArray(new double[SectionParameters.PinsCount, SectionParameters.PinsCount]);
         }
 
         public FESectionParameters SectionParameters { get; set; }
+
+        public Matrix<double> YParametersMatrix { get; set; }
 
         public int[] SchemeIndices { get; set; } = { 0, 0 }; 
     }

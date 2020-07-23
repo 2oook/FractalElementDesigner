@@ -29,10 +29,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.StructureSchemeSynthesis
 
             var Rp = Math.Pow(exp_base, exp);
 
-            FESections.Add(new FESection(new FESectionParameters() { C = 0.000_000_001, R = 100_000, N = 1, L = 1, G = G, Rk = Rk, Rp = Rp } ));
-            FESections.Add(new FESection(new FESectionParameters() { C = 0.000_000_001, R = 100_000, N = 1, L = 1, G = G, Rk = Rk, Rp = Rp } ));
-            FESections.Add(new FESection(new FESectionParameters() { C = 0.000_000_001, R = 100_000, N = 1, L = 1, G = G, Rk = Rk, Rp = Rp } ));
-            FESections.Add(new FESection(new FESectionParameters() { C = 0.000_000_001, R = 100_000, N = 1, L = 1, G = G, Rk = Rk, Rp = Rp } ));
+            FESections.Add(new FESection(new FESectionParameters() { C = 0.000_000_001, R = 100_000, N = 1, L = 1, G = G, Rk = Rk, Rp = Rp, PinsCount = 4, PinsSchemeNumeration = new List<int> { 1-1, 4-1, 5-1, 6-1 } }));
+            FESections.Add(new FESection(new FESectionParameters() { C = 0.000_000_001, R = 100_000, N = 1, L = 1, G = G, Rk = Rk, Rp = Rp, PinsCount = 4, PinsSchemeNumeration = new List<int> { 7-1, 8-1, 9-1, 10-1 } } ));
+            FESections.Add(new FESection(new FESectionParameters() { C = 0.000_000_001, R = 100_000, N = 1, L = 1, G = G, Rk = Rk, Rp = Rp, PinsCount = 4, PinsSchemeNumeration = new List<int> { 11-1, 12-1, 13-1, 14-1 } } ));
+            FESections.Add(new FESection(new FESectionParameters() { C = 0.000_000_001, R = 100_000, N = 1, L = 1, G = G, Rk = Rk, Rp = Rp, PinsCount = 4, PinsSchemeNumeration = new List<int> { 15-1, 16-1, 2-1, 3-1 } } ));
             // TODO
         }
 
