@@ -11,6 +11,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     /// </summary>
     public class FESectionParameters
     {
+        /// <summary>
+        /// Тип секции
+        /// </summary>
         public FESectionTypeEnum SectionType { get; set; } = FESectionTypeEnum.R_C_NR;
 
         public double C { get; set; }
@@ -36,12 +39,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// </summary>
         public double Rk { get; set; }
 
-
+        /// <summary>
+        /// Число выводов
+        /// </summary>
         public int PinsCount { get; set; }
 
-
+        /// <summary>
+        /// Нумерация выводов
+        /// </summary>
         public List<int> PinsSchemeNumeration { get; set; }
-
-        public List<int> PinsInnerNumeration { get; set; }
     }
 }

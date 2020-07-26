@@ -16,7 +16,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// <summary>
         /// Матрицы инцидентности допустимых подключений двух четырехполюсников
         /// </summary>
-        public static List<List<int[][]>> IncidenceMatrices_E;
+        public static List<List<int[,]>> IncidenceMatrices_E;
 
         /// <summary>
         /// Матрицы указывающие на заземлённые выводы
@@ -29,68 +29,68 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         static FElementScheme()
         {
             // порядок обхода каждого элемента: левый верхний -> правый верхний -> правый нижний -> левый нижний
-            IncidenceMatrices_E = new List<List<int[][]>>()
+            IncidenceMatrices_E = new List<List<int[,]>>()
             {
-                new List<int[][]>
+                new List<int[,]>
                 {
-                    new int[][]
+                    new int[,]
                     { 
-                        new int[] { 1, 1, 1, 1 },
-                        new int[] { 1, 1, 1, 1 },
-                        new int[] { 1, 1, 1, 1 },
-                        new int[] { 1, 1, 1, 1 }
+                        { 1, 1, 1, 1 },
+                        { 1, 1, 1, 1 },
+                        { 1, 1, 1, 1 },
+                        { 1, 1, 1, 1 }
                     },
-                    new int[][]
+                    new int[,]
                     {
-                        new int[] { 1, 1, 0, 0 },
-                        new int[] { 1, 1, 1, 0 },
-                        new int[] { 0, 1, 1, 0 },
-                        new int[] { 0, 0, 0, 1 }
+                        { 1, 1, 0, 0 },
+                        { 1, 1, 1, 0 },
+                        { 0, 1, 1, 0 },
+                        { 0, 0, 0, 1 }
                     },
-                    new int[][]
+                    new int[,]
                     {
-                        new int[] { 1, 1, 0, 1 },
-                        new int[] { 1, 1, 0, 0 },
-                        new int[] { 0, 0, 1, 0 },
-                        new int[] { 1, 0, 0, 1 }
+                        { 1, 1, 0, 1 },
+                        { 1, 1, 0, 0 },
+                        { 0, 0, 1, 0 },
+                        { 1, 0, 0, 1 }
                     },
-                    new int[][]
+                    new int[,]
                     {
-                        new int[] { 1, 1, 0, 0 },
-                        new int[] { 1, 1, 0, 0 },
-                        new int[] { 0, 0, 1, 0 },
-                        new int[] { 0, 0, 0, 1 }
+                        { 1, 1, 0, 0 },
+                        { 1, 1, 0, 0 },
+                        { 0, 0, 1, 0 },
+                        { 0, 0, 0, 1 }
                     }
                 },
-                new List<int[][]>
+                new List<int[,]>
                 {
-                    new int[][]
+                    new int[,]
                     {
-                        new int[] { 1, 0, 0, 1 },
-                        new int[] { 0, 1, 0, 0 },
-                        new int[] { 0, 0, 1, 1 },
-                        new int[] { 1, 0, 1, 1 }
+                        { 1, 0, 0, 1 },
+                        { 0, 1, 0, 0 },
+                        { 0, 0, 1, 1 },
+                        { 1, 0, 1, 1 }
                     },
-                    new int[][]
+                    new int[,]
                     {
-                        new int[] { 1, 0, 0, 0 },
-                        new int[] { 0, 1, 0, 0 },
-                        new int[] { 0, 0, 1, 1 },
-                        new int[] { 0, 0, 1, 1 }
+                        { 1, 0, 0, 0 },
+                        { 0, 1, 0, 0 },
+                        { 0, 0, 1, 1 },
+                        { 0, 0, 1, 1 }
                     },
-                    new int[][]
+                    new int[,]
                     {
-                        new int[] { 1, 1, 0, 0 },
-                        new int[] { 1, 1, 0, 0 },
-                        new int[] { 0, 0, 1, 1 },
-                        new int[] { 0, 0, 1, 1 }
+                        { 1, 1, 0, 0 },
+                        { 1, 1, 0, 0 },
+                        { 0, 0, 1, 1 },
+                        { 0, 0, 1, 1 }
                     },
-                    new int[][]
+                    new int[,]
                     {
-                        new int[] { 1, 0, 0, 0 },
-                        new int[] { 0, 1, 1, 0 },
-                        new int[] { 0, 1, 1, 1 },
-                        new int[] { 0, 0, 1, 1 }
+                        { 1, 0, 0, 0 },
+                        { 0, 1, 1, 0 },
+                        { 0, 1, 1, 1 },
+                        { 0, 0, 1, 1 }
                     }
                 }
             };
@@ -113,10 +113,33 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         {
             FESections = sections;
 
+            InnerConnections = new List<Connection>();
+
             var array = new List<int>();
 
-            foreach (var section in sections)     
-                array = array.Concat(section.SectionParameters.PinsSchemeNumeration).ToList();
+            for (int i = 0; i < sections.Count; i++)
+            {
+                array = array.Concat(sections[i].SectionParameters.PinsSchemeNumeration).ToList();
+
+                if (i < sections.Count - 1)
+                {
+                    // добавить соединение в котором участвуют текущая секция и следующая
+                    InnerConnections.Add(new Connection()
+                    {
+                        Sections = new List<FESection>() 
+                        {
+                            sections[i],
+                            sections[i + 1]
+                        }
+                    });
+                }
+            }
+
+            // тест!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            InnerConnections[0].SchemeIndices = new [] { 1, 2 };
+            InnerConnections[1].SchemeIndices = new [] { 1, 3 };
+            InnerConnections[2].SchemeIndices = new [] { 0, 3 };
+            // тест!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
             PinsNumbering = array.ToArray();
         }
@@ -125,6 +148,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// Секции ФРЭ
         /// </summary>
         public List<FESection> FESections { get; set; }
+
+        /// <summary>
+        /// Соединения БКЭ
+        /// </summary>
+        public List<Connection> InnerConnections { get; set; }
 
         /// <summary>
         /// Вектор перестановки нумерации выводов схемы

@@ -26,8 +26,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             // для всех секций фрэ
             for (int sectionNumber = 0; sectionNumber < scheme.FESections.Count; sectionNumber++)
             {
-                var y_start_col = (sectionNumber) * pinsCount;
-                var y_start_row = (sectionNumber) * pinsCount;
+                var row_col_index = (sectionNumber) * pinsCount;
 
                 var parameters = scheme.FESections[sectionNumber].SectionParameters;
 
@@ -66,7 +65,19 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                 mattrix[3, 3] = mattrix[2, 2];
 
                 // скопировать матрицу БКЭ в глобальную матрицу
-                Y.SetSubMatrix(y_start_row, y_start_col, scheme.FESections[sectionNumber].YParametersMatrix);
+                Y.SetSubMatrix(row_col_index, row_col_index, scheme.FESections[sectionNumber].YParametersMatrix);
+            }
+
+            // матрица соединений (инциденции)
+            var I = Matrix<int>.Build.DenseOfArray(new int[scheme.FESections.Count * pinsCount, scheme.FESections.Count * pinsCount]);
+
+            // для всех соединений схемы
+            for (int connectionNumber = 0; connectionNumber < scheme.InnerConnections.Count; connectionNumber++)
+            {
+                var row_col_index = (connectionNumber) * pinsCount;
+
+                // скопировать матрицу инциденции в глобальную матрицу инциденций
+                CreateGlobalIncidenceMatrix(row_col_index, I, pinsCount, scheme.InnerConnections);
             }
 
             // привести матрицу в соответствие с нумерацией выводов элементов
@@ -78,6 +89,22 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             var test = Y.ToArray();
 
             return phase;
+        }
+
+        private static void CreateGlobalIncidenceMatrix(int row_col_index, Matrix<int> matrix, int sectionPinsCount, List<Connection> connections) 
+        {
+            if (row_col_index == 0)
+            {
+                // первые четыре вывода не подключены
+                var firstMatrix = Matrix<int>.Build.DenseOfArray(new int[sectionPinsCount, sectionPinsCount]);
+                var diagonal = Vector<int>.Build.Dense(sectionPinsCount, 1);
+                firstMatrix.SetDiagonal(diagonal);
+                matrix.SetSubMatrix(row_col_index, row_col_index, firstMatrix);
+
+                return;
+            }
+
+
         }
     }
 }
