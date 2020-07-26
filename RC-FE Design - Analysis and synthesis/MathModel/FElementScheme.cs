@@ -21,13 +21,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// <summary>
         /// Матрицы указывающие на заземлённые выводы
         /// </summary>
-        public static List<List<int[][]>> GroundMatrices_A;
+        public static List<int[]> GroundVectors_A;
 
         /// <summary>
         /// Статический конструктор
         /// </summary>
         static FElementScheme()
         {
+            // порядок обхода каждого элемента: левый верхний -> правый верхний -> правый нижний -> левый нижний
             IncidenceMatrices_E = new List<List<int[][]>>()
             {
                 new List<int[][]>
@@ -41,137 +42,67 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                     },
                     new int[][]
                     {
+                        new int[] { 1, 1, 0, 0 },
                         new int[] { 1, 1, 1, 0 },
-                        new int[] { 1, 1, 1, 0 },
-                        new int[] { 1, 1, 1, 0 },
+                        new int[] { 0, 1, 1, 0 },
                         new int[] { 0, 0, 0, 1 }
                     },
                     new int[][]
                     {
-                        new int[] { 1, 0, 1, 1 },
+                        new int[] { 1, 1, 0, 1 },
+                        new int[] { 1, 1, 0, 0 },
+                        new int[] { 0, 0, 1, 0 },
+                        new int[] { 1, 0, 0, 1 }
+                    },
+                    new int[][]
+                    {
+                        new int[] { 1, 1, 0, 0 },
+                        new int[] { 1, 1, 0, 0 },
+                        new int[] { 0, 0, 1, 0 },
+                        new int[] { 0, 0, 0, 1 }
+                    }
+                },
+                new List<int[][]>
+                {
+                    new int[][]
+                    {
+                        new int[] { 1, 0, 0, 1 },
                         new int[] { 0, 1, 0, 0 },
-                        new int[] { 1, 0, 1, 1 },
+                        new int[] { 0, 0, 1, 1 },
                         new int[] { 1, 0, 1, 1 }
                     },
                     new int[][]
                     {
-                        new int[] { 1, 0, 1, 0 },
+                        new int[] { 1, 0, 0, 0 },
                         new int[] { 0, 1, 0, 0 },
-                        new int[] { 1, 0, 1, 0 },
-                        new int[] { 0, 0, 0, 1 }
-                    }
-                },
-                new List<int[][]>
-                {
+                        new int[] { 0, 0, 1, 1 },
+                        new int[] { 0, 0, 1, 1 }
+                    },
                     new int[][]
                     {
-                        new int[] { 1, 0, 0, 0 },
-                        new int[] { 0, 1, 1, 1 },
-                        new int[] { 0, 1, 1, 1 },
-                        new int[] { 0, 1, 1, 1 }
+                        new int[] { 1, 1, 0, 0 },
+                        new int[] { 1, 1, 0, 0 },
+                        new int[] { 0, 0, 1, 1 },
+                        new int[] { 0, 0, 1, 1 }
                     },
                     new int[][]
                     {
                         new int[] { 1, 0, 0, 0 },
-                        new int[] { 0, 1, 0, 1 },
-                        new int[] { 0, 0, 1, 0 },
-                        new int[] { 0, 1, 0, 1 }
-                    },
-                    new int[][]
-                    {
-                        new int[] { 1, 0, 1, 0 },
-                        new int[] { 0, 1, 0, 1 },
-                        new int[] { 1, 0, 1, 0 },
-                        new int[] { 0, 1, 0, 1 }
-                    },
-                    new int[][]
-                    {
-                        new int[] { 1, 1, 0, 1 },
-                        new int[] { 1, 1, 0, 1 },
-                        new int[] { 0, 0, 1, 0 },
-                        new int[] { 1, 1, 0, 1 }
+                        new int[] { 0, 1, 1, 0 },
+                        new int[] { 0, 1, 1, 1 },
+                        new int[] { 0, 0, 1, 1 }
                     }
                 }
             };
 
-            GroundMatrices_A = new List<List<int[][]>>
+            GroundVectors_A = new List<int[]>()
             {
-                new List<int[][]>
-                {
-                    new int[][]
-                    {
-                        new int[] { 0 },
-                        new int[] { 1 },
-                        new int[] { 0 },
-                        new int[] { 0 }
-                    },
-                    new int[][]
-                    {
-                        new int[] { 0 },
-                        new int[] { 0 },
-                        new int[] { 1 },
-                        new int[] { 0 }
-                    },
-                    new int[][]
-                    {
-                        new int[] { 1 },
-                        new int[] { 0 },
-                        new int[] { 0 },
-                        new int[] { 0 }
-                    },
-                    new int[][]
-                    {
-                        new int[] { 1 },
-                        new int[] { 0 },
-                        new int[] { 0 },
-                        new int[] { 0 }
-                    },
-                    new int[][]
-                    {
-                        new int[] { 0 },
-                        new int[] { 1 },
-                        new int[] { 0 },
-                        new int[] { 1 }
-                    }
-                },
-                new List<int[][]>
-                {
-                    new int[][]
-                    {
-                        new int[] { 0 },
-                        new int[] { 0 },
-                        new int[] { 0 },
-                        new int[] { 1 }
-                    },
-                    new int[][]
-                    {
-                        new int[] { 1 },
-                        new int[] { 0 },
-                        new int[] { 1 },
-                        new int[] { 0 }
-                    },
-                    new int[][]
-                    {
-                        new int[] { 0 },
-                        new int[] { 0 },
-                        new int[] { 1 },
-                        new int[] { 0 }
-                    },
-                    new int[][]
-                    {
-                        new int[] { 0 },
-                        new int[] { 0 },
-                        new int[] { 0 },
-                        new int[] { 1 }
-                    },
-                    new int[][]
-                    {
-                        new int[] { 0 },
-                        new int[] { 1 },
-                        new int[] { 0 },
-                        new int[] { 0 }
-                    }
-                }
+                new int[] { 1, 0, 0, 0 },
+                new int[] { 0, 1, 0, 0 },
+                new int[] { 0, 0, 1, 0 },
+                new int[] { 0, 0, 0, 1 },
+                new int[] { 1, 1, 0, 0 },
+                new int[] { 0, 0, 1, 1 }
             };
         }
 

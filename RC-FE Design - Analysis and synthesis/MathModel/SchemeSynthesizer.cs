@@ -29,6 +29,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         // Метод для синтезирования схемы включения элемента
         public static bool Synthesize(GeneticAlgorithm ga, StructureSchemeSynthesisParameters synthesisParameters, FElementScheme scheme) 
         {
+            // тест!!!!!!!
+            PhaseResponseCalculator.CalculatePhase(scheme, 10);
+            // тест!!!!!!!
+
             bool result = true;
 
             OnStateChange("Выполнение синтеза");
