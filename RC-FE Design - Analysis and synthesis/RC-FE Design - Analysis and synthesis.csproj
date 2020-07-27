@@ -145,6 +145,8 @@
     <Compile Include="MathModel\FESectionParameters.cs" />
     <Compile Include="MathModel\GeneticAlgorithm.cs" />
     <Compile Include="MathModel\PhaseResponseCalculator.cs" />
+    <Compile Include="MathModel\Pin.cs" />
+    <Compile Include="MathModel\PinOrientationEnum.cs" />
     <Compile Include="MathModel\PRPlot.cs" />
     <Compile Include="MathModel\SchemeSynthesizer.cs" />
     <Compile Include="MathModel\StructureCreator.cs" />

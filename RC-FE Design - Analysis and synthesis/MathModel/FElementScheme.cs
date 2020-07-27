@@ -18,6 +18,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// </summary>
         public static List<List<int[,]>> IncidenceMatrices_E;
 
+
+        public static Dictionary<int, List<int[]>> IncidenceCodes_E;
+
         /// <summary>
         /// Матрицы указывающие на заземлённые выводы
         /// </summary>
@@ -95,6 +98,75 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                 }
             };
 
+            IncidenceCodes_E =
+                new Dictionary<int,List<int[]>>()
+                {
+                    {
+                        1,
+                        new List<int[]>()
+                        {
+                            new int [] { 1, 2 },
+                            new int [] { 2, 3 },
+                            new int [] { 3, 4 },
+                            new int [] { 4, 1 }
+                        }
+                    },
+                    {
+                        2, 
+                        new List<int[]>()
+                        {
+                            new int [] { 1, 2 },
+                            new int [] { 2, 3 }
+                        }
+                    },
+                    {
+                        3, 
+                        new List<int[]>()
+                        {
+                            new int [] { 1, 2 },
+                            new int [] { 4, 1 },
+                        } 
+                    },
+                    {
+                        4, 
+                        new List<int[]>()
+                        {
+                            new int [] { 1, 2 }
+                        } 
+                    },
+                    {
+                        5, 
+                        new List<int[]>()
+                        {
+                            new int [] { 3, 4 },
+                            new int [] { 4, 1 }
+                        }
+                    },
+                    {
+                        6, 
+                        new List<int[]>()
+                        {
+                            new int [] { 3, 4 }
+                        } 
+                    },
+                    {
+                        7, 
+                        new List<int[]>()
+                        {
+                            new int [] { 1, 2 },
+                            new int [] { 3, 4 }
+                        } 
+                    },
+                    {
+                        8, 
+                        new List<int[]>()
+                        {
+                            new int [] { 2, 3 },
+                            new int [] { 3, 4 }
+                        }
+                    }
+                };
+
             GroundVectors_A = new List<int[]>()
             {
                 new int[] { 1, 0, 0, 0 },
@@ -111,6 +183,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// </summary>
         public FElementScheme(List<FESection> sections)
         {
+            sections = sections.OrderBy(x => x.Number).ToList();
+
             FESections = sections;
 
             InnerConnections = new List<Connection>();
@@ -119,27 +193,60 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
             for (int i = 0; i < sections.Count; i++)
             {
-                array = array.Concat(sections[i].SectionParameters.PinsSchemeNumeration).ToList();
+                array = array.Concat(sections[i].Pins.Select(x => x.Number)).ToList();//!!!!!!!!!!!!!!!!!!!!
+            }
+            
+            for (int i = 0; i < sections.Count - 1; i++)
+            {
+                //InnerConnections.Add(new Connection()
+                //{
+                //    FirstSection = sections[sections[i].Number],
+                //    SecondSection = sections[sections[i].Number + 1]
+                //});
 
-                if (i < sections.Count - 1)
+                // тест!!!!!!!!!!!!!!!!!!!!!!!!
+                // инициализация 3-х соединений
+                switch (i)
                 {
-                    // добавить соединение в котором участвуют текущая секция и следующая
-                    InnerConnections.Add(new Connection()
-                    {
-                        Sections = new List<FESection>() 
+                    case 0:
                         {
-                            sections[i],
-                            sections[i + 1]
+                            var type = 7;
+
+                            InnerConnections.Add(new Connection()
+                            {
+                                ConnectionType = type,
+                                FirstSection = sections[sections[i].Number],
+                                SecondSection = sections[sections[i].Number + 1]
+                            });
                         }
-                    });
+                        break;
+                    case 1:
+                        {
+                            var type = 8; 
+                            
+                            InnerConnections.Add(new Connection()
+                            {
+                                ConnectionType = type,
+                                FirstSection = sections[sections[i].Number],
+                                SecondSection = sections[sections[i].Number + 1]
+                            });
+                        }
+                        break;
+                    case 2:
+                        {
+                            var type = 4; 
+                            
+                            InnerConnections.Add(new Connection()
+                            {
+                                ConnectionType = type,
+                                FirstSection = sections[sections[i].Number],
+                                SecondSection = sections[sections[i].Number + 1]
+                            });
+                        }
+                        break;
                 }
             }
-
-            // тест!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            InnerConnections[0].SchemeIndices = new [] { 1, 2 };
-            InnerConnections[1].SchemeIndices = new [] { 1, 3 };
-            InnerConnections[2].SchemeIndices = new [] { 0, 3 };
-            // тест!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // тест!!!!!!!!!!!!!!!!!!!!!!!!
 
             PinsNumbering = array.ToArray();
         }

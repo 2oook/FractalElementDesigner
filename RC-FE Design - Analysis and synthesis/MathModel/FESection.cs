@@ -73,14 +73,36 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
         };
 
-        public FESection(FESectionParameters sectionParameters)
+        public FESection(FESectionParameters sectionParameters, List<Pin> pins, int number)
         {
+            Number = number;
+            Pins = pins;
+
+            foreach (var pin in pins)
+                pin.Section = this;
+
             SectionParameters = sectionParameters;
-            YParametersMatrix = Matrix<Complex>.Build.DenseOfArray(new Complex[SectionParameters.PinsCount, SectionParameters.PinsCount]);
+            YParametersMatrix = Matrix<Complex>.Build.DenseOfArray(new Complex[pins.Count, pins.Count]);
         }
 
+        /// <summary>
+        /// Номер секции
+        /// </summary>
+        public int Number { get; set; }
+
+        /// <summary>
+        /// Список выводов секции
+        /// </summary>
+        public List<Pin> Pins { get; set; }
+
+        /// <summary>
+        /// Параметры секции
+        /// </summary>
         public FESectionParameters SectionParameters { get; set; }
 
+        /// <summary>
+        /// Матрица проводимости секции
+        /// </summary>
         public Matrix<Complex> YParametersMatrix { get; set; }
     }
 }

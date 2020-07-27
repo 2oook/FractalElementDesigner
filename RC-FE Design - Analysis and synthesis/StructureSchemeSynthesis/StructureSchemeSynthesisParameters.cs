@@ -29,10 +29,89 @@ namespace RC_FE_Design___Analysis_and_synthesis.StructureSchemeSynthesis
 
             var Rp = Math.Pow(exp_base, exp);
 
-            FESections.Add(new FESection(new FESectionParameters() { C = 0.000_000_000_2, R = 118_718, N = 13.1, L = 3, G = 3, Rk = Rk, Rp = Rp, PinsCount = 4, PinsSchemeNumeration = new List<int> { 1-1, 5-1, 6-1, 4-1 } }));
-            FESections.Add(new FESection(new FESectionParameters() { C = 0.000_000_000_2, R = 118_718, N = 13.1, L = 9.5, G = 9.5, Rk = Rk, Rp = Rp, PinsCount = 4, PinsSchemeNumeration = new List<int> { 7-1, 9-1, 10-1, 8-1 } } ));
-            FESections.Add(new FESection(new FESectionParameters() { C = 0.000_000_000_2, R = 118_718, N = 13.1, L = 8.1, G = 8.1, Rk = Rk, Rp = Rp, PinsCount = 4, PinsSchemeNumeration = new List<int> { 11-1, 13-1, 14-1, 12-1 } } ));
-            FESections.Add(new FESection(new FESectionParameters() { C = 0.000_000_000_2, R = 118_718, N = 13.1, L = 7.8, G = 7.8, Rk = Rk, Rp = Rp, PinsCount = 4, PinsSchemeNumeration = new List<int> { 15-1, 2-1, 3-1, 16-1 } } ));
+            var sec1 = new FESection(new FESectionParameters()
+            {
+                C = 0.000_000_000_2,
+                R = 118_718,
+                N = 13.1,
+                L = 3,
+                G = 3,
+                Rk = Rk,
+                Rp = Rp             
+            }, 
+            new List<Pin>()
+            {
+                new Pin() { Number = 0, Orientation = PinOrientationEnum.Left },
+                new Pin() { Number = 4, Orientation = PinOrientationEnum.Right },
+                new Pin() { Number = 5, Orientation = PinOrientationEnum.Right },
+                new Pin() { Number = 3, Orientation = PinOrientationEnum.Left }
+            }, 
+            1);
+
+            FESections.Add(sec1);
+
+            var sec2 = new FESection(new FESectionParameters()
+            {
+                C = 0.000_000_000_2,
+                R = 118_718,
+                N = 13.1,
+                L = 9.5,
+                G = 9.5,
+                Rk = Rk,
+                Rp = Rp
+            },
+            new List<Pin>()
+            {
+                new Pin() { Number = 6, Orientation = PinOrientationEnum.Left },
+                new Pin() { Number = 8, Orientation = PinOrientationEnum.Right },
+                new Pin() { Number = 9, Orientation = PinOrientationEnum.Right },
+                new Pin() { Number = 7, Orientation = PinOrientationEnum.Left }
+            },
+            2);
+
+            FESections.Add(sec2);
+
+            var sec3 = new FESection(new FESectionParameters()
+            {
+                C = 0.000_000_000_2,
+                R = 118_718,
+                N = 13.1,
+                L = 8.1,
+                G = 8.1,
+                Rk = Rk,
+                Rp = Rp
+            }, 
+            new List<Pin>()
+            {
+                new Pin() { Number = 10, Orientation = PinOrientationEnum.Left },
+                new Pin() { Number = 12, Orientation = PinOrientationEnum.Right },
+                new Pin() { Number = 13, Orientation = PinOrientationEnum.Right },
+                new Pin() { Number = 11, Orientation = PinOrientationEnum.Left }
+            }, 
+            3);
+
+            FESections.Add(sec3);
+
+            var sec4 = new FESection(new FESectionParameters()
+            {
+                C = 0.000_000_000_2,
+                R = 118_718,
+                N = 13.1,
+                L = 7.8,
+                G = 7.8,
+                Rk = Rk,
+                Rp = Rp
+            },
+            new List<Pin>()
+            {
+                new Pin() { Number = 14, Orientation = PinOrientationEnum.Left },
+                new Pin() { Number = 1, Orientation = PinOrientationEnum.Right },
+                new Pin() { Number = 2, Orientation = PinOrientationEnum.Right },
+                new Pin() { Number = 15, Orientation = PinOrientationEnum.Left }
+            },
+            4);
+
+            FESections.Add(sec4);
             // TODO
         }
 

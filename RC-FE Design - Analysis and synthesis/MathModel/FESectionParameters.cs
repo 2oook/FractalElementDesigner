@@ -38,15 +38,5 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// Технологический параметр Rk
         /// </summary>
         public double Rk { get; set; }
-
-        /// <summary>
-        /// Число выводов
-        /// </summary>
-        public int PinsCount { get; set; }
-
-        /// <summary>
-        /// Нумерация выводов
-        /// </summary>
-        public List<int> PinsSchemeNumeration { get; set; }
     }
 }

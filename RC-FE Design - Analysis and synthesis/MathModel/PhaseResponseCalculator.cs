@@ -18,7 +18,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         {
             double phase = 0;
 
-            int pinsCount = scheme.FESections.First().SectionParameters.PinsCount;
+            int pinsCount = scheme.FESections.First().Pins.Count;
 
             // глобальная матрица y-параметров
             var Y = Matrix<Complex>.Build.DenseOfArray(new Complex[scheme.FESections.Count * pinsCount, scheme.FESections.Count * pinsCount]);
@@ -69,16 +69,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             }
 
             // матрица соединений (инциденции)
-            var I = Matrix<int>.Build.DenseOfArray(new int[scheme.FESections.Count * pinsCount, scheme.FESections.Count * pinsCount]);
+            var I = Matrix<float>.Build.DenseOfArray(new float[scheme.FESections.Count * pinsCount, scheme.FESections.Count * pinsCount]);
 
-            // для всех соединений схемы
-            for (int connectionNumber = 0; connectionNumber < scheme.InnerConnections.Count; connectionNumber++)
-            {
-                var row_col_index = (connectionNumber) * pinsCount;
-
-                // скопировать матрицу инциденции в глобальную матрицу инциденций
-                CreateGlobalIncidenceMatrix(row_col_index, I, pinsCount, scheme.InnerConnections);
-            }
+            // скопировать матрицу инциденции в глобальную матрицу инциденций
+            CreateGlobalIncidenceMatrix(I, pinsCount, scheme);
 
             // привести матрицу в соответствие с нумерацией выводов элементов
             // перестановка с учётом порядка обхода каждого элемента: левый верхний -> правый верхний -> правый нижний -> левый нижний
@@ -91,17 +85,24 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             return phase;
         }
 
-        private static void CreateGlobalIncidenceMatrix(int row_col_index, Matrix<int> matrix, int sectionPinsCount, List<Connection> connections) 
+        private static void CreateGlobalIncidenceMatrix(Matrix<float> matrix, int sectionPinsCount, FElementScheme scheme) 
         {
-            if (row_col_index == 0)
+            // для всех соединений схемы
+            for (int connectionNumber = 0; connectionNumber < scheme.InnerConnections.Count; connectionNumber++)
             {
-                // первые четыре вывода не подключены
-                var firstMatrix = Matrix<int>.Build.DenseOfArray(new int[sectionPinsCount, sectionPinsCount]);
-                var diagonal = Vector<int>.Build.Dense(sectionPinsCount, 1);
-                firstMatrix.SetDiagonal(diagonal);
-                matrix.SetSubMatrix(row_col_index, row_col_index, firstMatrix);
+                var row_col_index = (connectionNumber) * sectionPinsCount;
 
-                return;
+                if (row_col_index == 0)
+                {
+                    // первые четыре вывода не подключены
+                    var firstMatrix = Matrix<float>.Build.DenseOfArray(new float[sectionPinsCount, sectionPinsCount]);
+                    var diagonal = Vector<float>.Build.Dense(sectionPinsCount, 1);
+                    firstMatrix.SetDiagonal(diagonal);
+                    matrix.SetSubMatrix(row_col_index, row_col_index, firstMatrix);
+
+                    return;
+                }
+
             }
 
 
