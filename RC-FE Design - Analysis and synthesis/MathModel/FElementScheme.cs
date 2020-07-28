@@ -16,10 +16,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// <summary>
         /// Матрицы инцидентности допустимых подключений двух четырехполюсников
         /// </summary>
-        public static List<List<int[,]>> IncidenceMatrices_E;
-
-
-        public static Dictionary<int, List<int[]>> IncidenceCodes_E;
+        public static Dictionary<int, int[,]> IncidenceMatrices_E;
 
         /// <summary>
         /// Матрицы указывающие на заземлённые выводы
@@ -27,36 +24,50 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         public static List<int[]> GroundVectors_A;
 
         /// <summary>
+        /// Коды допустимых заземлений четырёхполюсника
+        /// </summary>
+        public static Dictionary<int, int[]> GroundCodes_A;
+
+        /// <summary>
         /// Статический конструктор
         /// </summary>
         static FElementScheme()
         {
             // порядок обхода каждого элемента: левый верхний -> правый верхний -> правый нижний -> левый нижний
-            IncidenceMatrices_E = new List<List<int[,]>>()
+            IncidenceMatrices_E = new Dictionary<int, int[,]>()
             {
-                new List<int[,]>
                 {
+                    1,
                     new int[,]
-                    { 
+                    {
                         { 1, 1, 1, 1 },
                         { 1, 1, 1, 1 },
                         { 1, 1, 1, 1 },
                         { 1, 1, 1, 1 }
-                    },
+                    }
+                },
+                {
+                    2,
                     new int[,]
                     {
-                        { 1, 1, 0, 0 },
                         { 1, 1, 1, 0 },
-                        { 0, 1, 1, 0 },
+                        { 1, 1, 1, 0 },
+                        { 1, 1, 1, 0 },
                         { 0, 0, 0, 1 }
-                    },
+                    }
+                },
+                {
+                    3,
                     new int[,]
                     {
                         { 1, 1, 0, 1 },
-                        { 1, 1, 0, 0 },
+                        { 1, 1, 0, 1 },
                         { 0, 0, 1, 0 },
-                        { 1, 0, 0, 1 }
-                    },
+                        { 1, 1, 0, 1 }
+                    }
+                },
+                {
+                    4,
                     new int[,]
                     {
                         { 1, 1, 0, 0 },
@@ -65,113 +76,47 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                         { 0, 0, 0, 1 }
                     }
                 },
-                new List<int[,]>
                 {
+                    5,
                     new int[,]
                     {
-                        { 1, 0, 0, 1 },
+                        { 1, 0, 1, 1 },
                         { 0, 1, 0, 0 },
-                        { 0, 0, 1, 1 },
+                        { 1, 0, 1, 1 },
                         { 1, 0, 1, 1 }
-                    },
+                    }
+                },
+                {
+                    6,
                     new int[,]
                     {
                         { 1, 0, 0, 0 },
                         { 0, 1, 0, 0 },
                         { 0, 0, 1, 1 },
-                        { 0, 0, 1, 1 }
-                    },
-                    new int[,]
-                    {
-                        { 1, 1, 0, 0 },
-                        { 1, 1, 0, 0 },
-                        { 0, 0, 1, 1 },
-                        { 0, 0, 1, 1 }
-                    },
-                    new int[,]
-                    {
-                        { 1, 0, 0, 0 },
-                        { 0, 1, 1, 0 },
-                        { 0, 1, 1, 1 },
                         { 0, 0, 1, 1 }
                     }
+                },
+                {
+                    7,
+                    new int[,]
+                    {
+                        { 1, 1, 0, 0 },
+                        { 1, 1, 0, 0 },
+                        { 0, 0, 1, 1 },
+                        { 0, 0, 1, 1 }
+                    }
+                },
+                {
+                    8,
+                    new int[,]
+                    {
+                        { 1, 0, 0, 0 },
+                        { 0, 1, 1, 1 },
+                        { 0, 1, 1, 1 },
+                        { 0, 1, 1, 1 }
+                    } 
                 }
             };
-
-            IncidenceCodes_E =
-                new Dictionary<int,List<int[]>>()
-                {
-                    {
-                        1,
-                        new List<int[]>()
-                        {
-                            new int [] { 0, 1 },
-                            new int [] { 1, 2 },
-                            new int [] { 2, 3 },
-                            new int [] { 3, 0 },
-                            new int [] { 0, 2 },
-                            new int [] { 1, 3 }
-                        }
-                    },
-                    {
-                        2, 
-                        new List<int[]>()
-                        {
-                            new int [] { 0, 1 },
-                            new int [] { 1, 2 },
-                            new int [] { 2, 0 }
-                        }
-                    },
-                    {
-                        3, 
-                        new List<int[]>()
-                        {
-                            new int [] { 0, 1 },
-                            new int [] { 1, 3 },
-                            new int [] { 3, 0 }
-                        } 
-                    },
-                    {
-                        4, 
-                        new List<int[]>()
-                        {
-                            new int [] { 0, 1 }
-                        } 
-                    },
-                    {
-                        5, 
-                        new List<int[]>()
-                        {
-                            new int [] { 2, 3 },
-                            new int [] { 3, 0 },
-                            new int [] { 0, 2 }
-                        }
-                    },
-                    {
-                        6, 
-                        new List<int[]>()
-                        {
-                            new int [] { 2, 3 }
-                        } 
-                    },
-                    {
-                        7, 
-                        new List<int[]>()
-                        {
-                            new int [] { 0, 1 },
-                            new int [] { 2, 3 }
-                        } 
-                    },
-                    {
-                        8, 
-                        new List<int[]>()
-                        {
-                            new int [] { 1, 2 },
-                            new int [] { 2, 3 },
-                            new int [] { 3, 1 }
-                        }
-                    }
-                };
 
             GroundVectors_A = new List<int[]>()
             {
@@ -181,6 +126,38 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                 new int[] { 0, 0, 0, 1 },
                 new int[] { 1, 1, 0, 0 },
                 new int[] { 0, 0, 1, 1 }
+            };
+
+            GroundCodes_A = new Dictionary<int, int[]>()
+            {
+                {
+                    1,
+                    new int[] {  }
+                },
+                {
+                    2,
+                    new int[] { 0 }
+                },
+                {
+                    3,
+                    new int[] { 1 }
+                },
+                {
+                    4,
+                    new int[] { 2 }
+                },
+                {
+                    5,
+                    new int[] { 3 }
+                },
+                {
+                    6,
+                    new int[] { 0, 1 }
+                },
+                {
+                    7,
+                    new int[] { 2, 3 }
+                },
             };
         }
 

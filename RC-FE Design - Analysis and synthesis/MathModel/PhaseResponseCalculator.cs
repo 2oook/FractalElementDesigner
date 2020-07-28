@@ -23,6 +23,29 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             // глобальная матрица y-параметров
             var Y = Matrix<Complex>.Build.DenseOfArray(new Complex[scheme.FESections.Count * pinsCount, scheme.FESections.Count * pinsCount]);
 
+            // сформировать глобальную матрицу проводимости
+            CreateGlobalConductivityMatrix(Y, pinsCount, frequency, scheme);
+
+            // матрица соединений (инцидентности)
+            var I = Matrix<float>.Build.DenseOfArray(new float[scheme.FESections.Count * pinsCount, scheme.FESections.Count * pinsCount]);
+
+            // сформировать глобальную матрицу инцидентности
+            CreateGlobalIncidenceMatrix(I, pinsCount, scheme);
+
+            // привести матрицу в соответствие с нумерацией выводов элементов
+            // перестановка с учётом порядка обхода каждого элемента: левый верхний -> правый верхний -> правый нижний -> левый нижний
+            Y.PermuteColumns(new MathNet.Numerics.Permutation(scheme.PinsNumbering)); 
+            Y.PermuteRows(new MathNet.Numerics.Permutation(scheme.PinsNumbering));
+
+            // TEST!!
+            var test = Y.ToArray();
+
+            return phase;
+        }
+
+        // Метод для создания матрицы проводимости
+        private static void CreateGlobalConductivityMatrix(Matrix<Complex> matrix, int pinsCount, double frequency, FElementScheme scheme) 
+        {
             // для всех секций фрэ
             for (int sectionNumber = 0; sectionNumber < scheme.FESections.Count; sectionNumber++)
             {
@@ -36,16 +59,16 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                 var th = Complex.Tanh(theta);
                 var sh = Complex.Sinh(theta);
 
-                var theta_div_th = (theta/th);
-                var theta_div_sh = (theta /sh);
+                var theta_div_th = (theta / th);
+                var theta_div_sh = (theta / sh);
 
-                var coeficient = 1 / ((1 + parameters.N)*parameters.R*parameters.L);
+                var coeficient = 1 / ((1 + parameters.N) * parameters.R * parameters.L);
 
                 var mattrix = scheme.FESections[sectionNumber].YParametersMatrix;
 
                 // рассчитать матрицу БКЭ 
                 mattrix[0, 0] = coeficient * (theta_div_th + parameters.N);
-                mattrix[0, 1] = coeficient * (- theta_div_sh - parameters.N);
+                mattrix[0, 1] = coeficient * (-theta_div_sh - parameters.N);
                 mattrix[0, 2] = coeficient * (theta_div_sh - 1);
                 mattrix[0, 3] = coeficient * (1 - theta_div_th);
 
@@ -65,26 +88,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                 mattrix[3, 3] = mattrix[2, 2];
 
                 // скопировать матрицу БКЭ в глобальную матрицу
-                Y.SetSubMatrix(row_col_index, row_col_index, scheme.FESections[sectionNumber].YParametersMatrix);
+                matrix.SetSubMatrix(row_col_index, row_col_index, scheme.FESections[sectionNumber].YParametersMatrix);
             }
-
-            // матрица соединений (инциденции)
-            var I = Matrix<float>.Build.DenseOfArray(new float[scheme.FESections.Count * pinsCount, scheme.FESections.Count * pinsCount]);
-
-            // скопировать матрицу инциденции в глобальную матрицу инциденций
-            CreateGlobalIncidenceMatrix(I, pinsCount, scheme);
-
-            // привести матрицу в соответствие с нумерацией выводов элементов
-            // перестановка с учётом порядка обхода каждого элемента: левый верхний -> правый верхний -> правый нижний -> левый нижний
-            Y.PermuteColumns(new MathNet.Numerics.Permutation(scheme.PinsNumbering)); 
-            Y.PermuteRows(new MathNet.Numerics.Permutation(scheme.PinsNumbering));
-
-            // TEST!!
-            var test = Y.ToArray();
-
-            return phase;
         }
 
+        // Метод для создания матрицы инцидентности
         private static void CreateGlobalIncidenceMatrix(Matrix<float> matrix, int sectionPinsCount, FElementScheme scheme) 
         {
             // установить диагональ
@@ -94,28 +102,31 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             // для всех соединений схемы
             foreach (var connection in scheme.InnerConnections)
             {
-                var _conn = FElementScheme.IncidenceCodes_E[connection.ConnectionType];
+                var localMatrix = FElementScheme.IncidenceMatrices_E[connection.ConnectionType];
+                var upperBound0 = localMatrix.GetUpperBound(0);
+                var upperBound1 = localMatrix.GetUpperBound(1);
 
-                // обойти подключения между выводами
-                foreach (var pinsConnection in _conn)
+                // обойти матрицу инцидентности
+                for (int i = 0; i <= upperBound0; i++)
                 {
-                    int global_index_1 = 0;
-                    int global_index_2 = 0;
+                    for (int j = i; j <= upperBound1; j++)
+                    {
+                        if (localMatrix[i,j] == 1)
+                        {
+                            int global_index_1 = MapIndexToGlobal(i, connection);
+                            int global_index_2 = MapIndexToGlobal(j, connection);
 
-                    var pin1 = pinsConnection[0];
-                    var pin2 = pinsConnection[1];
-
-                    global_index_1 = MapIndexToGlobal(pin1, connection);
-                    global_index_2 = MapIndexToGlobal(pin2, connection);
-
-                    matrix[global_index_1, global_index_2] = 1;
-                    matrix[global_index_2, global_index_1] = 1;
+                            matrix[global_index_1, global_index_2] = 1;
+                            matrix[global_index_2, global_index_1] = 1;
+                        }
+                    }
                 }
             }
 
             // найти номер вывода в схеме по номеру вывода элемента
             int MapIndexToGlobal(int pin, Connection connection) 
             {
+                // спроецировать внутреннюю нумерацию шаблонного соединения на выводы двух БКЭ
                 switch (pin)        
                 {
                     case 0:           
