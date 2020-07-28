@@ -87,25 +87,52 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
         private static void CreateGlobalIncidenceMatrix(Matrix<float> matrix, int sectionPinsCount, FElementScheme scheme) 
         {
+            // установить диагональ
+            var diagonal = Vector<float>.Build.Dense(scheme.FESections.Count*sectionPinsCount, 1);
+            matrix.SetDiagonal(diagonal);
+
             // для всех соединений схемы
-            for (int connectionNumber = 0; connectionNumber < scheme.InnerConnections.Count; connectionNumber++)
+            foreach (var connection in scheme.InnerConnections)
             {
-                var row_col_index = (connectionNumber) * sectionPinsCount;
+                var _conn = FElementScheme.IncidenceCodes_E[connection.ConnectionType];
 
-                if (row_col_index == 0)
+                // обойти подключения между выводами
+                foreach (var pinsConnection in _conn)
                 {
-                    // первые четыре вывода не подключены
-                    var firstMatrix = Matrix<float>.Build.DenseOfArray(new float[sectionPinsCount, sectionPinsCount]);
-                    var diagonal = Vector<float>.Build.Dense(sectionPinsCount, 1);
-                    firstMatrix.SetDiagonal(diagonal);
-                    matrix.SetSubMatrix(row_col_index, row_col_index, firstMatrix);
+                    int global_index_1 = 0;
+                    int global_index_2 = 0;
 
-                    return;
+                    var pin1 = pinsConnection[0];
+                    var pin2 = pinsConnection[1];
+
+                    global_index_1 = MapIndexToGlobal(pin1, connection);
+                    global_index_2 = MapIndexToGlobal(pin2, connection);
+
+                    matrix[global_index_1, global_index_2] = 1;
+                    matrix[global_index_2, global_index_1] = 1;
                 }
-
             }
 
+            // найти номер вывода в схеме по номеру вывода элемента
+            int MapIndexToGlobal(int pin, Connection connection) 
+            {
+                switch (pin)        
+                {
+                    case 0:           
+                        return connection.FirstSection.Pins[1].Number;
+                    case 3:                   
+                        return connection.FirstSection.Pins[2].Number;                    
+                    case 1:                  
+                        return connection.SecondSection.Pins[0].Number;
+                    case 2:
+                        return connection.SecondSection.Pins[3].Number;
+                }
 
+                return -1;
+            }
+
+            // TEST!!
+            var test = matrix.ToArray();
         }
     }
 }

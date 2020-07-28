@@ -105,64 +105,70 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                         1,
                         new List<int[]>()
                         {
+                            new int [] { 0, 1 },
                             new int [] { 1, 2 },
                             new int [] { 2, 3 },
-                            new int [] { 3, 4 },
-                            new int [] { 4, 1 }
+                            new int [] { 3, 0 },
+                            new int [] { 0, 2 },
+                            new int [] { 1, 3 }
                         }
                     },
                     {
                         2, 
                         new List<int[]>()
                         {
+                            new int [] { 0, 1 },
                             new int [] { 1, 2 },
-                            new int [] { 2, 3 }
+                            new int [] { 2, 0 }
                         }
                     },
                     {
                         3, 
                         new List<int[]>()
                         {
-                            new int [] { 1, 2 },
-                            new int [] { 4, 1 },
+                            new int [] { 0, 1 },
+                            new int [] { 1, 3 },
+                            new int [] { 3, 0 }
                         } 
                     },
                     {
                         4, 
                         new List<int[]>()
                         {
-                            new int [] { 1, 2 }
+                            new int [] { 0, 1 }
                         } 
                     },
                     {
                         5, 
                         new List<int[]>()
                         {
-                            new int [] { 3, 4 },
-                            new int [] { 4, 1 }
+                            new int [] { 2, 3 },
+                            new int [] { 3, 0 },
+                            new int [] { 0, 2 }
                         }
                     },
                     {
                         6, 
                         new List<int[]>()
                         {
-                            new int [] { 3, 4 }
+                            new int [] { 2, 3 }
                         } 
                     },
                     {
                         7, 
                         new List<int[]>()
                         {
-                            new int [] { 1, 2 },
-                            new int [] { 3, 4 }
+                            new int [] { 0, 1 },
+                            new int [] { 2, 3 }
                         } 
                     },
                     {
                         8, 
                         new List<int[]>()
                         {
+                            new int [] { 1, 2 },
                             new int [] { 2, 3 },
-                            new int [] { 3, 4 }
+                            new int [] { 3, 1 }
                         }
                     }
                 };
@@ -200,8 +206,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             {
                 //InnerConnections.Add(new Connection()
                 //{
-                //    FirstSection = sections[sections[i].Number],
-                //    SecondSection = sections[sections[i].Number + 1]
+                //    FirstSection = sections[sections[i].Number - 1],
+                //    SecondSection = sections[sections[i].Number + 1 - 1]
                 //});
 
                 // тест!!!!!!!!!!!!!!!!!!!!!!!!
@@ -215,8 +221,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                             InnerConnections.Add(new Connection()
                             {
                                 ConnectionType = type,
-                                FirstSection = sections[sections[i].Number],
-                                SecondSection = sections[sections[i].Number + 1]
+                                FirstSection = sections[sections[i].Number - 1],
+                                SecondSection = sections[sections[i].Number + 1 - 1]
                             });
                         }
                         break;
@@ -227,8 +233,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                             InnerConnections.Add(new Connection()
                             {
                                 ConnectionType = type,
-                                FirstSection = sections[sections[i].Number],
-                                SecondSection = sections[sections[i].Number + 1]
+                                FirstSection = sections[sections[i].Number - 1],
+                                SecondSection = sections[sections[i].Number + 1 - 1]
                             });
                         }
                         break;
@@ -239,8 +245,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                             InnerConnections.Add(new Connection()
                             {
                                 ConnectionType = type,
-                                FirstSection = sections[sections[i].Number],
-                                SecondSection = sections[sections[i].Number + 1]
+                                FirstSection = sections[sections[i].Number - 1],
+                                SecondSection = sections[sections[i].Number + 1 - 1]
                             });
                         }
                         break;
