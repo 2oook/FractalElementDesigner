@@ -41,10 +41,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.StructureSchemeSynthesis
             }, 
             new List<Pin>()
             {
-                new Pin() { Number = 0, Orientation = PinOrientationEnum.Left },
-                new Pin() { Number = 4, Orientation = PinOrientationEnum.Right },
-                new Pin() { Number = 5, Orientation = PinOrientationEnum.Right },
-                new Pin() { Number = 3, Orientation = PinOrientationEnum.Left }
+                new Pin() { Number = 0 },
+                new Pin() { Number = 4 },
+                new Pin() { Number = 5 },
+                new Pin() { Number = 3 }
             }, 
             1);
 
@@ -62,10 +62,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.StructureSchemeSynthesis
             },
             new List<Pin>()
             {
-                new Pin() { Number = 6, Orientation = PinOrientationEnum.Left },
-                new Pin() { Number = 8, Orientation = PinOrientationEnum.Right },
-                new Pin() { Number = 9, Orientation = PinOrientationEnum.Right },
-                new Pin() { Number = 7, Orientation = PinOrientationEnum.Left }
+                new Pin() { Number = 6 },
+                new Pin() { Number = 8 },
+                new Pin() { Number = 9 },
+                new Pin() { Number = 7 }
             },
             2);
 
@@ -83,10 +83,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.StructureSchemeSynthesis
             }, 
             new List<Pin>()
             {
-                new Pin() { Number = 10, Orientation = PinOrientationEnum.Left },
-                new Pin() { Number = 12, Orientation = PinOrientationEnum.Right },
-                new Pin() { Number = 13, Orientation = PinOrientationEnum.Right },
-                new Pin() { Number = 11, Orientation = PinOrientationEnum.Left }
+                new Pin() { Number = 10 },
+                new Pin() { Number = 12 },
+                new Pin() { Number = 13 },
+                new Pin() { Number = 11 }
             }, 
             3);
 
@@ -104,10 +104,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.StructureSchemeSynthesis
             },
             new List<Pin>()
             {
-                new Pin() { Number = 14, Orientation = PinOrientationEnum.Left },
-                new Pin() { Number = 1, Orientation = PinOrientationEnum.Right },
-                new Pin() { Number = 2, Orientation = PinOrientationEnum.Right },
-                new Pin() { Number = 15, Orientation = PinOrientationEnum.Left }
+                new Pin() { Number = 14 },
+                new Pin() { Number = 1 },
+                new Pin() { Number = 2 },
+                new Pin() { Number = 15 }
             },
             4);
 

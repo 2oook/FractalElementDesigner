@@ -14,7 +14,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     /// <summary>
     /// Класс реализующий синтез схемы включения элемента
     /// </summary>
-    public class SchemeSynthesizer
+    class SchemeSynthesizer
     {
         /// <summary>
         /// Событие выполнения части работы

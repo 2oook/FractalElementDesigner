@@ -11,12 +11,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     /// <summary>
     /// Схема включения элемента
     /// </summary>
-    public class FElementScheme : IProjectTreeItem
+    class FElementScheme : IProjectTreeItem
     {
         /// <summary>
-        /// Матрицы инцидентности допустимых подключений двух четырехполюсников
+        /// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Матрицы инцидентности допустимых подключений двух четырехполюсников
         /// </summary>
-        public static Dictionary<int, int[,]> IncidenceMatrices_E;
+        public static Dictionary<int, AllowablePinsConnection> IncidenceMatrices_E;
 
         /// <summary>
         /// Матрицы указывающие на заземлённые выводы
@@ -34,87 +34,111 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         static FElementScheme()
         {
             // порядок обхода каждого элемента: левый верхний -> правый верхний -> правый нижний -> левый нижний
-            IncidenceMatrices_E = new Dictionary<int, int[,]>()
+            IncidenceMatrices_E = new Dictionary<int, AllowablePinsConnection>()
             {
                 {
                     1,
-                    new int[,]
+                    new AllowablePinsConnection()
                     {
-                        { 1, 1, 1, 1 },
-                        { 1, 1, 1, 1 },
-                        { 1, 1, 1, 1 },
-                        { 1, 1, 1, 1 }
-                    }
+                        ConnectionMatrix = new int[,]
+                        {
+                            { 1, 1, 1, 1 },
+                            { 1, 1, 1, 1 },
+                            { 1, 1, 1, 1 },
+                            { 1, 1, 1, 1 }
+                        }
+                    } 
                 },
                 {
                     2,
-                    new int[,]
+                    new AllowablePinsConnection()
                     {
-                        { 1, 1, 1, 0 },
-                        { 1, 1, 1, 0 },
-                        { 1, 1, 1, 0 },
-                        { 0, 0, 0, 1 }
-                    }
+                        ConnectionMatrix = new int[,]
+                        {
+                            { 1, 1, 1, 0 },
+                            { 1, 1, 1, 0 },
+                            { 1, 1, 1, 0 },
+                            { 0, 0, 0, 1 }
+                        }
+                    } 
                 },
                 {
                     3,
-                    new int[,]
+                    new AllowablePinsConnection()
                     {
-                        { 1, 1, 0, 1 },
-                        { 1, 1, 0, 1 },
-                        { 0, 0, 1, 0 },
-                        { 1, 1, 0, 1 }
+                        ConnectionMatrix = new int[,]
+                        {
+                            { 1, 1, 0, 1 },
+                            { 1, 1, 0, 1 },
+                            { 0, 0, 1, 0 },
+                            { 1, 1, 0, 1 }
+                        }
                     }
                 },
                 {
                     4,
-                    new int[,]
+                    new AllowablePinsConnection()
                     {
-                        { 1, 1, 0, 0 },
-                        { 1, 1, 0, 0 },
-                        { 0, 0, 1, 0 },
-                        { 0, 0, 0, 1 }
+                        ConnectionMatrix = new int[,]
+                        {
+                            { 1, 1, 0, 0 },
+                            { 1, 1, 0, 0 },
+                            { 0, 0, 1, 0 },
+                            { 0, 0, 0, 1 }
+                        }
                     }
                 },
                 {
                     5,
-                    new int[,]
+                    new AllowablePinsConnection()
                     {
-                        { 1, 0, 1, 1 },
-                        { 0, 1, 0, 0 },
-                        { 1, 0, 1, 1 },
-                        { 1, 0, 1, 1 }
+                        ConnectionMatrix = new int[,]
+                        {
+                            { 1, 0, 1, 1 },
+                            { 0, 1, 0, 0 },
+                            { 1, 0, 1, 1 },
+                            { 1, 0, 1, 1 }
+                        }
                     }
                 },
                 {
                     6,
-                    new int[,]
+                    new AllowablePinsConnection()
                     {
-                        { 1, 0, 0, 0 },
-                        { 0, 1, 0, 0 },
-                        { 0, 0, 1, 1 },
-                        { 0, 0, 1, 1 }
+                        ConnectionMatrix = new int[,]
+                        {
+                            { 1, 0, 0, 0 },
+                            { 0, 1, 0, 0 },
+                            { 0, 0, 1, 1 },
+                            { 0, 0, 1, 1 }
+                        }
                     }
                 },
                 {
                     7,
-                    new int[,]
+                    new AllowablePinsConnection()
                     {
-                        { 1, 1, 0, 0 },
-                        { 1, 1, 0, 0 },
-                        { 0, 0, 1, 1 },
-                        { 0, 0, 1, 1 }
-                    }
+                        ConnectionMatrix = new int[,]
+                        {
+                            { 1, 1, 0, 0 },
+                            { 1, 1, 0, 0 },
+                            { 0, 0, 1, 1 },
+                            { 0, 0, 1, 1 }
+                        }
+                    }     
                 },
                 {
                     8,
-                    new int[,]
+                    new AllowablePinsConnection()
                     {
-                        { 1, 0, 0, 0 },
-                        { 0, 1, 1, 1 },
-                        { 0, 1, 1, 1 },
-                        { 0, 1, 1, 1 }
-                    } 
+                        ConnectionMatrix = new int[,]
+                        {
+                            { 1, 0, 0, 0 },
+                            { 0, 1, 1, 1 },
+                            { 0, 1, 1, 1 },
+                            { 0, 1, 1, 1 }
+                        }
+                    }   
                 }
             };
 

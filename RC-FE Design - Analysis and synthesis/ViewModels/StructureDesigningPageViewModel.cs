@@ -31,7 +31,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
     /// <summary>
     /// ViewModel страницы анализа и синтеза
     /// </summary>
-    public class StructureDesigningPageViewModel : ViewModelBase, IPageViewModel
+    class StructureDesigningPageViewModel : ViewModelBase, IPageViewModel
     {
         public StructureDesigningPageViewModel()
         {

@@ -15,7 +15,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     /// <summary>
     /// Класс реализующий создание конструкции элемента
     /// </summary>
-    public class StructureCreator
+    class StructureCreator
     {
         /// <summary>
         /// Событие выполнения части работы

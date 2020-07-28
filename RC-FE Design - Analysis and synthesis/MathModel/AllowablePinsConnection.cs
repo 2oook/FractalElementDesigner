@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 {
-    /// <summary>
-    /// Ориентация вывода
-    /// </summary>
-    public enum PinOrientationEnum
+    class AllowablePinsConnection
     {
-        Right,
-        Left
+        public int[,] ConnectionMatrix { get; set; }
+
+
     }
 }

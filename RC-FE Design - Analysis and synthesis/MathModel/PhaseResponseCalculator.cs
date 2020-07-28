@@ -11,7 +11,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     /// <summary>
     /// Класс для расчета ФЧХ
     /// </summary>
-    public class PhaseResponseCalculator
+    class PhaseResponseCalculator
     {
         // Метод для расчёта фазы
         public static double CalculatePhase(FElementScheme scheme, double frequency) 
@@ -103,15 +103,15 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             foreach (var connection in scheme.InnerConnections)
             {
                 var localMatrix = FElementScheme.IncidenceMatrices_E[connection.ConnectionType];
-                var upperBound0 = localMatrix.GetUpperBound(0);
-                var upperBound1 = localMatrix.GetUpperBound(1);
+                var upperBound0 = localMatrix.ConnectionMatrix.GetUpperBound(0);
+                var upperBound1 = localMatrix.ConnectionMatrix.GetUpperBound(1);
 
                 // обойти матрицу инцидентности
                 for (int i = 0; i <= upperBound0; i++)
                 {
                     for (int j = i; j <= upperBound1; j++)
                     {
-                        if (localMatrix[i,j] == 1)
+                        if (localMatrix.ConnectionMatrix[i,j] == 1)
                         {
                             int global_index_1 = MapIndexToGlobal(i, connection);
                             int global_index_2 = MapIndexToGlobal(j, connection);

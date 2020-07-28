@@ -9,7 +9,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     /// <summary>
     /// Соединение
     /// </summary>
-    public class Connection
+    class Connection
     {
         /// <summary>
         /// Секция 1

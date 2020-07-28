@@ -20,10 +20,5 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// Ссылка на секцию данного вывода
         /// </summary>
         public FESection Section { get; set; }
-
-        /// <summary>
-        /// Условная ориентация вывода
-        /// </summary>
-        public PinOrientationEnum Orientation { get; set; }
     }
 }
