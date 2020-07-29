@@ -43,6 +43,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             return phase;
         }
 
+        private static void ImposePE() 
+        {
+            
+        }
+
         // Метод для создания матрицы проводимости
         private static void CreateGlobalConductivityMatrix(Matrix<Complex> matrix, int pinsCount, double frequency, FElementScheme scheme) 
         {
@@ -102,7 +107,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             // для всех соединений схемы
             foreach (var connection in scheme.InnerConnections)
             {
-                var localMatrix = FElementScheme.IncidenceMatrices_E[connection.ConnectionType];
+                var localMatrix = FElementScheme.AllowablePinsConnection_E[connection.ConnectionType];
                 var upperBound0 = localMatrix.ConnectionMatrix.GetUpperBound(0);
                 var upperBound1 = localMatrix.ConnectionMatrix.GetUpperBound(1);
 

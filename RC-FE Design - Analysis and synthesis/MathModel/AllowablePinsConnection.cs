@@ -10,6 +10,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     {
         public int[,] ConnectionMatrix { get; set; }
 
-
+        public Dictionary<int, int[]> PEVector { get; set; }
     }
 }
