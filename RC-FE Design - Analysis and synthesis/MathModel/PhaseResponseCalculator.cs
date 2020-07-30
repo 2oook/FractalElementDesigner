@@ -16,21 +16,29 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         // Метод для расчёта фазы
         public static double CalculatePhase(FElementScheme scheme, double frequency) 
         {
-            double phase = 0;
-
             int pinsCount = scheme.FESections.First().Pins.Count;
 
             // глобальная матрица y-параметров
             var Y = Matrix<Complex>.Build.DenseOfArray(new Complex[scheme.FESections.Count * pinsCount, scheme.FESections.Count * pinsCount]);
-
             // сформировать глобальную матрицу проводимости
             CreateGlobalConductivityMatrix(Y, pinsCount, frequency, scheme);
 
             // матрица соединений (инцидентности)
             var I = Matrix<float>.Build.DenseOfArray(new float[scheme.FESections.Count * pinsCount, scheme.FESections.Count * pinsCount]);
-
             // сформировать глобальную матрицу инцидентности
             CreateGlobalIncidenceMatrix(I, pinsCount, scheme);
+            
+            // номера заземлённых выводов
+            var PE = new List<int>();
+            // найти номера заземлённых выводов
+            FindPEIndices(PE, scheme);
+
+            RemoveRowAndColsFromMatrix(ref Y, PE);
+            RemoveRowAndColsFromMatrix(ref I, PE);
+
+            I.SetDiagonal(Vector<float>.Build.Dense(I.ColumnCount, 0));
+
+            AddRowsAndColsInYMatrix(ref Y, ref I);
 
             // привести матрицу в соответствие с нумерацией выводов элементов
             // перестановка с учётом порядка обхода каждого элемента: левый верхний -> правый верхний -> правый нижний -> левый нижний
@@ -40,12 +48,87 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             // TEST!!
             var test = Y.ToArray();
 
+            double phase = 0;
+
             return phase;
         }
 
-        private static void ImposePE() 
+
+        // метод для сложения столбцов и строк соединённых выводов
+        private static void AddRowsAndColsInYMatrix(ref Matrix<Complex> Y, ref Matrix<float> I) 
         {
-            
+            // обойти верхнюю треугольную матрицу
+            for (int i = 0; i < I.RowCount; i++)
+            {
+                for (int j = i + 1; j < I.ColumnCount; j++)
+                {
+                    // сложить столбцы и строки соединённых выводов в матрице проводимости
+                    if (I[i,j] == 1)
+                    {
+                        var firstRow = Y.Row(i);
+                        var secondRow = Y.Row(j);
+                        var rowSum = firstRow.Add(secondRow);
+
+                        Y.SetRow(i, rowSum);
+
+                        var firstCol = Y.Column(i);
+                        var secondCol = Y.Column(j);
+                        var colSum = firstCol.Add(secondCol);
+
+                        Y.SetColumn(i, colSum);
+
+                        Y = RemoveRowAndColsFromMatrix(Y, j);
+                        I = RemoveRowAndColsFromMatrix(I, j);
+                    }
+                }
+            }
+        }
+
+        // метод для удаления строк и столбцов из матрицы
+        private static void RemoveRowAndColsFromMatrix<T>(ref Matrix<T> matrix, List<int> indices) where T : struct , IEquatable<T>, IFormattable
+        {
+            var result = matrix;
+
+            foreach (var index in indices)
+            {
+                result = result.RemoveColumn(index);
+                result = result.RemoveRow(index);
+            }
+
+            matrix = result;
+        }
+
+        // метод для удаления строки и столбца из матрицы
+        private static Matrix<T> RemoveRowAndColsFromMatrix<T>(Matrix<T> matrix, int index) where T : struct, IEquatable<T>, IFormattable
+        {
+            var result = matrix;
+
+            result = result.RemoveColumn(index);
+            result = result.RemoveRow(index);          
+
+            if (result != null)
+                return result;
+            else
+                return matrix;
+        }
+
+        // Метод для поиска номеров заземлённых выводов
+        private static void FindPEIndices(List<int> vector, FElementScheme scheme)
+        {
+            // для всех соединений схемы
+            foreach (var connection in scheme.InnerConnections) 
+            {
+                var localVector = FElementScheme.AllowablePinsConnections[connection.ConnectionType].PEVector[connection.PEType];
+
+                for (int i = 0; i < localVector.Length; i++)
+                {
+                    if (localVector[i] == 1)
+                    {
+                        int index = MapIndexToGlobal(i, connection);
+                        vector.Add(index);
+                    }
+                }
+            }
         }
 
         // Метод для создания матрицы проводимости
@@ -107,7 +190,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             // для всех соединений схемы
             foreach (var connection in scheme.InnerConnections)
             {
-                var localMatrix = FElementScheme.AllowablePinsConnection_E[connection.ConnectionType];
+                var localMatrix = FElementScheme.AllowablePinsConnections[connection.ConnectionType];
                 var upperBound0 = localMatrix.ConnectionMatrix.GetUpperBound(0);
                 var upperBound1 = localMatrix.ConnectionMatrix.GetUpperBound(1);
 
@@ -127,28 +210,25 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                     }
                 }
             }
+        }
 
-            // найти номер вывода в схеме по номеру вывода элемента
-            int MapIndexToGlobal(int pin, Connection connection) 
+        // найти номер вывода в схеме по номеру вывода элемента
+        private static int MapIndexToGlobal(int pin, Connection connection)
+        {
+            // спроецировать внутреннюю нумерацию шаблонного соединения на выводы двух БКЭ
+            switch (pin)
             {
-                // спроецировать внутреннюю нумерацию шаблонного соединения на выводы двух БКЭ
-                switch (pin)        
-                {
-                    case 0:           
-                        return connection.FirstSection.Pins[1].Number;
-                    case 3:                   
-                        return connection.FirstSection.Pins[2].Number;                    
-                    case 1:                  
-                        return connection.SecondSection.Pins[0].Number;
-                    case 2:
-                        return connection.SecondSection.Pins[3].Number;
-                }
-
-                return -1;
+                case 0:
+                    return connection.FirstSection.Pins[1].Number;
+                case 3:
+                    return connection.FirstSection.Pins[2].Number;
+                case 1:
+                    return connection.SecondSection.Pins[0].Number;
+                case 2:
+                    return connection.SecondSection.Pins[3].Number;
             }
 
-            // TEST!!
-            var test = matrix.ToArray();
+            return -1;
         }
     }
 }

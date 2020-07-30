@@ -16,7 +16,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// <summary>
         /// Допустимые подключения двух четырехполюсников
         /// </summary>
-        public static Dictionary<int, AllowablePinsConnection> AllowablePinsConnection_E;
+        public static Dictionary<int, AllowablePinsConnection> AllowablePinsConnections;
 
         /// <summary>
         /// Статический конструктор
@@ -24,7 +24,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         static FElementScheme()
         {
             // порядок обхода каждого элемента: левый верхний -> правый верхний -> правый нижний -> левый нижний
-            AllowablePinsConnection_E = new Dictionary<int, AllowablePinsConnection>()
+            AllowablePinsConnections = new Dictionary<int, AllowablePinsConnection>()
             {
                 {
                     1,
