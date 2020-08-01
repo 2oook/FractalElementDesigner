@@ -885,7 +885,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                 StartSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, scheme);
 
-                ShowPhaseResponsePlot(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, scheme);
+                AddPhaseResponsePlot(scheme);
             }
             catch (Exception ex)
             {
@@ -893,13 +893,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             }
         }
 
-        private void ShowPhaseResponsePlot(StructureSchemeSynthesisParameters structureSchemeSynthesisParameters, FElementScheme scheme) 
+        private void AddPhaseResponsePlot(FElementScheme scheme) 
         {          
             var plot = new PRPlot();
-            //plot.Points = new List<List<double>>();
 
-
-            scheme.Plots = new ObservableCollection<PRPlot>() { plot };
+            scheme.Elements.Add(plot);
         }
 
         // Метод для асинхронного создания конструкции элемента
@@ -946,6 +944,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                     // синтезировать схему
                     SchemeSynthesizer.Synthesize(ga, structureSchemeSynthesisParametersInstance, scheme);
+
+                    var plot = scheme.Elements.Where(x => x is PRPlot).SingleOrDefault() as PRPlot;
+
+                    PRPlot.InitializatePlot(scheme.PhaseResponsePoints, plot);
                 }
                 catch (Exception ex)
                 {

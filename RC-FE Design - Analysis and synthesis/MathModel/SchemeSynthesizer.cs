@@ -37,19 +37,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
             OnStateChange("Выполнение синтеза");
 
-            var points = new List<(double, double)>();
+            // рассчитать ФЧХ для схемы
+            scheme.PhaseResponsePoints = InnerSchemePhaseResponseCalculator.CalculatePhaseResponseInScheme(
+                synthesisParameters.MinFrequency, synthesisParameters.MaxFrequency, synthesisParameters.PointsCountAtFrequencyAxle, scheme);
 
-            double increment = (synthesisParameters.MaxFrequency - synthesisParameters.MinFrequency)/ synthesisParameters.PointsCountAtFrequencyAxle;
-            double frequency = synthesisParameters.MinFrequency;
-            // цикл по частотам
-            for (int i = 0; i < synthesisParameters.PointsCountAtFrequencyAxle; i++)
-            {
-                var phase = PhaseResponseCalculator.CalculatePhase(scheme, Math.Pow(10,frequency));
 
-                points.Add((Math.Pow(10, frequency), phase));
 
-                frequency += increment;
-            }
 
             int n = scheme.FESections.Count;
 
@@ -66,32 +59,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                 Thread.Sleep(5);
                 OnDoWork(i+1);
             }
-
-            var plot = scheme.Plots.SingleOrDefault();
-
-            if (plot != null)
-            {
-                var series = new LineSeries() { InterpolationAlgorithm = InterpolationAlgorithms.CanonicalSpline };
-
-                foreach (var point in points)
-                {
-                    series.Points.Add(new DataPoint(point.Item1, point.Item2));
-                }
-
-
-                //series.Points.Add(new DataPoint(0.1, -6));
-                //series.Points.Add(new DataPoint(1, -22));
-                //series.Points.Add(new DataPoint(10, -20));
-                //series.Points.Add(new DataPoint(100, -15));
-
-                plot.Model = new PlotModel() { Title = "ФЧХ" };
-
-                plot.Model.Axes.Add(new LinearAxis() { Title = "φ", Position = AxisPosition.Left, Unit = "град" , AxisTitleDistance = 10 });
-                plot.Model.Axes.Add(new LogarithmicAxis() { Title = "ωRC", Position = AxisPosition.Bottom, Base = 10, Minimum = 0.1 });
-
-                plot.Model.Series.Add(series);
-            }
-
             // для отладки
             // для отладки
             // для отладки

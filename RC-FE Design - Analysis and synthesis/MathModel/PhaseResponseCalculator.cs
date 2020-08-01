@@ -38,8 +38,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             I.SetDiagonal(Vector<float>.Build.Dense(I.ColumnCount, 0));
 
             // скорее всего в Matlab есть ошибка, которая не учитывает перестановку матрицы инцидениции
-            I.PermuteColumns(permutation);
-            I.PermuteRows(permutation);
+            //I.PermuteColumns(permutation);
+            //I.PermuteRows(permutation);
 
             // найти номера заземлённых выводов
             var PE = FindPEIndices(scheme);

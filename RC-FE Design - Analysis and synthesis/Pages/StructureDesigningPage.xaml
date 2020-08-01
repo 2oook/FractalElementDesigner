@@ -115,7 +115,7 @@
                                                 
                                             </Style>
 
-                                            <HierarchicalDataTemplate x:Key="FElementSchemeDataTemplate" ItemsSource="{Binding Path=Plots}" ItemTemplateSelector="{x:Null}">
+                                            <HierarchicalDataTemplate x:Key="FElementSchemeDataTemplate" ItemsSource="{Binding Path=Elements}" ItemTemplateSelector="{x:Null}">
                                                 <!--схема-->
                                                 <TextBlock Text="{Binding Path=Name}"/>
                                                 <HierarchicalDataTemplate.ItemTemplate>

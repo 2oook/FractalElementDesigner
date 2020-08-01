@@ -246,8 +246,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
             FESections = sections;
 
-            InnerConnections = new List<Connection>();
-
             var array = new List<int>();
 
             for (int i = 0; i < sections.Count; i++)
@@ -321,7 +319,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// <summary>
         /// Соединения БКЭ
         /// </summary>
-        public List<Connection> InnerConnections { get; set; }
+        public List<Connection> InnerConnections { get; set; } = new List<Connection>();
 
         /// <summary>
         /// Вектор перестановки нумерации выводов схемы
@@ -329,12 +327,17 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         public int[] PinsNumbering { get; set; }
 
         /// <summary>
-        /// Графики
+        /// Точки ФЧХ
         /// </summary>
-        public ObservableCollection<PRPlot> Plots { get; set; }
+        public List<(double frequency, double phase)> PhaseResponsePoints { get; set; }
 
         /// <summary>
-        /// Название
+        /// Элементы схемы
+        /// </summary>
+        public ObservableCollection<IProjectTreeItem> Elements { get; set; } = new ObservableCollection<IProjectTreeItem>();
+
+        /// <summary>
+        /// Название схемы
         /// </summary>
         public string Name { get; set; }
 
