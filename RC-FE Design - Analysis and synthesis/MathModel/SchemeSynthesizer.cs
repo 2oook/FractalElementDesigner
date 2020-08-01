@@ -37,14 +37,16 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
             OnStateChange("Выполнение синтеза");
 
-            scheme.ClearState();
+            var points = new List<(double, double)>();
 
-            double increment = (synthesisParameters.MaxLevelOfFrequencyCharacteristic - synthesisParameters.MinLevelOfFrequencyCharacteristic)/ synthesisParameters.PointsCountAtFrequencyAxle;
-            double frequency = synthesisParameters.MinLevelOfFrequencyCharacteristic;
+            double increment = (synthesisParameters.MaxFrequency - synthesisParameters.MinFrequency)/ synthesisParameters.PointsCountAtFrequencyAxle;
+            double frequency = synthesisParameters.MinFrequency;
             // цикл по частотам
             for (int i = 0; i < synthesisParameters.PointsCountAtFrequencyAxle; i++)
             {
-                var phase = PhaseResponseCalculator.CalculatePhase(scheme, frequency);
+                var phase = PhaseResponseCalculator.CalculatePhase(scheme, Math.Pow(10,frequency));
+
+                points.Add((Math.Pow(10, frequency), phase));
 
                 frequency += increment;
             }
@@ -70,10 +72,17 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             if (plot != null)
             {
                 var series = new LineSeries() { InterpolationAlgorithm = InterpolationAlgorithms.CanonicalSpline };
-                series.Points.Add(new DataPoint(0.1, -6));
-                series.Points.Add(new DataPoint(1, -22));
-                series.Points.Add(new DataPoint(10, -20));
-                series.Points.Add(new DataPoint(100, -15));
+
+                foreach (var point in points)
+                {
+                    series.Points.Add(new DataPoint(point.Item1, point.Item2));
+                }
+
+
+                //series.Points.Add(new DataPoint(0.1, -6));
+                //series.Points.Add(new DataPoint(1, -22));
+                //series.Points.Add(new DataPoint(10, -20));
+                //series.Points.Add(new DataPoint(100, -15));
 
                 plot.Model = new PlotModel() { Title = "ФЧХ" };
 

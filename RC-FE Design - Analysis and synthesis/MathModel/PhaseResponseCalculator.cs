@@ -1,4 +1,5 @@
-﻿using MathNet.Numerics.LinearAlgebra;
+﻿using MathNet.Numerics;
+using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,8 +38,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             I.SetDiagonal(Vector<float>.Build.Dense(I.ColumnCount, 0));
 
             // скорее всего в Matlab есть ошибка, которая не учитывает перестановку матрицы инцидениции
-            //I.PermuteColumns(permutation); 
-            //I.PermuteRows(permutation);
+            I.PermuteColumns(permutation);
+            I.PermuteRows(permutation);
 
             // найти номера заземлённых выводов
             var PE = FindPEIndices(scheme);
@@ -48,12 +49,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
             AddRowsAndColsInYMatrix(ref Y, ref I);
 
-            ReduceMatrix(ref Y, 4);
+            ReduceMatrix(ref Y, 1);
 
-            // TEST!!
-            var test = Y.ToArray();
-
-            double phase = 0;
+            var phase = -Y[Y.RowCount-1, Y.ColumnCount-1].Phase * 180 / Math.PI;
 
             return phase;
         }
@@ -70,6 +68,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
                 temp = matrix.RemoveColumn(i);
                 temp = temp.RemoveRow(i);
+
+                // проверка знаменателя на 0
+                if (matrix[i, i].IsZero())
+                    matrix[i, i] = 1;
 
                 matrix = temp - (column * (1 / matrix[i, i]) * row);
             }
