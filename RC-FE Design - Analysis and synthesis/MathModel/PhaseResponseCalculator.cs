@@ -27,23 +27,28 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             var I = Matrix<float>.Build.DenseOfArray(new float[scheme.FESections.Count * pinsCount, scheme.FESections.Count * pinsCount]);
             // сформировать глобальную матрицу инцидентности
             CreateGlobalIncidenceMatrix(I, pinsCount, scheme);
-            
-            // номера заземлённых выводов
-            var PE = new List<int>();
+
+            // привести матрицу в соответствие с нумерацией выводов элементов
+            // перестановка с учётом порядка обхода каждого элемента: левый верхний -> правый верхний -> правый нижний -> левый нижний
+            var permutation = new MathNet.Numerics.Permutation(scheme.PinsNumbering);
+            Y.PermuteColumns(permutation); 
+            Y.PermuteRows(permutation);
+
+            I.SetDiagonal(Vector<float>.Build.Dense(I.ColumnCount, 0));
+
+            // скорее всего в Matlab есть ошибка, которая не учитывает перестановку матрицы инцидениции
+            //I.PermuteColumns(permutation); 
+            //I.PermuteRows(permutation);
+
             // найти номера заземлённых выводов
-            FindPEIndices(PE, scheme);
+            var PE = FindPEIndices(scheme);
 
             RemoveRowAndColsFromMatrix(ref Y, PE);
             RemoveRowAndColsFromMatrix(ref I, PE);
 
-            I.SetDiagonal(Vector<float>.Build.Dense(I.ColumnCount, 0));
-
             AddRowsAndColsInYMatrix(ref Y, ref I);
 
-            // привести матрицу в соответствие с нумерацией выводов элементов
-            // перестановка с учётом порядка обхода каждого элемента: левый верхний -> правый верхний -> правый нижний -> левый нижний
-            Y.PermuteColumns(new MathNet.Numerics.Permutation(scheme.PinsNumbering)); 
-            Y.PermuteRows(new MathNet.Numerics.Permutation(scheme.PinsNumbering));
+            ReduceMatrix(ref Y, 4);
 
             // TEST!!
             var test = Y.ToArray();
@@ -53,10 +58,28 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             return phase;
         }
 
+        // Метод для понижения порядка матрицы
+        private static void ReduceMatrix(ref Matrix<Complex> matrix, int upTo)
+        {
+            Matrix<Complex> temp;
+
+            for (int i = matrix.ColumnCount - 1; i >= upTo; i--)
+            {
+                var column = matrix.Column(i).SubVector(0, i).ToColumnMatrix();
+                var row = matrix.Row(i).SubVector(0, i).ToRowMatrix();
+
+                temp = matrix.RemoveColumn(i);
+                temp = temp.RemoveRow(i);
+
+                matrix = temp - (column * (1 / matrix[i, i]) * row);
+            }
+        }
 
         // метод для сложения столбцов и строк соединённых выводов
         private static void AddRowsAndColsInYMatrix(ref Matrix<Complex> Y, ref Matrix<float> I) 
         {
+            var indicesForRemove = new List<int>();
+
             // обойти верхнюю треугольную матрицу
             for (int i = 0; i < I.RowCount; i++)
             {
@@ -65,56 +88,72 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                     // сложить столбцы и строки соединённых выводов в матрице проводимости
                     if (I[i,j] == 1)
                     {
-                        var firstRow = Y.Row(i);
-                        var secondRow = Y.Row(j);
+                        int _i = i;
+                        int _j = j;
+
+                        // i всегда меньше
+                        if (i > j)
+                        {
+                            _i = j;
+                            _j = i;
+                        }
+
+                        var firstRow = Y.Row(_i);
+                        var secondRow = Y.Row(_j);
                         var rowSum = firstRow.Add(secondRow);
 
-                        Y.SetRow(i, rowSum);
+                        Y.SetRow(_i, rowSum);
 
-                        var firstCol = Y.Column(i);
-                        var secondCol = Y.Column(j);
+                        var firstCol = Y.Column(_i);
+                        var secondCol = Y.Column(_j);
                         var colSum = firstCol.Add(secondCol);
 
-                        Y.SetColumn(i, colSum);
+                        Y.SetColumn(_i, colSum);
 
-                        Y = RemoveRowAndColsFromMatrix(Y, j);
-                        I = RemoveRowAndColsFromMatrix(I, j);
+                        if (!indicesForRemove.Contains(_j))
+                        {
+                            indicesForRemove.Add(_j);
+                        }                   
                     }
                 }
             }
+
+            indicesForRemove.Sort();
+
+            RemoveRowAndColsFromMatrix(ref Y, indicesForRemove);
+            RemoveRowAndColsFromMatrix(ref I, indicesForRemove);
         }
 
         // метод для удаления строк и столбцов из матрицы
         private static void RemoveRowAndColsFromMatrix<T>(ref Matrix<T> matrix, List<int> indices) where T : struct , IEquatable<T>, IFormattable
         {
-            var result = matrix;
+            // число для корректировки индекса в матрице, т.к. число столбцов и строк матрицы уменьшается во время работы цикла
+            int adjustCounter;
 
-            foreach (var index in indices)
+            for (int i = 0; i < indices.Count; i++)
             {
-                result = result.RemoveColumn(index);
-                result = result.RemoveRow(index);
-            }
+                adjustCounter = i;
 
-            matrix = result;
+                var index = indices[i] - adjustCounter;
+
+                matrix = matrix.RemoveColumn(index);
+                matrix = matrix.RemoveRow(index);
+            }
         }
 
         // метод для удаления строки и столбца из матрицы
-        private static Matrix<T> RemoveRowAndColsFromMatrix<T>(Matrix<T> matrix, int index) where T : struct, IEquatable<T>, IFormattable
+        private static void RemoveRowAndColsFromMatrix<T>(ref Matrix<T> matrix, int index) where T : struct, IEquatable<T>, IFormattable
         {
-            var result = matrix;
-
-            result = result.RemoveColumn(index);
-            result = result.RemoveRow(index);          
-
-            if (result != null)
-                return result;
-            else
-                return matrix;
+            matrix = matrix.RemoveColumn(index);
+            matrix = matrix.RemoveRow(index);
         }
 
         // Метод для поиска номеров заземлённых выводов
-        private static void FindPEIndices(List<int> vector, FElementScheme scheme)
+        private static List<int> FindPEIndices(FElementScheme scheme)
         {
+            // номера заземлённых выводов
+            var vector = new List<int>();
+
             // для всех соединений схемы
             foreach (var connection in scheme.InnerConnections) 
             {
@@ -129,6 +168,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                     }
                 }
             }
+
+            vector.Sort();
+
+            return vector;
         }
 
         // Метод для создания матрицы проводимости
