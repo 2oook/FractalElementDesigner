@@ -13,6 +13,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     /// <summary>
     /// График
     /// </summary>
+    [Serializable]
     class PRPlot : IProjectTreeItem
     {
         // Метод для инициализации графика
@@ -58,6 +59,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// <summary>
         /// Модель графика
         /// </summary>
-        public PlotModel Model { get; set; }
+        [NonSerialized]
+        public PlotModel Model = null;
     }
 }

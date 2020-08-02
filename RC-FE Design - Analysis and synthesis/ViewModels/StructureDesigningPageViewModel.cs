@@ -877,15 +877,15 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 // создать проект
                 var project = new Project() { Name = "Проект №1" };
 
-                var scheme = new FElementScheme(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance.FESections) { Name = "Схема" };
+                var schemePrototype = new FElementScheme(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance.FESections) { Name = "Схема" };
 
-                project.Items.Add(scheme);
+                project.Items.Add(schemePrototype);
 
                 Projects.Add(project);
 
-                StartSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, scheme);
+                StartSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, schemePrototype);
 
-                AddPhaseResponsePlot(scheme);
+                AddPhaseResponsePlot(schemePrototype);
             }
             catch (Exception ex)
             {
@@ -943,7 +943,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     var ga = new GeneticAlgorithm(structureSchemeSynthesisParametersInstance);
 
                     // синтезировать схему
-                    SchemeSynthesizer.Synthesize(ga, structureSchemeSynthesisParametersInstance, scheme);
+                    var schemes = SchemeSynthesizer.Synthesize(ga, structureSchemeSynthesisParametersInstance, scheme);
 
                     var plot = scheme.Elements.Where(x => x is PRPlot).SingleOrDefault() as PRPlot;
 

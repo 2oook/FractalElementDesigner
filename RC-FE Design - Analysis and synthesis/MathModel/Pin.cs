@@ -9,6 +9,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     /// <summary>
     /// Вывод элемента
     /// </summary>
+    [Serializable]
     public class Pin
     {
         /// <summary>

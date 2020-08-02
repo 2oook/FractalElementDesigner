@@ -9,6 +9,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     /// <summary>
     /// Соединение
     /// </summary>
+    [Serializable]
     class Connection
     {
         /// <summary>

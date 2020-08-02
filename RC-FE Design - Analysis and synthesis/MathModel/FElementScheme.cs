@@ -1,8 +1,11 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
+﻿using MahApps.Metro.Controls;
+using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +14,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     /// <summary>
     /// Схема включения элемента
     /// </summary>
-    class FElementScheme : IProjectTreeItem
+    [Serializable]
+    class FElementScheme : IFElementSchemePrototype, IProjectTreeItem
     {
         /// <summary>
         /// Допустимые подключения двух четырехполюсников
@@ -352,6 +356,28 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             bool result = true;
 
             return result;
+        }
+
+        // Метод для клонирования схемы
+        public IFElementSchemePrototype DeepClone()
+        {
+            FElementScheme scheme;
+
+            var formatter = new BinaryFormatter();         
+
+            using (var stream = new MemoryStream())
+            {
+                formatter.Serialize(stream, this);
+                stream.Seek(0, SeekOrigin.Begin);
+                scheme = formatter.Deserialize(stream) as FElementScheme;
+
+                if (scheme == null)
+                {
+                    throw new Exception("Ошибка сериализации объекта схемы!");
+                }
+            }
+
+            return scheme;
         }
     }
 }

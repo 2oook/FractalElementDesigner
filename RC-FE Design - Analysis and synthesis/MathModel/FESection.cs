@@ -13,6 +13,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     /// <summary>
     /// Класс представляет базовый конструктивный элемент
     /// </summary>
+    [Serializable]
     public class FESection
     {
         /// <summary>
