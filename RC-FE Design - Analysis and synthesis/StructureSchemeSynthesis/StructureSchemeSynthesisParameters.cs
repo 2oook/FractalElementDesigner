@@ -143,12 +143,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.StructureSchemeSynthesis
         /// <summary>
         /// Минимальная частота
         /// </summary>
-        public double MinFrequency { get; set; } = 2;
+        public double MinFrequency { get; set; } = 1;
 
         /// <summary>
         /// Максимальная частота
         /// </summary>
-        public double MaxFrequency { get; set; } = 5;
+        public double MaxFrequency { get; set; } = 3;
 
         /// <summary>
         /// Нижний предел диапазона изменения частот

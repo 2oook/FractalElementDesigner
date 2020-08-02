@@ -16,7 +16,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     class PRPlot : IProjectTreeItem
     {
         // Метод для инициализации графика
-        public static void InitializatePlot(List<(double, double)> points, PRPlot plot) 
+        public static void InitializatePhaseResponsePlot(List<(double, double)> points, PRPlot plot) 
         {
             if (plot != null)
             {
@@ -27,10 +27,24 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                     series.Points.Add(new DataPoint(point.Item1, point.Item2));
                 }
 
-                plot.Model = new PlotModel() { Title = "ФЧХ" };
+                plot.Model = new PlotModel() { Title = "ФЧХ" }; 
 
-                plot.Model.Axes.Add(new LinearAxis() { Title = "φ", Position = AxisPosition.Left, Unit = "град", AxisTitleDistance = 10 });
-                plot.Model.Axes.Add(new LogarithmicAxis() { Title = "ωRC", Position = AxisPosition.Bottom, Base = 10, Minimum = 0.1 });
+                plot.Model.Axes.Add(new LinearAxis() { 
+                    Title = "φ", 
+                    MajorGridlineStyle = LineStyle.Automatic, 
+                    MajorGridlineColor = OxyColors.LightGray, 
+                    Position = AxisPosition.Left, 
+                    Unit = "град", 
+                    AxisTitleDistance = 10 
+                });
+
+                plot.Model.Axes.Add(new LogarithmicAxis() { 
+                    Title = "ωRC", 
+                    MajorGridlineStyle = LineStyle.Automatic,
+                    MajorGridlineColor = OxyColors.LightGray, 
+                    Position = AxisPosition.Bottom, 
+                    Base = 10 
+                });
 
                 plot.Model.Series.Add(series);
             }

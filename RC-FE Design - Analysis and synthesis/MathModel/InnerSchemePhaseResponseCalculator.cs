@@ -12,19 +12,21 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     class InnerSchemePhaseResponseCalculator
     {
         // Метод для расчёта ФЧХ схемы
-        public static List<(double frequency, double phase)> CalculatePhaseResponseInScheme(double minFrequency, double maxFrequency, double pointsCount, FElementScheme scheme) 
+        public static List<(double frequency, double phase)> CalculatePhaseResponseInScheme(double minFrequencyLn, double maxFrequencyLn, double pointsCount, FElementScheme scheme) 
         {
             var points = new List<(double frequency, double phase)>();
+
+            var maxFrequency = Math.Pow(10, maxFrequencyLn);
+            var minFrequency = Math.Pow(10, minFrequencyLn);
 
             double increment = (maxFrequency - minFrequency) / pointsCount;
             double frequency = minFrequency;
             // цикл по частотам
-            for (int i = 0; i < pointsCount; i++)
+            for (int i = 0; i <= pointsCount; i++)
             {
-                var f = Math.Pow(10, frequency);
-                var phase = PhaseResponseCalculator.CalculatePhase(scheme, f);
+                var phase = PhaseResponseCalculator.CalculatePhase(scheme, frequency);
 
-                points.Add((f, phase));
+                points.Add((frequency, phase));
 
                 frequency += increment;
             }
