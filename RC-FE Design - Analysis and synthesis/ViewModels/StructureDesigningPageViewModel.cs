@@ -947,7 +947,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                     var plot = scheme.Elements.Where(x => x is PRPlot).SingleOrDefault() as PRPlot;
 
-                    PRPlot.InitializatePhaseResponsePlot(scheme.PhaseResponsePoints, plot);
+                    PRPlot.InitializatePhaseResponsePlot(scheme.Model.PhaseResponsePoints, plot);
                 }
                 catch (Exception ex)
                 {

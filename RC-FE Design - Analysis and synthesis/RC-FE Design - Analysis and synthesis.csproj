@@ -139,6 +139,7 @@
     <Compile Include="IO\ProjectSaveModel\SavingStructureCellBase.cs" />
     <Compile Include="IO\ProjectSaver.cs" />
     <Compile Include="MathModel\Connection.cs" />
+    <Compile Include="MathModel\FESchemeModel.cs" />
     <Compile Include="MathModel\IFElementSchemePrototype.cs" />
     <Compile Include="MathModel\FESectionTypeEnum.cs" />
     <Compile Include="MathModel\FElementScheme.cs" />

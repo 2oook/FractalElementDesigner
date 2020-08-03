@@ -46,7 +46,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
                     throw new NotImplementedException();
 
-                    return theta;
+                    //return theta;
                 }
             },
             {
@@ -57,7 +57,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
                     throw new NotImplementedException();
 
-                    return theta;
+                   // return theta;
                 }
             },
             {
@@ -68,7 +68,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
                     throw new NotImplementedException();
 
-                    return theta;
+                    //return theta;
                 }
             }
 

@@ -248,7 +248,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         {
             sections = sections.OrderBy(x => x.Number).ToList();
 
-            FESections = sections;
+            Model.FESections = sections;
 
             var array = new List<int>();
 
@@ -273,7 +273,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                         {
                             var type = 7;
 
-                            InnerConnections.Add(new Connection()
+                            Model.InnerConnections.Add(new Connection()
                             {
                                 ConnectionType = type,
                                 PEType = 3,
@@ -284,9 +284,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                         break;
                     case 1:
                         {
-                            var type = 8; 
-                            
-                            InnerConnections.Add(new Connection()
+                            var type = 8;
+
+                            Model.InnerConnections.Add(new Connection()
                             {
                                 ConnectionType = type,
                                 PEType = 1,
@@ -297,9 +297,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                         break;
                     case 2:
                         {
-                            var type = 4; 
-                            
-                            InnerConnections.Add(new Connection()
+                            var type = 4;
+
+                            Model.InnerConnections.Add(new Connection()
                             {
                                 ConnectionType = type,
                                 PEType = 3,
@@ -312,28 +312,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             }
             // тест!!!!!!!!!!!!!!!!!!!!!!!!
 
-            PinsNumbering = array.ToArray();
+            Model.PinsNumbering = array.ToArray();
         }
 
         /// <summary>
-        /// Секции ФРЭ
+        /// Модель схемы
         /// </summary>
-        public List<FESection> FESections { get; set; }
-
-        /// <summary>
-        /// Соединения БКЭ
-        /// </summary>
-        public List<Connection> InnerConnections { get; set; } = new List<Connection>();
-
-        /// <summary>
-        /// Вектор перестановки нумерации выводов схемы
-        /// </summary>
-        public int[] PinsNumbering { get; set; }
-
-        /// <summary>
-        /// Точки ФЧХ
-        /// </summary>
-        public List<(double frequency, double phase)> PhaseResponsePoints { get; set; }
+        public FESchemeModel Model { get; set; } = new FESchemeModel();
 
         /// <summary>
         /// Элементы схемы
@@ -349,14 +334,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// Заблокирована ли схема
         /// </summary>
         public bool IsLocked { get; set; } = false;
-
-        // Метод для очистки состояния схемы 
-        public bool ClearState() 
-        {
-            bool result = true;
-
-            return result;
-        }
 
         // Метод для клонирования схемы
         public IFElementSchemePrototype DeepClone()

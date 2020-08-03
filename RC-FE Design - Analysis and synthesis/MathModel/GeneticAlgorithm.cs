@@ -19,8 +19,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             PointsCountAtFrequencyAxle = synthesisParameters.PointsCountAtFrequencyAxle;
             PositiveDeviationOfTheFrequencyCharacteristic = synthesisParameters.PositiveDeviationOfTheFrequencyCharacteristic;
             NegativeDeviationOfTheFrequencyCharacteristic = synthesisParameters.NegativeDeviationOfTheFrequencyCharacteristic;
-            MinFrequency = synthesisParameters.MinFrequency;
-            MaxFrequency = synthesisParameters.MaxFrequency;
+            MinFrequencyLn = synthesisParameters.MinFrequencyLn;
+            MaxFrequencyLn = synthesisParameters.MaxFrequencyLn;
             MinLevelOfFrequencyCharacteristic = synthesisParameters.MinLevelOfFrequencyCharacteristic;
             MaxLevelOfFrequencyCharacteristic = synthesisParameters.MaxLevelOfFrequencyCharacteristic;
         }
@@ -53,12 +53,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// <summary>
         /// Минимальная частота
         /// </summary>
-        public double MinFrequency { get; set; }
+        public double MinFrequencyLn { get; set; }
 
         /// <summary>
         /// Максимальная частота
         /// </summary>
-        public double MaxFrequency { get; set; }
+        public double MaxFrequencyLn { get; set; }
 
         /// <summary>
         /// Нижний предел диапазона изменения частот
@@ -70,7 +70,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// </summary>
         public double MaxLevelOfFrequencyCharacteristic { get; set; }
 
-        private Random random = new Random();
+        /// <summary>
+        /// Объект для генерации случайных чисел
+        /// </summary>
+        private Random random = new Random(1);
 
         /// <summary>
         /// Популяция
@@ -80,12 +83,23 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// <summary>
         /// Метод для инициализации популяции
         /// </summary>
-        public void InitiatePopulation() 
+        public List<FElementScheme> InitiatePopulation(FElementScheme schemePrototype, int populationCount) 
         {
+            var schemes = new List<FElementScheme>();
 
+            // инициализировать популяцию
+            for (int i = 0; i < populationCount; i++)
+            {
+                var newScheme = schemePrototype.DeepClone() as FElementScheme;
+
+                schemes.Add(newScheme);
+                this.Mutate(newScheme.Model);
+            }
+
+            return schemes;
         }
 
-        public void Fit(FElementScheme scheme)
+        public void Fit(FESchemeModel model)
         {
 
         }
@@ -95,9 +109,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
         }
 
-        public void Mutate_C()
+        public void Mutate(FESchemeModel model)
         {
-
+            //model.
         }
 
         public void Mutate_P()

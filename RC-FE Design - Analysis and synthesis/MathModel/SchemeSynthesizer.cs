@@ -31,17 +31,18 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         {
             OnStateChange("Выполнение синтеза");
 
-            var result = new List<FElementScheme>();
+            var population = ga.InitiatePopulation(scheme, 100);
+
+
 
             // рассчитать ФЧХ для схемы
-            scheme.PhaseResponsePoints = InnerSchemePhaseResponseCalculator.CalculatePhaseResponseInScheme(
-                synthesisParameters.MinFrequency, synthesisParameters.MaxFrequency, synthesisParameters.PointsCountAtFrequencyAxle, scheme);
+            scheme.Model.PhaseResponsePoints = InnerSchemePhaseResponseCalculator.CalculatePhaseResponseInScheme(
+                synthesisParameters.MinFrequencyLn, synthesisParameters.MaxFrequencyLn, synthesisParameters.PointsCountAtFrequencyAxle, scheme);
 
-            var t = scheme.DeepClone();
-            var t1 = scheme.DeepClone();
+            //var t = scheme.DeepClone();
 
 
-            int n = scheme.FESections.Count;
+            int n = scheme.Model.FESections.Count;
 
             for (int i = 0; i < n; i++)
             {
@@ -62,7 +63,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
             OnStateChange("");
 
-            return result;
+            return population;
         }
     }
 }

@@ -143,12 +143,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.StructureSchemeSynthesis
         /// <summary>
         /// Минимальная частота
         /// </summary>
-        public double MinFrequency { get; set; } = 1;
+        public double MinFrequencyLn { get; set; } = 1;
 
         /// <summary>
         /// Максимальная частота
         /// </summary>
-        public double MaxFrequency { get; set; } = 3;
+        public double MaxFrequencyLn { get; set; } = 3;
 
         /// <summary>
         /// Нижний предел диапазона изменения частот
@@ -226,10 +226,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.StructureSchemeSynthesis
                             error = "Некорректный ввод";
                         }
                         break;
-                    case nameof(MinFrequency):
+                    case nameof(MinFrequencyLn):
 
                         break;
-                    case nameof(MaxFrequency):
+                    case nameof(MaxFrequencyLn):
 
                         break;
                     case nameof(MinLevelOfFrequencyCharacteristic):
