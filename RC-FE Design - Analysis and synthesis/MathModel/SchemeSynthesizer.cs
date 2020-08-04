@@ -27,13 +27,26 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         public static event Action<string> OnStateChange;
 
         // Метод для синтезирования схемы включения элемента
-        public static List<FElementScheme> Synthesize(GeneticAlgorithm ga, StructureSchemeSynthesisParameters synthesisParameters, FElementScheme scheme) 
+        public static List<FElementScheme> Synthesize(StructureSchemeSynthesisParameters synthesisParameters, FElementScheme scheme) 
         {
             OnStateChange("Выполнение синтеза");
 
-            var population = ga.InitiatePopulation(scheme, 100);
+            var ga = new GeneticAlgorithm(synthesisParameters, 100);
+
+            ga.InitiatePopulation(scheme);
+
+            // для сравнения мутировавших особей
+            //var t = ga.Population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
+
+            ga.MutatePopulation();
+
+            // для сравнения мутировавших особей
+            //var t2 = ga.Population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
 
 
+
+            //var t = population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
+            //var t1 = population.Select(x => x.Model.InnerConnections.Select(y => y.PEType).ToList()).ToList();
 
             // рассчитать ФЧХ для схемы
             scheme.Model.PhaseResponsePoints = InnerSchemePhaseResponseCalculator.CalculatePhaseResponseInScheme(
@@ -63,7 +76,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
             OnStateChange("");
 
-            return population;
+            return ga.Population;
         }
     }
 }

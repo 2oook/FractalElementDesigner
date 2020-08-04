@@ -254,7 +254,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
             for (int i = 0; i < sections.Count; i++)
             {
-                array = array.Concat(sections[i].Pins.Select(x => x.Number)).ToList();//!!!!!!!!!!!!!!!!!!!!
+                array = array.Concat(sections[i].Pins.Select(x => x.Number)).ToList();
             }
             
             for (int i = 0; i < sections.Count - 1; i++)
@@ -312,13 +312,19 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             }
             // тест!!!!!!!!!!!!!!!!!!!!!!!!
 
-            Model.PinsNumbering = array.ToArray();
+            PinsNumbering = array.ToArray();
         }
 
         /// <summary>
         /// Модель схемы
         /// </summary>
         public FESchemeModel Model { get; set; } = new FESchemeModel();
+
+
+        /// <summary>
+        /// Вектор перестановки нумерации выводов схемы
+        /// </summary>
+        public int[] PinsNumbering { get; set; }
 
         /// <summary>
         /// Элементы схемы

@@ -146,6 +146,7 @@
     <Compile Include="MathModel\FESection.cs" />
     <Compile Include="MathModel\FESectionParameters.cs" />
     <Compile Include="MathModel\GeneticAlgorithm.cs" />
+    <Compile Include="MathModel\IFESchemeModelPrototype.cs" />
     <Compile Include="MathModel\InnerSchemePhaseResponseCalculator.cs" />
     <Compile Include="MathModel\PhaseResponseCalculator.cs" />
     <Compile Include="MathModel\Pin.cs" />

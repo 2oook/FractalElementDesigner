@@ -940,10 +940,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 {
                     scheme.IsLocked = true;
 
-                    var ga = new GeneticAlgorithm(structureSchemeSynthesisParametersInstance);
-
                     // синтезировать схему
-                    var schemes = SchemeSynthesizer.Synthesize(ga, structureSchemeSynthesisParametersInstance, scheme);
+                    var schemes = SchemeSynthesizer.Synthesize(structureSchemeSynthesisParametersInstance, scheme);
 
                     var plot = scheme.Elements.Where(x => x is PRPlot).SingleOrDefault() as PRPlot;
 

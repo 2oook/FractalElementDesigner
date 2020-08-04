@@ -31,7 +31,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
             // привести матрицу в соответствие с нумерацией выводов элементов
             // перестановка с учётом порядка обхода каждого элемента: левый верхний -> правый верхний -> правый нижний -> левый нижний
-            var permutation = new Permutation(scheme.Model.PinsNumbering);
+            var permutation = new Permutation(scheme.PinsNumbering);
             Y.PermuteColumns(permutation); 
             Y.PermuteRows(permutation);
 

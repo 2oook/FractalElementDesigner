@@ -12,8 +12,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     /// </summary>
     class GeneticAlgorithm
     {
-        public GeneticAlgorithm(StructureSchemeSynthesisParameters synthesisParameters)
+        public GeneticAlgorithm(StructureSchemeSynthesisParameters synthesisParameters, int populationCount)
         {
+            PopulationCount = populationCount;
+            PopulationCountToMutate = (int)(populationCount * MutateCoefficient);
+
             IterationCountForFirstStepOfGA = synthesisParameters.IterationCountForFirstStepOfGA;
             CountOfWholeStepsOfGA = synthesisParameters.CountOfWholeStepsOfGA;
             PointsCountAtFrequencyAxle = synthesisParameters.PointsCountAtFrequencyAxle;
@@ -23,7 +26,29 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             MaxFrequencyLn = synthesisParameters.MaxFrequencyLn;
             MinLevelOfFrequencyCharacteristic = synthesisParameters.MinLevelOfFrequencyCharacteristic;
             MaxLevelOfFrequencyCharacteristic = synthesisParameters.MaxLevelOfFrequencyCharacteristic;
+
+            // инициализировать диапазон кодов для произведения мутаций
+            foreach (var connectionNumber in FElementScheme.AllowablePinsConnections.Keys.OrderBy(x => x))
+            {
+                var gnd = FElementScheme.AllowablePinsConnections[connectionNumber];
+                ConnectionCodes.Add(connectionNumber, gnd.PEVector.Keys.OrderBy(x => x).ToList());
+            }
+
+            MaxConnectionCodeValue = ConnectionCodes.Keys.Max();
+            MinConnectionCodeValue = ConnectionCodes.Keys.Min();
         }
+
+        private Dictionary<int, List<int>> ConnectionCodes = new Dictionary<int, List<int>>();
+
+        private int MaxConnectionCodeValue;
+
+        private int MinConnectionCodeValue;
+
+        private int PopulationCount;
+
+        private int PopulationCountToMutate;
+
+        public double MutateCoefficient { get; set; } = 0.3;
 
         /// <summary>
         /// Количество итераций 1-го такта ГА
@@ -78,25 +103,29 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// <summary>
         /// Популяция
         /// </summary>
-        public List<FElementScheme> Population { get; set; }
+        public List<FElementScheme> Population;
+
+        private FElementScheme SchemePrototype;
 
         /// <summary>
         /// Метод для инициализации популяции
         /// </summary>
-        public List<FElementScheme> InitiatePopulation(FElementScheme schemePrototype, int populationCount) 
+        public void InitiatePopulation(FElementScheme schemePrototype) 
         {
+            SchemePrototype = schemePrototype;
+
             var schemes = new List<FElementScheme>();
 
             // инициализировать популяцию
-            for (int i = 0; i < populationCount; i++)
+            for (int i = 0; i < PopulationCount; i++)
             {
                 var newScheme = schemePrototype.DeepClone() as FElementScheme;
 
                 schemes.Add(newScheme);
-                this.Mutate(newScheme.Model);
+                this.InitiateIndividual(newScheme.Model);
             }
 
-            return schemes;
+            Population = schemes;
         }
 
         public void Fit(FESchemeModel model)
@@ -109,24 +138,79 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
         }
 
-        public void Mutate(FESchemeModel model)
+        public void InitiateIndividual(FESchemeModel model)
         {
-            //model.
+            foreach (var connection in model.InnerConnections)
+            {
+                // сгенерировать код соединения
+                var connectionCode = random.Next(MinConnectionCodeValue, MaxConnectionCodeValue);
+                // найти список возможных кодов заземлений этого соединения
+                var groundCodes = ConnectionCodes[connectionCode];
+                // сгенерировать код заземления
+                var groundCode = random.Next(groundCodes[0], groundCodes[groundCodes.Count - 1]);
+
+                connection.ConnectionType = connectionCode;
+                connection.PEType = groundCode;
+            }
         }
 
-        public void Mutate_P()
+        public void MutatePopulation()
+        {
+            // для отладки
+            var schemesToMutate = new List<int>();
+
+            var mutateConnectionIndices = new List<int>();
+
+            for (int i = 0; i < PopulationCountToMutate; i++)
+            {
+                var schemeIndexToMutate = random.Next(i, PopulationCount - 1);
+                schemesToMutate.Add(schemeIndexToMutate);
+                var mutateConnectionsCount = random.Next(1, SchemePrototype.Model.InnerConnections.Count);
+
+                // выбор соединений для мутации
+                for (int k = 0; k <= mutateConnectionsCount; k++)
+                {
+                    var mutateIndex = random.Next(0, Population[schemeIndexToMutate].Model.InnerConnections.Count - 1);
+                    mutateConnectionIndices.Add(mutateIndex);
+                }              
+
+                for (int j = 0; j < mutateConnectionIndices.Count; j++)
+                {
+                    // сгенерировать код соединения
+                    var connectionCode = random.Next(MinConnectionCodeValue, MaxConnectionCodeValue);
+                    // найти список возможных кодов заземлений этого соединения
+                    var groundCodes = ConnectionCodes[connectionCode];
+                    // сгенерировать код заземления
+                    var groundCode = random.Next(groundCodes[0], groundCodes[groundCodes.Count - 1]);
+
+                    Population[schemeIndexToMutate].Model.InnerConnections[mutateConnectionIndices[j]].ConnectionType = connectionCode;
+                    Population[schemeIndexToMutate].Model.InnerConnections[mutateConnectionIndices[j]].PEType = groundCode;                     
+                }
+
+                mutateConnectionIndices.Clear();
+            }
+        }
+
+        public void MutateIndividual()
         {
 
         }
 
-        public void Cross_C()
+        public FElementScheme Cross(FElementScheme first, FElementScheme second)
         {
+            var newScheme = first.DeepClone() as FElementScheme;
 
-        }
+            var mutateConnectionsCount = random.Next(0, (SchemePrototype.Model.InnerConnections.Count / 2) + 1);
 
-        public void Cross_P()
-        {
+            for (int i = 0; i < mutateConnectionsCount; i++)
+            {
+                var mutateConnectionIndex = random.Next(0, SchemePrototype.Model.InnerConnections.Count -1);
 
+                newScheme.Model.InnerConnections[mutateConnectionIndex].ConnectionType = second.Model.InnerConnections[mutateConnectionIndex].ConnectionType;
+                newScheme.Model.InnerConnections[mutateConnectionIndex].PEType = second.Model.InnerConnections[mutateConnectionIndex].PEType;
+            }
+
+            return newScheme;
         }
     }
 }
