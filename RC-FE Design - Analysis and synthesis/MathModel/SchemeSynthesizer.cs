@@ -43,7 +43,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             // для сравнения мутировавших особей
             //var t2 = ga.Population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
 
-
+            ga.CrossPopulation();
 
             //var t = population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
             //var t1 = population.Select(x => x.Model.InnerConnections.Select(y => y.PEType).ToList()).ToList();

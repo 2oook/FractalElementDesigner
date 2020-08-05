@@ -128,16 +128,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             Population = schemes;
         }
 
-        public void Fit(FESchemeModel model)
-        {
-
-        }
-
-        public void Select()
-        {
-
-        }
-
         public void InitiateIndividual(FESchemeModel model)
         {
             foreach (var connection in model.InnerConnections)
@@ -191,9 +181,17 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             }
         }
 
-        public void MutateIndividual()
+        public void MutateSchemeConnection(FElementScheme scheme, int connectionIndex)
         {
+            // сгенерировать код соединения
+            var connectionCode = random.Next(MinConnectionCodeValue, MaxConnectionCodeValue);
+            // найти список возможных кодов заземлений этого соединения
+            var groundCodes = ConnectionCodes[connectionCode];
+            // сгенерировать код заземления
+            var groundCode = random.Next(groundCodes[0], groundCodes[groundCodes.Count - 1]);
 
+            scheme.Model.InnerConnections[connectionIndex].ConnectionType = connectionCode;
+            scheme.Model.InnerConnections[connectionIndex].PEType = groundCode;
         }
 
         public FElementScheme Cross(FElementScheme first, FElementScheme second)
@@ -211,6 +209,29 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             }
 
             return newScheme;
+        }
+
+        public void CrossPopulation() 
+        {
+            var randomizedPopulation = Population.OrderBy(x => random.Next()).ToList();
+
+            var randomizedPopulationCount = randomizedPopulation.Count - (randomizedPopulation.Count % 2);
+
+            for (int i = 0; i < randomizedPopulationCount; i+=2)
+            {
+                var scheme = Cross(randomizedPopulation[i], randomizedPopulation[i + 1]);
+                Population.Add(scheme);
+            }
+        }
+
+        public void Fit(FESchemeModel model)
+        {
+
+        }
+
+        public void Select()
+        {
+
         }
     }
 }
