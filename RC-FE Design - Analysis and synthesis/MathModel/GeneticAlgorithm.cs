@@ -283,9 +283,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             }
         }
 
-        public void Select()
+        public void SelectPopulation()
         {
+            var newPopulation = Population.OrderByDescending(x => x.Model.Rate).Take(100).ToList();
 
+            Population = newPopulation;
         }
     }
 }

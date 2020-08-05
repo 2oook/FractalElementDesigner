@@ -35,50 +35,32 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
             ga.InitiatePopulation(scheme);
 
-            // для сравнения мутировавших особей
-            //var t = ga.Population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
-
-            ga.MutatePopulation();
-
-            // для сравнения мутировавших особей
-            //var t2 = ga.Population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
-
-            ga.CrossPopulation();
-
-            ga.RatePopulation();
-
-            // для просмотра оценки 
-            var t4 = ga.Population.OrderByDescending(x => x.Model.Rate).Select(x => x.Model).ToList();
-
-
-            //var t = population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
-            //var t1 = population.Select(x => x.Model.InnerConnections.Select(y => y.PEType).ToList()).ToList();
-
-            // рассчитать ФЧХ для схемы
-            scheme.Model.PhaseResponsePoints = InnerSchemePhaseResponseCalculator.CalculatePhaseResponseInScheme(
-                synthesisParameters.MinFrequencyLn, synthesisParameters.MaxFrequencyLn, synthesisParameters.PointsCountAtFrequencyAxle, scheme.Model);
-
-            //var t = scheme.DeepClone();
-
-
-            int n = scheme.Model.FESections.Count;
-
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < 70; i++)
             {
+                OnDoWork(i);
 
-            }
+                // для сравнения мутировавших особей
+                //var t = ga.Population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
 
-            // для отладки
-            // для отладки
-            // для отладки
-            for (int i = 0; i < 100; i++)
-            {                
-                Thread.Sleep(5);
-                OnDoWork(i+1);
+                ga.MutatePopulation();
+
+                // для сравнения мутировавших особей
+                //var t1 = ga.Population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
+
+                ga.CrossPopulation();
+
+                //var t2 = ga.Population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
+
+                ga.RatePopulation();
+
+                // для просмотра оценки 
+                var t3 = ga.Population.OrderByDescending(x => x.Model.Rate).Select(x => x.Model).ToList();
+
+                ga.SelectPopulation();
+
+                //var t99 = population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
+                //var t9 = population.Select(x => x.Model.InnerConnections.Select(y => y.PEType).ToList()).ToList();
             }
-            // для отладки
-            // для отладки
-            // для отладки
 
             OnStateChange("");
 

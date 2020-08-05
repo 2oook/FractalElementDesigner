@@ -877,27 +877,18 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 // создать проект
                 var project = new Project() { Name = "Проект №1" };
 
-                var schemePrototype = new FElementScheme(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance.FESections) { Name = "Схема" };
+                var schemePrototype = new FElementScheme(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance.FESections) { Name = "Схема", Elements = { new PRPlot() } };
 
                 project.Items.Add(schemePrototype);
 
                 Projects.Add(project);
 
                 StartSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, schemePrototype);
-
-                AddPhaseResponsePlot(schemePrototype);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
-        }
-
-        private void AddPhaseResponsePlot(FElementScheme scheme) 
-        {          
-            var plot = new PRPlot();
-
-            scheme.Elements.Add(plot);
         }
 
         // Метод для асинхронного создания конструкции элемента
@@ -943,9 +934,17 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                     // синтезировать схему
                     var schemes = SchemeSynthesizer.Synthesize(structureSchemeSynthesisParametersInstance, scheme);
 
-                    var plot = scheme.Elements.Where(x => x is PRPlot).SingleOrDefault() as PRPlot;
+                    foreach (var _scheme in schemes)
+                    {
+                        PRPlot.InitializatePhaseResponsePlot(_scheme.Model.PhaseResponsePoints, _scheme.Elements.Where(x => x is PRPlot).SingleOrDefault() as PRPlot);
+                        //break;
 
-                    PRPlot.InitializatePhaseResponsePlot(scheme.Model.PhaseResponsePoints, plot);
+                        DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                        {
+                            currentProject.Items.Add(_scheme);
+                        });
+                        
+                    }
                 }
                 catch (Exception ex)
                 {
