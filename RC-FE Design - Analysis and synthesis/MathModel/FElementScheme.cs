@@ -312,19 +312,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             }
             // тест!!!!!!!!!!!!!!!!!!!!!!!!
 
-            PinsNumbering = array.ToArray();
+            Model.PinsNumbering = array.ToArray();
         }
 
         /// <summary>
         /// Модель схемы
         /// </summary>
         public FESchemeModel Model { get; set; } = new FESchemeModel();
-
-
-        /// <summary>
-        /// Вектор перестановки нумерации выводов схемы
-        /// </summary>
-        public int[] PinsNumbering { get; set; }
 
         /// <summary>
         /// Элементы схемы
@@ -339,7 +333,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// <summary>
         /// Заблокирована ли схема
         /// </summary>
-        public bool IsLocked { get; set; } = false;
+        [NonSerialized]
+        public bool IsLocked = false;
 
         // Метод для клонирования схемы
         public IFElementSchemePrototype DeepClone()

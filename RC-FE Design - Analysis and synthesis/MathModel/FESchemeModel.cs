@@ -25,9 +25,20 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         public List<Connection> InnerConnections { get; set; } = new List<Connection>();
 
         /// <summary>
+        /// Вектор перестановки нумерации выводов схемы
+        /// </summary>
+        public int[] PinsNumbering { get; set; }
+
+        /// <summary>
+        /// Оценка модели
+        /// </summary>
+        public int Rate { get; set; }
+
+        /// <summary>
         /// Точки функции ФЧХ
         /// </summary>
-        public List<(double frequency, double phase)> PhaseResponsePoints { get; set; }
+        [NonSerialized]
+        public List<(double frequency, double phase)> PhaseResponsePoints;
 
         // Метод для клонирования модели схемы
         public IFESchemeModelPrototype DeepClone()

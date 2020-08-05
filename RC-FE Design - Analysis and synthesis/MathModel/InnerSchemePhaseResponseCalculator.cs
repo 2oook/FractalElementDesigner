@@ -12,7 +12,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     class InnerSchemePhaseResponseCalculator
     {
         // Метод для расчёта ФЧХ схемы
-        public static List<(double frequency, double phase)> CalculatePhaseResponseInScheme(double minFrequencyLn, double maxFrequencyLn, double pointsCount, FElementScheme scheme) 
+        public static List<(double frequency, double phase)> CalculatePhaseResponseInScheme(double minFrequencyLn, double maxFrequencyLn, double pointsCount, FESchemeModel scheme) 
         {
             var points = new List<(double frequency, double phase)>();
 

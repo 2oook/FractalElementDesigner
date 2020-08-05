@@ -15,17 +15,17 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     class PhaseResponseCalculator
     {
         // Метод для расчёта фазы
-        public static double CalculatePhase(FElementScheme scheme, double frequency) 
+        public static double CalculatePhase(FESchemeModel scheme, double frequency) 
         {
-            int pinsCount = scheme.Model.FESections.First().Pins.Count;
+            int pinsCount = scheme.FESections.First().Pins.Count;
 
             // глобальная матрица y-параметров
-            var Y = Matrix<Complex>.Build.DenseOfArray(new Complex[scheme.Model.FESections.Count * pinsCount, scheme.Model.FESections.Count * pinsCount]);
+            var Y = Matrix<Complex>.Build.DenseOfArray(new Complex[scheme.FESections.Count * pinsCount, scheme.FESections.Count * pinsCount]);
             // сформировать глобальную матрицу проводимости
             CreateGlobalConductivityMatrix(Y, pinsCount, frequency, scheme);
 
             // матрица соединений (инцидентности)
-            var I = Matrix<float>.Build.DenseOfArray(new float[scheme.Model.FESections.Count * pinsCount, scheme.Model.FESections.Count * pinsCount]);
+            var I = Matrix<float>.Build.DenseOfArray(new float[scheme.FESections.Count * pinsCount, scheme.FESections.Count * pinsCount]);
             // сформировать глобальную матрицу инцидентности
             CreateGlobalIncidenceMatrix(I, pinsCount, scheme);
 
@@ -151,13 +151,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         }
 
         // Метод для поиска номеров заземлённых выводов
-        private static List<int> FindPEIndices(FElementScheme scheme)
+        private static List<int> FindPEIndices(FESchemeModel scheme)
         {
             // номера заземлённых выводов
             var vector = new List<int>();
 
             // для всех соединений схемы
-            foreach (var connection in scheme.Model.InnerConnections) 
+            foreach (var connection in scheme.InnerConnections) 
             {
                 var localVector = FElementScheme.AllowablePinsConnections[connection.ConnectionType].PEVector[connection.PEType];
 
@@ -177,14 +177,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         }
 
         // Метод для создания матрицы проводимости
-        private static void CreateGlobalConductivityMatrix(Matrix<Complex> matrix, int pinsCount, double frequency, FElementScheme scheme) 
+        private static void CreateGlobalConductivityMatrix(Matrix<Complex> matrix, int pinsCount, double frequency, FESchemeModel scheme) 
         {
             // для всех секций фрэ
-            for (int sectionNumber = 0; sectionNumber < scheme.Model.FESections.Count; sectionNumber++)
+            for (int sectionNumber = 0; sectionNumber < scheme.FESections.Count; sectionNumber++)
             {
                 var row_col_index = (sectionNumber) * pinsCount;
 
-                var parameters = scheme.Model.FESections[sectionNumber].SectionParameters;
+                var parameters = scheme.FESections[sectionNumber].SectionParameters;
 
                 var thetaFunc = FESection.ThetaFunctions.Single(x => x.Key == parameters.SectionType).Value;
                 var theta = thetaFunc(parameters.R, parameters.N, parameters.C, parameters.Rp, parameters.Rk, parameters.G, parameters.L, frequency);
@@ -197,7 +197,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
                 var coeficient = 1 / ((1 + parameters.N) * parameters.R * parameters.L);
 
-                var mattrix = scheme.Model.FESections[sectionNumber].YParametersMatrix;
+                var mattrix = scheme.FESections[sectionNumber].YParametersMatrix;
 
                 // рассчитать матрицу БКЭ 
                 mattrix[0, 0] = coeficient * (theta_div_th + parameters.N);
@@ -221,19 +221,19 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                 mattrix[3, 3] = mattrix[2, 2];
 
                 // скопировать матрицу БКЭ в глобальную матрицу
-                matrix.SetSubMatrix(row_col_index, row_col_index, scheme.Model.FESections[sectionNumber].YParametersMatrix);
+                matrix.SetSubMatrix(row_col_index, row_col_index, scheme.FESections[sectionNumber].YParametersMatrix);
             }
         }
 
         // Метод для создания матрицы инцидентности
-        private static void CreateGlobalIncidenceMatrix(Matrix<float> matrix, int sectionPinsCount, FElementScheme scheme) 
+        private static void CreateGlobalIncidenceMatrix(Matrix<float> matrix, int sectionPinsCount, FESchemeModel scheme) 
         {
             // установить диагональ
-            var diagonal = Vector<float>.Build.Dense(scheme.Model.FESections.Count*sectionPinsCount, 1);
+            var diagonal = Vector<float>.Build.Dense(scheme.FESections.Count*sectionPinsCount, 1);
             matrix.SetDiagonal(diagonal);
 
             // для всех соединений схемы
-            foreach (var connection in scheme.Model.InnerConnections)
+            foreach (var connection in scheme.InnerConnections)
             {
                 var localMatrix = FElementScheme.AllowablePinsConnections[connection.ConnectionType];
                 var upperBound0 = localMatrix.ConnectionMatrix.GetUpperBound(0);

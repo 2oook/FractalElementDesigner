@@ -10,7 +10,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     /// <summary>
     /// Класс представляет генетический алгоритм
     /// </summary>
-    class GeneticAlgorithm
+    class GeneticAlgorithm : IGeneticAlgorithm
     {
         public GeneticAlgorithm(StructureSchemeSynthesisParameters synthesisParameters, int populationCount)
         {
@@ -22,10 +22,28 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             PointsCountAtFrequencyAxle = synthesisParameters.PointsCountAtFrequencyAxle;
             PositiveDeviationOfTheFrequencyCharacteristic = synthesisParameters.PositiveDeviationOfTheFrequencyCharacteristic;
             NegativeDeviationOfTheFrequencyCharacteristic = synthesisParameters.NegativeDeviationOfTheFrequencyCharacteristic;
-            MinFrequencyLn = synthesisParameters.MinFrequencyLn;
-            MaxFrequencyLn = synthesisParameters.MaxFrequencyLn;
+
+            MinFrequency = Math.Pow(10, synthesisParameters.MinFrequencyLn);
+            MaxFrequency = Math.Pow(10, synthesisParameters.MaxFrequencyLn);
+
+            FrequencyIncrement = (MaxFrequency - MinFrequency) / PointsCountAtFrequencyAxle;
+
             MinLevelOfFrequencyCharacteristic = synthesisParameters.MinLevelOfFrequencyCharacteristic;
             MaxLevelOfFrequencyCharacteristic = synthesisParameters.MaxLevelOfFrequencyCharacteristic;
+
+            // сформировать окно корректности ФЧХ
+            if (MaxLevelOfFrequencyCharacteristic < MinLevelOfFrequencyCharacteristic)
+            {
+                // из меньшего вычитаем, к большему прибавляем
+                LowerCharacteristicBound = MaxLevelOfFrequencyCharacteristic - NegativeDeviationOfTheFrequencyCharacteristic;
+                UpperCharacteristicBound = MinLevelOfFrequencyCharacteristic + PositiveDeviationOfTheFrequencyCharacteristic;
+            }
+            else
+            {
+                // из меньшего вычитаем, к большему прибавляем
+                LowerCharacteristicBound = MinLevelOfFrequencyCharacteristic - NegativeDeviationOfTheFrequencyCharacteristic;
+                UpperCharacteristicBound = MaxLevelOfFrequencyCharacteristic + PositiveDeviationOfTheFrequencyCharacteristic;
+            }
 
             // инициализировать диапазон кодов для произведения мутаций
             foreach (var connectionNumber in FElementScheme.AllowablePinsConnections.Keys.OrderBy(x => x))
@@ -47,6 +65,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         private int PopulationCount;
 
         private int PopulationCountToMutate;
+
+        private double FrequencyIncrement;
+
+        private double LowerCharacteristicBound;
+
+        private double UpperCharacteristicBound;
 
         public double MutateCoefficient { get; set; } = 0.3;
 
@@ -78,12 +102,12 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// <summary>
         /// Минимальная частота
         /// </summary>
-        public double MinFrequencyLn { get; set; }
+        public double MinFrequency { get; set; }
 
         /// <summary>
         /// Максимальная частота
         /// </summary>
-        public double MaxFrequencyLn { get; set; }
+        public double MaxFrequency { get; set; }
 
         /// <summary>
         /// Нижний предел диапазона изменения частот
@@ -226,7 +250,37 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
         public void Fit(FESchemeModel model)
         {
+            var points = new List<(double frequency, double phase)>();
 
+            int rate = 0;
+
+            double frequency = MinFrequency;
+            // цикл по частотам
+            for (int i = 0; i < PointsCountAtFrequencyAxle; i++)
+            {
+                var phase = PhaseResponseCalculator.CalculatePhase(model, frequency);
+
+                // если точка попадает в окно
+                if (phase > LowerCharacteristicBound & phase < UpperCharacteristicBound)
+                {
+                    rate++;
+                }
+
+                points.Add((frequency, phase));
+
+                frequency += FrequencyIncrement;
+            }
+
+            model.Rate = rate;
+            model.PhaseResponsePoints = points;
+        }
+
+        public void RatePopulation() 
+        {
+            foreach (var scheme in Population)
+            {
+                Fit(scheme.Model);            
+            }
         }
 
         public void Select()

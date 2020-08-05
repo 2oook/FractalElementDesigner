@@ -45,12 +45,18 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
             ga.CrossPopulation();
 
+            ga.RatePopulation();
+
+            // для просмотра оценки 
+            var t4 = ga.Population.OrderByDescending(x => x.Model.Rate).Select(x => x.Model).ToList();
+
+
             //var t = population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
             //var t1 = population.Select(x => x.Model.InnerConnections.Select(y => y.PEType).ToList()).ToList();
 
             // рассчитать ФЧХ для схемы
             scheme.Model.PhaseResponsePoints = InnerSchemePhaseResponseCalculator.CalculatePhaseResponseInScheme(
-                synthesisParameters.MinFrequencyLn, synthesisParameters.MaxFrequencyLn, synthesisParameters.PointsCountAtFrequencyAxle, scheme);
+                synthesisParameters.MinFrequencyLn, synthesisParameters.MaxFrequencyLn, synthesisParameters.PointsCountAtFrequencyAxle, scheme.Model);
 
             //var t = scheme.DeepClone();
 
