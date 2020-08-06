@@ -31,13 +31,15 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         {
             OnStateChange("Выполнение синтеза");
 
-            var ga = new SingleStageGeneticAlgorithm(synthesisParameters, 100);
+            IGeneticAlgorithm ga = new SingleStageGeneticAlgorithm(synthesisParameters, 100);
 
             ga.InitiatePopulation(scheme);
 
-            for (int i = 0; i < 15; i++)
+            double increment = 100f / synthesisParameters.CountOfWholeStepsOfGA;
+
+            for (int i = 0; i < synthesisParameters.CountOfWholeStepsOfGA; i++)
             {
-                OnDoWork(i+1);
+                OnDoWork(increment * (i + 1));
 
                 // для сравнения мутировавших особей
                 //var t = ga.Population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
@@ -67,11 +69,13 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             scheme.Model.PhaseResponsePoints = InnerSchemePhaseResponseCalculator.CalculatePhaseResponseInScheme(
                 synthesisParameters.MinFrequencyLn, synthesisParameters.MaxFrequencyLn, synthesisParameters.PointsCountAtFrequencyAxle, scheme.Model);
             // для примера
-            ga.Population.Add(scheme);
+            var t = ga.GetPopulation();
+            t.Add(scheme);
+            // для примера
 
             OnStateChange("");
 
-            return ga.Population;
+            return ga.GetPopulation();
         }
     }
 }

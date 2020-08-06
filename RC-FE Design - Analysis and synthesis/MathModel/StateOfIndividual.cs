@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 {
-    class Individual
+    /// <summary>
+    /// Состояние особи в ГА
+    /// </summary>
+    [Serializable]
+    class StateOfIndividual
     {
         /// <summary>
         /// Оценка особи

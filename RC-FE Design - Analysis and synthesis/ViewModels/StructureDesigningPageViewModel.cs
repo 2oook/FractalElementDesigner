@@ -928,21 +928,24 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             {
                 try
                 {
-                    scheme.IsLocked = true;
+                    //scheme.IsLocked
 
                     // синтезировать схему
                     var schemes = SchemeSynthesizer.Synthesize(structureSchemeSynthesisParametersInstance, scheme);
 
-                    foreach (var _scheme in schemes)
+                    for (int i = 0; i < schemes.Count; i++)
                     {
-                        PRPlot.InitializatePhaseResponsePlot(_scheme.Model.PhaseResponsePoints, _scheme.Elements.Where(x => x is PRPlot).SingleOrDefault() as PRPlot);
-                        //break;
+                        var _scheme = schemes[i];
+                        _scheme.Name = "Схема №" + (i+1);
+
+                        var plot = _scheme.Elements.Where(x => x is PRPlot).SingleOrDefault() as PRPlot;
+
+                        PRPlot.InitializatePhaseResponsePlot(_scheme.Model.PhaseResponsePoints, plot);
 
                         DispatcherHelper.CheckBeginInvokeOnUI(() =>
                         {
                             currentProject.Items.Add(_scheme);
-                        });
-                        
+                        });               
                     }
                 }
                 catch (Exception ex)
@@ -953,7 +956,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 }
                 finally 
                 {
-                    scheme.IsLocked = false;
+                    //scheme.IsLocked = false;
                 }    
             });
         }

@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 {
+    /// <summary>
+    /// Интерфейс генетического алгоритма
+    /// </summary>
     interface IGeneticAlgorithm
     {
         void MutatePopulation();
 
         void InitiatePopulation(FElementScheme schemePrototype);
-
+         
         void InitiateIndividual(FESchemeModel model);
 
         FElementScheme Cross(FElementScheme first, FElementScheme second);
@@ -23,5 +26,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         void RatePopulation();
 
         void SelectPopulation();
+
+        List<FElementScheme> GetPopulation();
     }
 }

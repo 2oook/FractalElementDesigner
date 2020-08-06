@@ -32,7 +32,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// <summary>
         /// Информация об особи
         /// </summary>
-        public Individual Individual { get; set; }
+        public StateOfIndividual StateInGA { get; set; } = new StateOfIndividual();
 
         /// <summary>
         /// Точки функции ФЧХ

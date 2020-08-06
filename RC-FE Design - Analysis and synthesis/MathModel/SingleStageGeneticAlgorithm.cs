@@ -17,7 +17,6 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             PopulationCount = populationCount;
             PopulationCountToMutate = (int)(populationCount * MutateCoefficient);
 
-            IterationCountForFirstStepOfGA = synthesisParameters.IterationCountForFirstStepOfGA;
             CountOfWholeStepsOfGA = synthesisParameters.CountOfWholeStepsOfGA;
             PointsCountAtFrequencyAxle = synthesisParameters.PointsCountAtFrequencyAxle;
             PositiveDeviationOfTheFrequencyCharacteristic = synthesisParameters.PositiveDeviationOfTheFrequencyCharacteristic;
@@ -99,14 +98,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         public double MutateCoefficient { get; set; } = 0.3;
 
         /// <summary>
-        /// Количество итераций 1-го такта ГА
-        /// </summary>
-        public int IterationCountForFirstStepOfGA { get; set; }
-
-        /// <summary>
         /// Количество полных тактов ГА
         /// </summary>
-        public int CountOfWholeStepsOfGA { get; set; }
+        public int CountOfWholeStepsOfGA;
 
         /// <summary>
         /// Количество точек на частотной оси
@@ -146,7 +140,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// <summary>
         /// Объект для генерации случайных чисел
         /// </summary>
-        private Random random = new Random(1);
+        private Random random = new Random();
 
         /// <summary>
         /// Популяция
@@ -295,7 +289,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                 frequency += FrequencyIncrement;
             }
 
-            model.Individual.Rate = rate;
+            model.StateInGA.Rate = rate;
             model.PhaseResponsePoints = points;
         }
 
@@ -309,9 +303,14 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
         public void SelectPopulation()
         {
-            var newPopulation = Population.OrderByDescending(x => x.Model.Individual.Rate).Take(100).ToList();
+            var newPopulation = Population.OrderByDescending(x => x.Model.StateInGA.Rate).Take(100).ToList();
 
             Population = newPopulation;
+        }
+
+        public List<FElementScheme> GetPopulation() 
+        {
+            return Population;
         }
     }
 }
