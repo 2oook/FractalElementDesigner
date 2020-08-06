@@ -30,9 +30,9 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         public int[] PinsNumbering { get; set; }
 
         /// <summary>
-        /// Оценка модели
+        /// Информация об особи
         /// </summary>
-        public int Rate { get; set; }
+        public Individual Individual { get; set; }
 
         /// <summary>
         /// Точки функции ФЧХ

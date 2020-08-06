@@ -145,7 +145,9 @@
     <Compile Include="MathModel\FElementScheme.cs" />
     <Compile Include="MathModel\FESection.cs" />
     <Compile Include="MathModel\FESectionParameters.cs" />
-    <Compile Include="MathModel\GeneticAlgorithm.cs" />
+    <Compile Include="MathModel\Individual.cs" />
+    <Compile Include="MathModel\ITwoPortNetwork.cs" />
+    <Compile Include="MathModel\SingleStageGeneticAlgorithm.cs" />
     <Compile Include="MathModel\IFESchemeModelPrototype.cs" />
     <Compile Include="MathModel\IGeneticAlgorithm.cs" />
     <Compile Include="MathModel\InnerSchemePhaseResponseCalculator.cs" />

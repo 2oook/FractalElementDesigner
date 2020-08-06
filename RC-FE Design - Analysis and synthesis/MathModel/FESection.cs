@@ -14,7 +14,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     /// Класс представляет базовый конструктивный элемент
     /// </summary>
     [Serializable]
-    public class FESection
+    public class FESection : ITwoPortNetwork
     {
         /// <summary>
         /// Словарь функций для расчета 

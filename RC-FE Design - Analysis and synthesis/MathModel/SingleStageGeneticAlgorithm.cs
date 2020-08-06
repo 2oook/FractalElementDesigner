@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 {
     /// <summary>
-    /// Класс представляет генетический алгоритм
+    /// Класс представляет генетический алгоритм с одной ступенью
     /// </summary>
-    class GeneticAlgorithm : IGeneticAlgorithm
+    class SingleStageGeneticAlgorithm : IGeneticAlgorithm
     {
-        public GeneticAlgorithm(StructureSchemeSynthesisParameters synthesisParameters, int populationCount)
+        public SingleStageGeneticAlgorithm(StructureSchemeSynthesisParameters synthesisParameters, int populationCount)
         {
             PopulationCount = populationCount;
             PopulationCountToMutate = (int)(populationCount * MutateCoefficient);
@@ -58,20 +58,44 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
         private Dictionary<int, List<int>> ConnectionCodes = new Dictionary<int, List<int>>();
 
+        /// <summary>
+        /// Максимальный код соединения (определяется один раз для повышения эффективности)
+        /// </summary>
         private int MaxConnectionCodeValue;
 
+        /// <summary>
+        /// Минимальный код соединения (определяется один раз для повышения эффективности)
+        /// </summary>
         private int MinConnectionCodeValue;
 
+        /// <summary>
+        /// Число популяции
+        /// </summary>
         private int PopulationCount;
 
+        /// <summary>
+        /// Число особей для мутации
+        /// </summary>
         private int PopulationCountToMutate;
 
+        /// <summary>
+        /// Число для инкремента частоты
+        /// </summary>
         private double FrequencyIncrement;
 
+        /// <summary>
+        /// Нижняя граница окна
+        /// </summary>
         private double LowerCharacteristicBound;
 
+        /// <summary>
+        /// Верхняя граница окна
+        /// </summary>
         private double UpperCharacteristicBound;
 
+        /// <summary>
+        /// Коэффициент мутации популяции
+        /// </summary>
         public double MutateCoefficient { get; set; } = 0.3;
 
         /// <summary>
@@ -271,7 +295,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
                 frequency += FrequencyIncrement;
             }
 
-            model.Rate = rate;
+            model.Individual.Rate = rate;
             model.PhaseResponsePoints = points;
         }
 
@@ -285,7 +309,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
 
         public void SelectPopulation()
         {
-            var newPopulation = Population.OrderByDescending(x => x.Model.Rate).Take(100).ToList();
+            var newPopulation = Population.OrderByDescending(x => x.Model.Individual.Rate).Take(100).ToList();
 
             Population = newPopulation;
         }
