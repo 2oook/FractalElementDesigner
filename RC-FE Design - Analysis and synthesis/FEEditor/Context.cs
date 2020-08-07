@@ -1,12 +1,12 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.FEEditor.Controls;
-using RC_FE_Design___Analysis_and_synthesis.FEEditor.Core;
+﻿using FractalElementDesigner.FEEditor.Controls;
+using FractalElementDesigner.FEEditor.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
+namespace FractalElementDesigner.FEEditor
 {
     [Serializable]
     public class Context

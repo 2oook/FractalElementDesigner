@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Controls
+namespace FractalElementDesigner.FEEditor.Controls
 {
     public class SelectionAdorner : Adorner
     {

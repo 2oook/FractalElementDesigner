@@ -1,6 +1,6 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor;
+﻿using FractalElementDesigner.SchemeEditing.Controls;
+using FractalElementDesigner.SchemeEditing.Core;
+using FractalElementDesigner.SchemeEditing.Editor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
+namespace FractalElementDesigner.SchemeEditing.Views
 {
     public partial class SchemeControl : UserControl
     {
@@ -45,7 +45,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views
         #region Properties
 
         public Action SelectionChanged { get; set; }
-        public Editor.SchemeEditor Editor { get; set; }
+        public SchemeEditor Editor { get; set; }
         private SelectionAdorner Adorner { get; set; }
 
         #endregion

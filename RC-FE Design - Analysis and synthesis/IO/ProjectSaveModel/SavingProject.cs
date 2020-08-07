@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RC_FE_Design___Analysis_and_synthesis.IO.ProjectSaveModel
+namespace FractalElementDesigner.IO.ProjectSaveModel
 {
     [Serializable]
     public class SavingProject

@@ -8,7 +8,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RC_FE_Design___Analysis_and_synthesis.MathModel
+namespace FractalElementDesigner.MathModel
 {
     /// <summary>
     /// Класс представляет базовый конструктивный элемент

@@ -1,7 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Threading;
 using MahApps.Metro.Controls.Dialogs;
-using RC_FE_Design___Analysis_and_synthesis.Navigation;
-using RC_FE_Design___Analysis_and_synthesis.ViewModels;
+using FractalElementDesigner.Navigating;
+using FractalElementDesigner.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Markup;
 
-namespace RC_FE_Design___Analysis_and_synthesis
+namespace FractalElementDesigner
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -31,7 +31,7 @@ namespace RC_FE_Design___Analysis_and_synthesis
 
             var window = new MainWindow();
 
-            Navigation.Navigation.Service = window.MainFrame.NavigationService;
+            Navigation.Service = window.MainFrame.NavigationService;
             
             window.DataContext = new MainViewModel(new ViewModelsResolver(DialogCoordinator.Instance));
 

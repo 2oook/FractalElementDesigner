@@ -1,13 +1,13 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro.Controls.Dialogs;
-using RC_FE_Design___Analysis_and_synthesis.FEEditor;
-using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
-using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
-using RC_FE_Design___Analysis_and_synthesis.FEEditor.Tools;
-using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
-using RC_FE_Design___Analysis_and_synthesis.Pages;
-using RC_FE_Design___Analysis_and_synthesis.Windows;
+using FractalElementDesigner.FEEditor;
+using FractalElementDesigner.FEEditor.Model;
+using FractalElementDesigner.FEEditor.Model.Cells;
+using FractalElementDesigner.FEEditor.Tools;
+using FractalElementDesigner.Navigating.Interfaces;
+using FractalElementDesigner.Pages;
+using FractalElementDesigner.Windows;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -18,15 +18,15 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using RC_FE_Design___Analysis_and_synthesis.IO;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views;
-using RC_FE_Design___Analysis_and_synthesis.MathModel;
+using FractalElementDesigner.IO;
+using FractalElementDesigner.SchemeEditing.Views;
+using FractalElementDesigner.MathModel;
 using System.Threading.Tasks;
-using RC_FE_Design___Analysis_and_synthesis.StructureSchemeSynthesis;
+using FractalElementDesigner.StructureSchemeSynthesis;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight.Threading;
 
-namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
+namespace FractalElementDesigner.ViewModels
 {
     /// <summary>
     /// ViewModel страницы анализа и синтеза
@@ -563,6 +563,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             else if (value is FElementScheme scheme)
             {
                 SchemeEditorVisibility = Visibility.Visible;
+                _Page.schemeEditorControl.SchemeControl.Editor = scheme.Editor;
             }
             else if (value is PRPlot plot)
             {

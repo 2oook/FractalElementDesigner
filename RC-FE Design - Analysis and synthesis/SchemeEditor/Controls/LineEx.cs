@@ -1,5 +1,5 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor;
+﻿using FractalElementDesigner.SchemeEditing.Core;
+using FractalElementDesigner.SchemeEditing.Editor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls
+namespace FractalElementDesigner.SchemeEditing.Controls
 {
     public class LineEx : Shape, ILine
     {

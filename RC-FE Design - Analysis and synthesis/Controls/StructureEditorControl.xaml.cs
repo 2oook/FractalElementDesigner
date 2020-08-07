@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RC_FE_Design___Analysis_and_synthesis.Controls
+namespace FractalElementDesigner.Controls
 {
     /// <summary>
     /// Interaction logic for StructureEditorControl.xaml

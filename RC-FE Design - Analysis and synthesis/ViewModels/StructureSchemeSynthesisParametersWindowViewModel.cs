@@ -1,7 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using RC_FE_Design___Analysis_and_synthesis.StructureSchemeSynthesis;
-using RC_FE_Design___Analysis_and_synthesis.Windows;
+using FractalElementDesigner.StructureSchemeSynthesis;
+using FractalElementDesigner.Windows;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
+namespace FractalElementDesigner.ViewModels
 {
     /// <summary>
     /// ViewModel окна ввода параметров синтеза

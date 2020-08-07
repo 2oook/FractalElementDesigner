@@ -1,5 +1,5 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.FEEditor;
-using RC_FE_Design___Analysis_and_synthesis.IO.ProjectSaveModel;
+﻿using FractalElementDesigner.FEEditor;
+using FractalElementDesigner.IO.ProjectSaveModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RC_FE_Design___Analysis_and_synthesis.IO
+namespace FractalElementDesigner.IO
 {
     public class ProjectSaver
     {

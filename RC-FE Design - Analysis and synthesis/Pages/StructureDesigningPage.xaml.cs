@@ -1,4 +1,4 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.ViewModels;
+﻿using FractalElementDesigner.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RC_FE_Design___Analysis_and_synthesis.Pages
+namespace FractalElementDesigner.Pages
 {
     /// <summary>
     /// Interaction logic for AnalysisPage.xaml

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace RC_FE_Design___Analysis_and_synthesis.Commands
+namespace FractalElementDesigner.Commands
 {
     /// <summary>
     /// Класс контейнер для статических команд

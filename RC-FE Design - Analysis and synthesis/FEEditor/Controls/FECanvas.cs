@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Controls
+namespace FractalElementDesigner.FEEditor.Controls
 {
     /// <summary>
     /// Элемент для редактирования структуры

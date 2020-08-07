@@ -1,7 +1,7 @@
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls;
+using FractalElementDesigner.SchemeEditing.Core;
+using FractalElementDesigner.SchemeEditing.Core.Model;
+using FractalElementDesigner.SchemeEditing.Editor;
+using FractalElementDesigner.SchemeEditing.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
-namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor
+namespace FractalElementDesigner.SchemeEditing
 {
     using FactoryFunc = Func<object[], double, double, bool, object>;
 

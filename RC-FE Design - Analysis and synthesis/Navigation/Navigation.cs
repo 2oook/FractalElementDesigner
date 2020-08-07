@@ -1,4 +1,4 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
+﻿using FractalElementDesigner.Navigating.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 
-namespace RC_FE_Design___Analysis_and_synthesis.Navigation
+namespace FractalElementDesigner.Navigating
 {
     public sealed class Navigation
     {

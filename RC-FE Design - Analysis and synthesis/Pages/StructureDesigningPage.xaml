@@ -3,15 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        xmlns:controls="clr-namespace:RC_FE_Design___Analysis_and_synthesis.Controls"
-        xmlns:selectors="clr-namespace:RC_FE_Design___Analysis_and_synthesis.Controls.Selectors"
-        xmlns:commands="clr-namespace:RC_FE_Design___Analysis_and_synthesis.Commands"
+        xmlns:controls="clr-namespace:FractalElementDesigner.Controls"
+        xmlns:selectors="clr-namespace:FractalElementDesigner.Controls.Selectors"
+        xmlns:commands="clr-namespace:FractalElementDesigner.Commands"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro" 
         xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity" 
-        xmlns:behaviours="clr-namespace:RC_FE_Design___Analysis_and_synthesis.FEEditor.Controls.Behaviours"
+        xmlns:behaviours="clr-namespace:FractalElementDesigner.FEEditor.Controls.Behaviours"
         Dialog:DialogParticipation.Register="{Binding}"
-        x:Class="RC_FE_Design___Analysis_and_synthesis.Pages.StructureDesigningPage"
+        x:Class="FractalElementDesigner.Pages.StructureDesigningPage"
         mc:Ignorable="d" 
         d:DesignHeight="450" d:DesignWidth="800"
         Title="Page2"
@@ -66,7 +66,7 @@
 
                 <controls:HomePageControl Visibility="{Binding Path=HomePageVisibility}"/>
 
-                <controls:SchemeEditorControl Visibility="{Binding Path=SchemeEditorVisibility}"/>
+                <controls:SchemeEditorControl x:Name="schemeEditorControl" Visibility="{Binding Path=SchemeEditorVisibility}"/>
 
                 <controls:PlotControl x:Name="plotControl" Visibility="{Binding Path=PlotVisibility}"/>
 

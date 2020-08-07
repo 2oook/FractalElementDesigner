@@ -1,4 +1,4 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core;
+﻿using FractalElementDesigner.SchemeEditing.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives; 
 
-namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls
+namespace FractalElementDesigner.SchemeEditing.Controls
 {
     public class ElementThumb : Thumb, IThumb
     {

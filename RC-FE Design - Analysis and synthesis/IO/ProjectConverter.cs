@@ -1,17 +1,17 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.IO.ProjectSaveModel;
-using RC_FE_Design___Analysis_and_synthesis;
+﻿using FractalElementDesigner.IO.ProjectSaveModel;
+using FractalElementDesigner;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RC_FE_Design___Analysis_and_synthesis.FEEditor;
+using FractalElementDesigner.FEEditor;
 using System.Collections.ObjectModel;
-using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
-using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
-using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
+using FractalElementDesigner.FEEditor.Model;
+using FractalElementDesigner.FEEditor.Model.Cells;
+using FractalElementDesigner.ProjectTree;
 
-namespace RC_FE_Design___Analysis_and_synthesis.IO
+namespace FractalElementDesigner.IO
 {
     public class ProjectConverter
     {

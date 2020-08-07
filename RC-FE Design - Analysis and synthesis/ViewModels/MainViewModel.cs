@@ -1,9 +1,10 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro.Controls.Dialogs;
-using RC_FE_Design___Analysis_and_synthesis.Commands;
-using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
-using RC_FE_Design___Analysis_and_synthesis.Pages;
+using FractalElementDesigner.Commands;
+using FractalElementDesigner.Navigating;
+using FractalElementDesigner.Navigating.Interfaces;
+using FractalElementDesigner.Pages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
+namespace FractalElementDesigner.ViewModels
 {
     /// <summary>
     /// Главная ViewModel
@@ -134,7 +135,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// </summary>
         private void GoToMainPageCommandExecute()
         {
-            Navigation.Navigation.Navigate(Navigation.Navigation.MainPageAlias, this);
+            Navigation.Navigate(Navigation.MainPageAlias, this);
         }
 
         /// <summary>
@@ -142,7 +143,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// </summary>
         private void GoToSchemeEditorPageCommandExecute(object sender, ExecutedRoutedEventArgs e)
         {
-            Navigation.Navigation.Navigate(_SchemeEditorPage, _SchemeEditorPageViewModel);
+            Navigation.Navigate(_SchemeEditorPage, _SchemeEditorPageViewModel);
         }
 
         /// <summary>
@@ -150,7 +151,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
         /// </summary>
         private void GoToStructureDesigningPageCommandExecute(object sender, ExecutedRoutedEventArgs e)
         {
-            Navigation.Navigation.Navigate(_StructureDesigningPage, _StructureDesigningPageViewModel);
+            Navigation.Navigate(_StructureDesigningPage, _StructureDesigningPageViewModel);
         }
 
         #endregion

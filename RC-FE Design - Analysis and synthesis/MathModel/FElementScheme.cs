@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
-using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
+using FractalElementDesigner.ProjectTree;
+using FractalElementDesigner.SchemeEditing.Editor;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +10,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RC_FE_Design___Analysis_and_synthesis.MathModel
+namespace FractalElementDesigner.MathModel
 {
     /// <summary>
     /// Схема включения элемента
@@ -335,6 +336,17 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// </summary>
         [NonSerialized]
         public bool IsLocked = false;
+
+        [NonSerialized]
+        private SchemeEditor editor;
+        /// <summary>
+        /// Объект редактора схемы
+        /// </summary>
+        public SchemeEditor Editor
+        {
+            get { return editor; }
+            set { editor = value; }
+        }
 
         // Метод для клонирования схемы
         public IFElementSchemePrototype DeepClone()

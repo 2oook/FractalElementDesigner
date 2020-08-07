@@ -15,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace RC_FE_Design___Analysis_and_synthesis.Windows
+namespace FractalElementDesigner.Windows
 {
     /// <summary>
     /// Interaction logic for NewStructureWindow.xaml

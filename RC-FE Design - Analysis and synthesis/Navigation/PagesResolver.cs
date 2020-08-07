@@ -1,5 +1,5 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
-using RC_FE_Design___Analysis_and_synthesis.Pages;
+﻿using FractalElementDesigner.Navigating.Interfaces;
+using FractalElementDesigner.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace RC_FE_Design___Analysis_and_synthesis.Navigation
+namespace FractalElementDesigner.Navigating
 {
     /// <summary>
     /// Класс для определения страниц

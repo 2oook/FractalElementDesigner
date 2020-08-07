@@ -1,12 +1,12 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro.Controls.Dialogs;
-using RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces;
-using RC_FE_Design___Analysis_and_synthesis.Pages;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor;
+using FractalElementDesigner.Navigating.Interfaces;
+using FractalElementDesigner.Pages;
+using FractalElementDesigner.SchemeEditing.Controls;
+using FractalElementDesigner.SchemeEditing.Core;
+using FractalElementDesigner.SchemeEditing.Core.Model;
+using FractalElementDesigner.SchemeEditing.Editor;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
+namespace FractalElementDesigner.ViewModels
 {
     /// <summary>
     /// ViewModel страницы редактирования схем включения

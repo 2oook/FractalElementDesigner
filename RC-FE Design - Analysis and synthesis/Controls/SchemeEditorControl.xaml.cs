@@ -1,9 +1,9 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Controls;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Views;
+﻿using FractalElementDesigner.SchemeEditing.Core;
+using FractalElementDesigner.SchemeEditing.Controls;
+using FractalElementDesigner.SchemeEditing.Editor;
+using FractalElementDesigner.SchemeEditing;
+using FractalElementDesigner.SchemeEditing.Core.Model;
+using FractalElementDesigner.SchemeEditing.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RC_FE_Design___Analysis_and_synthesis.Controls
+namespace FractalElementDesigner.Controls
 {
     /// <summary>
     /// Interaction logic for SchemeEditorControl.xaml
@@ -38,7 +38,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Controls
 
         #region Fields
 
-        public SchemeEditor.Editor.SchemeEditor Editor { get; private set; }
+        public SchemeEditing.Editor.SchemeEditor Editor { get; private set; }
 
         private PointEx InsertDefaultPoint { get; set; } = new PointEx(325.0, 30.0);
 
@@ -70,7 +70,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.Controls
 
         private void InitializeEditor()
         {
-            Editor = new SchemeEditor.Editor.SchemeEditor();
+            Editor = new SchemeEditing.Editor.SchemeEditor();
             Editor.Context = new Context();
             Editor.Context.CurrentCanvas = this.SchemeControl.SchemeCanvas;
 

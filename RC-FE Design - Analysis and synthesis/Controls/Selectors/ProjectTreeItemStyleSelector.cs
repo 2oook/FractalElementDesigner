@@ -1,6 +1,6 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
-using RC_FE_Design___Analysis_and_synthesis.MathModel;
-using RC_FE_Design___Analysis_and_synthesis.ProjectTree;
+﻿using FractalElementDesigner.FEEditor.Model;
+using FractalElementDesigner.MathModel;
+using FractalElementDesigner.ProjectTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace RC_FE_Design___Analysis_and_synthesis.Controls.Selectors
+namespace FractalElementDesigner.Controls.Selectors
 {
     /// <summary>
     /// Селектор стиля узла дерева проекта

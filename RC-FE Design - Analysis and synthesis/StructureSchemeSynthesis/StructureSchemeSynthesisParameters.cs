@@ -1,4 +1,4 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.MathModel;
+﻿using FractalElementDesigner.MathModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace RC_FE_Design___Analysis_and_synthesis.StructureSchemeSynthesis
+namespace FractalElementDesigner.StructureSchemeSynthesis
 {
     /// <summary>
     /// Класс параметров синтеза схемы структуры

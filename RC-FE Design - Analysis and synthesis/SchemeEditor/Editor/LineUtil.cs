@@ -1,10 +1,10 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core;
+﻿using FractalElementDesigner.SchemeEditing.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
+namespace FractalElementDesigner.SchemeEditing.Editor
 {
     public static class LineUtil
     {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace RC_FE_Design___Analysis_and_synthesis.Navigation.Interfaces
+namespace FractalElementDesigner.Navigating.Interfaces
 {
     public interface IPageViewModel : INotifyPropertyChanged
     {

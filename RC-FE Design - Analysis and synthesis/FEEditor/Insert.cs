@@ -1,8 +1,8 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.FEEditor.Controls;
-using RC_FE_Design___Analysis_and_synthesis.FEEditor.Core;
-using RC_FE_Design___Analysis_and_synthesis.FEEditor.Elements;
-using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
-using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
+﻿using FractalElementDesigner.FEEditor.Controls;
+using FractalElementDesigner.FEEditor.Core;
+using FractalElementDesigner.FEEditor.Elements;
+using FractalElementDesigner.FEEditor.Model;
+using FractalElementDesigner.FEEditor.Model.Cells;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
+namespace FractalElementDesigner.FEEditor
 {
     /// <summary>
     /// Класс для вставки элементов в область редактирования

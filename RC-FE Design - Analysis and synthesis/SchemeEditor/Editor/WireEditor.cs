@@ -1,12 +1,12 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Core.Model;
-using RC_FE_Design___Analysis_and_synthesis.SchemeEditor;
+﻿using FractalElementDesigner.SchemeEditing.Core;
+using FractalElementDesigner.SchemeEditing.Core.Model;
+using FractalElementDesigner.SchemeEditing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace RC_FE_Design___Analysis_and_synthesis.SchemeEditor.Editor
+namespace FractalElementDesigner.SchemeEditing.Editor
 {
     public static class WireEditor
     {

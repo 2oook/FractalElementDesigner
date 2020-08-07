@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 
-namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Tools
+namespace FractalElementDesigner.FEEditor.Tools
 {
     /// <summary>
     /// Класс представляет инструмент для редактирования структуры

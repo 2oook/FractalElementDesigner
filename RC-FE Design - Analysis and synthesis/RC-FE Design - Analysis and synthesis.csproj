@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B935E4EA-EF43-467A-AB3E-6ABB8B27294E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>RC_FE_Design___Analysis_and_synthesis</RootNamespace>
+    <RootNamespace>FractalElementDesigner</RootNamespace>
     <AssemblyName>RC-FE Design - Analysis and synthesis</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

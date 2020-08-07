@@ -1,7 +1,7 @@
-﻿<Application x:Class="RC_FE_Design___Analysis_and_synthesis.App"
+﻿<Application x:Class="FractalElementDesigner.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:RC_FE_Design___Analysis_and_synthesis">
+             xmlns:local="clr-namespace:FractalElementDesigner">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

@@ -1,5 +1,5 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.FEEditor.Controls;
-using RC_FE_Design___Analysis_and_synthesis.FEEditor.Core;
+﻿using FractalElementDesigner.FEEditor.Controls;
+using FractalElementDesigner.FEEditor.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RC_FE_Design___Analysis_and_synthesis.FEEditor
+namespace FractalElementDesigner.FEEditor
 {
     /// <summary>
     /// Interaction logic for FEControl.xaml

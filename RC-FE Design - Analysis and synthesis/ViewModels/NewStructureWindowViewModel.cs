@@ -1,7 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model;
-using RC_FE_Design___Analysis_and_synthesis.Windows;
+using FractalElementDesigner.FEEditor.Model;
+using FractalElementDesigner.Windows;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
+namespace FractalElementDesigner.ViewModels
 {
     /// <summary>
     /// ViewModel страницы создания новой структуры

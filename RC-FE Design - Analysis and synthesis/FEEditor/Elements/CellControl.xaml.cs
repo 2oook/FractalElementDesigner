@@ -1,4 +1,4 @@
-﻿using RC_FE_Design___Analysis_and_synthesis.FEEditor.Model.Cells;
+﻿using FractalElementDesigner.FEEditor.Model.Cells;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RC_FE_Design___Analysis_and_synthesis.FEEditor.Elements
+namespace FractalElementDesigner.FEEditor.Elements
 {
     /// <summary>
     /// Interaction logic for CellControl.xaml
