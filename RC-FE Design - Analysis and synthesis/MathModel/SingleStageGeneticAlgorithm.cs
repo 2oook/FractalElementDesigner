@@ -12,6 +12,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
     /// </summary>
     class SingleStageGeneticAlgorithm : IGeneticAlgorithm
     {
+        /// <summary>
+        /// Событие выполнения части работы
+        /// </summary>
+        public static event Action<double> OnDoWork;
+
         public SingleStageGeneticAlgorithm(StructureSchemeSynthesisParameters synthesisParameters, int populationCount)
         {
             PopulationCount = populationCount;

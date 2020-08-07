@@ -95,7 +95,7 @@
                                             </ContextMenu>
 
                                             <ContextMenu x:Key="projectTreeFElementSchemeContextMenu">
-                                                <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Синтез" Command="{Binding Path=SchemeSynthesisCommand}"/>
+                                                <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Выбрать схему" Command="{Binding Path=ChoiceOfSchemeCommand}"/>
                                                 <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Создать конструкцию" Command="{Binding Path=CreateStructureCommand}"/>
                                             </ContextMenu>
 

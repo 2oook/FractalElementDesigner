@@ -497,7 +497,24 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 RaisePropertyChanged(nameof(CreateStructureCommand));
             }
         }
-        
+
+        private ICommand choiceOfSchemeCommand;
+        /// <summary>
+        /// Команда для выбора схемы
+        /// </summary>
+        public ICommand ChoiceOfSchemeCommand
+        {
+            get
+            {
+                return choiceOfSchemeCommand;
+            }
+            set
+            {
+                choiceOfSchemeCommand = value;
+                RaisePropertyChanged(nameof(ChoiceOfSchemeCommand));
+            }
+        }
+
         /// <summary>
         /// Команда для перемещения на главную страницу 
         /// </summary>
@@ -630,38 +647,40 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
             LoadProjectCommand = new RelayCommand(LoadProject);
             SaveProjectCommand = new RelayCommand(SaveProject);
 
+            ChoiceOfSchemeCommand = new RelayCommand(ChoiceOfScheme, IsChoiceOfSchemePossible);
+
             SchemeSynthesisCommand = new RelayCommand(SchemeSynthesize, IsSchemeSynthesisPossible);
             CreateStructureCommand = new RelayCommand(CreateStructure, IsStructureCreatingPossible);
         }
 
         /// <summary>
-        /// Метод определяющий возможность создания конструкции схемы
+        /// Метод для выбора схемы
         /// </summary>
-        /// <returns>Разрешающий флаг</returns>
-        private bool IsStructureCreatingPossible() 
+        private void ChoiceOfScheme() 
         {
             if (SelectedProjectTreeItem is FElementScheme scheme)
             {
-                if (scheme.IsLocked)
-                {
-                    return false;
-                }
-
                 var project = Projects.SingleOrDefault(x => x.Items.Contains(scheme));
 
-                if (project.Items.Count > 0)
-                {
-                    return true;
-                }
-            }
+                if (project.Items.Where(x => x is FElementScheme).Count() == 1)
+                    return;
 
-            return false;
+                if (project == null)
+                    return;
+
+                DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                {
+                    project.Items.Clear();
+                    project.Items.Add(scheme);
+                });
+            }
         }
 
+
         // Метод для создания конструкции
-        private void CreateStructure() 
+        private void CreateStructure()
         {
-            if (SelectedProjectTreeItem is FElementScheme scheme) 
+            if (SelectedProjectTreeItem is FElementScheme scheme)
             {
                 // создать окно
                 var window = new NewStructureWindow();
@@ -688,6 +707,52 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
 
                 CreateStructureAsync(project, scheme, newStructureWindowViewModel.CurrentStructure);
             }
+        }
+
+        /// <summary>
+        /// Метод определяющий возможность создания конструкции схемы
+        /// </summary>
+        /// <returns>Разрешающий флаг</returns>
+        private bool IsStructureCreatingPossible() 
+        {
+            if (SelectedProjectTreeItem is FElementScheme scheme)
+            {
+                if (scheme.IsLocked)
+                {
+                    return false;
+                }
+
+                var project = Projects.SingleOrDefault(x => x.Items.Contains(scheme));
+
+                if (project.Items.Count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Метод для определения возможности выбора схемы
+        /// </summary>
+        /// <returns>Разрешающий флаг</returns>
+        private bool IsChoiceOfSchemePossible()
+        {
+            if (SelectedProjectTreeItem is FElementScheme scheme)
+            {
+                var project = Projects.SingleOrDefault(x => x.Items.Contains(scheme));
+
+                if (project == null)
+                    return false;
+
+                if (project.Items.Where(x => x is FElementScheme).Count() == 1)
+                    return false;
+
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -743,6 +808,8 @@ namespace RC_FE_Design___Analysis_and_synthesis.ViewModels
                 }
 
                 var project = Projects.SingleOrDefault(x => x.Items.Contains(scheme));
+
+                project.Items.Clear();
 
                 StartSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, scheme);
             }
