@@ -28,5 +28,7 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         void SelectPopulation();
 
         List<FElementScheme> GetPopulation();
+
+        void Start();
     }
 }

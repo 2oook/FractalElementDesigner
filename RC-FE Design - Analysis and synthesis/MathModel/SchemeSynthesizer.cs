@@ -31,38 +31,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         {
             OnStateChange("Выполнение синтеза");
 
-            IGeneticAlgorithm ga = new SingleStageGeneticAlgorithm(synthesisParameters, 100);
+            IGeneticAlgorithm ga = new SingleStageGeneticAlgorithm(synthesisParameters, 100, scheme);
 
-            ga.InitiatePopulation(scheme);
+            SingleStageGeneticAlgorithm.OnDoWork += SingleStageGeneticAlgorithm_OnDoWork;
 
-            double increment = 100f / synthesisParameters.CountOfWholeStepsOfGA;
-
-            for (int i = 0; i < synthesisParameters.CountOfWholeStepsOfGA; i++)
-            {
-                OnDoWork(increment * (i + 1));
-
-                // для сравнения мутировавших особей
-                //var t = ga.Population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
-
-                ga.MutatePopulation();
-
-                // для сравнения мутировавших особей
-                //var t1 = ga.Population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
-
-                ga.CrossPopulation();
-
-                //var t2 = ga.Population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
-
-                ga.RatePopulation();
-
-                // для просмотра оценки 
-                //var t3 = ga.Population.OrderByDescending(x => x.Model.Rate).Select(x => x.Model).ToList();
-
-                ga.SelectPopulation();
-
-                //var t99 = population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
-                //var t9 = population.Select(x => x.Model.InnerConnections.Select(y => y.PEType).ToList()).ToList();
-            }
+            ga.Start();
 
             // для примера
             // рассчитать ФЧХ для схемы
@@ -76,6 +49,11 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
             OnStateChange("");
 
             return ga.GetPopulation();
+        }
+
+        private static void SingleStageGeneticAlgorithm_OnDoWork(double obj)
+        {
+            OnDoWork(obj);
         }
     }
 }

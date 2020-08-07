@@ -17,8 +17,10 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         /// </summary>
         public static event Action<double> OnDoWork;
 
-        public SingleStageGeneticAlgorithm(StructureSchemeSynthesisParameters synthesisParameters, int populationCount)
+        public SingleStageGeneticAlgorithm(StructureSchemeSynthesisParameters synthesisParameters, int populationCount, FElementScheme schemePrototype)
         {
+            SchemePrototype = schemePrototype;
+
             PopulationCount = populationCount;
             PopulationCountToMutate = (int)(populationCount * MutateCoefficient);
 
@@ -316,6 +318,40 @@ namespace RC_FE_Design___Analysis_and_synthesis.MathModel
         public List<FElementScheme> GetPopulation() 
         {
             return Population;
+        }
+
+        public void Start() 
+        {
+            InitiatePopulation(SchemePrototype);
+
+            double increment = 100f / CountOfWholeStepsOfGA;
+
+            for (int i = 0; i < CountOfWholeStepsOfGA; i++)
+            {
+                OnDoWork(increment * (i + 1));
+
+                // для сравнения мутировавших особей
+                //var t = ga.Population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
+
+                MutatePopulation();
+
+                // для сравнения мутировавших особей
+                //var t1 = ga.Population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
+
+                CrossPopulation();
+
+                //var t2 = ga.Population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
+
+                RatePopulation();
+
+                // для просмотра оценки 
+                //var t3 = ga.Population.OrderByDescending(x => x.Model.Rate).Select(x => x.Model).ToList();
+
+                SelectPopulation();
+
+                //var t99 = population.Select(x => x.Model.InnerConnections.Select(y => y.ConnectionType).ToList()).ToList();
+                //var t9 = population.Select(x => x.Model.InnerConnections.Select(y => y.PEType).ToList()).ToList();
+            }
         }
     }
 }
