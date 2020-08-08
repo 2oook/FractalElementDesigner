@@ -1,5 +1,6 @@
 ﻿using FractalElementDesigner.FEEditor.Controls;
 using FractalElementDesigner.FEEditor.Core;
+using FractalElementDesigner.FEEditor.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,7 @@ namespace FractalElementDesigner.FEEditor
     [Serializable]
     public class Context
     {
-        #region Properties
-
-
-        #endregion
-
-        #region Fields
-
-        public FECanvas CurrentCanvas = null;
+        public ICanvas CurrentCanvas = null;
 
         public double DefaultGridSize = 30;
 
@@ -41,8 +35,5 @@ namespace FractalElementDesigner.FEEditor
         public PointEx ZoomPoint;
 
         public double ReversePanDirection = -1.0; // reverse: 1.0, normal: -1.0
-
-
-        #endregion
     }
 }

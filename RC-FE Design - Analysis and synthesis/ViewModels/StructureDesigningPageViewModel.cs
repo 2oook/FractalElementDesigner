@@ -25,6 +25,10 @@ using System.Threading.Tasks;
 using FractalElementDesigner.StructureSchemeSynthesis;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight.Threading;
+using FractalElementDesigner.SchemeEditing.Editor;
+using FractalElementDesigner.SchemeEditing.Core;
+using FractalElementDesigner.FEEditor.Controls;
+using FractalElementDesigner.SchemeEditing;
 
 namespace FractalElementDesigner.ViewModels
 {
@@ -877,12 +881,12 @@ namespace FractalElementDesigner.ViewModels
                     {
                         foreach (var layer in structure.StructureLayers)
                         {
-                            var editor = new Editor() { Context = new Context() };
+                            var editor = new Editor() { Context = new FEEditor.Context() };
                             editor.Context.CurrentCanvas = _Page.structureEditorControl.FEControl.CreateFECanvas();
 
                             layer.Editor = editor;
 
-                            Insert.ExistingStructureLayer(editor.Context.CurrentCanvas, layer, layer.CellsType);
+                            FEEditor.Insert.ExistingStructureLayer(editor.Context.CurrentCanvas as FECanvas, layer, layer.CellsType);
                         }
                     }
 
@@ -1006,9 +1010,12 @@ namespace FractalElementDesigner.ViewModels
                         var _scheme = schemes[i];
                         _scheme.Name = "Схема №" + (i+1);
 
+                        // Инициализировать график
                         var plot = _scheme.Elements.Where(x => x is PRPlot).SingleOrDefault() as PRPlot;
-
                         PRPlot.InitializatePhaseResponsePlot(_scheme.Model.PhaseResponsePoints, plot);
+
+                        // Создать отображение схемы из полученной модели
+                        CreateSchemeInEditor(_scheme);
 
                         DispatcherHelper.CheckBeginInvokeOnUI(() =>
                         {
@@ -1027,6 +1034,21 @@ namespace FractalElementDesigner.ViewModels
                     //scheme.IsLocked = false;
                 }    
             });
+        }
+
+        private void CreateSchemeInEditor(FElementScheme scheme) 
+        {
+            DispatcherHelper.CheckBeginInvokeOnUI(() =>
+            {
+                var canvas = _Page.schemeEditorControl.SchemeControl.CreateSchemeCanvas();
+                var editor = _Page.schemeEditorControl.InitializeNewEditor(canvas);
+                scheme.Editor = editor;
+
+                if (canvas == null)
+                    return;
+
+                SchemeVisualizator.InsertVisual(scheme, _Page.schemeEditorControl.SchemeControl);
+            });       
         }
 
         private void CreateNewStructureProject()
@@ -1074,12 +1096,12 @@ namespace FractalElementDesigner.ViewModels
                 // вставить слои
                 foreach (var layer in newStructure.StructureLayers)
                 {
-                    var editor = new Editor() { Context = new Context() };
+                    var editor = new Editor() { Context = new FEEditor.Context() };
                     editor.Context.CurrentCanvas = _Page.structureEditorControl.FEControl.CreateFECanvas();
 
                     layer.Editor = editor;
 
-                    Insert.StructureLayer(editor.Context.CurrentCanvas, layer, layer.CellsType);
+                    FEEditor.Insert.StructureLayer(editor.Context.CurrentCanvas as FECanvas, layer, layer.CellsType);
                 }
 
                 _Page.structureEditorControl.FEControl.Editor = newStructure.StructureLayers.First().Editor;

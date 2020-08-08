@@ -12,13 +12,9 @@ namespace FractalElementDesigner.FEEditor
     [Serializable]
     public class Editor
     {
-        #region Properties
-
         /// <summary>
         /// Контекст редактора
         /// </summary>
         public Context Context { get; set; }
-
-        #endregion
     }
 }

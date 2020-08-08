@@ -1,5 +1,6 @@
 ﻿using FractalElementDesigner.Controls;
 using FractalElementDesigner.FEEditor;
+using FractalElementDesigner.FEEditor.Controls;
 using FractalElementDesigner.FEEditor.Model;
 using FractalElementDesigner.FEEditor.Model.Cells;
 using System;
@@ -65,7 +66,7 @@ namespace FractalElementDesigner.MathModel
 
                 layer.Editor = editor;
 
-                Insert.StructureLayer(editor.Context.CurrentCanvas, layer, layer.CellsType);
+                Insert.StructureLayer(editor.Context.CurrentCanvas as FECanvas, layer, layer.CellsType);
             }
         }
 

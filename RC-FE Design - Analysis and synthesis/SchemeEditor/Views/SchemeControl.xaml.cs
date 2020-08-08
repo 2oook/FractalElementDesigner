@@ -19,8 +19,6 @@ namespace FractalElementDesigner.SchemeEditing.Views
 {
     public partial class SchemeControl : UserControl
     {
-        #region Constructor
-
         public SchemeControl()
         {
             InitializeComponent();
@@ -38,14 +36,59 @@ namespace FractalElementDesigner.SchemeEditing.Views
 
             SchemeTemplate.Width = RootGrid.ActualWidth;
             SchemeTemplate.Height = RootGrid.ActualHeight;
+
+            var tg = new TransformGroup() { Children = { new ScaleTransform() { ScaleX = 1, ScaleY = 1 }, new SkewTransform(), new RotateTransform(), new TranslateTransform() } };
+            RootGrid.RenderTransform = tg;
         }
 
-        #endregion
+        public ICanvas CreateSchemeCanvas()
+        {
+            var canvas = new SchemeCanvas() { Name = "SchemeCanvas", Background = (SolidColorBrush)Application.Current.Resources["LogicTransparentColorKey"] };
+
+            canvas.MouseLeftButtonDown += Canvas_MouseLeftButtonDown;
+            canvas.MouseLeftButtonUp += Canvas_MouseLeftButtonUp;
+            canvas.PreviewMouseLeftButtonDown += Canvas_PreviewMouseLeftButtonDown;
+            canvas.MouseMove += Canvas_MouseMove;
+            canvas.PreviewMouseRightButtonDown += Canvas_PreviewMouseRightButtonDown;
+            canvas.ContextMenuOpening += Canvas_ContextMenuOpening;
+
+            canvas.Width = RootGrid.ActualWidth;
+            canvas.Height = RootGrid.ActualHeight;
+
+            Grid.SetColumn(canvas, 0);
+            Grid.SetRow(canvas, 0);
+
+            return canvas;
+        }
 
         #region Properties
 
         public Action SelectionChanged { get; set; }
-        public SchemeEditor Editor { get; set; }
+
+        private SchemeEditor editor;
+        /// <summary>
+        /// Редактор
+        /// </summary>
+        public SchemeEditor Editor
+        {
+            get => editor;
+            set
+            {
+                // если объект редактора не null очистить область редактирования и расположить в ней текущий редактор
+                if (editor != null)
+                {
+                    var canvases = RootGrid.Children.OfType<ICanvas>().ToList();
+
+                    for (int i = 0; i < canvases.Count; i++)
+                        RootGrid.Children.Remove(canvases[i] as UIElement);                  
+                    
+                    RootGrid.Children.Add(value.Context.CurrentCanvas as SchemeCanvas);
+                }
+
+                editor = value;
+            }
+        }
+
         private SelectionAdorner Adorner { get; set; }
 
         #endregion

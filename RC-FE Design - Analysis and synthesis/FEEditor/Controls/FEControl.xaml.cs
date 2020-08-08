@@ -1,5 +1,6 @@
 ﻿using FractalElementDesigner.FEEditor.Controls;
 using FractalElementDesigner.FEEditor.Core;
+using FractalElementDesigner.FEEditor.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace FractalElementDesigner.FEEditor
         /// Метод для создания области проектирования
         /// </summary>
         /// <returns></returns>
-        public FECanvas CreateFECanvas()
+        public ICanvas CreateFECanvas()
         {
             var canvas = new FECanvas() { Name = "FECanvas", Background = (SolidColorBrush)Application.Current.Resources["LogicTransparentColorKey"] };
 
@@ -50,7 +51,6 @@ namespace FractalElementDesigner.FEEditor
 
             var tg = new TransformGroup() { Children = { new ScaleTransform() { ScaleX = 1, ScaleY = 1 }, new SkewTransform(), new RotateTransform(), new TranslateTransform() } };
             RootGrid.RenderTransform = tg;
-            RootGrid.Children.Add(canvas);
 
             return canvas;
         }
@@ -70,7 +70,7 @@ namespace FractalElementDesigner.FEEditor
                 if (editor != null)
                 {
                     RootGrid.Children.Clear();
-                    RootGrid.Children.Add(value.Context.CurrentCanvas);
+                    RootGrid.Children.Add(value.Context.CurrentCanvas as FECanvas);
                 }
 
                 editor = value;
@@ -201,7 +201,7 @@ namespace FractalElementDesigner.FEEditor
         public void ZoomToFit()
         {
             var viewport = new Size(this.ActualWidth + 0.0, this.ActualHeight + 0.0);
-            var source = new Size(this.Editor.Context.CurrentCanvas.Width + 6.0, this.Editor.Context.CurrentCanvas.Height + 6.0);
+            var source = new Size(this.Editor.Context.CurrentCanvas.GetWidth() + 6.0, this.Editor.Context.CurrentCanvas.GetHeight() + 6.0);
             ZoomToFit(viewport, source);
         }
 

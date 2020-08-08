@@ -40,21 +40,6 @@ namespace FractalElementDesigner.ViewModels
         /// </summary>
         private SchemeEditorPage _Page { get; set; }
 
-        private ICanvas currentCanvas;
-        private ICanvas _CurrentCanvas 
-        { 
-            get => currentCanvas;
-            set 
-            {
-                currentCanvas = value;
-
-                //if (currentCanvas.ElementAdded == null)
-                //{
-                //    currentCanvas.ElementAdded = ElementAddedHandler;
-                //}
-            }
-        }
-
         /// <summary>
         /// Объект для вывода диалогов
         /// </summary>
@@ -147,7 +132,6 @@ namespace FractalElementDesigner.ViewModels
         public void SetPage(Page page)
         {
             _Page = (SchemeEditorPage)page;
-            _CurrentCanvas = _Page.Editor.Context.CurrentCanvas;
         }
 
         #endregion

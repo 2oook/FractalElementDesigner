@@ -127,6 +127,8 @@
     </Compile>
     <Compile Include="FEEditor\Editor.cs" />
     <Compile Include="FEEditor\Insert.cs" />
+    <Compile Include="FEEditor\Interfaces\ICanvas.cs" />
+    <Compile Include="FEEditor\Interfaces\IElement.cs" />
     <Compile Include="FEEditor\Model\Cells\CellType.cs" />
     <Compile Include="FEEditor\Model\RCStructureTemplate.cs" />
     <Compile Include="FEEditor\ResourceConstants.cs" />
@@ -224,6 +226,7 @@
     <Compile Include="SchemeEditor\ResourceConstants.cs" />
     <Compile Include="SchemeEditor\Helpers\SnapHelper.cs" />
     <Compile Include="SchemeEditor\Helpers\StringHelper.cs" />
+    <Compile Include="SchemeEditor\SchemeVisualizator.cs" />
     <Compile Include="SchemeEditor\WpfSchemeCreator.cs" />
     <Compile Include="SchemeEditor\Views\SchemeControl.xaml.cs">
       <DependentUpon>SchemeControl.xaml</DependentUpon>

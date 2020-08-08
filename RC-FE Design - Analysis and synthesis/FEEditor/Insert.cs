@@ -17,7 +17,7 @@ namespace FractalElementDesigner.FEEditor
     /// <summary>
     /// Класс для вставки элементов в область редактирования
     /// </summary>
-    public static class Insert
+    static class Insert
     {
         // Метод для вставки слоя структуры в элемент Canvas
         public static void StructureLayer(FECanvas canvas, Layer layer, CellType layerType)

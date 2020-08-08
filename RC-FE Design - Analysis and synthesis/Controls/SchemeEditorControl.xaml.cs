@@ -68,9 +68,9 @@ namespace FractalElementDesigner.Controls
             };
         }
 
-        private void InitializeEditor()
+        public void InitializeEditor()
         {
-            Editor = new SchemeEditing.Editor.SchemeEditor();
+            Editor = new SchemeEditor();
             Editor.Context = new Context();
             Editor.Context.CurrentCanvas = this.SchemeControl.SchemeCanvas;
 
@@ -85,6 +85,35 @@ namespace FractalElementDesigner.Controls
 
             // Scheme creator
             Editor.Context.SchemeCreator = GetSchemeCreator();
+        }
+
+        public SchemeEditor InitializeNewEditor(ICanvas canvas)
+        {
+            var editor = new SchemeEditor();
+            editor.Context = new Context();
+            editor.Context.CurrentCanvas = canvas;
+
+            var counter = new IdCounter();
+            counter.Set(3);
+            canvas.SetCounter(counter);
+
+            var prop = SchemeProperties.Default;
+            canvas.SetProperties(prop);
+
+            editor.Context.IsControlPressed = () => Keyboard.Modifiers == ModifierKeys.Control;
+
+            var creator = new WpfSchemeCreator();
+
+            creator.SetThumbEvents = (thumb) => SetThumbEvents(thumb);
+            creator.SetPosition = (element, left, top, snap) => editor.SetPosition(element, left, top, snap);
+
+            creator.GetCounter = () => editor.Context.CurrentCanvas.GetCounter();
+            creator.SetCanvas(canvas);
+
+            // Scheme creator
+            editor.Context.SchemeCreator = creator;
+
+            return editor;
         }
 
         private ISchemeCreator GetSchemeCreator()
