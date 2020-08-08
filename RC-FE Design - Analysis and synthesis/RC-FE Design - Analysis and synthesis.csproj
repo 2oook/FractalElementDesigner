@@ -113,27 +113,27 @@
     <Compile Include="Controls\StructureEditorControl.xaml.cs">
       <DependentUpon>StructureEditorControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FEEditor\Context.cs" />
-    <Compile Include="FEEditor\Controls\Behaviours\BindableSelectedItemBehavior.cs" />
-    <Compile Include="FEEditor\Controls\FEControl.xaml.cs">
+    <Compile Include="FEEditing\Context.cs" />
+    <Compile Include="FEEditing\Controls\Behaviours\BindableSelectedItemBehavior.cs" />
+    <Compile Include="FEEditing\Controls\FEControl.xaml.cs">
       <DependentUpon>FEControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FEEditor\Controls\FECanvas.cs" />
-    <Compile Include="FEEditor\Controls\SelectionAdorner.cs" />
-    <Compile Include="FEEditor\Converters\CellTypeConverter.cs" />
-    <Compile Include="FEEditor\Core\PointEx.cs" />
-    <Compile Include="FEEditor\Elements\CellControl.xaml.cs">
+    <Compile Include="FEEditing\Controls\FECanvas.cs" />
+    <Compile Include="FEEditing\Controls\SelectionAdorner.cs" />
+    <Compile Include="FEEditing\Converters\CellTypeConverter.cs" />
+    <Compile Include="FEEditing\Core\PointEx.cs" />
+    <Compile Include="FEEditing\Elements\CellControl.xaml.cs">
       <DependentUpon>CellControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FEEditor\Editor.cs" />
-    <Compile Include="FEEditor\Insert.cs" />
-    <Compile Include="FEEditor\Interfaces\ICanvas.cs" />
-    <Compile Include="FEEditor\Interfaces\IElement.cs" />
-    <Compile Include="FEEditor\Model\Cells\CellType.cs" />
-    <Compile Include="FEEditor\Model\RCStructureTemplate.cs" />
-    <Compile Include="FEEditor\ResourceConstants.cs" />
-    <Compile Include="FEEditor\Tools\Tool.cs" />
-    <Compile Include="FEEditor\Tools\ToolType.cs" />
+    <Compile Include="FEEditing\Editor.cs" />
+    <Compile Include="FEEditing\Insert.cs" />
+    <Compile Include="FEEditing\Interfaces\ICanvas.cs" />
+    <Compile Include="FEEditing\Interfaces\IElement.cs" />
+    <Compile Include="FEEditing\Model\Cells\CellType.cs" />
+    <Compile Include="FEEditing\Model\RCStructureTemplate.cs" />
+    <Compile Include="FEEditing\ResourceConstants.cs" />
+    <Compile Include="FEEditing\Tools\Tool.cs" />
+    <Compile Include="FEEditing\Tools\ToolType.cs" />
     <Compile Include="IO\ProjectConverter.cs" />
     <Compile Include="IO\ProjectSaveModel\SavingLayer.cs" />
     <Compile Include="IO\ProjectSaveModel\SavingProject.cs" />
@@ -159,12 +159,12 @@
     <Compile Include="MathModel\PRPlot.cs" />
     <Compile Include="MathModel\SchemeSynthesizer.cs" />
     <Compile Include="MathModel\StructureCreator.cs" />
-    <Compile Include="Navigation\Interfaces\IPageResolver.cs" />
-    <Compile Include="Navigation\Interfaces\IPageViewModel.cs" />
-    <Compile Include="Navigation\Interfaces\IViewModelsResolver.cs" />
-    <Compile Include="Navigation\Navigation.cs" />
-    <Compile Include="Navigation\PagesResolver.cs" />
-    <Compile Include="Navigation\ViewModelsResolver.cs" />
+    <Compile Include="Navigating\Interfaces\IPageResolver.cs" />
+    <Compile Include="Navigating\Interfaces\IPageViewModel.cs" />
+    <Compile Include="Navigating\Interfaces\IViewModelsResolver.cs" />
+    <Compile Include="Navigating\Navigation.cs" />
+    <Compile Include="Navigating\PagesResolver.cs" />
+    <Compile Include="Navigating\ViewModelsResolver.cs" />
     <Compile Include="Pages\StructureDesigningPage.xaml.cs">
       <DependentUpon>StructureDesigningPage.xaml</DependentUpon>
     </Compile>
@@ -179,56 +179,56 @@
     </Compile>
     <Compile Include="ProjectTree\IProjectTreeItem.cs" />
     <Compile Include="ProjectTree\Project.cs" />
-    <Compile Include="FEEditor\Model\Layer.cs" />
-    <Compile Include="FEEditor\Model\RCStructure.cs" />
-    <Compile Include="FEEditor\Model\RCStructureBase.cs" />
-    <Compile Include="FEEditor\Model\Cells\StructureCellBase.cs" />
-    <Compile Include="SchemeEditor\Controls\SchemeCanvas.cs" />
-    <Compile Include="SchemeEditor\Controls\Elements\FElementControl.xaml.cs">
+    <Compile Include="FEEditing\Model\Layer.cs" />
+    <Compile Include="FEEditing\Model\RCStructure.cs" />
+    <Compile Include="FEEditing\Model\RCStructureBase.cs" />
+    <Compile Include="FEEditing\Model\Cells\StructureCellBase.cs" />
+    <Compile Include="SchemeEditing\Controls\SchemeCanvas.cs" />
+    <Compile Include="SchemeEditing\Controls\Elements\FElementControl.xaml.cs">
       <DependentUpon>FElementControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SchemeEditor\Controls\Elements\PinControl.xaml.cs">
+    <Compile Include="SchemeEditing\Controls\Elements\PinControl.xaml.cs">
       <DependentUpon>PinControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SchemeEditor\Controls\ElementThumb.cs" />
-    <Compile Include="SchemeEditor\Controls\LineEx.cs" />
-    <Compile Include="SchemeEditor\Controls\PinThumb.cs" />
-    <Compile Include="SchemeEditor\Controls\SelectionAdorner.cs" />
-    <Compile Include="SchemeEditor\Core\ElementType.cs" />
-    <Compile Include="SchemeEditor\Core\SchemeProperties.cs" />
-    <Compile Include="SchemeEditor\Core\Interfaces\ICanvas.cs" />
-    <Compile Include="SchemeEditor\Core\Interfaces\IData.cs" />
-    <Compile Include="SchemeEditor\Core\IdCounter.cs" />
-    <Compile Include="SchemeEditor\Core\Interfaces\IElement.cs" />
-    <Compile Include="SchemeEditor\Core\Interfaces\ILine.cs" />
-    <Compile Include="SchemeEditor\Core\Interfaces\IMargin.cs" />
-    <Compile Include="SchemeEditor\Core\Interfaces\IPoint.cs" />
-    <Compile Include="SchemeEditor\Core\Interfaces\IRect.cs" />
-    <Compile Include="SchemeEditor\Core\Interfaces\ISelected.cs" />
-    <Compile Include="SchemeEditor\Core\Interfaces\ITag.cs" />
-    <Compile Include="SchemeEditor\Core\Interfaces\IThumb.cs" />
-    <Compile Include="SchemeEditor\Core\Interfaces\IUid.cs" />
-    <Compile Include="SchemeEditor\Core\MarginEx.cs" />
-    <Compile Include="SchemeEditor\Core\Model\Child.cs" />
-    <Compile Include="SchemeEditor\Core\Model\Connection.cs" />
-    <Compile Include="SchemeEditor\Core\Interfaces\ISchemeCreator.cs" />
-    <Compile Include="SchemeEditor\Core\Model\Pin.cs" />
-    <Compile Include="SchemeEditor\Core\Model\Wire.cs" />
-    <Compile Include="SchemeEditor\Core\PointEx.cs" />
-    <Compile Include="SchemeEditor\Core\RectEx.cs" />
-    <Compile Include="SchemeEditor\Editor\Constants.cs" />
-    <Compile Include="SchemeEditor\Editor\Context.cs" />
-    <Compile Include="SchemeEditor\Editor\SchemeEditor.cs" />
-    <Compile Include="SchemeEditor\Editor\Insert.cs" />
-    <Compile Include="SchemeEditor\Editor\LineUtil.cs" />
-    <Compile Include="SchemeEditor\Editor\ModelEditor.cs" />
-    <Compile Include="SchemeEditor\Editor\WireEditor.cs" />
-    <Compile Include="SchemeEditor\ResourceConstants.cs" />
-    <Compile Include="SchemeEditor\Helpers\SnapHelper.cs" />
-    <Compile Include="SchemeEditor\Helpers\StringHelper.cs" />
-    <Compile Include="SchemeEditor\SchemeVisualizator.cs" />
-    <Compile Include="SchemeEditor\WpfSchemeCreator.cs" />
-    <Compile Include="SchemeEditor\Views\SchemeControl.xaml.cs">
+    <Compile Include="SchemeEditing\Controls\ElementThumb.cs" />
+    <Compile Include="SchemeEditing\Controls\LineEx.cs" />
+    <Compile Include="SchemeEditing\Controls\PinThumb.cs" />
+    <Compile Include="SchemeEditing\Controls\SelectionAdorner.cs" />
+    <Compile Include="SchemeEditing\Core\ElementType.cs" />
+    <Compile Include="SchemeEditing\Core\SchemeProperties.cs" />
+    <Compile Include="SchemeEditing\Core\Interfaces\ICanvas.cs" />
+    <Compile Include="SchemeEditing\Core\Interfaces\IData.cs" />
+    <Compile Include="SchemeEditing\Core\IdCounter.cs" />
+    <Compile Include="SchemeEditing\Core\Interfaces\IElement.cs" />
+    <Compile Include="SchemeEditing\Core\Interfaces\ILine.cs" />
+    <Compile Include="SchemeEditing\Core\Interfaces\IMargin.cs" />
+    <Compile Include="SchemeEditing\Core\Interfaces\IPoint.cs" />
+    <Compile Include="SchemeEditing\Core\Interfaces\IRect.cs" />
+    <Compile Include="SchemeEditing\Core\Interfaces\ISelected.cs" />
+    <Compile Include="SchemeEditing\Core\Interfaces\ITag.cs" />
+    <Compile Include="SchemeEditing\Core\Interfaces\IThumb.cs" />
+    <Compile Include="SchemeEditing\Core\Interfaces\IUid.cs" />
+    <Compile Include="SchemeEditing\Core\MarginEx.cs" />
+    <Compile Include="SchemeEditing\Core\Model\Child.cs" />
+    <Compile Include="SchemeEditing\Core\Model\Connection.cs" />
+    <Compile Include="SchemeEditing\Core\Interfaces\ISchemeCreator.cs" />
+    <Compile Include="SchemeEditing\Core\Model\Pin.cs" />
+    <Compile Include="SchemeEditing\Core\Model\Wire.cs" />
+    <Compile Include="SchemeEditing\Core\PointEx.cs" />
+    <Compile Include="SchemeEditing\Core\RectEx.cs" />
+    <Compile Include="SchemeEditing\Editor\Constants.cs" />
+    <Compile Include="SchemeEditing\Editor\Context.cs" />
+    <Compile Include="SchemeEditing\Editor\SchemeEditor.cs" />
+    <Compile Include="SchemeEditing\Editor\Insert.cs" />
+    <Compile Include="SchemeEditing\Editor\LineUtil.cs" />
+    <Compile Include="SchemeEditing\Editor\ModelEditor.cs" />
+    <Compile Include="SchemeEditing\Editor\WireEditor.cs" />
+    <Compile Include="SchemeEditing\ResourceConstants.cs" />
+    <Compile Include="SchemeEditing\Helpers\SnapHelper.cs" />
+    <Compile Include="SchemeEditing\Helpers\StringHelper.cs" />
+    <Compile Include="SchemeEditing\SchemeVisualizator.cs" />
+    <Compile Include="SchemeEditing\WpfSchemeCreator.cs" />
+    <Compile Include="SchemeEditing\Views\SchemeControl.xaml.cs">
       <DependentUpon>SchemeControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="StructureSchemeSynthesis\StructureSchemeSynthesisParameters.cs" />
@@ -275,11 +275,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="FEEditor\Controls\FEControl.xaml">
+    <Page Include="FEEditing\Controls\FEControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FEEditor\Elements\CellControl.xaml">
+    <Page Include="FEEditing\Elements\CellControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -311,15 +311,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SchemeEditor\Controls\Elements\FElementControl.xaml">
+    <Page Include="SchemeEditing\Controls\Elements\FElementControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SchemeEditor\Controls\Elements\PinControl.xaml">
+    <Page Include="SchemeEditing\Controls\Elements\PinControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SchemeEditor\Views\SchemeControl.xaml">
+    <Page Include="SchemeEditing\Views\SchemeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -360,7 +360,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="FEEditor\Model\Structures\" />
+    <Folder Include="FEEditing\Model\Structures\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
