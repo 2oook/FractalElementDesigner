@@ -223,6 +223,7 @@
     <Compile Include="SchemeEditing\Editor\LineUtil.cs" />
     <Compile Include="SchemeEditing\Editor\ModelEditor.cs" />
     <Compile Include="SchemeEditing\Editor\WireEditor.cs" />
+    <Compile Include="SchemeEditing\FEElementControlThumb.cs" />
     <Compile Include="SchemeEditing\ResourceConstants.cs" />
     <Compile Include="SchemeEditing\Helpers\SnapHelper.cs" />
     <Compile Include="SchemeEditing\Helpers\StringHelper.cs" />

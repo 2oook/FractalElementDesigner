@@ -9,6 +9,10 @@
     <sys:Double x:Key="IOStrokeThicknessKey">2.0</sys:Double>
     <sys:Double x:Key="PageStrokeThicknessKey">1.0</sys:Double>
 
+    <!-- dimensions of elements -->
+    <sys:Double x:Key="FEElementHeightKey">60</sys:Double>
+    <sys:Double x:Key="FEElementWidthKey">120</sys:Double>
+
     <!-- colors -->
 
     <SolidColorBrush x:Key="LogicBackgroundColorKey" Color="White"/>

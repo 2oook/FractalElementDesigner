@@ -1036,6 +1036,7 @@ namespace FractalElementDesigner.ViewModels
             });
         }
 
+        // Метод для отображения схемы 
         private void CreateSchemeInEditor(FElementScheme scheme) 
         {
             DispatcherHelper.CheckBeginInvokeOnUI(() =>
@@ -1046,8 +1047,8 @@ namespace FractalElementDesigner.ViewModels
 
                 if (canvas == null)
                     return;
-
-                SchemeVisualizator.InsertVisual(scheme, _Page.schemeEditorControl.SchemeControl);
+                
+                SchemeVisualizator.InsertVisual(scheme);
             });       
         }
 
