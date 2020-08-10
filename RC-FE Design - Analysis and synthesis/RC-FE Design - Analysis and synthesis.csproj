@@ -183,6 +183,12 @@
     <Compile Include="FEEditing\Model\RCStructure.cs" />
     <Compile Include="FEEditing\Model\RCStructureBase.cs" />
     <Compile Include="FEEditing\Model\Cells\StructureCellBase.cs" />
+    <Compile Include="SchemeEditing\Controls\Elements\BottomGroundControl.xaml.cs">
+      <DependentUpon>BottomGroundControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemeEditing\Controls\Elements\TopGroundControl.xaml.cs">
+      <DependentUpon>TopGroundControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SchemeEditing\Controls\SchemeCanvas.cs" />
     <Compile Include="SchemeEditing\Controls\Elements\FElementControl.xaml.cs">
       <DependentUpon>FElementControl.xaml</DependentUpon>
@@ -311,7 +317,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SchemeEditing\Controls\Elements\BottomGroundControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SchemeEditing\Controls\Elements\FElementControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SchemeEditing\Controls\Elements\TopGroundControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

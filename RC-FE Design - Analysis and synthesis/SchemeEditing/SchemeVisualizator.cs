@@ -113,6 +113,8 @@ namespace FractalElementDesigner.SchemeEditing
                 }
             }
 
+            // отображение заземлений
+
             // метод для определения номера секции (1я или вторая) по номеру вывода в соединении
             int MapPinNumberToSectionNumber(int pin)
             {

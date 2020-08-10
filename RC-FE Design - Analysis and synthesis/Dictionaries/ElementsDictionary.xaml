@@ -20,4 +20,12 @@
         <schemeElements:FElementControl/>
     </ControlTemplate>
 
+    <ControlTemplate x:Key="TopGroundControlTemplateKey">
+        <schemeElements:TopGroundControl/>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="BottomGroundControlTemplateKey">
+        <schemeElements:BottomGroundControl/>
+    </ControlTemplate>
+
 </ResourceDictionary>
