@@ -18,8 +18,12 @@ using System.Windows.Media;
 
 namespace FractalElementDesigner.SchemeEditing
 {
+    /// <summary>
+    /// Класс для визуализации схемы
+    /// </summary>
     class SchemeVisualizator
     {
+        // Вставить секции на схему
         public static void InsertSections(FElementScheme scheme)
         {
             var elementHeight = (double)Application.Current.FindResource("FEElementHeightKey");
@@ -33,7 +37,7 @@ namespace FractalElementDesigner.SchemeEditing
             var sheetWidth = scheme.Editor.Context.CurrentCanvas.GetWidth();
             var horizontalPartOfWidth = sheetWidth / scheme.Model.FESections.Count;
             var startHorizontalAxeCoordinate = horizontalPartOfWidth / 2;
-            var startHorizontalCoordinate = startHorizontalAxeCoordinate - (elementWidth/2);
+            var startHorizontalCoordinate = startHorizontalAxeCoordinate - (elementWidth / 2);
 
             // отобразить секции
             for (int i = 0; i < scheme.Model.FESections.Count; i++)
@@ -43,12 +47,14 @@ namespace FractalElementDesigner.SchemeEditing
             }
         }
 
+        // Метод для вставки соединений на схему
         public static void InsertConnections(FElementScheme scheme)
         {
             var sections = scheme.Editor.Context.CurrentCanvas.GetChildren();
 
             var sectionsCnt = sections.Count - 1;
 
+            // обойти все соединения
             for (int i = 0; i < 3; i++)
             {
                 var firstSectionChildren = FindVisualChild<Canvas>(sections[i] as DependencyObject);
@@ -66,13 +72,14 @@ namespace FractalElementDesigner.SchemeEditing
                 List<PinThumb> currentFirstSectionPinList = null;
                 List<PinThumb> currentSecondSectionPinList = null;
 
-                // обойти матрицу инцидентности
+                // обойти матрицу инцидентности (верхний треугольник)
                 for (int k = 0; k <= upperBound0; k++)
                 {
-                    for (int j = k+1; j <= upperBound1; j++)
+                    for (int j = k + 1; j <= upperBound1; j++)
                     {
                         if (connectionMatrix.ConnectionMatrix[k, j] == 1)
                         {
+                            // определить набор пинов секции для поиска вывода в зависимости от номера соединяемого вывода
                             if (MapPinNumberToSectionNumber(k) == 1)
                             {
                                 currentFirstSectionPinList = firstSectionPins;
@@ -90,30 +97,23 @@ namespace FractalElementDesigner.SchemeEditing
                             {
                                 currentSecondSectionPinList = secondSectionPins;
                             }
+
                             var first = currentFirstSectionPinList.SingleOrDefault(x => x.Name == MapPinNumberToString(k));
                             var second = currentSecondSectionPinList.SingleOrDefault(x => x.Name == MapPinNumberToString(j));
 
                             if (first == null | second == null)
                             {
-                                break;
+                                throw new Exception("Вывод не найден!");
                             }
-
-                            var x1 = first.GetX();
-                            var y1 = first.GetY();
-
-                            var x2 = second.GetX();
-                            var y2 = second.GetY();
                             
-
                             scheme.Editor.Connect(scheme.Editor.Context.CurrentCanvas, first, scheme.Editor.Context.SchemeCreator);
                             scheme.Editor.Connect(scheme.Editor.Context.CurrentCanvas, second, scheme.Editor.Context.SchemeCreator);
-
-                            //return;
                         }
                     }
                 }
             }
 
+            // метод для определения номера секции (1я или вторая) по номеру вывода в соединении
             int MapPinNumberToSectionNumber(int pin)
             {
                 switch (pin)
@@ -148,14 +148,9 @@ namespace FractalElementDesigner.SchemeEditing
                 
                 return "";
             }
-
-            for (int i = 0; i < scheme.Model.InnerConnections.Count; i++)
-            {
-                var connection = scheme.Model.InnerConnections[i];
-
-            }
         }
 
+        // Метод для поиска визуального потомка элемента
         public static T FindVisualChild<T>(DependencyObject depObj) where T : DependencyObject
         {
             if (depObj != null)

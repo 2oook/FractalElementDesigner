@@ -1092,6 +1092,8 @@ namespace FractalElementDesigner.ViewModels
                 {
                     SchemeVisualizator.InsertSections(selectedProjectTreeItem as FElementScheme);
                 });
+
+                e.Handled = true;
             }
         }
 

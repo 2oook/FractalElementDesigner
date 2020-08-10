@@ -16,29 +16,29 @@
             </Grid>
         </Canvas>
 
-        <controls:PinThumb x:Name="LeftTopPin"  Uid="LeftTopPin" Canvas.Left="-10" Canvas.Top="15"
+        <controls:PinThumb x:Name="LeftTopPin"  Uid="LeftTopPin" Canvas.Left="-15" Canvas.Top="15"
                            Template="{StaticResource PinThumbControlTemplateKey}"
                            Style="{StaticResource PinThumbStyleKey}"/>
 
-        <!--<Line Canvas.Left="-10" Canvas.Top="15" X1="0" Y1="0" X2="10" Y2="0" Stroke="Black" />-->
+        <Line Canvas.Left="-15" Canvas.Top="15" X1="0" Y1="0" X2="15" Y2="0" Stroke="Black" />
 
-        <controls:PinThumb x:Name="RightTopPin" Uid="RightTopPin" Canvas.Left="130" Canvas.Top="15" 
+        <controls:PinThumb x:Name="RightTopPin" Uid="RightTopPin" Canvas.Left="135" Canvas.Top="15" 
                            Template="{StaticResource PinThumbControlTemplateKey}"
                            Style="{StaticResource PinThumbStyleKey}"/>
 
-        <!--<Line Canvas.Left="130" Canvas.Top="15" X1="0" Y1="0" X2="-10" Y2="0" Stroke="Black" />-->
+        <Line Canvas.Left="135" Canvas.Top="15" X1="0" Y1="0" X2="-15" Y2="0" Stroke="Black" />
 
-        <controls:PinThumb x:Name="LeftBottomPin" Uid="LeftBottomPin" Canvas.Left="-10" Canvas.Top="45" 
+        <controls:PinThumb x:Name="LeftBottomPin" Uid="LeftBottomPin" Canvas.Left="-15" Canvas.Top="45" 
                            Template="{StaticResource PinThumbControlTemplateKey}"
                            Style="{StaticResource PinThumbStyleKey}"/>
 
-        <!--<Line Canvas.Left="-10" Canvas.Top="45" X1="0" Y1="0" X2="10" Y2="0" Stroke="Black" />-->
+        <Line Canvas.Left="-15" Canvas.Top="45" X1="0" Y1="0" X2="15" Y2="0" Stroke="Black" />
 
-        <controls:PinThumb x:Name="RightBottomPin" Uid="RightBottomPin" Canvas.Left="130" Canvas.Top="45" 
+        <controls:PinThumb x:Name="RightBottomPin" Uid="RightBottomPin" Canvas.Left="135" Canvas.Top="45" 
                            Template="{StaticResource PinThumbControlTemplateKey}"
                            Style="{StaticResource PinThumbStyleKey}"/>
 
-        <!--<Line Canvas.Left="130" Canvas.Top="45" X1="0" Y1="0" X2="-10" Y2="0" Stroke="Black" />-->
+        <Line Canvas.Left="135" Canvas.Top="45" X1="0" Y1="0" X2="-15" Y2="0" Stroke="Black" />
 
     </Canvas>
     
