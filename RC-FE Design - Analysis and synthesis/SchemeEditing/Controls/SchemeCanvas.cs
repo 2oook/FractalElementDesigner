@@ -22,6 +22,11 @@ namespace FractalElementDesigner.SchemeEditing.Controls
             return this.Children.Cast<FrameworkElement>().Cast<IElement>();
         }
 
+        public UIElementCollection GetChildren()
+        {
+            return this.Children;
+        }
+
         public void Add(IElement element)
         {
             if (element != null)

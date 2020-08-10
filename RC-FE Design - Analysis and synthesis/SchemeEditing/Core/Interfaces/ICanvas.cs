@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
 
 namespace FractalElementDesigner.SchemeEditing.Core
 {
     public interface ICanvas : IData, IUid, ITag, ISelected
     {
         IEnumerable<IElement> GetElements();
+
+        UIElementCollection GetChildren();
 
         void Add(IElement element);
         void Remove(IElement element);

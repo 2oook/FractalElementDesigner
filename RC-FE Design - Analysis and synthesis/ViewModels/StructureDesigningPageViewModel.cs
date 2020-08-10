@@ -29,6 +29,9 @@ using FractalElementDesigner.SchemeEditing.Editor;
 using FractalElementDesigner.SchemeEditing.Core;
 using FractalElementDesigner.FEEditor.Controls;
 using FractalElementDesigner.SchemeEditing;
+using System.Windows.Media;
+using FractalElementDesigner.SchemeEditing.Controls;
+using System.Threading;
 
 namespace FractalElementDesigner.ViewModels
 {
@@ -789,6 +792,10 @@ namespace FractalElementDesigner.ViewModels
         /// </summary>
         private void SchemeSynthesize() 
         {
+            //var t = RecursiveVisualChildFinder<Canvas>((Projects[0].Items[0] as FElementScheme).Editor.Context.CurrentCanvas.GetElements().ToList()[0] as DependencyObject);
+            var b = SchemeVisualizator.FindVisualChild<Canvas>((Projects[0].Items[0] as FElementScheme).Editor.Context.CurrentCanvas.GetElements().ToList()[0] as DependencyObject);
+
+
             if (SelectedProjectTreeItem is FElementScheme scheme)
             {
                 // создать окно
@@ -1039,17 +1046,53 @@ namespace FractalElementDesigner.ViewModels
         // Метод для отображения схемы 
         private void CreateSchemeInEditor(FElementScheme scheme) 
         {
-            DispatcherHelper.CheckBeginInvokeOnUI(() =>
+            DispatcherHelper.CheckBeginInvokeOnUI(() => 
             {
                 var canvas = _Page.schemeEditorControl.SchemeControl.CreateSchemeCanvas();
-                var editor = _Page.schemeEditorControl.InitializeNewEditor(canvas);
-                scheme.Editor = editor;
 
                 if (canvas == null)
                     return;
-                
-                SchemeVisualizator.InsertVisual(scheme);
-            });       
+
+                var editor = _Page.schemeEditorControl.InitializeNewEditor(canvas);
+                scheme.Editor = editor;
+
+                var schemeCanvas = canvas as SchemeCanvas;
+                schemeCanvas.Loaded += SchemeCanvas_Loaded;
+                schemeCanvas.MouseEnter += SchemeCanvas_MouseEnter;
+            });
+     
+        }
+
+        private void SchemeCanvas_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (sender is SchemeCanvas schemeCanvas)
+            {
+                if (!(selectedProjectTreeItem is FElementScheme))
+                {
+                    return;
+                }
+
+                DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                {
+                    SchemeVisualizator.InsertConnections(selectedProjectTreeItem as FElementScheme);
+                });
+            }
+        }
+
+        private void SchemeCanvas_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is SchemeCanvas schemeCanvas)
+            {
+                if (!(selectedProjectTreeItem is FElementScheme))
+                {
+                    return;
+                }
+
+                DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                {
+                    SchemeVisualizator.InsertSections(selectedProjectTreeItem as FElementScheme);
+                });
+            }
         }
 
         private void CreateNewStructureProject()

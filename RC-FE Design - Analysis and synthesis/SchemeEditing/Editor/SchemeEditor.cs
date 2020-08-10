@@ -28,7 +28,7 @@ namespace FractalElementDesigner.SchemeEditing.Editor
         #region Wire Connection
 
         // ВЫЗЫВАЕТСЯ ТОЛЬКО НА ВЫВОДАХ ЭЛЕМЕНТОВ
-        private void Connect(ICanvas canvas, IThumb pin, ISchemeCreator creator)
+        public void Connect(ICanvas canvas, IThumb pin, ISchemeCreator creator)
         {
             if (pin == null)
                 return;
