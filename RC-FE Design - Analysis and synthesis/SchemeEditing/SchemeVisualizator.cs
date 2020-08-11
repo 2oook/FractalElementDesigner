@@ -114,6 +114,7 @@ namespace FractalElementDesigner.SchemeEditing
             }
 
             // отображение заземлений
+            scheme.Editor.Add(scheme.Editor.Context.CurrentCanvas, Constants.TagElementTopGround, new PointEx(100, 100));
 
             // метод для определения номера секции (1я или вторая) по номеру вывода в соединении
             int MapPinNumberToSectionNumber(int pin)

@@ -17,6 +17,8 @@
 
         public const string KeyTemplatePin = "PinControlTemplateKey";
         public const string KeyTemplateFElement = "FElementControlTemplateKey";
+        public const string KeyTemplateTopGround = "TopGroundControlTemplateKey";
+        public const string KeyTemplateBottomGround = "BottomGroundControlTemplateKey";
 
         public const string KeyLandscapePageTemplate = "LandscapePageTemplateKey";
 

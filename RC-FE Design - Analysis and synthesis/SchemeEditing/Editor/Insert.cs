@@ -41,5 +41,27 @@ namespace FractalElementDesigner.SchemeEditing.Editor
 
 
         #endregion
+
+        public static IElement TopGround(ICanvas canvas, IPoint point, ISchemeCreator creator, bool snap)
+        {
+            var thumb = creator.CreateElement(Constants.TagElementTopGround,
+                new object[] { canvas.GetCounter().Next() },
+                point.X, point.Y, snap) as IThumb;
+
+            canvas.Add(thumb);
+
+            return thumb;
+        }
+
+        public static IElement BottomGround(ICanvas canvas, IPoint point, ISchemeCreator creator, bool snap)
+        {
+            var thumb = creator.CreateElement(Constants.TagElementBottomGround,
+                new object[] { canvas.GetCounter().Next() },
+                point.X, point.Y, snap) as IThumb;
+
+            canvas.Add(thumb);
+
+            return thumb;
+        }
     }
 }

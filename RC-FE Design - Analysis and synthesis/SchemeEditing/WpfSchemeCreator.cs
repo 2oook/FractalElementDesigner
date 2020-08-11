@@ -40,6 +40,8 @@ namespace FractalElementDesigner.SchemeEditing
                 {  Constants.TagElementPin, CreatePin },
                 {  Constants.TagElementWire, CreateWire },
                 {  Constants.TagElementFElement, CreateFElement },
+                {  Constants.TagElementTopGround, CreateTopGround },
+                {  Constants.TagElementBottomGround, CreateBottomGround },
             };
         }
 
@@ -118,7 +120,49 @@ namespace FractalElementDesigner.SchemeEditing
             return thumb;
         }
 
-        
+        private object CreateTopGround(object[] data, double x, double y, bool snap)
+        {
+            if (data == null || data.Length != 1)
+                return null;
+
+            int id = (int)data[0];
+
+            var thumb = new ElementThumb()
+            {
+                ElementType = ElementType.TopGround,
+                Template = Application.Current.Resources[ResourceConstants.KeyTemplateTopGround] as ControlTemplate,
+                Style = Application.Current.Resources[ResourceConstants.KeySyleRootThumb] as Style,
+                Uid = Constants.TagElementTopGround + Constants.TagNameSeparator + id.ToString()
+            };
+
+            SetThumbEvents(thumb);
+            SetPosition(thumb, x, y, snap);
+
+            return thumb;
+        }
+
+        private object CreateBottomGround(object[] data, double x, double y, bool snap)
+        {
+            if (data == null || data.Length != 1)
+                return null;
+
+            int id = (int)data[0];
+
+            var thumb = new ElementThumb()
+            {
+                ElementType = ElementType.BottomGround,
+                Template = Application.Current.Resources[ResourceConstants.KeyTemplateBottomGround] as ControlTemplate,
+                Style = Application.Current.Resources[ResourceConstants.KeySyleRootThumb] as Style,
+                Uid = Constants.TagElementBottomGround + Constants.TagNameSeparator + id.ToString()
+            };
+
+            SetThumbEvents(thumb);
+            SetPosition(thumb, x, y, snap);
+
+            return thumb;
+        }
+
+
         #endregion
 
         #region ISchemeCreator

@@ -12,6 +12,8 @@ namespace FractalElementDesigner.SchemeEditing.Core
     public enum ElementType
     {
         Unknown,
-        SchemeElement
+        SchemeElement,
+        TopGround,
+        BottomGround
     }
 }
