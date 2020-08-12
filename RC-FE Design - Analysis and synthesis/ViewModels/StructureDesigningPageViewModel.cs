@@ -180,9 +180,19 @@ namespace FractalElementDesigner.ViewModels
         /// </summary>
         private IDialogCoordinator _dialogCoordinator;
 
+        /// <summary>
+        /// Ссылка на страницу
+        /// </summary>
+        private StructureDesigningPage _Page;
+
         #endregion
 
         #region Свойства
+
+        /// <summary>
+        /// Словарь инструментов для редактирования структуры
+        /// </summary>
+        public Dictionary<string, Tool> EditorTools { get; set; }
 
         private object selectedProjectTreeItem;
         /// <summary>
@@ -198,49 +208,6 @@ namespace FractalElementDesigner.ViewModels
                 SetChosenProjectTreeItemEnvironment(value);
  
                 RaisePropertyChanged(nameof(SelectedProjectTreeItem));
-            }
-        }
-
-        private Project selectedProject = null;
-        /// <summary>
-        /// Выбранный проект
-        /// </summary>
-        public Project SelectedProject
-        {
-            get { return selectedProject; }
-            set 
-            { 
-                selectedProject = value;
-                RaisePropertyChanged(nameof(SelectedProject));
-            }
-        }
-
-        private RCStructure selectedStructure = null;
-        /// <summary>
-        /// Выбранная структура
-        /// </summary>
-        public RCStructure SelectedStructure
-        {
-            get { return selectedStructure; }
-            set
-            {
-                selectedStructure = value;
-                RaisePropertyChanged(nameof(SelectedStructure));
-            }
-        }
-
-        private Layer selectedLayer;
-        /// <summary>
-        /// Выбранный слой структуры
-        /// </summary>
-        public Layer SelectedLayer
-        {
-            get { return selectedLayer; }
-            set 
-            {
-                _Page.structureEditorControl.FEControl.Editor = value.Editor;
-                selectedLayer = value;
-                RaisePropertyChanged(nameof(SelectedLayer));
             }
         }
 
@@ -267,24 +234,6 @@ namespace FractalElementDesigner.ViewModels
                 RaisePropertyChanged(nameof(SelectedTool));
             }
         }
-
-        private StructureSchemeSynthesisParameters currentStructureSchemeSynthesisParameters;
-
-        public StructureSchemeSynthesisParameters CurrentStructureSchemeSynthesisParameters
-        {
-            get { return currentStructureSchemeSynthesisParameters; }
-            set 
-            { 
-                currentStructureSchemeSynthesisParameters = value;
-                RaisePropertyChanged(nameof(CurrentStructureSchemeSynthesisParameters));
-            }
-        }
-
-
-        /// <summary>
-        /// Словарь инструментов для редактирования структуры
-        /// </summary>
-        public Dictionary<string, Tool> EditorTools { get; set; }
 
         private ObservableCollection<Project> _projects = new ObservableCollection<Project>();
         /// <summary>
@@ -334,10 +283,7 @@ namespace FractalElementDesigner.ViewModels
         /// </summary>
         public Visibility StructureEditorVisibility
         {
-            get
-            {
-                return structureEeditorVisibility;
-            }
+            get { return structureEeditorVisibility; }
             set
             {
                 structureEeditorVisibility = value;
@@ -351,10 +297,7 @@ namespace FractalElementDesigner.ViewModels
         /// </summary>
         public Visibility SchemeEditorVisibility
         {
-            get
-            {
-                return schemeEditorVisibility;
-            }
+            get { return schemeEditorVisibility; }
             set
             {
                 schemeEditorVisibility = value;
@@ -368,10 +311,7 @@ namespace FractalElementDesigner.ViewModels
         /// </summary>
         public Visibility HomePageVisibility
         {
-            get
-            {
-                return homePageVisibility;
-            }
+            get { return homePageVisibility; }
             set
             {
                 homePageVisibility = value;
@@ -385,10 +325,7 @@ namespace FractalElementDesigner.ViewModels
         /// </summary>
         public Visibility PlotVisibility
         {
-            get
-            {
-                return plotVisibility;
-            }
+            get{ return plotVisibility; }
             set
             {
                 plotVisibility = value;
@@ -410,12 +347,6 @@ namespace FractalElementDesigner.ViewModels
             }
         }
 
-
-        /// <summary>
-        /// Ссылка на страницу
-        /// </summary>
-        private StructureDesigningPage _Page { get; set; }
-
         #endregion
 
         #region Команды
@@ -426,10 +357,7 @@ namespace FractalElementDesigner.ViewModels
         /// </summary>
         public ICommand NewProjectCommand
         {
-            get
-            {
-                return newProjectCommand;
-            }
+            get { return newProjectCommand; }
             set
             {
                 newProjectCommand = value;
@@ -443,10 +371,7 @@ namespace FractalElementDesigner.ViewModels
         /// </summary>
         public ICommand LoadProjectCommand
         {
-            get
-            {
-                return loadProjectCommand;
-            }
+            get { return loadProjectCommand; }
             set
             {
                 loadProjectCommand = value;
@@ -460,10 +385,7 @@ namespace FractalElementDesigner.ViewModels
         /// </summary>
         public ICommand SaveProjectCommand
         {
-            get
-            {
-                return saveProjectCommand;
-            }
+            get { return saveProjectCommand; }
             set
             {
                 saveProjectCommand = value;
@@ -477,10 +399,7 @@ namespace FractalElementDesigner.ViewModels
         /// </summary>
         public ICommand SchemeSynthesisCommand
         {
-            get
-            {
-                return schemeSynthesisCommand;
-            }
+            get { return schemeSynthesisCommand; }
             set
             {
                 schemeSynthesisCommand = value;
@@ -494,10 +413,7 @@ namespace FractalElementDesigner.ViewModels
         /// </summary>
         public ICommand CreateStructureCommand
         {
-            get
-            {
-                return сreateStructureCommand;
-            }
+            get { return сreateStructureCommand; }
             set
             {
                 сreateStructureCommand = value;
@@ -511,10 +427,7 @@ namespace FractalElementDesigner.ViewModels
         /// </summary>
         public ICommand ChoiceOfSchemeCommand
         {
-            get
-            {
-                return choiceOfSchemeCommand;
-            }
+            get { return choiceOfSchemeCommand; }
             set
             {
                 choiceOfSchemeCommand = value;
@@ -832,25 +745,25 @@ namespace FractalElementDesigner.ViewModels
         {
             try
             {
-                var project = SelectedProject;
+                //var project = SelectedProject;
 
-                if (SelectedProject == null)
-                {
-                    _dialogCoordinator.ShowMessageAsync(this, "", "Не выбран проект для сохранения");
-                    return;
-                }
-                else
-                {
-                    var dialog = new CommonSaveFileDialog();
-                    ConfigureDialogForProjectSaving(ref dialog);
-                    CommonFileDialogResult result = dialog.ShowDialog();
+                //if (SelectedProject == null)
+                //{
+                //    _dialogCoordinator.ShowMessageAsync(this, "", "Не выбран проект для сохранения");
+                //    return;
+                //}
+                //else
+                //{
+                //    var dialog = new CommonSaveFileDialog();
+                //    ConfigureDialogForProjectSaving(ref dialog);
+                //    CommonFileDialogResult result = dialog.ShowDialog();
 
-                    if (result == CommonFileDialogResult.Ok)
-                    {
-                        var savingProject = ProjectConverter.Convert(project);
-                        ProjectSaver.SaveProject(savingProject, dialog.FileName);
-                    }
-                }
+                //    if (result == CommonFileDialogResult.Ok)
+                //    {
+                //        var savingProject = ProjectConverter.Convert(project);
+                //        ProjectSaver.SaveProject(savingProject, dialog.FileName);
+                //    }
+                //}
             }
             catch (Exception ex)
             {
@@ -1095,7 +1008,7 @@ namespace FractalElementDesigner.ViewModels
                 // создать проект
                 var project = new Project() { Name = "Проект_0" };
 
-                SelectedProject = project;
+                //SelectedProject = project;
 
                 var newStructure = StructureCreator.InitializeStructure(newStructureWindowViewModel.CurrentStructure);
 
