@@ -138,8 +138,7 @@ namespace FractalElementDesigner.SchemeEditing
                             currentFirstSectionPinList = secondSectionPins;
                         }
 
-                        var first = currentFirstSectionPinList.SingleOrDefault(p => p.Name == MapPinNumberToString(g));
-                        var second = currentSecondSectionPinList.SingleOrDefault(p => p.Name == MapPinNumberToString(g));
+                        var pinOnElement = currentFirstSectionPinList.SingleOrDefault(p => p.Name == MapPinNumberToString(g));
 
                         ElementThumb groundingSection = null;
 
@@ -161,19 +160,24 @@ namespace FractalElementDesigner.SchemeEditing
                         if (g == 0 | g == 1)
                         {
                             elementTag = Constants.TagElementTopGround;
-                            x = groundingSection.GetX() + first.GetX() - 15;
-                            y = groundingSection.GetY() - first.GetY() - 30;
+                            x = groundingSection.GetX() + pinOnElement.GetX() - 15;
+                            y = groundingSection.GetY() - pinOnElement.GetY() - 30;
                         }
                         else
                         {
                             elementTag = Constants.TagElementBottomGround;
-                            x = groundingSection.GetX() + first.GetX() - 15;
-                            y = groundingSection.GetY() + first.GetY() + 30;
+                            x = groundingSection.GetX() + pinOnElement.GetX() - 15;
+                            y = groundingSection.GetY() + pinOnElement.GetY() + 30;
                         }
 
                         var addedGround = scheme.Editor.Add(scheme.Editor.Context.CurrentCanvas, elementTag, new PointEx(x, y));
-                        var groundElement = scheme.Editor.Context.CurrentCanvas.GetChildren().OfType<ElementThumb>().Where(c => c.ElementType == ElementType.BottomGround | c.ElementType == ElementType.TopGround).Last();
-                        var te =FindVisualChild<Canvas>(addedGround as DependencyObject);
+                        
+                        ((FrameworkElement)addedGround).Measure(new Size());
+
+                        var groundPin = FindVisualChild<PinThumb>(addedGround as DependencyObject);
+
+                        scheme.Editor.Connect(scheme.Editor.Context.CurrentCanvas, pinOnElement, scheme.Editor.Context.SchemeCreator);
+                        scheme.Editor.Connect(scheme.Editor.Context.CurrentCanvas, groundPin, scheme.Editor.Context.SchemeCreator);
                     }
                 }
             }         
