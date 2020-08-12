@@ -194,9 +194,9 @@ namespace FractalElementDesigner.ViewModels
             set 
             {
                 InvalidateAllVisualViewers();
-                SetChosenProjectTreeItemEnvironment(value);
-
                 selectedProjectTreeItem = value;
+                SetChosenProjectTreeItemEnvironment(value);
+ 
                 RaisePropertyChanged(nameof(SelectedProjectTreeItem));
             }
         }
@@ -1056,45 +1056,9 @@ namespace FractalElementDesigner.ViewModels
                 var editor = _Page.schemeEditorControl.InitializeNewEditor(canvas);
                 scheme.Editor = editor;
 
-                var schemeCanvas = canvas as SchemeCanvas;
-                schemeCanvas.Loaded += SchemeCanvas_Loaded;
-                schemeCanvas.MouseEnter += SchemeCanvas_MouseEnter;
+                SchemeVisualizator.InsertSections(scheme);
             });
      
-        }
-
-        private void SchemeCanvas_MouseEnter(object sender, MouseEventArgs e)
-        {
-            if (sender is SchemeCanvas schemeCanvas)
-            {
-                if (!(selectedProjectTreeItem is FElementScheme))
-                {
-                    return;
-                }
-
-                DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                {
-                    SchemeVisualizator.InsertConnections(selectedProjectTreeItem as FElementScheme);
-                });
-            }
-        }
-
-        private void SchemeCanvas_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (sender is SchemeCanvas schemeCanvas)
-            {
-                if (!(selectedProjectTreeItem is FElementScheme))
-                {
-                    return;
-                }
-
-                DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                {
-                    SchemeVisualizator.InsertSections(selectedProjectTreeItem as FElementScheme);
-                });
-
-                e.Handled = true;
-            }
         }
 
         private void CreateNewStructureProject()

@@ -45,6 +45,8 @@ namespace FractalElementDesigner.SchemeEditing
                 var horizontalCoordinate = startHorizontalCoordinate + horizontalPartOfWidth * i;
                 var addedElement = scheme.Editor.Add(scheme.Editor.Context.CurrentCanvas, Constants.TagElementFElement, new PointEx(horizontalCoordinate, startVerticalCoordinate));
             }
+
+            InsertConnections(scheme);
         }
 
         // Метод для вставки соединений на схему
@@ -57,15 +59,22 @@ namespace FractalElementDesigner.SchemeEditing
             // обойти все соединения
             for (int i = 0; i < 3; i++)
             {
-                var firstSectionChildren = FindVisualChild<Canvas>(sections[i] as DependencyObject);
-                var firstSectionPins = firstSectionChildren.Children.OfType<PinThumb>().ToList();
+                var firstSection = (FrameworkElement)sections[i];
+                firstSection.Measure(new Size());
 
-                var secondSectionChildren = FindVisualChild<Canvas>(sections[i+1] as DependencyObject);
+                var secondSection = (FrameworkElement)sections[i + 1];
+                secondSection.Measure(new Size());
+
+                // получить потомков первой секции и отфильтровать в них пины
+                var firstSectionChildren = FindVisualChild<Canvas>(firstSection);
+                var firstSectionPins = firstSectionChildren.Children.OfType<PinThumb>().ToList();
+                // получить потомков второй секции и отфильтровать в них пины
+                var secondSectionChildren = FindVisualChild<Canvas>(secondSection);
                 var secondSectionPins = secondSectionChildren.Children.OfType<PinThumb>().ToList();
 
+                // найти закодированное соединение и его матрицу
                 var connection = scheme.Model.InnerConnections[i];
                 var connectionMatrix = FElementScheme.AllowablePinsConnections[connection.ConnectionType];
-
                 var upperBound0 = connectionMatrix.ConnectionMatrix.GetUpperBound(0);
                 var upperBound1 = connectionMatrix.ConnectionMatrix.GetUpperBound(1);
 
@@ -100,7 +109,7 @@ namespace FractalElementDesigner.SchemeEditing
 
                             var first = currentFirstSectionPinList.SingleOrDefault(x => x.Name == MapPinNumberToString(k));
                             var second = currentSecondSectionPinList.SingleOrDefault(x => x.Name == MapPinNumberToString(j));
-
+                            
                             if (first == null | second == null)
                             {
                                 throw new Exception("Вывод не найден!");
@@ -111,10 +120,63 @@ namespace FractalElementDesigner.SchemeEditing
                         }
                     }
                 }
-            }
 
-            // отображение заземлений
-            scheme.Editor.Add(scheme.Editor.Context.CurrentCanvas, Constants.TagElementTopGround, new PointEx(100, 100));
+                // найти закодированный вектор заземлений
+                var groundVector = FElementScheme.AllowablePinsConnections[connection.ConnectionType].PEVector[connection.PEType];
+                // отображение заземлений
+                for (int g = 0; g < groundVector.Length; g++)
+                {
+                    if (groundVector[g] == 1)
+                    {
+                        // определить набор пинов секции для поиска вывода в зависимости от номера соединяемого вывода
+                        if (MapPinNumberToSectionNumber(g) == 1)
+                        {
+                            currentFirstSectionPinList = firstSectionPins;
+                        }
+                        else
+                        {
+                            currentFirstSectionPinList = secondSectionPins;
+                        }
+
+                        var first = currentFirstSectionPinList.SingleOrDefault(p => p.Name == MapPinNumberToString(g));
+                        var second = currentSecondSectionPinList.SingleOrDefault(p => p.Name == MapPinNumberToString(g));
+
+                        ElementThumb groundingSection = null;
+
+                        if (MapPinNumberToSectionNumber(g) == 1)
+                        {
+                            groundingSection = (ElementThumb)firstSection;
+                        }
+                        else
+                        {
+                            groundingSection = (ElementThumb)secondSection;
+                        }
+
+                        var elementTag = string.Empty;
+
+                        double x = 0;
+                        double y = 0;
+
+                        // расположить символы заземления в зависимости от того сверху или снизу они расположены
+                        if (g == 0 | g == 1)
+                        {
+                            elementTag = Constants.TagElementTopGround;
+                            x = groundingSection.GetX() + first.GetX() - 15;
+                            y = groundingSection.GetY() - first.GetY() - 30;
+                        }
+                        else
+                        {
+                            elementTag = Constants.TagElementBottomGround;
+                            x = groundingSection.GetX() + first.GetX() - 15;
+                            y = groundingSection.GetY() + first.GetY() + 30;
+                        }
+
+                        var addedGround = scheme.Editor.Add(scheme.Editor.Context.CurrentCanvas, elementTag, new PointEx(x, y));
+                        var groundElement = scheme.Editor.Context.CurrentCanvas.GetChildren().OfType<ElementThumb>().Where(c => c.ElementType == ElementType.BottomGround | c.ElementType == ElementType.TopGround).Last();
+                        var te =FindVisualChild<Canvas>(addedGround as DependencyObject);
+                    }
+                }
+            }         
 
             // метод для определения номера секции (1я или вторая) по номеру вывода в соединении
             int MapPinNumberToSectionNumber(int pin)
