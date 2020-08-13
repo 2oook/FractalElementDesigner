@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FractalElementDesigner.FEEditor.Model
+namespace FractalElementDesigner.FEEditing.Model
 {
     /// <summary>
     /// Базовый класс структуры 

@@ -1,4 +1,4 @@
-﻿using FractalElementDesigner.FEEditor.Model.Cells;
+﻿using FractalElementDesigner.FEEditing.Model.Cells;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace FractalElementDesigner.FEEditor.Converters
+namespace FractalElementDesigner.FEEditing.Converters
 {
     /// <summary>
     /// Класс конвертер для преобразования типа ячейки в цвет фона 

@@ -1,4 +1,4 @@
-﻿using FractalElementDesigner.FEEditor.Model.Cells;
+﻿using FractalElementDesigner.FEEditing.Model.Cells;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FractalElementDesigner.FEEditor.Elements
+namespace FractalElementDesigner.FEEditing.Elements
 {
     /// <summary>
     /// Interaction logic for CellControl.xaml

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FractalElementDesigner.FEEditor.Tools
+namespace FractalElementDesigner.FEEditing
 {
     /// <summary>
     /// Перечисление тип инструмента

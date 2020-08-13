@@ -1,13 +1,13 @@
-﻿using FractalElementDesigner.FEEditor.Controls;
-using FractalElementDesigner.FEEditor.Core;
-using FractalElementDesigner.FEEditor.Interfaces;
+﻿using FractalElementDesigner.FEEditing.Controls;
+using FractalElementDesigner.FEEditing.Core;
+using FractalElementDesigner.FEEditing.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FractalElementDesigner.FEEditor
+namespace FractalElementDesigner.FEEditing
 {
     [Serializable]
     public class Context

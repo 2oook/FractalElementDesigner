@@ -9,7 +9,7 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro" 
         xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity" 
-        xmlns:behaviours="clr-namespace:FractalElementDesigner.FEEditor.Controls.Behaviours"
+        xmlns:behaviours="clr-namespace:FractalElementDesigner.FEEditing.Controls.Behaviours"
         Dialog:DialogParticipation.Register="{Binding}"
         x:Class="FractalElementDesigner.Pages.StructureDesigningPage"
         mc:Ignorable="d" 

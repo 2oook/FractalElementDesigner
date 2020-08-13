@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FractalElementDesigner.FEEditor
+namespace FractalElementDesigner.FEEditing
 {
     /// <summary>
     /// Редактор

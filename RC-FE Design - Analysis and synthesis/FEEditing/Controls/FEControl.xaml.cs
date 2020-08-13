@@ -1,6 +1,6 @@
-﻿using FractalElementDesigner.FEEditor.Controls;
-using FractalElementDesigner.FEEditor.Core;
-using FractalElementDesigner.FEEditor.Interfaces;
+﻿using FractalElementDesigner.FEEditing.Controls;
+using FractalElementDesigner.FEEditing.Core;
+using FractalElementDesigner.FEEditing.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FractalElementDesigner.FEEditor
+namespace FractalElementDesigner.FEEditing
 {
     /// <summary>
     /// Interaction logic for FEControl.xaml

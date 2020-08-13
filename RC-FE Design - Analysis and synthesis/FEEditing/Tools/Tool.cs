@@ -6,13 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
+using System.ComponentModel;
 
-namespace FractalElementDesigner.FEEditor.Tools
+namespace FractalElementDesigner.FEEditing
 {
     /// <summary>
     /// Класс представляет инструмент для редактирования структуры
     /// </summary>
-    public class Tool : ViewModelBase
+    public class Tool : IEditingTool
     {
         /// <summary>
         /// Название свойства
@@ -31,18 +32,32 @@ namespace FractalElementDesigner.FEEditor.Tools
 
         private bool isChecked;
         /// <summary>
-        /// Команда выбора инструмента редактирования
+        /// Флаг выбора инструмента редактирования
         /// </summary>
         public bool IsChecked
         {
-            get
-            {
-                return isChecked;
-            }
+            get { return isChecked; }
             set
             {
                 isChecked = value;
                 RaisePropertyChanged(nameof(IsChecked));
+            }
+        }
+
+        /// <summary>
+        /// Событие изменения свойства
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Метод для поднятия события изменения свойства
+        /// </summary>
+        /// <param name="propName"></param>
+        protected virtual void RaisePropertyChanged(string propName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propName));
             }
         }
     }

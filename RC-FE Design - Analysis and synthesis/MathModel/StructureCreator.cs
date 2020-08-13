@@ -1,8 +1,8 @@
 ﻿using FractalElementDesigner.Controls;
-using FractalElementDesigner.FEEditor;
-using FractalElementDesigner.FEEditor.Controls;
-using FractalElementDesigner.FEEditor.Model;
-using FractalElementDesigner.FEEditor.Model.Cells;
+using FractalElementDesigner.FEEditing;
+using FractalElementDesigner.FEEditing.Controls;
+using FractalElementDesigner.FEEditing.Model;
+using FractalElementDesigner.FEEditing.Model.Cells;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

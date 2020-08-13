@@ -1,4 +1,4 @@
-﻿using FractalElementDesigner.FEEditor.Model;
+﻿using FractalElementDesigner.FEEditing.Model;
 using FractalElementDesigner.MathModel;
 using FractalElementDesigner.ProjectTree;
 using System;

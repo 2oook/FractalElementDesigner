@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FractalElementDesigner.FEEditor.Model.Cells
+namespace FractalElementDesigner.FEEditing.Model.Cells
 {
     /// <summary>
     /// Базовый класс ячейки структуры

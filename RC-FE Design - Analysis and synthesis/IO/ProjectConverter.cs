@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FractalElementDesigner.FEEditor;
+using FractalElementDesigner.FEEditing;
 using System.Collections.ObjectModel;
-using FractalElementDesigner.FEEditor.Model;
-using FractalElementDesigner.FEEditor.Model.Cells;
+using FractalElementDesigner.FEEditing.Model;
+using FractalElementDesigner.FEEditing.Model.Cells;
 using FractalElementDesigner.ProjectTree;
 
 namespace FractalElementDesigner.IO

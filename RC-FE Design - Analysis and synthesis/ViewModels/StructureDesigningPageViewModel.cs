@@ -1,10 +1,9 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro.Controls.Dialogs;
-using FractalElementDesigner.FEEditor;
-using FractalElementDesigner.FEEditor.Model;
-using FractalElementDesigner.FEEditor.Model.Cells;
-using FractalElementDesigner.FEEditor.Tools;
+using FractalElementDesigner.FEEditing;
+using FractalElementDesigner.FEEditing.Model;
+using FractalElementDesigner.FEEditing.Model.Cells;
 using FractalElementDesigner.Navigating.Interfaces;
 using FractalElementDesigner.Pages;
 using FractalElementDesigner.Windows;
@@ -27,7 +26,7 @@ using System.Windows.Threading;
 using GalaSoft.MvvmLight.Threading;
 using FractalElementDesigner.SchemeEditing.Editor;
 using FractalElementDesigner.SchemeEditing.Core;
-using FractalElementDesigner.FEEditor.Controls;
+using FractalElementDesigner.FEEditing.Controls;
 using FractalElementDesigner.SchemeEditing;
 using System.Windows.Media;
 using FractalElementDesigner.SchemeEditing.Controls;
@@ -49,75 +48,15 @@ namespace FractalElementDesigner.ViewModels
             StructureCreator.OnDoWork += OnDoWork;
             StructureCreator.OnStateChange += OnProgressStateChange;
 
-            EditorTools = new Dictionary<string, Tool>()
-            {
-                {
-                    "Numerate",
-                    new Tool()
-                    {
-                        Name = "Нумерация КП",
-                        ImageURI = "pack://application:,,,/Resources/button0.png",
-                        Type = ToolType.ContactNumerator
-                    }
-                },
+            IToolCreator toolCreator = new ToolCreator();
 
-                {
-                    "Cut", new Tool()
-                    {
-                        Name = "Разрез",
-                        ImageURI = "pack://application:,,,/Resources/button1.png",
-                        Type = ToolType.CutCellDisposer
-                    }
-                },
-
-                {
-                    "RC",
-                    new Tool()
-                    {
-                        Name = "RC-ячейка",
-                        ImageURI = "pack://application:,,,/Resources/button2.png",
-                        Type = ToolType.RCCellDisposer
-                    }
-                },
-
-                {
-                    "R", new Tool()
-                    {
-                        Name = "R-ячейка",
-                        ImageURI = "pack://application:,,,/Resources/button3.png",
-                        Type = ToolType.RCellDisposer
-                    }
-                },
-
-                {
-                    "Contact",
-                    new Tool()
-                    {
-                        Name = "Контактная площадка",
-                        ImageURI = "pack://application:,,,/Resources/button4.png",
-                        Type = ToolType.ContactCellDisposer
-                    }
-                },
-
-                {
-                    "Forbid", new Tool()
-                    {
-                        Name = "Запрет КП",
-                        ImageURI = "pack://application:,,,/Resources/button5.png",
-                        Type = ToolType.ForbidContactDisposer
-                    }
-                },
-
-                {
-                    "Shunt",
-                    new Tool()
-                    {
-                        Name = "Шунт",
-                        ImageURI = "pack://application:,,,/Resources/button6.png",
-                        Type = ToolType.ShuntCellDisposer
-                    }
-                },
-            };
+            EditorTools.Add("Numerate", toolCreator.CreateTool(ToolType.ContactNumerator));
+            EditorTools.Add("Cut", toolCreator.CreateTool(ToolType.CutCellDisposer));
+            EditorTools.Add("RC", toolCreator.CreateTool(ToolType.RCCellDisposer));
+            EditorTools.Add("R", toolCreator.CreateTool(ToolType.RCellDisposer));
+            EditorTools.Add("Contact", toolCreator.CreateTool(ToolType.ContactCellDisposer));
+            EditorTools.Add("Forbid", toolCreator.CreateTool(ToolType.ForbidContactDisposer));
+            EditorTools.Add("Shunt", toolCreator.CreateTool(ToolType.ShuntCellDisposer));
 
             foreach (var tool in EditorTools.Values)
             {
@@ -192,7 +131,7 @@ namespace FractalElementDesigner.ViewModels
         /// <summary>
         /// Словарь инструментов для редактирования структуры
         /// </summary>
-        public Dictionary<string, Tool> EditorTools { get; set; }
+        public Dictionary<string, IEditingTool> EditorTools { get; set; } = new Dictionary<string, IEditingTool>();
 
         private object selectedProjectTreeItem;
         /// <summary>
@@ -801,12 +740,12 @@ namespace FractalElementDesigner.ViewModels
                     {
                         foreach (var layer in structure.StructureLayers)
                         {
-                            var editor = new Editor() { Context = new FEEditor.Context() };
+                            var editor = new Editor() { Context = new FEEditing.Context() };
                             editor.Context.CurrentCanvas = _Page.structureEditorControl.FEControl.CreateFECanvas();
 
                             layer.Editor = editor;
 
-                            FEEditor.Insert.ExistingStructureLayer(editor.Context.CurrentCanvas as FECanvas, layer, layer.CellsType);
+                            FEEditing.Insert.ExistingStructureLayer(editor.Context.CurrentCanvas as FECanvas, layer, layer.CellsType);
                         }
                     }
 
@@ -1019,12 +958,12 @@ namespace FractalElementDesigner.ViewModels
                 // вставить слои
                 foreach (var layer in newStructure.StructureLayers)
                 {
-                    var editor = new Editor() { Context = new FEEditor.Context() };
+                    var editor = new Editor() { Context = new FEEditing.Context() };
                     editor.Context.CurrentCanvas = _Page.structureEditorControl.FEControl.CreateFECanvas();
 
                     layer.Editor = editor;
 
-                    FEEditor.Insert.StructureLayer(editor.Context.CurrentCanvas as FECanvas, layer, layer.CellsType);
+                    FEEditing.Insert.StructureLayer(editor.Context.CurrentCanvas as FECanvas, layer, layer.CellsType);
                 }
 
                 _Page.structureEditorControl.FEControl.Editor = newStructure.StructureLayers.First().Editor;

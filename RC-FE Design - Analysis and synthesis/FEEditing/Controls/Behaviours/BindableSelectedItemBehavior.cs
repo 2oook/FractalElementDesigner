@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 
-namespace FractalElementDesigner.FEEditor.Controls.Behaviours
+namespace FractalElementDesigner.FEEditing.Controls.Behaviours
 {
     /// <summary>
     /// Класс поведения получения выбранного элемента TreeView

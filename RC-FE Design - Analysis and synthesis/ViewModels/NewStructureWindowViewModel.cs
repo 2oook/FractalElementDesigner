@@ -1,6 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using FractalElementDesigner.FEEditor.Model;
+using FractalElementDesigner.FEEditing.Model;
 using FractalElementDesigner.Windows;
 using System;
 using System.Collections.Generic;

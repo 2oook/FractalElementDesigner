@@ -126,12 +126,15 @@
       <DependentUpon>CellControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="FEEditing\Editor.cs" />
+    <Compile Include="FEEditing\IEditingTool.cs" />
     <Compile Include="FEEditing\Insert.cs" />
     <Compile Include="FEEditing\Interfaces\ICanvas.cs" />
     <Compile Include="FEEditing\Interfaces\IElement.cs" />
+    <Compile Include="FEEditing\IToolCreator.cs" />
     <Compile Include="FEEditing\Model\Cells\CellType.cs" />
     <Compile Include="FEEditing\Model\RCStructureTemplate.cs" />
     <Compile Include="FEEditing\ResourceConstants.cs" />
+    <Compile Include="FEEditing\ToolCreator.cs" />
     <Compile Include="FEEditing\Tools\Tool.cs" />
     <Compile Include="FEEditing\Tools\ToolType.cs" />
     <Compile Include="IO\ProjectConverter.cs" />
