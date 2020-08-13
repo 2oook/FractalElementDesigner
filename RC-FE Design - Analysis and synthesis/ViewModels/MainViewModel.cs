@@ -78,10 +78,6 @@ namespace FractalElementDesigner.ViewModels
         /// Страница проектирования
         /// </summary>
         private readonly Page _StructureDesigningPage;
-        /// <summary>
-        /// Страница редактора схем
-        /// </summary>
-        private readonly Page _SchemeEditorPage;
 
         #endregion
 

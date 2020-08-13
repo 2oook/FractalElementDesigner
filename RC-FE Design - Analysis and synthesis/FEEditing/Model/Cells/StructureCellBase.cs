@@ -94,8 +94,6 @@ namespace FractalElementDesigner.FEEditing.Model.Cells
             return result;
         }
 
-        public static IEditingTool CurrentTool;
-
         private CellType cellType = CellType.None;
         /// <summary>
         /// Тип ячейки структуры
@@ -113,9 +111,9 @@ namespace FractalElementDesigner.FEEditing.Model.Cells
         /// <summary>
         /// Метод для применения инструмента
         /// </summary>
-        public void ApplyTool()
+        public void ApplyTool(IEditingTool tool)
         {
-            ApplyToolDelegate(this, CurrentTool);
+            ApplyToolDelegate(this, tool);
         }
 
         /// <summary>

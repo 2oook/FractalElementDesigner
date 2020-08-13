@@ -31,6 +31,7 @@ using FractalElementDesigner.SchemeEditing;
 using System.Windows.Media;
 using FractalElementDesigner.SchemeEditing.Controls;
 using System.Threading;
+using FractalElementDesigner.FEEditing.Elements;
 
 namespace FractalElementDesigner.ViewModels
 {
@@ -130,7 +131,6 @@ namespace FractalElementDesigner.ViewModels
             }
             set 
             {
-                StructureCellBase.CurrentTool = value;
                 selectedTool = value;
                 RaisePropertyChanged(nameof(SelectedTool));
             }
@@ -265,6 +265,20 @@ namespace FractalElementDesigner.ViewModels
                 RaisePropertyChanged(nameof(NewProjectCommand));
             }
         }
+
+        private ICommand cellApplyToolCommand;
+        /// <summary>
+        /// Команда для применения инструмента к ячейке элемента
+        /// </summary>
+        public ICommand CellApplyToolCommand
+        {
+            get { return cellApplyToolCommand; }
+            set
+            {
+                cellApplyToolCommand = value;
+                RaisePropertyChanged(nameof(CellApplyToolCommand));
+            }
+        }  
 
         private ICommand loadProjectCommand;
         /// <summary>
@@ -436,6 +450,17 @@ namespace FractalElementDesigner.ViewModels
 
             SchemeSynthesisCommand = new RelayCommand(SchemeSynthesize, IsSchemeSynthesisPossible);
             CreateStructureCommand = new RelayCommand(CreateStructure, IsStructureCreatingPossible);
+
+            CellApplyToolCommand = new RelayCommand<StructureCellBase>(ApplyToolForElementCell);
+        }
+
+        /// <summary>
+        /// Метод для применения инструмента к ячейке элемента
+        /// </summary>
+        /// <param name="cell">Объект ячейки</param>
+        private void ApplyToolForElementCell(StructureCellBase cell) 
+        {
+            cell.ApplyTool(SelectedTool);
         }
 
         /// <summary>
@@ -569,10 +594,6 @@ namespace FractalElementDesigner.ViewModels
         /// </summary>
         private void SchemeSynthesize() 
         {
-            //var t = RecursiveVisualChildFinder<Canvas>((Projects[0].Items[0] as FElementScheme).Editor.Context.CurrentCanvas.GetElements().ToList()[0] as DependencyObject);
-            var b = SchemeVisualizator.FindVisualChild<Canvas>((Projects[0].Items[0] as FElementScheme).Editor.Context.CurrentCanvas.GetElements().ToList()[0] as DependencyObject);
-
-
             if (SelectedProjectTreeItem is FElementScheme scheme)
             {
                 // создать окно
@@ -784,8 +805,6 @@ namespace FractalElementDesigner.ViewModels
             {
                 try
                 {
-                    //scheme.IsLocked
-
                     // синтезировать схему
                     var schemes = SchemeSynthesizer.Synthesize(structureSchemeSynthesisParametersInstance, scheme);
 
@@ -806,17 +825,21 @@ namespace FractalElementDesigner.ViewModels
                             currentProject.Items.Add(_scheme);
                         });               
                     }
+
+                    DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                    {
+                        //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
+                        SelectedProjectTreeItem = schemes[0];
+                        ChoiceOfScheme();
+                        CreateStructure();
+                    });
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex.Message);
 
                     _dialogCoordinator.ShowMessageAsync(this, "", "Ошибка синтеза" + Environment.NewLine + ex.Message);
-                }
-                finally 
-                {
-                    //scheme.IsLocked = false;
-                }    
+                } 
             });
         }
 

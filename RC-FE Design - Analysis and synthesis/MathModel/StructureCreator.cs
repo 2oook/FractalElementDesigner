@@ -40,7 +40,7 @@ namespace FractalElementDesigner.MathModel
             // для отладки
             for (int i = 0; i < 100; i++)
             {
-                Thread.Sleep(50);
+                Thread.Sleep(5);
                 OnDoWork(i + 1);
             }
             // для отладки

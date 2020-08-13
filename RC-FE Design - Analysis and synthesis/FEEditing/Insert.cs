@@ -105,8 +105,6 @@ namespace FractalElementDesigner.FEEditing
 
                     // создать контрол ячейки
                     var cell = new CellControl(height, width);
-                    // установить ячейке метод для применения инструмента
-                    cell.Click += layer.StructureCells[i][j].ApplyTool;
                     // связать отображение с объектом структуры
                     cell.DataContext = layer.StructureCells[i][j];
 
@@ -177,8 +175,6 @@ namespace FractalElementDesigner.FEEditing
 
                     // создать контрол ячейки
                     var cell = new CellControl(height, width);
-                    // установить ячейке метод для применения инструмента
-                    cell.Click += layer.StructureCells[i][j].ApplyTool;
                     // связать отображение с объектом структуры
                     cell.DataContext = layer.StructureCells[i][j];
 
