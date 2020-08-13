@@ -14,7 +14,6 @@ namespace FractalElementDesigner.Navigating
         #region Constants
 
         public static readonly string MainPageAlias = "MainPage";
-        public static readonly string SchemeEditorPageAlias = "SchemeEditorPage";
         public static readonly string StructureDesigningPageAlias = "StructureDesigningPage";
 
         #endregion

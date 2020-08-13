@@ -12,7 +12,7 @@ namespace FractalElementDesigner.FEEditing.Model
     /// Слой структуры
     /// </summary>
     [Serializable]
-    public class Layer
+    class Layer
     {
         /// <summary>
         /// Название

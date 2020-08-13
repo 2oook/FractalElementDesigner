@@ -6,13 +6,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace FractalElementDesigner.FEEditing.Model
 {
     /// <summary>
     /// Базовый класс структуры 
     /// </summary>
-    public class RCStructureBase : ViewModelBase, IProjectTreeItem
+    class RCStructureBase : INotifyPropertyChanged, IProjectTreeItem
     {
         /// <summary>
         /// Порядковый номер структуры
@@ -37,5 +39,22 @@ namespace FractalElementDesigner.FEEditing.Model
         /// Словарь слоёв структуры
         /// </summary>
         public ObservableCollection<Layer> StructureLayers { get; set; } = new ObservableCollection<Layer>();
+
+        /// <summary>
+        /// Событие изменения свойства
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Метод для поднятия события изменения свойства
+        /// </summary>
+        /// <param name="propName">Имя свойства</param>
+        protected virtual void RaisePropertyChanged(string propName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            }
+        }
     }
 }

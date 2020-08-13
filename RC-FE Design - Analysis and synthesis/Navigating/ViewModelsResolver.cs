@@ -25,7 +25,6 @@ namespace FractalElementDesigner.Navigating
         /// </summary>
         public ViewModelsResolver()
         {
-            _vmResolvers.Add(MainViewModel.SchemeEditorPageViewModelAlias, () => new SchemeEditorPageViewModel());
             _vmResolvers.Add(MainViewModel.StructureDesigningPageViewModelAlias, () => new StructureDesigningPageViewModel());
         }
 
@@ -35,7 +34,6 @@ namespace FractalElementDesigner.Navigating
         /// <param name="dialogCoordinator">Объект для вывода диалогов</param>
         public ViewModelsResolver(IDialogCoordinator dialogCoordinator)
         {
-            _vmResolvers.Add(MainViewModel.SchemeEditorPageViewModelAlias, () => new SchemeEditorPageViewModel(dialogCoordinator));
             _vmResolvers.Add(MainViewModel.StructureDesigningPageViewModelAlias, () => new StructureDesigningPageViewModel(dialogCoordinator));
         }
 

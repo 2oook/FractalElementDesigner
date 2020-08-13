@@ -9,13 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.ComponentModel;
 
 namespace FractalElementDesigner.ViewModels
 {
     /// <summary>
     /// ViewModel окна ввода параметров синтеза
     /// </summary>
-    public class StructureSchemeSynthesisParametersWindowViewModel : ViewModelBase
+    public class StructureSchemeSynthesisParametersWindowViewModel : INotifyPropertyChanged
     {
         public StructureSchemeSynthesisParametersWindowViewModel(StructureSchemeSynthesisParametersWindow structureSchemeSynthesisParametersWindow)
         {
@@ -104,5 +105,22 @@ namespace FractalElementDesigner.ViewModels
         }
 
         #endregion
+
+        /// <summary>
+        /// Событие изменения свойства
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Метод для поднятия события изменения свойства
+        /// </summary>
+        /// <param name="propName">Имя свойства</param>
+        protected virtual void RaisePropertyChanged(string propName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            }
+        }
     }
 }

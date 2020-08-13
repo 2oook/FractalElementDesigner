@@ -19,7 +19,7 @@ namespace FractalElementDesigner.ViewModels
     /// <summary>
     /// Главная ViewModel
     /// </summary>
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : INotifyPropertyChanged
     {
         /// <summary>
         /// Конструктор
@@ -31,13 +31,10 @@ namespace FractalElementDesigner.ViewModels
 
             // создать страницы
             _StructureDesigningPage = new StructureDesigningPage();
-            _SchemeEditorPage = new SchemeEditorPage();
         
-            _SchemeEditorPageViewModel = _resolver.GetViewModelInstance(SchemeEditorPageViewModelAlias);
             _StructureDesigningPageViewModel = _resolver.GetViewModelInstance(StructureDesigningPageViewModelAlias);
 
             // методы используются так как нет доступа к конструкторам viewmodel'oв
-            _SchemeEditorPageViewModel.SetPage(_SchemeEditorPage);
             _StructureDesigningPageViewModel.SetPage(_StructureDesigningPage);
 
             // Инициализировать команды
@@ -47,7 +44,6 @@ namespace FractalElementDesigner.ViewModels
             _StructureDesigningPageViewModel.GoToMainPageCommand = GoToMainPageCommand;
 
             // Зарегистрировать статические команды
-            CommandManager.RegisterClassCommandBinding(typeof(Page), new CommandBinding(StaticCommandContainer.GoToSchemeEditorPageCommand, GoToSchemeEditorPageCommandExecute));
             CommandManager.RegisterClassCommandBinding(typeof(Page), new CommandBinding(StaticCommandContainer.GoToStructureDesigningPageCommand, GoToStructureDesigningPageCommandExecute));
 
             // Перейти на главную страницу
@@ -73,10 +69,6 @@ namespace FractalElementDesigner.ViewModels
         /// </summary>
         private readonly IViewModelsResolver _resolver;
 
-        /// <summary>
-        /// Ссылка на ViewModel страницы редактора схем
-        /// </summary>
-        private readonly IPageViewModel _SchemeEditorPageViewModel;
         /// <summary>
         /// Ссылка на ViewModel страницы проектирования
         /// </summary>
@@ -139,14 +131,6 @@ namespace FractalElementDesigner.ViewModels
         }
 
         /// <summary>
-        /// Метод для перемещения на страницу редактора схем
-        /// </summary>
-        private void GoToSchemeEditorPageCommandExecute(object sender, ExecutedRoutedEventArgs e)
-        {
-            Navigation.Navigate(_SchemeEditorPage, _SchemeEditorPageViewModel);
-        }
-
-        /// <summary>
         /// Метод для перемещения на страницу проектирования
         /// </summary>
         private void GoToStructureDesigningPageCommandExecute(object sender, ExecutedRoutedEventArgs e)
@@ -155,5 +139,22 @@ namespace FractalElementDesigner.ViewModels
         }
 
         #endregion
+
+        /// <summary>
+        /// Событие изменения свойства
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Метод для поднятия события изменения свойства
+        /// </summary>
+        /// <param name="propName">Имя свойства</param>
+        protected virtual void RaisePropertyChanged(string propName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            }
+        }
     }
 }

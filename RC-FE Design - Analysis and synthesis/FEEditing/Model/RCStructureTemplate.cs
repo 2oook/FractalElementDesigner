@@ -10,7 +10,7 @@ namespace FractalElementDesigner.FEEditing.Model
     /// <summary>
     /// Класс шаблона RC структуры 
     /// </summary>
-    public class RCStructureTemplate
+    class RCStructureTemplate
     {
         /// <summary>
         /// Название структуры

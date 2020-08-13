@@ -52,7 +52,7 @@ namespace FractalElementDesigner.FEEditing
         /// <summary>
         /// Метод для поднятия события изменения свойства
         /// </summary>
-        /// <param name="propName"></param>
+        /// <param name="propName">Имя свойства</param>
         protected virtual void RaisePropertyChanged(string propName)
         {
             if (PropertyChanged != null)

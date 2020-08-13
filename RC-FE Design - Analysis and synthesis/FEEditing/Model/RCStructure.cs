@@ -12,7 +12,7 @@ namespace FractalElementDesigner.FEEditing.Model
     /// <summary>
     /// Класс структуры
     /// </summary>
-    public class RCStructure : RCStructureBase
+    class RCStructure : RCStructureBase
     {
         /// <summary>
         /// Статический конструктор класса структуры

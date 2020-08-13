@@ -12,14 +12,6 @@ namespace FractalElementDesigner.Commands
     /// </summary>
     public static class StaticCommandContainer
     {
-        private static readonly RoutedUICommand goToSchemeEditorPageCommand = new RoutedUICommand("goToSchemeEditorPageCommand", "GoToSchemeEditorPageCommand", typeof(StaticCommandContainer));
-        /// <summary>
-        /// Команда переключения на страницу редактора схем
-        /// </summary>
-        public static RoutedUICommand GoToSchemeEditorPageCommand
-        {
-            get => goToSchemeEditorPageCommand;
-        }
 
         private static readonly RoutedUICommand goToStructureDesigningPageCommand = new RoutedUICommand("goToStructureDesigningPageCommand", "GoToStructureDesigningPageCommand", typeof(StaticCommandContainer));
         /// <summary>

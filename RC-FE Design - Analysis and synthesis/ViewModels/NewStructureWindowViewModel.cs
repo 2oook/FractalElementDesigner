@@ -10,13 +10,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.ComponentModel;
 
 namespace FractalElementDesigner.ViewModels
 {
     /// <summary>
     /// ViewModel страницы создания новой структуры
     /// </summary>
-    public class NewStructureWindowViewModel : ViewModelBase
+    class NewStructureWindowViewModel : INotifyPropertyChanged
     {
         public NewStructureWindowViewModel(NewStructureWindow newStructureWindow)
         {
@@ -222,6 +223,23 @@ namespace FractalElementDesigner.ViewModels
         }
 
         #endregion
+
+        /// <summary>
+        /// Событие изменения свойства
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Метод для поднятия события изменения свойства
+        /// </summary>
+        /// <param name="propName">Имя свойства</param>
+        protected virtual void RaisePropertyChanged(string propName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            }
+        }
     }
 
 

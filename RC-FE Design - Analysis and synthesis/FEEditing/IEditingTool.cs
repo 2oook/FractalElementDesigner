@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FractalElementDesigner.FEEditing
 {
-    interface IEditingTool : INotifyPropertyChanged
+    public interface IEditingTool : INotifyPropertyChanged
     {
         /// <summary>
         /// Название свойства

@@ -25,7 +25,6 @@ namespace FractalElementDesigner.Navigating
         public PagesResolver()
         {
             _pagesResolvers.Add(Navigation.MainPageAlias, () => new MainPage());
-            _pagesResolvers.Add(Navigation.SchemeEditorPageAlias, () => new SchemeEditorPage());
             _pagesResolvers.Add(Navigation.StructureDesigningPageAlias, () => new StructureDesigningPage());
         }
 
