@@ -36,20 +36,5 @@ namespace FractalElementDesigner.FEEditing.Elements
 
             path.Data = Geometry.Parse("M 0,0 L 0," + height + " L " + width + "," + height + "L " + width + ",0 Z ");
         }
-
-        /// <summary>
-        /// Событие нажатия на контрол ячейки
-        /// </summary>
-        public event Action Click = delegate { };
-
-        /// <summary>
-        /// Обработчик нажатия на ячейку
-        /// </summary>
-        /// <param name="sender">Объект источник события</param>
-        /// <param name="e">Объект параметров события</param>
-        private void canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Click();
-        }
     }
 }

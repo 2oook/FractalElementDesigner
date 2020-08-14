@@ -25,7 +25,30 @@
         
         <Grid x:Name="grid" Width="60" Height="60">
             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource LogicTextStyleKey}"/>
-            <Button Background="Transparent" BorderBrush="Transparent" Command="{Binding DataContext.CellApplyToolCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=3, AncestorType={x:Type Grid}}}" CommandParameter="{Binding}"/>
+            <Button Command="{Binding DataContext.CellApplyToolCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=3, AncestorType={x:Type Grid}}}" CommandParameter="{Binding}">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="Transparent" BorderBrush="Black">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#667ECFED"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        
+                    </Style>
+                </Button.Style>
+            </Button>
         </Grid>
 
     </Canvas>

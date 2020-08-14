@@ -13,50 +13,6 @@ namespace FractalElementDesigner.FEEditing.Model.Cells
     /// </summary>
     class StructureCellBase : INotifyPropertyChanged
     {
-        /// <summary>
-        /// Делегат для вызова метода применения инструмента
-        /// </summary>
-        public static Action<StructureCellBase, IEditingTool> ApplyToolDelegate = (StructureCellBase cell, IEditingTool tool) =>
-        {
-            if (tool != null && tool.IsChecked == true)
-            {
-                if (!CheckToolApplyPossibility(tool, cell))
-                {
-                    return;
-                }
-
-                switch (tool.Type)
-                {
-                    case ToolType.None:
-                        cell.CellType = CellType.None;
-                        break;
-                    case ToolType.ContactNumerator:
-
-                        break;
-                    case ToolType.CutCellDisposer:
-                        cell.CellType = CellType.Cut;
-                        break;
-                    case ToolType.ContactCellDisposer:
-                        cell.CellType = CellType.Contact;
-                        break;
-                    case ToolType.ForbidContactDisposer:
-                        cell.CellType = CellType.Forbid;
-                        break;
-                    case ToolType.RCCellDisposer:
-                        cell.CellType = CellType.RC;
-                        break;
-                    case ToolType.RCellDisposer:
-                        cell.CellType = CellType.R;
-                        break;
-                    case ToolType.ShuntCellDisposer:
-                        cell.CellType = CellType.Shunt;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
-
         // метод для проверки возможности применения инструмента к ячейке
         private static bool CheckToolApplyPossibility(IEditingTool tool, StructureCellBase cell)
         {
@@ -113,7 +69,45 @@ namespace FractalElementDesigner.FEEditing.Model.Cells
         /// </summary>
         public void ApplyTool(IEditingTool tool)
         {
-            ApplyToolDelegate(this, tool);
+            var cell = this;
+
+            if (tool != null && tool.IsChecked == true)
+            {
+                if (!CheckToolApplyPossibility(tool, cell))
+                {
+                    return;
+                }
+
+                switch (tool.Type)
+                {
+                    case ToolType.None:
+                        cell.CellType = CellType.None;
+                        break;
+                    case ToolType.ContactNumerator:
+
+                        break;
+                    case ToolType.CutCellDisposer:
+                        cell.CellType = CellType.Cut;
+                        break;
+                    case ToolType.ContactCellDisposer:
+                        cell.CellType = CellType.Contact;
+                        break;
+                    case ToolType.ForbidContactDisposer:
+                        cell.CellType = CellType.Forbid;
+                        break;
+                    case ToolType.RCCellDisposer:
+                        cell.CellType = CellType.RC;
+                        break;
+                    case ToolType.RCellDisposer:
+                        cell.CellType = CellType.R;
+                        break;
+                    case ToolType.ShuntCellDisposer:
+                        cell.CellType = CellType.Shunt;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         /// <summary>
