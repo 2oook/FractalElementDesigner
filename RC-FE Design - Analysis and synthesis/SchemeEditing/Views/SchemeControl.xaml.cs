@@ -75,7 +75,7 @@ namespace FractalElementDesigner.SchemeEditing.Views
             set
             {
                 // если объект редактора не null очистить область редактирования и расположить в ней текущий редактор
-                if (editor != null)
+                if (value != null)
                 {
                     var canvases = RootGrid.Children.OfType<ICanvas>().ToList();
 

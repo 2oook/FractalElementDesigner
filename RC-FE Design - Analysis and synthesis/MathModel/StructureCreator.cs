@@ -56,7 +56,7 @@ namespace FractalElementDesigner.MathModel
             return t;
         }
 
-        public static void InsertVisual(RCStructure structure, FEControl structureEditorControl) 
+        public static void InsertVisual(RCStructure structure, FESchemeModel schemeModel, FEControl structureEditorControl) 
         {
             // вставить слои
             foreach (var layer in structure.StructureLayers)
@@ -66,10 +66,65 @@ namespace FractalElementDesigner.MathModel
 
                 layer.Editor = editor;
 
-                Insert.StructureLayer(editor.Context.CurrentCanvas as FECanvas, layer, layer.CellsType);
+                FitStructureToScheme(structure, schemeModel, layer.CellsType);
+
+                Insert.StructureLayer(editor.Context.CurrentCanvas as FECanvas, layer);
+                //Insert.StructureLayer(editor.Context.CurrentCanvas as FECanvas, layer, layer.CellsType);
             }
         }
 
+        private static void FitStructureToScheme(RCStructure structure, FESchemeModel schemeModel, CellType cellType) 
+        {
+
+
+            CellType DefineCellType(int i, int j, int rowCount, CellType _layerType)
+            {
+                // первая строка
+                if (i == 0)
+                {
+                    if (j != 0 | j != rowCount - 1)
+                    {
+                        return CellType.PlaceForContact;
+                    }
+                }
+                // последняя строка
+                if (i == rowCount - 1)
+                {
+                    if (j != 0 | j != rowCount - 1)
+                    {
+                        return CellType.PlaceForContact;
+                    }
+                }
+                // первая колонка
+                if (j == 0)
+                {
+                    // установить угловые ячейки как неактивные
+                    if (i == 0 | i == rowCount - 1)
+                    {
+                        return CellType.None;
+                    }
+                    else
+                    {
+                        return CellType.PlaceForContact;
+                    }
+                }
+                // последняя колонка
+                if (j == rowCount - 1)
+                {
+                    // установить угловые ячейки как неактивные
+                    if (i == 0 | i == rowCount - 1)
+                    {
+                        return CellType.None;
+                    }
+                    else
+                    {
+                        return CellType.PlaceForContact;
+                    }
+                }
+
+                return _layerType;
+            }
+        }
 
         // Метод для инициализации структуры
         public static RCStructure InitializeStructure(RCStructure structure)

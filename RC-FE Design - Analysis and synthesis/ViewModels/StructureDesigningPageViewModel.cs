@@ -62,10 +62,24 @@ namespace FractalElementDesigner.ViewModels
 
             foreach (var tool in EditorTools.Values)
             {
-                tool.PropertyChanged += Tool_PropertyChanged;
+                tool.PropertyChanged += (object sender, PropertyChangedEventArgs e) => 
+                {
+                    if (sender as Tool != null)
+                    {
+                        var _tool = (Tool)sender;
+
+                        if (e.PropertyName == nameof(_tool.IsChecked))
+                        {
+                            if (_tool.IsChecked == true)
+                            {
+                                SelectedTool = _tool;
+                            }
+                        }
+                    }
+                };
             }
 
-            HomePageVisibility = Visibility.Visible;
+            HomePageVisibility = Visibility.Visible;      
         }
 
         public StructureDesigningPageViewModel(IDialogCoordinator dialogCoordinator) : this()
@@ -417,27 +431,6 @@ namespace FractalElementDesigner.ViewModels
         }
 
         /// <summary>
-        /// Обработчик изменения выбранного инструмента
-        /// </summary>
-        /// <param name="sender">Объект отправитель события</param>
-        /// <param name="e">Объект параметров события</param>
-        private void Tool_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (sender as Tool != null)
-            {
-                var tool = (Tool)sender;
-
-                if (e.PropertyName == nameof(tool.IsChecked))
-                {
-                    if (tool.IsChecked == true)
-                    {
-                        SelectedTool = tool;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// Метод для инициализации команд
         /// </summary>
         private void InitializeCommands()
@@ -757,7 +750,7 @@ namespace FractalElementDesigner.ViewModels
                 Projects.Add(project);
 
                 var schemePrototype = new FElementScheme(
-                    structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance.FESections) { Name = "Схема", Elements = { new PRPlot() } };        
+                    structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance.FESections) { Name = "Схема", Elements = { new PRPlot() } };
 
                 StartSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, schemePrototype);
             }
@@ -782,7 +775,7 @@ namespace FractalElementDesigner.ViewModels
                     DispatcherHelper.CheckBeginInvokeOnUI(() =>
                     {
                         currentProject.Items.Add(structure);
-                        StructureCreator.InsertVisual(structure, _Page.structureEditorControl.FEControl);
+                        StructureCreator.InsertVisual(structure, scheme.Model, _Page.structureEditorControl.FEControl);
                     });
                 }
                 catch (Exception ex)
@@ -826,9 +819,11 @@ namespace FractalElementDesigner.ViewModels
                         });               
                     }
 
+                    //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
+                    //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
+                    //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
                     DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                    {
-                        //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
+                    {                      
                         SelectedProjectTreeItem = schemes[0];
                         ChoiceOfScheme();
                         CreateStructure();
@@ -931,6 +926,47 @@ namespace FractalElementDesigner.ViewModels
         public void SetPage(Page page)
         {
             _Page = (StructureDesigningPage)page;
+
+            // тест
+            // тест
+            // тест
+            _Page.schemeEditorControl.SchemeControl.Loaded += (object sender, RoutedEventArgs e) => 
+            {
+                // создать проект
+                var project = new Project() { Name = "Проект №1" };
+
+                Projects.Add(project);
+
+                var schemePrototype = new FElementScheme(new StructureSchemeSynthesisParameters().FESections) { Name = "Схема", Elements = { new PRPlot() } };
+
+                // Создать отображение схемы из полученной модели
+                CreateSchemeInEditor(schemePrototype);
+
+                project.Items.Add(schemePrototype);
+
+                // создать окно
+                var window = new NewStructureWindow();
+                // создать vm для окна создания новой структуры
+                var newStructureWindowViewModel = new NewStructureWindowViewModel(window);
+                // вывести окно ввода параметров структуры
+                window.DataContext = newStructureWindowViewModel;
+                var dialogResult = window.ShowDialog();
+
+                // если не было подтверждения выйти
+                if (dialogResult.HasValue == false)
+                {
+                    return;
+                }
+                else
+                {
+                    if (dialogResult.Value == false)
+                    {
+                        return;
+                    }
+                }
+
+                CreateStructureAsync(project, schemePrototype, newStructureWindowViewModel.CurrentStructure);
+            };
         }
 
         #endregion

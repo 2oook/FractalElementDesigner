@@ -3,6 +3,7 @@ using FractalElementDesigner.FEEditing.Core;
 using FractalElementDesigner.FEEditing.Elements;
 using FractalElementDesigner.FEEditing.Model;
 using FractalElementDesigner.FEEditing.Model.Cells;
+using FractalElementDesigner.MathModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,53 @@ namespace FractalElementDesigner.FEEditing
     /// </summary>
     static class Insert
     {
+        // Метод для вставки слоя структуры в элемент Canvas
+        public static void StructureLayer(FECanvas canvas, Layer layer)
+        {
+            double height = 60;
+            double width = 60;
+
+            double structureWidth = 0;
+            double structureHeight = 0;
+
+            var rows = layer.StructureCells;
+
+            var _grid = new Grid();
+
+            for (int i = 0; i < rows.Count; i++)
+            {
+                structureHeight += height;
+                _grid.RowDefinitions.Add(new RowDefinition());
+            }
+
+            for (int j = 0; j < rows[0].Count; j++)
+            {
+                structureWidth += width;
+                _grid.ColumnDefinitions.Add(new ColumnDefinition());
+            }
+
+            for (int i = 0; i < rows.Count; i++)
+            {
+                var row = rows[i];
+
+                for (int j = 0; j < row.Count; j++)
+                {
+                    // создать контрол ячейки
+                    var cell = new CellControl(height, width);
+                    // связать отображение с объектом структуры
+                    cell.DataContext = layer.StructureCells[i][j];
+
+                    Grid.SetRow(cell, i);
+                    Grid.SetColumn(cell, j);
+                    _grid.Children.Add(cell);
+                }
+            }
+
+            FitCanvasToStructure(structureWidth, structureHeight, canvas);
+
+            PlaceCanvasInCenter(_grid, canvas);
+        }
+
         // Метод для вставки слоя структуры в элемент Canvas
         public static void StructureLayer(FECanvas canvas, Layer layer, CellType layerType)
         {
