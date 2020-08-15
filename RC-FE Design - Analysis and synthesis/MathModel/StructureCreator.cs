@@ -6,6 +6,7 @@ using FractalElementDesigner.FEEditing.Model.Cells;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -18,6 +19,18 @@ namespace FractalElementDesigner.MathModel
     /// </summary>
     class StructureCreator
     {
+        /// <summary>
+        /// Отображение пина на двухмерную реализацию
+        /// </summary>
+        class LayerConnectionItem 
+        {
+            internal Layer Layer = null;
+
+            internal bool Grounded = false;
+
+            internal List<LayerConnectionItem> Connection = new List<LayerConnectionItem>();
+        }
+
         /// <summary>
         /// Событие выполнения части работы
         /// </summary>
@@ -66,16 +79,16 @@ namespace FractalElementDesigner.MathModel
 
                 layer.Editor = editor;
 
-                FitStructureToScheme(structure, schemeModel, layer.CellsType);
+                FitLayerToScheme(structure, schemeModel, layer.CellsType);
 
                 Insert.StructureLayer(editor.Context.CurrentCanvas as FECanvas, layer);
                 //Insert.StructureLayer(editor.Context.CurrentCanvas as FECanvas, layer, layer.CellsType);
             }
         }
 
-        private static void FitStructureToScheme(RCStructure structure, FESchemeModel schemeModel, CellType cellType) 
+        private static void FitLayerToScheme(RCStructure structure, FESchemeModel schemeModel, CellType cellType) 
         {
-
+            var schemeInLayerContext = ExpandConnectionsAndGroundsOnLayers(structure, schemeModel);
 
             CellType DefineCellType(int i, int j, int rowCount, CellType _layerType)
             {
@@ -123,6 +136,90 @@ namespace FractalElementDesigner.MathModel
                 }
 
                 return _layerType;
+            }
+        }
+
+        // Метод для получения соединений и заземлений в контексте слоёв структуры
+        private static Dictionary<Layer, List<List<LayerConnectionItem>>> ExpandConnectionsAndGroundsOnLayers(RCStructure structure, FESchemeModel schemeModel) 
+        {
+            if (structure.StructureLayers.Count != schemeModel.InnerConnections[0].FirstSection.Pins.Count / 2)
+            {
+                throw new Exception("Количество слоёв не совпадает с количеством выводов БКЭ");
+            }
+
+            // структура слоёв с соединениями
+            var layerInfo = new Dictionary<Layer, List<List<LayerConnectionItem>>>();
+
+            // инициализация структуры
+            foreach (var layer in structure.StructureLayers)
+                layerInfo.Add(layer, new List<List<LayerConnectionItem>>());
+
+            for (int c = 0; c < schemeModel.InnerConnections.Count; c++)
+            {
+                var localMatrix = FElementScheme.AllowablePinsConnections[schemeModel.InnerConnections[c].ConnectionType];
+                var bound = localMatrix.ConnectionMatrix.GetUpperBound(0);
+
+                // добавить 2 мерные представления пинов в структуру слоев
+                foreach (var key in layerInfo.Keys)
+                {
+                    var lst = new List<LayerConnectionItem>();
+
+                    layerInfo[key].Add(lst);
+
+                    for (int i = 0; i < (bound + 1) / 2; i++)
+                        lst.Add(new LayerConnectionItem() { Layer = key });
+                }
+
+                // обойти матрицу инцидентности
+                for (int i = 0; i <= bound; i++)
+                {
+                    for (int j = i + 1; j <= bound; j++)
+                    {
+                        if (localMatrix.ConnectionMatrix[i, j] == 1)
+                        {
+                            var layerConnectionItem_i = MapIndexToLayerConnectionItem(i, c, layerInfo);
+                            var layerConnectionItem_j = MapIndexToLayerConnectionItem(j, c, layerInfo);
+
+                            // соединить представления пинов
+                            layerConnectionItem_i.Connection.Add(layerConnectionItem_j);
+                            layerConnectionItem_j.Connection.Add(layerConnectionItem_i);
+                        }
+                    }
+                }
+
+                // учесть заземления
+                var pEVector = FElementScheme.AllowablePinsConnections[schemeModel.InnerConnections[c].ConnectionType].PEVector[schemeModel.InnerConnections[c].PEType];
+
+                for (int i = 0; i < pEVector.Length; i++)
+                {
+                    if (pEVector[i] == 1)
+                    {
+                        var layerConnectionItem = MapIndexToLayerConnectionItem(i, c, layerInfo);
+                        layerConnectionItem.Grounded = true;
+                    }
+                }
+            }
+
+            return layerInfo;
+
+            // Метод для получения LayerConnectionItem по индексу из матрицы инцидентности
+            LayerConnectionItem MapIndexToLayerConnectionItem(int index, int connNumber, Dictionary<Layer, List<List<LayerConnectionItem>>> layerDictionary)
+            {
+                var keys = layerDictionary.Keys.ToList();
+
+                switch (index)
+                {
+                    case 0:
+                        return layerDictionary[keys[0]][connNumber][0];
+                    case 1:
+                        return layerDictionary[keys[0]][connNumber][1];
+                    case 2:
+                        return layerDictionary[keys[1]][connNumber][1];
+                    case 3:
+                        return layerDictionary[keys[1]][connNumber][0];
+                }
+
+                return null;
             }
         }
 
