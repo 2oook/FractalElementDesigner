@@ -15,22 +15,10 @@ using System.Threading.Tasks;
 namespace FractalElementDesigner.MathModel
 {
     /// <summary>
-    /// Класс реализующий создание конструкции элемента
+    /// Класс реализующий создание конструкции RC-G-NR элемента
     /// </summary>
     class StructureCreator
     {
-        /// <summary>
-        /// Отображение пина на двухмерную реализацию
-        /// </summary>
-        class LayerConnectionItem 
-        {
-            internal Layer Layer = null;
-
-            internal bool Grounded = false;
-
-            internal List<LayerConnectionItem> Connection = new List<LayerConnectionItem>();
-        }
-
         /// <summary>
         /// Событие выполнения части работы
         /// </summary>
@@ -86,9 +74,16 @@ namespace FractalElementDesigner.MathModel
             }
         }
 
+        // Метод для наложения полученной схемы на слои структуры
         private static void FitLayerToScheme(RCStructure structure, FESchemeModel schemeModel, CellType cellType) 
         {
             var schemeInLayerContext = ExpandConnectionsAndGroundsOnLayers(structure, schemeModel);
+
+            // обойти слои структуры
+            foreach (var layer in schemeInLayerContext.Keys)
+            {
+                var layerData = schemeInLayerContext[layer];
+            }
 
             CellType DefineCellType(int i, int j, int rowCount, CellType _layerType)
             {
