@@ -283,7 +283,7 @@ namespace FractalElementDesigner.MathModel
             // цикл по частотам
             for (int i = 0; i < PointsCountAtFrequencyAxle; i++)
             {
-                var phase = PhaseResponseCalculator.CalculatePhase(model, frequency);
+                var phase = SchemePhaseResponseCalculator.CalculatePhase(model, frequency);
 
                 // если точка попадает в окно
                 if (phase > LowerCharacteristicBound & phase < UpperCharacteristicBound)

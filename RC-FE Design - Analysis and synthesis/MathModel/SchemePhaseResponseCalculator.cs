@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 namespace FractalElementDesigner.MathModel
 {
     /// <summary>
-    /// Класс для расчета ФЧХ
+    /// Класс для расчета ФЧХ схемы
     /// </summary>
-    class PhaseResponseCalculator
+    class SchemePhaseResponseCalculator
     {
         // Метод для расчёта фазы
         public static double CalculatePhase(FESchemeModel scheme, double frequency) 

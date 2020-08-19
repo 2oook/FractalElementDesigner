@@ -24,7 +24,7 @@ namespace FractalElementDesigner.MathModel
             // цикл по частотам
             for (int i = 0; i <= pointsCount; i++)
             {
-                var phase = PhaseResponseCalculator.CalculatePhase(scheme, frequency);
+                var phase = SchemePhaseResponseCalculator.CalculatePhase(scheme, frequency);
 
                 points.Add((frequency, phase));
 

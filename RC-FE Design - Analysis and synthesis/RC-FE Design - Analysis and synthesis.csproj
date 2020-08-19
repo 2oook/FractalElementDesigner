@@ -157,12 +157,13 @@
     <Compile Include="MathModel\IFESchemeModelPrototype.cs" />
     <Compile Include="MathModel\IGeneticAlgorithm.cs" />
     <Compile Include="MathModel\InnerSchemePhaseResponseCalculator.cs" />
-    <Compile Include="MathModel\PhaseResponseCalculator.cs" />
+    <Compile Include="MathModel\SchemePhaseResponseCalculator.cs" />
     <Compile Include="MathModel\Pin.cs" />
     <Compile Include="MathModel\AllowablePinsConnection.cs" />
     <Compile Include="MathModel\PRPlot.cs" />
     <Compile Include="MathModel\SchemeSynthesizer.cs" />
     <Compile Include="MathModel\StructureCreator.cs" />
+    <Compile Include="MathModel\Structure\StructurePhaseResponseCalculator.cs" />
     <Compile Include="Navigating\Interfaces\IPageResolver.cs" />
     <Compile Include="Navigating\Interfaces\IPageViewModel.cs" />
     <Compile Include="Navigating\Interfaces\IViewModelsResolver.cs" />
