@@ -32,6 +32,7 @@ using System.Windows.Media;
 using FractalElementDesigner.SchemeEditing.Controls;
 using System.Threading;
 using FractalElementDesigner.FEEditing.Elements;
+using FractalElementDesigner.MathModel.Structure;
 
 namespace FractalElementDesigner.ViewModels
 {
@@ -49,6 +50,8 @@ namespace FractalElementDesigner.ViewModels
             StructureCreator.OnDoWork += OnDoWork;
             StructureCreator.OnStateChange += OnProgressStateChange;
 
+            StructureSynthesizer.OnDoWork += OnDoWork;
+            StructureSynthesizer.OnStateChange += OnProgressStateChange;
 
             IToolCreator toolCreator = new ToolCreator();
 
@@ -441,7 +444,7 @@ namespace FractalElementDesigner.ViewModels
 
             ChoiceOfSchemeCommand = new RelayCommand(ChoiceOfScheme, IsChoiceOfSchemePossible);
 
-            SchemeSynthesisCommand = new RelayCommand(SchemeSynthesize, IsSchemeSynthesisPossible);
+            SchemeSynthesisCommand = new RelayCommand(SynthesizeScheme, IsSchemeSynthesisPossible);
             CreateStructureCommand = new RelayCommand(CreateStructure, IsStructureCreatingPossible);
 
             CellApplyToolCommand = new RelayCommand<StructureCellBase>(ApplyToolForElementCell);
@@ -585,7 +588,7 @@ namespace FractalElementDesigner.ViewModels
         /// <summary>
         /// Метод для запуска синтеза схемы
         /// </summary>
-        private void SchemeSynthesize() 
+        private void SynthesizeScheme() 
         {
             if (SelectedProjectTreeItem is FElementScheme scheme)
             {
@@ -614,7 +617,7 @@ namespace FractalElementDesigner.ViewModels
 
                 project.Items.Clear();
 
-                StartSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, scheme);
+                StartSchemeSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, scheme);
             }
         }
 
@@ -752,7 +755,7 @@ namespace FractalElementDesigner.ViewModels
                 var schemePrototype = new FElementScheme(
                     structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance.FESections) { Name = "Схема", Elements = { new PRPlot() } };
 
-                StartSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, schemePrototype);
+                StartSchemeSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, schemePrototype);
             }
             catch (Exception ex)
             {
@@ -763,6 +766,37 @@ namespace FractalElementDesigner.ViewModels
         // Метод для асинхронного создания конструкции элемента
         private async void CreateStructureAsync(Project currentProject, FElementScheme scheme, RCStructure _structure) 
         {
+            //удалить
+
+            // TODO организовать получение параметров синтеза
+
+            // создать окно
+            var window = new StructureSchemeSynthesisParametersWindow();
+            // создать vm для окна 
+            var structureSchemeSynthesisParametersViewModel = new StructureSchemeSynthesisParametersWindowViewModel(window);
+            // вывести окно ввода параметров 
+            window.DataContext = structureSchemeSynthesisParametersViewModel;
+            var dialogResult = window.ShowDialog();
+
+            // если не было подтверждения выйти
+            if (dialogResult.HasValue == false)
+            {
+                return;
+            }
+            else
+            {
+                if (dialogResult.Value == false)
+                {
+                    return;
+                }
+            }
+
+            // TODO организовать получение параметров синтеза
+
+            //удалить
+
+
+
             await Task.Run(() =>
             {
                 try
@@ -777,6 +811,12 @@ namespace FractalElementDesigner.ViewModels
                         currentProject.Items.Add(structure);
                         StructureCreator.InsertVisual(structure, scheme.Model, _Page.structureEditorControl.FEControl);
                     });
+
+                    // тест
+                    // тест
+                    
+                    // TODO выполнить по выбору пользователя
+                    StartStructureSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, currentProject, structure);
                 }
                 catch (Exception ex)
                 {
@@ -791,8 +831,29 @@ namespace FractalElementDesigner.ViewModels
             });
         }
 
-        // Метод для запуска синтеза асинхронно
-        private async void StartSynthesisAsync(StructureSchemeSynthesisParameters structureSchemeSynthesisParametersInstance, Project currentProject, FElementScheme scheme) 
+        // Метод для запуска синтеза конструкции асинхронно
+        private async void StartStructureSynthesisAsync(StructureSchemeSynthesisParameters structureSchemeSynthesisParametersInstance, Project currentProject, RCStructureBase structure)
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    // синтезировать конструкцию
+                    StructureSynthesizer.Synthesize(structureSchemeSynthesisParametersInstance, structure);
+
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+
+                    _dialogCoordinator.ShowMessageAsync(this, "", "Ошибка синтеза" + Environment.NewLine + ex.Message);
+                }
+            });
+        }
+
+
+        // Метод для запуска синтеза схемы асинхронно
+        private async void StartSchemeSynthesisAsync(StructureSchemeSynthesisParameters structureSchemeSynthesisParametersInstance, Project currentProject, FElementScheme scheme) 
         {
             await Task.Run(() =>
             {
@@ -856,69 +917,6 @@ namespace FractalElementDesigner.ViewModels
      
         }
 
-        private void CreateNewStructureProject()
-        {
-            try
-            {
-                // создать окно
-                var window = new NewStructureWindow();
-                // создать vm для окна создания новой структуры
-                var newStructureWindowViewModel = new NewStructureWindowViewModel(window);
-                // вывести окно ввода параметров структуры
-                window.DataContext = newStructureWindowViewModel;
-                var dialogResult = window.ShowDialog();
-
-                // если не было подтверждения выйти
-                if (dialogResult.HasValue == false)
-                {
-                    return;
-                }
-                else
-                {
-                    if (dialogResult.Value == false)
-                    {
-                        return;
-                    }
-                }
-
-                // показать область проектирования, если она скрыта
-                if (StructureEditorVisibility != Visibility.Visible)
-                {
-                    StructureEditorVisibility = Visibility.Visible;
-                }
-
-                // создать проект
-                var project = new Project() { Name = "Проект_0" };
-
-                //SelectedProject = project;
-
-                var newStructure = StructureCreator.InitializeStructure(newStructureWindowViewModel.CurrentStructure);
-
-                project.Items.Add(newStructure);
-
-                Projects.Add(project);
-
-                // вставить слои
-                foreach (var layer in newStructure.StructureLayers)
-                {
-                    var editor = new Editor() { Context = new FEEditing.Context() };
-                    editor.Context.CurrentCanvas = _Page.structureEditorControl.FEControl.CreateFECanvas();
-
-                    layer.Editor = editor;
-
-                    FEEditing.Insert.StructureLayer(editor.Context.CurrentCanvas as FECanvas, layer, layer.CellsType);
-                }
-
-                _Page.structureEditorControl.FEControl.Editor = newStructure.StructureLayers.First().Editor;
-
-                _Page.structureEditorControl.FEControl.ZoomToFit();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-        }
-
         /// <summary>
         /// Метод для установки ссылки на страницу
         /// </summary>
@@ -937,7 +935,14 @@ namespace FractalElementDesigner.ViewModels
 
                 Projects.Add(project);
 
-                var schemePrototype = new FElementScheme(new StructureSchemeSynthesisParameters().FESections) { Name = "Схема", Elements = { new PRPlot() } };
+                var plot = new PRPlot();
+
+                var schemePrototype = new FElementScheme(new StructureSchemeSynthesisParameters().FESections) { Name = "Схема", Elements = { plot } };
+
+                schemePrototype.Model.PhaseResponsePoints = InnerSchemePhaseResponseCalculator.CalculatePhaseResponseInScheme(
+                1, 3, 50, schemePrototype.Model);
+
+                PRPlot.InitializatePhaseResponsePlot(schemePrototype.Model.PhaseResponsePoints, plot);
 
                 // Создать отображение схемы из полученной модели
                 CreateSchemeInEditor(schemePrototype);

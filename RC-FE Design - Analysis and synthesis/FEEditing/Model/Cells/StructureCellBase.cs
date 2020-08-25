@@ -1,8 +1,10 @@
 ﻿using GalaSoft.MvvmLight;
+using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,6 +28,11 @@ namespace FractalElementDesigner.FEEditing.Model.Cells
                 RaisePropertyChanged(nameof(CellType));
             }
         }
+
+        /// <summary>
+        /// Матрица проводимости ячейки
+        /// </summary>
+        public Matrix<Complex> YParametersMatrix { get; set; }
 
         /// <summary>
         /// Метод для применения инструмента

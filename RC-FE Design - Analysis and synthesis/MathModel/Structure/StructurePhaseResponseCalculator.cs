@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FractalElementDesigner.FEEditing.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace FractalElementDesigner.MathModel.Structure
     class StructurePhaseResponseCalculator
     {
         // Метод для расчёта фазы
-        public static double CalculatePhase(double frequency)
+        public static double CalculatePhase(RCStructureBase structure, double frequency)
         {
 
             var phase = 0;

@@ -41,6 +41,12 @@ namespace FractalElementDesigner.FEEditing.Model
         public ObservableCollection<Layer> StructureLayers { get; set; } = new ObservableCollection<Layer>();
 
         /// <summary>
+        /// Точки функции ФЧХ
+        /// </summary>
+        [NonSerialized]
+        public List<(double frequency, double phase)> PhaseResponsePoints;
+
+        /// <summary>
         /// Событие изменения свойства
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;

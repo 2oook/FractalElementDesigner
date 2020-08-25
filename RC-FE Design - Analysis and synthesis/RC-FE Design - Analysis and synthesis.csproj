@@ -163,7 +163,9 @@
     <Compile Include="MathModel\PRPlot.cs" />
     <Compile Include="MathModel\SchemeSynthesizer.cs" />
     <Compile Include="MathModel\StructureCreator.cs" />
+    <Compile Include="MathModel\Structure\PhaseResponseCalculatorForStructureForAllFrequencies.cs" />
     <Compile Include="MathModel\Structure\StructurePhaseResponseCalculator.cs" />
+    <Compile Include="MathModel\Structure\StructureSynthesizer.cs" />
     <Compile Include="Navigating\Interfaces\IPageResolver.cs" />
     <Compile Include="Navigating\Interfaces\IPageViewModel.cs" />
     <Compile Include="Navigating\Interfaces\IViewModelsResolver.cs" />
@@ -371,7 +373,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="FEEditing\Model\Structures\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
