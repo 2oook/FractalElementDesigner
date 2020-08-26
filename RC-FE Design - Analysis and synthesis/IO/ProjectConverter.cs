@@ -69,40 +69,40 @@ namespace FractalElementDesigner.IO
         {
             var structures = new ObservableCollection<IProjectTreeItem>();
 
-            foreach (var structure in savingProject.Structures)
-            {
-                var structureLayers = new ObservableCollection<Layer>();
+            //foreach (var structure in savingProject.Structures)
+            //{
+            //    var structureLayers = new ObservableCollection<Layer>();
 
-                foreach (var layer in structure.StructureLayers)
-                {
-                    var structureCells = new ObservableCollection<ObservableCollection<StructureCellBase>>();
+            //    foreach (var layer in structure.StructureLayers)
+            //    {
+            //        var structureCells = new ObservableCollection<ObservableCollection<StructureCellBase>>();
 
-                    foreach (var row in layer.StructureCells)
-                    {
-                        var _row = new ObservableCollection<StructureCellBase>();
+            //        foreach (var row in layer.StructureCells)
+            //        {
+            //            var _row = new ObservableCollection<StructureCellBase>();
 
-                        foreach (var col in row)
-                        {
-                            _row.Add(new StructureCellBase() { CellType = col.CellType });
-                        }
+            //            foreach (var col in row)
+            //            {
+            //                _row.Add(new StructureCellBase() { CellType = col.CellType });
+            //            }
 
-                        structureCells.Add(_row);
-                    }
+            //            structureCells.Add(_row);
+            //        }
 
-                    structureLayers.Add(new Layer()
-                    {
-                        Name = layer.Name,
-                        CellsType = layer.CellsType,
-                        StructureCells = structureCells
-                    });
-                }
+            //        structureLayers.Add(new Layer()
+            //        {
+            //            Name = layer.Name,
+            //            CellsType = layer.CellsType,
+            //            StructureCells = structureCells
+            //        });
+            //    }
 
-                structures.Add(new RCStructureBase()
-                {
-                    Name = structure.Name,
-                    StructureLayers = structureLayers
-                });
-            }
+            //    structures.Add(new RCStructureBase()
+            //    {
+            //        Name = structure.Name,
+            //        StructureLayers = structureLayers
+            //    });
+            //}
 
             var project = new Project()
             {

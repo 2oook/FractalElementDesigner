@@ -3,6 +3,7 @@ using FractalElementDesigner.FEEditing;
 using FractalElementDesigner.FEEditing.Controls;
 using FractalElementDesigner.FEEditing.Model;
 using FractalElementDesigner.FEEditing.Model.Cells;
+using FractalElementDesigner.MathModel.Structure;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FractalElementDesigner.MathModel
+namespace FractalElementDesigner.MathModel.Structure
 {
     /// <summary>
     /// Класс реализующий создание конструкции RC-G-NR элемента
@@ -238,7 +239,16 @@ namespace FractalElementDesigner.MathModel
 
                     for (int c = 0; c < horizontalStructureDimensionValue; c++)
                     {
-                        row.Add(new StructureCellBase());
+                        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        var pins = new List<Pin>();
+
+                        for (int i = 0; i < 8; i++)
+                        {
+                            pins.Add(new Pin());
+                        }
+                        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+                        row.Add(new StructureCellBase(pins, r+c));
                     }
 
                     layer.StructureCells.Add(row);

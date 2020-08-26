@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using FractalElementDesigner.MathModel.Structure;
+using GalaSoft.MvvmLight;
 using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,27 @@ namespace FractalElementDesigner.FEEditing.Model.Cells
     /// </summary>
     class StructureCellBase : INotifyPropertyChanged
     {
+        public StructureCellBase(List<Pin> pins, int number)
+        {
+            Number = number;
+            Pins = pins;
+
+            foreach (var pin in pins)
+                pin.Cell = this;
+
+            YParametersMatrix = Matrix<Complex>.Build.DenseOfArray(new Complex[pins.Count, pins.Count]);
+        }
+
+        /// <summary>
+        /// Номер ячейки
+        /// </summary>
+        public int Number { get; set; }
+
+        /// <summary>
+        /// Список выводов ячейки
+        /// </summary>
+        public List<Pin> Pins { get; set; }
+
         private CellType cellType = CellType.None;
         /// <summary>
         /// Тип ячейки структуры
