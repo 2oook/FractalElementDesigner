@@ -131,6 +131,7 @@
     <Compile Include="FEEditing\Interfaces\ICanvas.cs" />
     <Compile Include="FEEditing\Interfaces\IElement.cs" />
     <Compile Include="FEEditing\IToolCreator.cs" />
+    <Compile Include="FEEditing\Model\Cells\CellInLayer.cs" />
     <Compile Include="FEEditing\Model\Cells\CellType.cs" />
     <Compile Include="FEEditing\Model\RCStructureTemplate.cs" />
     <Compile Include="FEEditing\ResourceConstants.cs" />

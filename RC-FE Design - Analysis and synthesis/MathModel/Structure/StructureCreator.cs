@@ -31,9 +31,9 @@ namespace FractalElementDesigner.MathModel.Structure
         public static event Action<string> OnStateChange;
 
         // Метод для создания конструкции элемента
-        public static RCStructure Create(FElementScheme scheme, RCStructure _structure)
+        public static RCStructure Create(FElementScheme scheme, RCStructure structure)
         {
-            RCStructureBase structure = new RCStructureBase();
+            FitLayerToScheme(structure, scheme.Model);
 
             OnStateChange("Создание конструкции");
 
@@ -51,14 +51,14 @@ namespace FractalElementDesigner.MathModel.Structure
 
             OnStateChange("");
 
-            var t = InitializeStructure(_structure);
+            var t = InitializeStructure(structure);
 
             
 
             return t;
         }
 
-        public static void InsertVisual(RCStructure structure, FESchemeModel schemeModel, FEControl structureEditorControl) 
+        public static void InsertVisual(RCStructure structure, FEControl structureEditorControl) 
         {
             // вставить слои
             foreach (var layer in structure.StructureLayers)
@@ -68,15 +68,13 @@ namespace FractalElementDesigner.MathModel.Structure
 
                 layer.Editor = editor;
 
-                FitLayerToScheme(structure, schemeModel, layer.CellsType);
 
-                Insert.StructureLayer(editor.Context.CurrentCanvas as FECanvas, layer);
-                //Insert.StructureLayer(editor.Context.CurrentCanvas as FECanvas, layer, layer.CellsType);
+                Insert.StructureLayer(editor.Context.CurrentCanvas as FECanvas, structure, layer);
             }
         }
 
         // Метод для наложения полученной схемы на слои структуры
-        private static void FitLayerToScheme(RCStructure structure, FESchemeModel schemeModel, CellType cellType) 
+        private static void FitLayerToScheme(RCStructure structure, FESchemeModel schemeModel) 
         {
             var schemeInLayerContext = ExpandConnectionsAndGroundsOnLayers(structure, schemeModel);
 
@@ -231,29 +229,7 @@ namespace FractalElementDesigner.MathModel.Structure
             // новая структура
             var newStructure = structure;
 
-            foreach (var layer in newStructure.StructureLayers)
-            {
-                for (int r = 0; r < verticalStructureDimensionValue; r++)
-                {
-                    var row = new ObservableCollection<StructureCellBase>();
-
-                    for (int c = 0; c < horizontalStructureDimensionValue; c++)
-                    {
-                        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                        var pins = new List<Pin>();
-
-                        for (int i = 0; i < 8; i++)
-                        {
-                            pins.Add(new Pin());
-                        }
-                        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-                        row.Add(new StructureCellBase(pins, r+c));
-                    }
-
-                    layer.StructureCells.Add(row);
-                }
-            }
+            newStructure.Initialize(verticalStructureDimensionValue, horizontalStructureDimensionValue);
 
             return newStructure;
         }

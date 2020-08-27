@@ -17,52 +17,54 @@ namespace FractalElementDesigner.IO
     {
         public static SavingProject Convert(Project project) 
         {
-            var structures = new ObservableCollection<SavingRCStructureBase>();
+            //var structures = new ObservableCollection<SavingRCStructureBase>();
 
-            var _structures = project.Items.Where(x => x is RCStructureBase).Select(x => x as RCStructureBase).ToList();
+            //var _structures = project.Items.Where(x => x is RCStructureBase).Select(x => x as RCStructureBase).ToList();
 
-            foreach (var structure in _structures)
-            {
-                var structureLayers = new ObservableCollection<SavingLayer>();
+            //foreach (var structure in _structures)
+            //{
+            //    var structureLayers = new ObservableCollection<SavingLayer>();
 
-                foreach (var layer in structure.StructureLayers)
-                {
-                    var structureCells = new ObservableCollection<ObservableCollection<SavingStructureCellBase>>();
+            //    foreach (var layer in structure.StructureLayers)
+            //    {
+            //        var structureCells = new ObservableCollection<ObservableCollection<SavingStructureCellBase>>();
 
-                    foreach (var row in layer.StructureCells)
-                    {
-                        var _row = new ObservableCollection<SavingStructureCellBase>();
+            //        foreach (var row in layer.StructureCells)
+            //        {
+            //            var _row = new ObservableCollection<SavingStructureCellBase>();
 
-                        foreach (var col in row)
-                        {
-                            _row.Add(new SavingStructureCellBase() { CellType = col.CellType });
-                        }
+            //            foreach (var col in row)
+            //            {
+            //                _row.Add(new SavingStructureCellBase() { CellType = col.CellType });
+            //            }
 
-                        structureCells.Add(_row);
-                    }
+            //            structureCells.Add(_row);
+            //        }
 
-                    structureLayers.Add(new SavingLayer()
-                    {
-                        Name = layer.Name,
-                        CellsType = layer.CellsType,
-                        StructureCells = structureCells
-                    });
-                }
+            //        structureLayers.Add(new SavingLayer()
+            //        {
+            //            Name = layer.Name,
+            //            CellsType = layer.CellsType,
+            //            StructureCells = structureCells
+            //        });
+            //    }
 
-                structures.Add(new SavingRCStructureBase()
-                {
-                    Name = structure.Name,
-                    StructureLayers = structureLayers
-                });
-            }
+            //    structures.Add(new SavingRCStructureBase()
+            //    {
+            //        Name = structure.Name,
+            //        StructureLayers = structureLayers
+            //    });
+            //}
 
-            var savingProject = new SavingProject()
-            {
-                Name = project.Name,
-                Structures = structures
-            };
+            //var savingProject = new SavingProject()
+            //{
+            //    Name = project.Name,
+            //    Structures = structures
+            //};
 
-            return savingProject;
+            //return savingProject;
+
+            return null;
         }
 
         public static Project ConvertBack(SavingProject savingProject) 

@@ -121,7 +121,7 @@ namespace FractalElementDesigner.FEEditing.Model
                 Name = "R-C-0",
                 StructureProperties = commonProperties,
                 StructureLayers = new ObservableCollection<Layer>() { 
-                    new Layer() { Name = "R-C" + layer_name, CellsType = CellType.RC } }
+                    new Layer() { Name = "R-C" + layer_name } }
             };
 
             AllTemplateStructures.Add(R_C_0.Name, R_C_0);
@@ -131,7 +131,7 @@ namespace FractalElementDesigner.FEEditing.Model
                 Name = "R-CG-0",
                 StructureProperties = commonProperties.Concat(N_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
-                    new Layer() { Name = "R-CG" + layer_name, CellsType = CellType.RC } }
+                    new Layer() { Name = "R-CG" + layer_name } }
             };
 
             AllTemplateStructures.Add(R_CG_0.Name, R_CG_0);
@@ -141,8 +141,8 @@ namespace FractalElementDesigner.FEEditing.Model
                 Name = "R-C-NR",
                 StructureProperties = commonProperties.Concat(N_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
-                    new Layer() { Name = "R-C" + layer_name, CellsType = CellType.RC },
-                    new Layer() { Name = "NR" + layer_name, CellsType = CellType.R } }
+                    new Layer() { Name = "R-C" + layer_name },
+                    new Layer() { Name = "NR" + layer_name } }
             };
 
             AllTemplateStructures.Add(R_C_NR.Name, R_C_NR);
@@ -152,8 +152,8 @@ namespace FractalElementDesigner.FEEditing.Model
                 Name = "R-CG-NR",
                 StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
-                    new Layer() { Name = "R-CG" + layer_name, CellsType = CellType.RC }, 
-                    new Layer() { Name = "NR" + layer_name, CellsType = CellType.R } }
+                    new Layer() { Name = "R-CG" + layer_name }, 
+                    new Layer() { Name = "NR" + layer_name } }
             };
 
             AllTemplateStructures.Add(R_CG_NR.Name, R_CG_NR);
@@ -163,8 +163,8 @@ namespace FractalElementDesigner.FEEditing.Model
                 Name = "R-CG-NR+КП",
                 StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(P_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
-                    new Layer() { Name = "R-CG" + layer_name, CellsType = CellType.RC }, 
-                    new Layer() { Name = "NR" + layer_name, CellsType = CellType.R } }
+                    new Layer() { Name = "R-CG" + layer_name }, 
+                    new Layer() { Name = "NR" + layer_name } }
             };
 
             AllTemplateStructures.Add(R_CG_NR_plus_CP.Name, R_CG_NR_plus_CP);
@@ -174,8 +174,8 @@ namespace FractalElementDesigner.FEEditing.Model
                 Name = "(R+R)-C-NR",
                 StructureProperties = commonProperties.Concat(N_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
-                    new Layer() { Name = "R-C" + layer_name, CellsType = CellType.RC }, 
-                    new Layer() { Name = "NR" + layer_name, CellsType = CellType.R } }
+                    new Layer() { Name = "R-C" + layer_name }, 
+                    new Layer() { Name = "NR" + layer_name } }
             };
 
             AllTemplateStructures.Add(R_plus_R_C_NR.Name, R_plus_R_C_NR);
@@ -185,8 +185,8 @@ namespace FractalElementDesigner.FEEditing.Model
                 Name = "(R+R)-CG-NR",
                 StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
-                    new Layer() { Name = "R-CG" + layer_name, CellsType = CellType.RC }, 
-                    new Layer() { Name = "NR" + layer_name, CellsType = CellType.R } }
+                    new Layer() { Name = "R-CG" + layer_name }, 
+                    new Layer() { Name = "NR" + layer_name } }
             };
 
             AllTemplateStructures.Add(R_plus_R_CG_NR.Name, R_plus_R_CG_NR);
@@ -196,8 +196,8 @@ namespace FractalElementDesigner.FEEditing.Model
                 Name = "(R+R)-CG-NR+КП",
                 StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(P_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
-                    new Layer() { Name = "R-CG" + layer_name, CellsType = CellType.RC }, 
-                    new Layer() { Name = "NR" + layer_name, CellsType = CellType.R } }
+                    new Layer() { Name = "R-CG" + layer_name }, 
+                    new Layer() { Name = "NR" + layer_name } }
             };
 
             AllTemplateStructures.Add(R_plus_R_CG_NR_plus_CP.Name, R_plus_R_CG_NR_plus_CP);

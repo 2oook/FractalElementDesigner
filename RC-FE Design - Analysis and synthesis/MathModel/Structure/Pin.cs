@@ -17,11 +17,11 @@ namespace FractalElementDesigner.MathModel.Structure
         /// <summary>
         /// Номер вывода
         /// </summary>
-        public string Number { get; set; }
+        public int Number { get; set; }
 
         /// <summary>
         /// Ссылка на ячейку данного вывода
         /// </summary>
-        public StructureCellBase Cell { get; set; }
+        public CellInLayer CellInLayer { get; set; }
     }
 }

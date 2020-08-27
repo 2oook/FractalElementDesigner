@@ -20,14 +20,9 @@ namespace FractalElementDesigner.FEEditing.Model
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
-        /// Тип ячеек слоя
-        /// </summary>
-        public CellType CellsType { get; set; } = CellType.None;
-
-        /// <summary>
         /// Матрица ячеек слоя
         /// </summary>
-        public ObservableCollection<ObservableCollection<StructureCellBase>> StructureCells { get; set; } = new ObservableCollection<ObservableCollection<StructureCellBase>>();
+        public ObservableCollection<ObservableCollection<CellInLayer>> Cells { get; set; } 
 
         private Editor editor;
         /// <summary>

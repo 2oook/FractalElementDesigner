@@ -447,14 +447,14 @@ namespace FractalElementDesigner.ViewModels
             SchemeSynthesisCommand = new RelayCommand(SynthesizeScheme, IsSchemeSynthesisPossible);
             CreateStructureCommand = new RelayCommand(CreateStructure, IsStructureCreatingPossible);
 
-            CellApplyToolCommand = new RelayCommand<StructureCellBase>(ApplyToolForElementCell);
+            CellApplyToolCommand = new RelayCommand<CellInLayer>(ApplyToolForElementCell);
         }
 
         /// <summary>
         /// Метод для применения инструмента к ячейке элемента
         /// </summary>
         /// <param name="cell">Объект ячейки</param>
-        private void ApplyToolForElementCell(StructureCellBase cell) 
+        private void ApplyToolForElementCell(CellInLayer cell) 
         {
             cell.ApplyTool(SelectedTool);
         }
@@ -687,7 +687,7 @@ namespace FractalElementDesigner.ViewModels
 
                             layer.Editor = editor;
 
-                            FEEditing.Insert.ExistingStructureLayer(editor.Context.CurrentCanvas as FECanvas, layer, layer.CellsType);
+                            FEEditing.Insert.ExistingStructureLayer(editor.Context.CurrentCanvas as FECanvas, structure, layer);
                         }
                     }
 
@@ -808,8 +808,8 @@ namespace FractalElementDesigner.ViewModels
 
                     DispatcherHelper.CheckBeginInvokeOnUI(() =>
                     {
+                        StructureCreator.InsertVisual(structure, _Page.structureEditorControl.FEControl);
                         currentProject.Items.Add(structure);
-                        StructureCreator.InsertVisual(structure, scheme.Model, _Page.structureEditorControl.FEControl);
                     });
 
                     // тест

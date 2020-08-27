@@ -21,7 +21,7 @@ namespace FractalElementDesigner.FEEditing
     static class Insert
     {
         // Метод для вставки слоя структуры в элемент Canvas
-        public static void StructureLayer(FECanvas canvas, Layer layer)
+        public static void StructureLayer(FECanvas canvas, RCStructureBase structure, Layer layer)
         {
             double height = 60;
             double width = 60;
@@ -29,32 +29,32 @@ namespace FractalElementDesigner.FEEditing
             double structureWidth = 0;
             double structureHeight = 0;
 
-            var rows = layer.StructureCells;
+            var cells_array = structure.Cells;
 
             var _grid = new Grid();
 
-            for (int i = 0; i < rows.Count; i++)
+            for (int i = 0; i < cells_array.Count; i++)
             {
                 structureHeight += height;
                 _grid.RowDefinitions.Add(new RowDefinition());
             }
 
-            for (int j = 0; j < rows[0].Count; j++)
+            for (int j = 0; j < cells_array[0].Count; j++)
             {
                 structureWidth += width;
                 _grid.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
-            for (int i = 0; i < rows.Count; i++)
+            for (int i = 0; i < cells_array.Count; i++)
             {
-                var row = rows[i];
+                var row = cells_array[i];
 
                 for (int j = 0; j < row.Count; j++)
                 {
                     // создать контрол ячейки
                     var cell = new CellControl(height, width);
                     // связать отображение с объектом структуры
-                    cell.DataContext = layer.StructureCells[i][j];
+                    cell.DataContext = cells_array[i][j].CellsInLayer[layer];
 
                     Grid.SetRow(cell, i);
                     Grid.SetColumn(cell, j);
@@ -68,7 +68,7 @@ namespace FractalElementDesigner.FEEditing
         }
 
         // Метод для вставки слоя структуры в элемент Canvas
-        public static void StructureLayer(FECanvas canvas, Layer layer, CellType layerType)
+        public static void StructureLayer(FECanvas canvas, RCStructureBase structure, Layer layer, CellType layerType)
         {
             double _BorderCellHeight = 30;
             double _BorderCellWidth = 30;
@@ -81,15 +81,15 @@ namespace FractalElementDesigner.FEEditing
 
             var _grid = new Grid();
 
-            var rows = layer.StructureCells;
+            var cells_array = structure.Cells;
 
-            for (int i = 0; i < rows.Count; i++)
+            for (int i = 0; i < cells_array.Count; i++)
             {
                 _grid.RowDefinitions.Add(new RowDefinition());
 
                 double height = _CommonCellHeight;
 
-                var row = rows[i];
+                var row = cells_array[i];
 
                 for (int j = 0; j < row.Count; j++)
                 {
@@ -109,7 +109,7 @@ namespace FractalElementDesigner.FEEditing
                         }
                     }
                     // последняя строка
-                    if (i == rows.Count - 1)
+                    if (i == cells_array.Count - 1)
                     {
                         height = _BorderCellHeight;
 
@@ -124,7 +124,7 @@ namespace FractalElementDesigner.FEEditing
                         width = _BorderCellWidth;
 
                         // установить угловые ячейки как неактивные
-                        if (i == 0 | i == rows.Count - 1)
+                        if (i == 0 | i == cells_array.Count - 1)
                         {
                             cellType = CellType.None;
                         }
@@ -139,7 +139,7 @@ namespace FractalElementDesigner.FEEditing
                         width = _BorderCellWidth;
 
                         // установить угловые ячейки как неактивные
-                        if (i == 0 | i == rows.Count - 1)
+                        if (i == 0 | i == cells_array.Count - 1)
                         {
                             cellType = CellType.None;
                         }
@@ -149,12 +149,12 @@ namespace FractalElementDesigner.FEEditing
                         }
                     }
 
-                    layer.StructureCells[i][j].CellType = cellType;
+                    cells_array[i][j].CellsInLayer[layer].CellType = cellType;
 
                     // создать контрол ячейки
                     var cell = new CellControl(height, width);
                     // связать отображение с объектом структуры
-                    cell.DataContext = layer.StructureCells[i][j];
+                    cell.DataContext = cells_array[i][j].CellsInLayer[layer];
 
                     Grid.SetRow(cell, i);
                     Grid.SetColumn(cell, j);
@@ -171,7 +171,7 @@ namespace FractalElementDesigner.FEEditing
         }
 
         // Метод для вставки слоя структуры в элемент Canvas
-        public static void ExistingStructureLayer(FECanvas canvas, Layer layer, CellType layerType)
+        public static void ExistingStructureLayer(FECanvas canvas, RCStructureBase structure, Layer layer)
         {
             double _BorderCellHeight = 30;
             double _BorderCellWidth = 30;
@@ -184,15 +184,15 @@ namespace FractalElementDesigner.FEEditing
 
             var _grid = new Grid();
 
-            var rows = layer.StructureCells;
+            var cells_array = structure.Cells;
 
-            for (int i = 0; i < rows.Count; i++)
+            for (int i = 0; i < cells_array.Count; i++)
             {
                 _grid.RowDefinitions.Add(new RowDefinition());
 
                 double height = _CommonCellHeight;
 
-                var row = rows[i];
+                var row = cells_array[i];
 
                 for (int j = 0; j < row.Count; j++)
                 {
@@ -206,7 +206,7 @@ namespace FractalElementDesigner.FEEditing
                         height = _BorderCellHeight;
                     }
                     // последняя строка
-                    if (i == rows.Count - 1)
+                    if (i == cells_array.Count - 1)
                     {
                         height = _BorderCellHeight;
                     }
@@ -224,7 +224,7 @@ namespace FractalElementDesigner.FEEditing
                     // создать контрол ячейки
                     var cell = new CellControl(height, width);
                     // связать отображение с объектом структуры
-                    cell.DataContext = layer.StructureCells[i][j];
+                    cell.DataContext = cells_array[i][j].CellsInLayer[layer];
 
                     Grid.SetRow(cell, i);
                     Grid.SetColumn(cell, j);

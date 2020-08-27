@@ -15,6 +15,7 @@ namespace FractalElementDesigner.MathModel.Structure
         // Метод для расчёта фазы
         public static double CalculatePhase(RCStructureBase structure, double frequency)
         {
+            //int pinsCount = structure.FESections.First().Pins.Count;
 
             var phase = 0;
 
