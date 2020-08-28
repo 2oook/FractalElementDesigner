@@ -131,8 +131,8 @@
     <Compile Include="FEEditing\Interfaces\ICanvas.cs" />
     <Compile Include="FEEditing\Interfaces\IElement.cs" />
     <Compile Include="FEEditing\IToolCreator.cs" />
-    <Compile Include="FEEditing\Model\Cells\CellInLayer.cs" />
-    <Compile Include="FEEditing\Model\Cells\CellType.cs" />
+    <Compile Include="FEEditing\Model\StructureElements\Cell.cs" />
+    <Compile Include="FEEditing\Model\StructureElements\CellType.cs" />
     <Compile Include="FEEditing\Model\RCStructureTemplate.cs" />
     <Compile Include="FEEditing\ResourceConstants.cs" />
     <Compile Include="FEEditing\ToolCreator.cs" />
@@ -188,7 +188,7 @@
     <Compile Include="FEEditing\Model\Layer.cs" />
     <Compile Include="FEEditing\Model\RCStructure.cs" />
     <Compile Include="FEEditing\Model\RCStructureBase.cs" />
-    <Compile Include="FEEditing\Model\Cells\StructureCellBase.cs" />
+    <Compile Include="FEEditing\Model\StructureElements\SegmentOfTheStructure.cs" />
     <Compile Include="SchemeEditing\Controls\Elements\BottomGroundControl.xaml.cs">
       <DependentUpon>BottomGroundControl.xaml</DependentUpon>
     </Compile>

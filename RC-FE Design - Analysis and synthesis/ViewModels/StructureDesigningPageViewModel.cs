@@ -3,7 +3,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using MahApps.Metro.Controls.Dialogs;
 using FractalElementDesigner.FEEditing;
 using FractalElementDesigner.FEEditing.Model;
-using FractalElementDesigner.FEEditing.Model.Cells;
+using FractalElementDesigner.FEEditing.Model.StructureElements;
 using FractalElementDesigner.Navigating.Interfaces;
 using FractalElementDesigner.Pages;
 using FractalElementDesigner.Windows;
@@ -447,14 +447,14 @@ namespace FractalElementDesigner.ViewModels
             SchemeSynthesisCommand = new RelayCommand(SynthesizeScheme, IsSchemeSynthesisPossible);
             CreateStructureCommand = new RelayCommand(CreateStructure, IsStructureCreatingPossible);
 
-            CellApplyToolCommand = new RelayCommand<CellInLayer>(ApplyToolForElementCell);
+            CellApplyToolCommand = new RelayCommand<Cell>(ApplyToolForElementCell);
         }
 
         /// <summary>
         /// Метод для применения инструмента к ячейке элемента
         /// </summary>
         /// <param name="cell">Объект ячейки</param>
-        private void ApplyToolForElementCell(CellInLayer cell) 
+        private void ApplyToolForElementCell(Cell cell) 
         {
             cell.ApplyTool(SelectedTool);
         }

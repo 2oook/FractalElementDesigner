@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FractalElementDesigner.FEEditing.Model.Cells
+namespace FractalElementDesigner.FEEditing.Model.StructureElements
 {
     /// <summary>
     /// Перечисление тип ячейки

@@ -6,16 +6,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FractalElementDesigner.FEEditing.Model.Cells
+namespace FractalElementDesigner.FEEditing.Model.StructureElements
 {
     /// <summary>
-    /// Ячейка в контексте слоя
+    /// Ячейка
     /// </summary>
-    class CellInLayer : INotifyPropertyChanged
+    class Cell : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Выводы ячейки
+        /// </summary>
         public List<Pin> Pins = new List<Pin>();
 
-        public StructureCellBase MainCell { get; set; }
+        /// <summary>
+        /// Сегмент содержащий ячейку
+        /// </summary>
+        public SegmentOfTheStructure MainCell { get; set; }
 
         private CellType cellType = CellType.None;
         /// <summary>
@@ -78,7 +84,7 @@ namespace FractalElementDesigner.FEEditing.Model.Cells
         }
 
         // метод для проверки возможности применения инструмента к ячейке
-        private static bool CheckToolApplyPossibility(IEditingTool tool, CellInLayer cell)
+        private static bool CheckToolApplyPossibility(IEditingTool tool, Cell cell)
         {
             var result = true;
 

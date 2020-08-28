@@ -1,4 +1,4 @@
-﻿using FractalElementDesigner.FEEditing.Model.Cells;
+﻿using FractalElementDesigner.FEEditing.Model.StructureElements;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,7 +22,7 @@ namespace FractalElementDesigner.FEEditing.Model
         /// <summary>
         /// Матрица ячеек слоя
         /// </summary>
-        public ObservableCollection<ObservableCollection<CellInLayer>> Cells { get; set; } 
+        public ObservableCollection<ObservableCollection<Cell>> Cells { get; set; } 
 
         private Editor editor;
         /// <summary>

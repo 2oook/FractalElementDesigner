@@ -2,7 +2,7 @@
 using FractalElementDesigner.FEEditing;
 using FractalElementDesigner.FEEditing.Controls;
 using FractalElementDesigner.FEEditing.Model;
-using FractalElementDesigner.FEEditing.Model.Cells;
+using FractalElementDesigner.FEEditing.Model.StructureElements;
 using FractalElementDesigner.MathModel.Structure;
 using System;
 using System.Collections.Generic;

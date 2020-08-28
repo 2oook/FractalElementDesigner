@@ -1,5 +1,5 @@
 ﻿using FractalElementDesigner.FEEditing.Model;
-using FractalElementDesigner.FEEditing.Model.Cells;
+using FractalElementDesigner.FEEditing.Model.StructureElements;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

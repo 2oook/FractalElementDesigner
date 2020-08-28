@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using FractalElementDesigner.FEEditing.Model.Cells;
+using FractalElementDesigner.FEEditing.Model.StructureElements;
 using FractalElementDesigner.MathModel.Structure;
 using MathNet.Numerics.LinearAlgebra;
 using System.Numerics;
@@ -40,9 +40,14 @@ namespace FractalElementDesigner.FEEditing.Model
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
-        /// Матрица ячеек
+        /// Число выводов сегмента конструкции
         /// </summary>
-        public ObservableCollection<ObservableCollection<StructureCellBase>> Cells { get; set; } = new ObservableCollection<ObservableCollection<StructureCellBase>>();
+        public int PinsCountOfSegment;
+
+        /// <summary>
+        /// Матрица сегментов
+        /// </summary>
+        public ObservableCollection<ObservableCollection<SegmentOfTheStructure>> Segments { get; set; } = new ObservableCollection<ObservableCollection<SegmentOfTheStructure>>();
 
         /// <summary>
         /// Словарь слоёв структуры
@@ -55,22 +60,29 @@ namespace FractalElementDesigner.FEEditing.Model
         [NonSerialized]
         public List<(double frequency, double phase)> PhaseResponsePoints;
 
+        // Метод для инициализации структуры
         public void Initialize(int verticalStructureDimensionValue, int horizontalStructureDimensionValue)
         {
+            // число выводов слоя сегмента
+            var pins_count_in_layer = 4; 
+            // найти общее число выводов сегмента 
+            PinsCountOfSegment = pins_count_in_layer * StructureLayers.Count;
+
             for (int r = 0; r < verticalStructureDimensionValue; r++)
             {
-                var row = new ObservableCollection<StructureCellBase>();
+                var row = new ObservableCollection<SegmentOfTheStructure>();
 
                 for (int c = 0; c < horizontalStructureDimensionValue; c++)
                 {
-                    var cell = new StructureCellBase(r.ToString() + c.ToString());
+                    var cell = new SegmentOfTheStructure(r.ToString() + c.ToString());
 
                     int pins_counter = 0;
 
                     foreach (var layer in StructureLayers)
                     {
-                        var cell_in_layer = new CellInLayer();
+                        var cell_in_layer = new Cell();
 
+                        // список выводов можно задать в виде параметра метода
                         cell_in_layer.Pins = new List<Pin>()
                         {
                             new Pin() { Number = 1 + pins_counter, CellInLayer = cell_in_layer },
@@ -91,12 +103,13 @@ namespace FractalElementDesigner.FEEditing.Model
                     row.Add(cell);
                 }
 
-                Cells.Add(row);
+                Segments.Add(row);
             }
 
             foreach (var layer in StructureLayers) 
             {
-                var cells_in_layer = new ObservableCollection<ObservableCollection<CellInLayer>>(Cells.Select(x => new ObservableCollection<CellInLayer>(x.Select(y => y.CellsInLayer[layer]))));
+                // найти ячейки слоя
+                var cells_in_layer = new ObservableCollection<ObservableCollection<Cell>>(Segments.Select(x => new ObservableCollection<Cell>(x.Select(y => y.CellsInLayer[layer]))));
                 layer.Cells = cells_in_layer;
             }
         }

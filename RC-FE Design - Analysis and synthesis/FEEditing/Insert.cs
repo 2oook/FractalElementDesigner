@@ -2,7 +2,7 @@
 using FractalElementDesigner.FEEditing.Core;
 using FractalElementDesigner.FEEditing.Elements;
 using FractalElementDesigner.FEEditing.Model;
-using FractalElementDesigner.FEEditing.Model.Cells;
+using FractalElementDesigner.FEEditing.Model.StructureElements;
 using FractalElementDesigner.MathModel;
 using System;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace FractalElementDesigner.FEEditing
             double structureWidth = 0;
             double structureHeight = 0;
 
-            var cells_array = structure.Cells;
+            var cells_array = structure.Segments;
 
             var _grid = new Grid();
 
@@ -81,7 +81,7 @@ namespace FractalElementDesigner.FEEditing
 
             var _grid = new Grid();
 
-            var cells_array = structure.Cells;
+            var cells_array = structure.Segments;
 
             for (int i = 0; i < cells_array.Count; i++)
             {
@@ -184,7 +184,7 @@ namespace FractalElementDesigner.FEEditing
 
             var _grid = new Grid();
 
-            var cells_array = structure.Cells;
+            var cells_array = structure.Segments;
 
             for (int i = 0; i < cells_array.Count; i++)
             {

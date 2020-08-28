@@ -10,27 +10,27 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FractalElementDesigner.FEEditing.Model.Cells
+namespace FractalElementDesigner.FEEditing.Model.StructureElements
 {
     /// <summary>
-    /// Базовый класс ячейки структуры
+    /// Сегмент конструкции ФРЭ
     /// </summary>
-    class StructureCellBase 
+    class SegmentOfTheStructure 
     {
-        public StructureCellBase(string number)
+        public SegmentOfTheStructure(string number)
         {
             Number = number;
         }
 
         /// <summary>
-        /// Номер ячейки
+        /// Номер сегмента
         /// </summary>
         public string Number { get; set; }
 
         /// <summary>
-        /// Словарь выводов ячейки
+        /// Словарь выводов сегмента по слоям
         /// </summary>
-        public Dictionary<Layer, CellInLayer> CellsInLayer { get; set; } = new Dictionary<Layer, CellInLayer>();
+        public Dictionary<Layer, Cell> CellsInLayer { get; set; } = new Dictionary<Layer, Cell>();
 
         /// <summary>
         /// Матрица проводимости ячейки

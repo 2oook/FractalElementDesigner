@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using FractalElementDesigner.FEEditing;
 using System.Collections.ObjectModel;
 using FractalElementDesigner.FEEditing.Model;
-using FractalElementDesigner.FEEditing.Model.Cells;
+using FractalElementDesigner.FEEditing.Model.StructureElements;
 using FractalElementDesigner.ProjectTree;
 
 namespace FractalElementDesigner.IO

@@ -1,5 +1,5 @@
 ﻿using FractalElementDesigner.FEEditing.Model;
-using FractalElementDesigner.FEEditing.Model.Cells;
+using FractalElementDesigner.FEEditing.Model.StructureElements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +22,6 @@ namespace FractalElementDesigner.MathModel.Structure
         /// <summary>
         /// Ссылка на ячейку данного вывода
         /// </summary>
-        public CellInLayer CellInLayer { get; set; }
+        public Cell CellInLayer { get; set; }
     }
 }
