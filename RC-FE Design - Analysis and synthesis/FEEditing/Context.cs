@@ -1,4 +1,7 @@
-﻿using FractalElementDesigner.FEEditing.Controls;
+﻿// Copyright (c) Wiesław Šoltés. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using FractalElementDesigner.FEEditing.Controls;
 using FractalElementDesigner.FEEditing.Core;
 using FractalElementDesigner.FEEditing.Interfaces;
 using System;
