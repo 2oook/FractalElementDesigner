@@ -45,8 +45,6 @@
 
             <DockPanel Grid.Row="0">
                 <Button DockPanel.Dock="Left" HorizontalAlignment="Left" Content="На главную" Command="{Binding GoToMainPageCommand}" Padding="5"  Margin="5" FontSize="14"/>
-                <Button DockPanel.Dock="Left" HorizontalAlignment="Left" Content="Редактор схем"   Padding="5"  Margin="5" FontSize="14"/>
-                <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Пересчитать"  Padding="5"  Margin="5" FontSize="14"/>
                 <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Синтез"  Command="{Binding SchemeSynthesisCommand}" Padding="5"  Margin="5" FontSize="14"/>
             </DockPanel>
 
@@ -274,111 +272,7 @@
                                 </Grid>
                             </ScrollViewer>
                         </TabItem>
-                        <TabItem Header="Настройки" mah:ControlsHelper.HeaderFontSize="16">
-                            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition SharedSizeGroup="tabItemWidth"/>
-                                    </Grid.ColumnDefinitions>
 
-                                    <StackPanel>
-                                        <GroupBox Header="Частоты">
-                                            <StackPanel>
-                                                <Grid Margin="0,0,0,5">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                        <ColumnDefinition Width="1*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Минимальное значение частоты"/>
-                                                    <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-                                                </Grid>
-                                                <Grid Margin="0,0,0,5">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                        <ColumnDefinition Width="1*" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Максимальное значение частоты"/>
-                                                    <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-                                                </Grid>
-                                                <Grid Margin="0,0,0,5">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                        <ColumnDefinition Width="1*" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Число точек"/>
-                                                    <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-                                                </Grid>
-                                                <GroupBox Header="Распределение точек">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <RadioButton Content="Линейно" Margin="0,0,5,0"/>
-                                                        <RadioButton Content="Логарифмически" Margin="0,0,5,0" IsChecked="True"/>
-                                                    </StackPanel>
-                                                </GroupBox>
-                                            </StackPanel>
-                                        </GroupBox>
-                                        <GroupBox Header="Схема включения">
-                                            <StackPanel>
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <ComboBox Grid.Column="0" Margin="0,0,0,5"/>
-                                                    <ComboBox Grid.Column="1" Margin="0,0,0,5"/>
-                                                </Grid>
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto"/>
-                                                        <ColumnDefinition/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Число КП"/>
-                                                    <TextBlock Grid.Column="1" Margin="0,0,0,5"/>
-                                                </Grid>
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto"/>
-                                                        <ColumnDefinition/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Формула"/>
-                                                    <TextBox Grid.Column="1" Margin="0,0,0,5"/>
-                                                </Grid>
-                                                <Button Content="Редактор схем"/>
-                                            </StackPanel>
-                                        </GroupBox>
-                                        <GroupBox Header="Годограф">
-                                            <StackPanel>
-                                                <Grid Margin="0,0,0,5">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                        <ColumnDefinition Width="1*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Включить"/>
-                                                    <CheckBox x:Name="hodographSwitchCheckBox" Grid.Column="1" HorizontalAlignment="Center"/>
-                                                </Grid>
-                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5" IsEnabled="{Binding Path=IsChecked, ElementName=hodographSwitchCheckBox}">
-                                                    <TextBlock Padding="0,0,5,0" Text="К: от"/>
-                                                    <TextBox MinWidth="50" MaxWidth="80"/>
-                                                    <TextBlock Padding="5,0,5,0" Text="до"/>
-                                                    <TextBox MinWidth="50" MaxWidth="80"/>
-                                                    <TextBlock Padding="5,0,5,0" Text="точек"/>
-                                                    <TextBox MinWidth="50" MaxWidth="80"/>
-                                                </StackPanel>
-                                                <Grid Margin="0,0,0,5" IsEnabled="{Binding Path=IsChecked, ElementName=hodographSwitchCheckBox}">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="1*"/>
-                                                        <ColumnDefinition Width="1*"/>
-                                                        <ColumnDefinition Width="1*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <CheckBox Grid.Column="0" Content="Нули" Margin="0,0,5,0"/>
-                                                    <CheckBox Grid.Column="1" Content="Полюса" Margin="0,0,5,0"/>
-                                                    <CheckBox Grid.Column="2"  Content="Линии" Margin="0,0,5,0"/>
-                                                </Grid>
-                                            </StackPanel>
-                                        </GroupBox>
-                                    </StackPanel>
-                                </Grid>
-                            </ScrollViewer>
-                        </TabItem>
                     </TabControl>
                 </Expander>
 
