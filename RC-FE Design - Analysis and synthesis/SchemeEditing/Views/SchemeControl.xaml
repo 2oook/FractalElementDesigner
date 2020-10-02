@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="clr-namespace:FractalElementDesigner.SchemeEditing.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="891" d:DesignWidth="1260"
+             d:DesignHeight="890" d:DesignWidth="1260"
              MouseMove="UserControl_MouseMove" 
              MouseDown="UserControl_MouseDown" 
              MouseUp="UserControl_MouseUp"
@@ -48,12 +48,15 @@
             </Canvas>
 
             <Canvas x:Name="SchemeTemplate" ClipToBounds="False" Background="{DynamicResource LogicTransparentColorKey}">
-                <Rectangle Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}, Path=ActualWidth}"
-                   Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}, Path=ActualHeight}"
-                   Stroke="Black" StrokeThickness="2"/>
+                <Rectangle                    
+                    Width="{Binding ElementName=SchemeCanvas, Path=Width}"
+                    Height="{Binding ElementName=SchemeCanvas, Path=Height}" 
+                    Stroke="Black" StrokeThickness="2"/>
             </Canvas>
 
-            <controls:SchemeCanvas x:Name="SchemeCanvas"                                  
+            <controls:SchemeCanvas x:Name="SchemeCanvas"   
+                                    Width="1260" 
+                                    Height="890"
                                     Grid.Column="0" Grid.Row="0"
                                     Background="{DynamicResource LogicTransparentColorKey}" 
                                     ContextMenu="{StaticResource SchemeCanvasContextMenuKey}"

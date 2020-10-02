@@ -40,7 +40,7 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <DockPanel Grid.Row="0">
@@ -51,7 +51,7 @@
             <Grid Grid.Row="1">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
 
@@ -60,221 +60,125 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
-                <controls:StructureEditorControl x:Name="structureEditorControl" Visibility="{Binding StructureEditorVisibility, TargetNullValue=Hidden}" Margin="5,0,5,0"/>
-
-                <controls:HomePageControl Visibility="{Binding Path=HomePageVisibility}"/>
-
-                <controls:SchemeEditorControl x:Name="schemeEditorControl" Visibility="{Binding Path=SchemeEditorVisibility}"/>
-
-                <controls:PlotControl x:Name="plotControl" Visibility="{Binding Path=PlotVisibility}"/>
+                <Grid Grid.Column="0">
+                    <controls:HomePageControl Visibility="{Binding Path=HomePageVisibility}" Margin="5,0,5,0"/>
+                    <controls:SchemeEditorControl x:Name="schemeEditorControl" Visibility="{Binding Path=SchemeEditorVisibility}" Margin="5,0,5,0"/>
+                    <controls:PlotControl x:Name="plotControl" Visibility="{Binding Path=PlotVisibility}" Margin="5,0,5,0"/>
+                    <controls:StructureEditorControl  x:Name="structureEditorControl" Visibility="{Binding StructureEditorVisibility, TargetNullValue=Hidden}" Margin="5,0,5,0"/>
+                </Grid>
 
                 <controls:ProcessesIndicationControl Grid.Row="1"/>
 
-                <Expander Grid.Column="2" Grid.RowSpan="2" ExpandDirection="Left" IsExpanded="True">
-                    <TabControl IsEnabled="{Binding Path=IsProjectTreeEnabled}" Grid.IsSharedSizeScope="True" >
-                        <TabItem Header="Проект" mah:ControlsHelper.HeaderFontSize="16">
-                            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*"/>
-                                    </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1" Grid.RowSpan="2" >
+                    <Expander ExpandDirection="Left" IsExpanded="True">
 
-                                    <TreeView ItemsSource="{Binding Path=Projects}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto" MinWidth="150" MaxWidth="600"/>
+                            </Grid.ColumnDefinitions>
 
-                                        <TreeView.Resources>
+                            <GridSplitter Grid.Column="1" Width="4" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns"/>
 
-                                            <Style x:Key="treeViewItemBaseStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
-                                                <Setter Property="IsExpanded" Value="True"/>
-                                                <EventSetter Event="PreviewMouseRightButtonDown" Handler="OnPreviewMouseRightButtonDown"/>
-                                            </Style>
+                            <TabControl Grid.Column="2" IsEnabled="{Binding Path=IsProjectTreeEnabled}" Grid.IsSharedSizeScope="True" >
+                                <TabItem Header="Проект" mah:ControlsHelper.HeaderFontSize="16">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*"/>
+                                            </Grid.ColumnDefinitions>
 
-                                            <ContextMenu x:Key="projectTreeSchemePlotContextMenu" Visibility="Hidden">
-                                                
-                                            </ContextMenu>
+                                            <TreeView ItemsSource="{Binding Path=Projects}">
 
-                                            <ContextMenu x:Key="projectTreeFElementSchemeContextMenu">
-                                                <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Выбрать схему" Command="{Binding Path=ChoiceOfSchemeCommand}"/>
-                                                <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Создать конструкцию" Command="{Binding Path=CreateStructureCommand}"/>
-                                            </ContextMenu>
+                                                <TreeView.Resources>
 
-                                            <Style x:Key="projectTreeFElementSchemeStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
-                                                <Setter Property="ContextMenu" Value="{StaticResource projectTreeFElementSchemeContextMenu}"/>
-                                            </Style>
+                                                    <Style x:Key="treeViewItemBaseStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                                                        <Setter Property="IsExpanded" Value="True"/>
+                                                        <EventSetter Event="PreviewMouseRightButtonDown" Handler="OnPreviewMouseRightButtonDown"/>
+                                                    </Style>
 
-                                            <Style x:Key="projectTreeFElementStructureStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
+                                                    <ContextMenu x:Key="projectTreeSchemePlotContextMenu" Visibility="Hidden">
 
-                                            </Style>
+                                                    </ContextMenu>
 
-                                            <Style x:Key="projectTreePRPlotStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
-                                                <Setter Property="ContextMenu" Value="{StaticResource projectTreeSchemePlotContextMenu}"/>
-                                            </Style>
+                                                    <ContextMenu x:Key="projectTreeFElementSchemeContextMenu">
+                                                        <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Выбрать схему" Command="{Binding Path=ChoiceOfSchemeCommand}"/>
+                                                        <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Создать конструкцию" Command="{Binding Path=CreateStructureCommand}"/>
+                                                    </ContextMenu>
 
-                                            <Style x:Key="projectTreeDefaultStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
-                                                
-                                            </Style>
+                                                    <Style x:Key="projectTreeFElementSchemeStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
+                                                        <Setter Property="ContextMenu" Value="{StaticResource projectTreeFElementSchemeContextMenu}"/>
+                                                    </Style>
 
-                                            <HierarchicalDataTemplate x:Key="FElementSchemeDataTemplate" ItemsSource="{Binding Path=Elements}" ItemTemplateSelector="{x:Null}">
-                                                <!--схема-->
-                                                <TextBlock Text="{Binding Path=Name}"/>
-                                                <HierarchicalDataTemplate.ItemTemplate>
-                                                    <HierarchicalDataTemplate>
-                                                        <!--график-->
+                                                    <Style x:Key="projectTreeFElementStructureStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
+
+                                                    </Style>
+
+                                                    <Style x:Key="projectTreePRPlotStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
+                                                        <Setter Property="ContextMenu" Value="{StaticResource projectTreeSchemePlotContextMenu}"/>
+                                                    </Style>
+
+                                                    <Style x:Key="projectTreeDefaultStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
+
+                                                    </Style>
+
+                                                    <HierarchicalDataTemplate x:Key="FElementSchemeDataTemplate" ItemsSource="{Binding Path=Elements}" ItemTemplateSelector="{x:Null}">
+                                                        <!--схема-->
                                                         <TextBlock Text="{Binding Path=Name}"/>
+                                                        <HierarchicalDataTemplate.ItemTemplate>
+                                                            <HierarchicalDataTemplate>
+                                                                <!--график-->
+                                                                <TextBlock Text="{Binding Path=Name}"/>
+                                                            </HierarchicalDataTemplate>
+                                                        </HierarchicalDataTemplate.ItemTemplate>
                                                     </HierarchicalDataTemplate>
-                                                </HierarchicalDataTemplate.ItemTemplate>
-                                            </HierarchicalDataTemplate>
 
-                                            <HierarchicalDataTemplate x:Key="FElementStructureDataTemplate" ItemsSource="{Binding Path=StructureLayers}" ItemTemplateSelector="{x:Null}">
-                                                <!--структура-->
-                                                <TextBlock Text="{Binding Path=Name}"/>
-                                                <HierarchicalDataTemplate.ItemTemplate>
-                                                    <HierarchicalDataTemplate>
-                                                        <!--слой-->
+                                                    <HierarchicalDataTemplate x:Key="FElementStructureDataTemplate" ItemsSource="{Binding Path=StructureLayers}" ItemTemplateSelector="{x:Null}">
+                                                        <!--структура-->
                                                         <TextBlock Text="{Binding Path=Name}"/>
+                                                        <HierarchicalDataTemplate.ItemTemplate>
+                                                            <HierarchicalDataTemplate>
+                                                                <!--слой-->
+                                                                <TextBlock Text="{Binding Path=Name}"/>
+                                                            </HierarchicalDataTemplate>
+                                                        </HierarchicalDataTemplate.ItemTemplate>
                                                     </HierarchicalDataTemplate>
-                                                </HierarchicalDataTemplate.ItemTemplate>
-                                            </HierarchicalDataTemplate>
 
-                                        </TreeView.Resources>
+                                                </TreeView.Resources>
 
-                                        <e:Interaction.Behaviors>
-                                            <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding SelectedProjectTreeItem, Mode=TwoWay}" />
-                                        </e:Interaction.Behaviors>
-                                        
-                                        <TreeView.ItemContainerStyleSelector>
-                                            <selectors:ProjectTreeItemStyleSelector FElementSchemeStyle="{StaticResource ResourceKey=projectTreeFElementSchemeStyle}" 
+                                                <e:Interaction.Behaviors>
+                                                    <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding SelectedProjectTreeItem, Mode=TwoWay}" />
+                                                </e:Interaction.Behaviors>
+
+                                                <TreeView.ItemContainerStyleSelector>
+                                                    <selectors:ProjectTreeItemStyleSelector FElementSchemeStyle="{StaticResource ResourceKey=projectTreeFElementSchemeStyle}" 
                                                                                     FElementStructureStyle ="{StaticResource ResourceKey=projectTreeFElementStructureStyle}"
                                                                                     PRPlotStyle ="{StaticResource ResourceKey=projectTreePRPlotStyle}"
                                                                                     DefaultStyle="{StaticResource ResourceKey=projectTreeDefaultStyle}"/>
-                                        </TreeView.ItemContainerStyleSelector>
-                                        
-                                        <TreeView.ItemTemplate>
-                                            <HierarchicalDataTemplate ItemsSource="{Binding Path=Items}">
-                                                <!--проект-->
-                                                <TextBlock Text="{Binding Path=Name}"/>
-                                                <HierarchicalDataTemplate.ItemTemplateSelector>
-                                                    <selectors:ProjectTreeItemDataTemplateSelector FElementSchemeDataTemplate="{StaticResource ResourceKey=FElementSchemeDataTemplate}"
+                                                </TreeView.ItemContainerStyleSelector>
+
+                                                <TreeView.ItemTemplate>
+                                                    <HierarchicalDataTemplate ItemsSource="{Binding Path=Items}">
+                                                        <!--проект-->
+                                                        <TextBlock Text="{Binding Path=Name}"/>
+                                                        <HierarchicalDataTemplate.ItemTemplateSelector>
+                                                            <selectors:ProjectTreeItemDataTemplateSelector FElementSchemeDataTemplate="{StaticResource ResourceKey=FElementSchemeDataTemplate}"
                                                                                             FElementStructureDataTemplate="{StaticResource ResourceKey=FElementStructureDataTemplate}"/>
-                                                </HierarchicalDataTemplate.ItemTemplateSelector>
-                                            </HierarchicalDataTemplate>
-                                        </TreeView.ItemTemplate>
-                                    </TreeView>
+                                                        </HierarchicalDataTemplate.ItemTemplateSelector>
+                                                    </HierarchicalDataTemplate>
+                                                </TreeView.ItemTemplate>
+                                            </TreeView>
 
-                                </Grid>
-                            </ScrollViewer>
-                        </TabItem>
-                        <TabItem Header="Структура" mah:ControlsHelper.HeaderFontSize="16">
-                            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition SharedSizeGroup="tabItemWidth"/>
-                                    </Grid.ColumnDefinitions>
+                                        </Grid>
+                                    </ScrollViewer>
+                                </TabItem>
 
-                                    <StackPanel>
-
-                                        <GroupBox Header="Сетка">
-                                            <StackPanel>
-                                                <Grid Margin="0,0,0,5">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                        <ColumnDefinition Width="1*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Количество ячеек по горизонтали"/>
-                                                    <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-                                                </Grid>
-                                                <Grid Margin="0,0,0,5">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                        <ColumnDefinition Width="1*" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Количество ячеек по вертикали"/>
-                                                    <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-                                                </Grid>
-                                            </StackPanel>
-                                        </GroupBox>
-
-                                        <GroupBox Header="Параметры">
-                                            <StackPanel>
-                                                <Grid Margin="0,0,0,5">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                        <ColumnDefinition Width="1*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="R"/>
-                                                    <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
-                                                </Grid>
-                                                <Grid Margin="0,0,0,5">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                        <ColumnDefinition Width="1*" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="C"/>
-                                                    <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
-                                                </Grid>
-                                                <Grid Margin="0,0,0,5">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                        <ColumnDefinition Width="1*" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Kf"/>
-                                                    <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
-                                                </Grid>
-                                                <Grid Margin="0,0,0,5">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                        <ColumnDefinition Width="1*" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="G"/>
-                                                    <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
-                                                </Grid>
-                                                <Grid Margin="0,0,0,5">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                        <ColumnDefinition Width="1*" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="H"/>
-                                                    <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
-                                                </Grid>
-                                                <Grid Margin="0,0,0,5">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                        <ColumnDefinition Width="1*" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="N"/>
-                                                    <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
-                                                </Grid>
-                                                <Grid Margin="0,0,0,5">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                        <ColumnDefinition Width="1*" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="P"/>
-                                                    <TextBox Grid.Column="1" MinWidth="30" MaxWidth="80"/>
-                                                </Grid>
-                                            </StackPanel>
-                                        </GroupBox>
-
-                                        <GroupBox Header="Маска">
-                                            <StackPanel>
-                                                <Grid Margin="0,0,0,5">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                                        <ColumnDefinition Width="1*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Padding="0,0,5,0" Text="Режим редактирования"/>
-                                                    <CheckBox Grid.Column="1" HorizontalAlignment="Center"/>
-                                                </Grid>
-                                            </StackPanel>
-                                        </GroupBox>
-
-                                    </StackPanel>
-
-                                </Grid>
-                            </ScrollViewer>
-                        </TabItem>
-
-                    </TabControl>
-                </Expander>
+                            </TabControl>
+                        </Grid>
+                        
+                    </Expander>
+                </Grid>
 
             </Grid>
 

@@ -1,4 +1,7 @@
-﻿using FractalElementDesigner.SchemeEditing.Controls;
+﻿// Copyright (c) Wiesław Šoltés. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using FractalElementDesigner.SchemeEditing.Controls;
 using FractalElementDesigner.SchemeEditing.Core;
 using FractalElementDesigner.SchemeEditing.Editor;
 using System;

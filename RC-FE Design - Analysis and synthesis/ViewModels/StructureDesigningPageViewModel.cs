@@ -883,12 +883,12 @@ namespace FractalElementDesigner.ViewModels
                     //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
                     //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
                     //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
-                    DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                    {                      
-                        SelectedProjectTreeItem = schemes[0];
-                        ChoiceOfScheme();
-                        CreateStructure();
-                    });
+                    //DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                    //{                      
+                    //    SelectedProjectTreeItem = schemes[0];
+                    //    ChoiceOfScheme();
+                    //    CreateStructure();
+                    //});
                 }
                 catch (Exception ex)
                 {
@@ -928,50 +928,50 @@ namespace FractalElementDesigner.ViewModels
             // тест
             // тест
             // тест
-            _Page.schemeEditorControl.SchemeControl.Loaded += (object sender, RoutedEventArgs e) => 
-            {
-                // создать проект
-                var project = new Project() { Name = "Проект №1" };
+            //_Page.schemeEditorControl.SchemeControl.Loaded += (object sender, RoutedEventArgs e) => 
+            //{
+            //    // создать проект
+            //    var project = new Project() { Name = "Проект №1" };
 
-                Projects.Add(project);
+            //    Projects.Add(project);
 
-                var plot = new PRPlot();
+            //    var plot = new PRPlot();
 
-                var schemePrototype = new FElementScheme(new StructureSchemeSynthesisParameters().FESections) { Name = "Схема", Elements = { plot } };
+            //    var schemePrototype = new FElementScheme(new StructureSchemeSynthesisParameters().FESections) { Name = "Схема", Elements = { plot } };
 
-                schemePrototype.Model.PhaseResponsePoints = InnerSchemePhaseResponseCalculator.CalculatePhaseResponseInScheme(
-                1, 3, 50, schemePrototype.Model);
+            //    schemePrototype.Model.PhaseResponsePoints = InnerSchemePhaseResponseCalculator.CalculatePhaseResponseInScheme(
+            //    1, 3, 50, schemePrototype.Model);
 
-                PRPlot.InitializatePhaseResponsePlot(schemePrototype.Model.PhaseResponsePoints, plot);
+            //    PRPlot.InitializatePhaseResponsePlot(schemePrototype.Model.PhaseResponsePoints, plot);
 
-                // Создать отображение схемы из полученной модели
-                CreateSchemeInEditor(schemePrototype);
+            //    // Создать отображение схемы из полученной модели
+            //    CreateSchemeInEditor(schemePrototype);
 
-                project.Items.Add(schemePrototype);
+            //    project.Items.Add(schemePrototype);
 
-                // создать окно
-                var window = new NewStructureWindow();
-                // создать vm для окна создания новой структуры
-                var newStructureWindowViewModel = new NewStructureWindowViewModel(window);
-                // вывести окно ввода параметров структуры
-                window.DataContext = newStructureWindowViewModel;
-                var dialogResult = window.ShowDialog();
+            //    // создать окно
+            //    var window = new NewStructureWindow();
+            //    // создать vm для окна создания новой структуры
+            //    var newStructureWindowViewModel = new NewStructureWindowViewModel(window);
+            //    // вывести окно ввода параметров структуры
+            //    window.DataContext = newStructureWindowViewModel;
+            //    var dialogResult = window.ShowDialog();
 
-                // если не было подтверждения выйти
-                if (dialogResult.HasValue == false)
-                {
-                    return;
-                }
-                else
-                {
-                    if (dialogResult.Value == false)
-                    {
-                        return;
-                    }
-                }
+            //    // если не было подтверждения выйти
+            //    if (dialogResult.HasValue == false)
+            //    {
+            //        return;
+            //    }
+            //    else
+            //    {
+            //        if (dialogResult.Value == false)
+            //        {
+            //            return;
+            //        }
+            //    }
 
-                CreateStructureAsync(project, schemePrototype, newStructureWindowViewModel.CurrentStructure);
-            };
+            //    CreateStructureAsync(project, schemePrototype, newStructureWindowViewModel.CurrentStructure);
+            //};
         }
 
         #endregion
