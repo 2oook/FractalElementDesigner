@@ -7,7 +7,7 @@
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"
         xmlns:local="clr-namespace:FractalElementDesigner"
-        GlowBrush="{DynamicResource HighlightBrush}"       
+        GlowBrush="{DynamicResource ResourceKey=MahApps.Brushes.Highlight}"     
         mc:Ignorable="d"    
         Title="RC-FE Design - Analysis and synthesis" 
         Height="600" Width="800" 
@@ -16,10 +16,7 @@
 
     <Grid>
 
-        <Border>
-            <Border.Background>
-                <SolidColorBrush Color="{DynamicResource AccentColor4}"/>
-            </Border.Background>
+        <Border Background="{DynamicResource ResourceKey=MahApps.Brushes.Accent4}">
             <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
         </Border>
    

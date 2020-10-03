@@ -11,6 +11,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Markup;
+using ControlzEx.Theming;
+using MahApps.Metro.Theming;
 
 namespace FractalElementDesigner
 {
@@ -25,6 +27,11 @@ namespace FractalElementDesigner
         /// <param name="e">Аргументы события</param>
         protected override void OnStartup(StartupEventArgs e)
         {
+            base.OnStartup(e);
+
+            var theme = ThemeManager.Current.AddLibraryTheme(new LibraryTheme(new Uri("pack://application:,,,/RC-FE Design - Analysis and synthesis;component/Themes/MainTheme.xaml"), MahAppsLibraryThemeProvider.DefaultInstance));
+            ThemeManager.Current.ChangeTheme(this, theme);
+
             // Установить культурный контекст
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
             new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));

@@ -8,7 +8,7 @@
         xmlns:commands="clr-namespace:FractalElementDesigner.Commands"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro" 
-        xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity" 
+        xmlns:e="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviours="clr-namespace:FractalElementDesigner.FEEditing.Controls.Behaviours"
         Dialog:DialogParticipation.Register="{Binding}"
         x:Class="FractalElementDesigner.Pages.StructureDesigningPage"
@@ -27,7 +27,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Menu Grid.Row="0" Background="{DynamicResource AccentColorBrush2}">
+        <Menu Grid.Row="0" Background="{DynamicResource ResourceKey=MahApps.Brushes.Accent2}">
             <MenuItem Header="Файл" >
                 <MenuItem x:Name="FileNew" Command="{Binding NewProjectCommand}" Header="Новый проект" InputGestureText="Ctrl+N"/>
                 <MenuItem x:Name="FileOpen" Command="{Binding LoadProjectCommand}" Header="Открыть" InputGestureText="Ctrl+O"/>
@@ -82,7 +82,7 @@
                             <GridSplitter Grid.Column="1" Width="4" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns"/>
 
                             <TabControl Grid.Column="2" IsEnabled="{Binding Path=IsProjectTreeEnabled}" Grid.IsSharedSizeScope="True" >
-                                <TabItem Header="Проект" mah:ControlsHelper.HeaderFontSize="16">
+                                <TabItem Header="Проект" mah:HeaderedControlHelper.HeaderFontSize="16">
                                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                                         <Grid>
                                             <Grid.ColumnDefinitions>

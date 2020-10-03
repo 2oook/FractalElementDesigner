@@ -71,7 +71,7 @@
 
                 <Expander Grid.Column="2" Grid.RowSpan="2" ExpandDirection="Left" IsExpanded="True">
                     <TabControl Grid.IsSharedSizeScope="True" >
-                        <TabItem Header="Проект" mah:ControlsHelper.HeaderFontSize="16">
+                        <TabItem Header="Проект" mah:HeaderedControlHelper.HeaderFontSize="16">
                             <ScrollViewer VerticalScrollBarVisibility="Auto">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -83,7 +83,7 @@
                                 </Grid>
                             </ScrollViewer>
                         </TabItem>
-                        <TabItem Header="Структура" mah:ControlsHelper.HeaderFontSize="16">
+                        <TabItem Header="Структура" mah:HeaderedControlHelper.HeaderFontSize="16">
                             <ScrollViewer VerticalScrollBarVisibility="Auto">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -192,7 +192,7 @@
                                 </Grid>
                             </ScrollViewer>
                         </TabItem>
-                        <TabItem Header="Настройки" mah:ControlsHelper.HeaderFontSize="16">
+                        <TabItem Header="Настройки" mah:HeaderedControlHelper.HeaderFontSize="16">
                             <ScrollViewer VerticalScrollBarVisibility="Auto">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -414,7 +414,7 @@
                                 </Grid>
                             </ScrollViewer>
                         </TabItem>
-                        <TabItem Header="Вероятности" mah:ControlsHelper.HeaderFontSize="16">
+                        <TabItem Header="Вероятности" mah:HeaderedControlHelper.HeaderFontSize="16">
                             <ScrollViewer VerticalScrollBarVisibility="Auto">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
