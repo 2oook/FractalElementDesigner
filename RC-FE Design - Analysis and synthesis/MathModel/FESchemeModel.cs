@@ -25,6 +25,11 @@ namespace FractalElementDesigner.MathModel
         public List<Connection> InnerConnections { get; set; } = new List<Connection>();
 
         /// <summary>
+        /// Внешние выводы
+        /// </summary>
+        public List<OuterPin> OuterPins { get; set; } = new List<OuterPin>();
+
+        /// <summary>
         /// Вектор перестановки нумерации выводов схемы
         /// </summary>
         public int[] PinsNumbering { get; set; }

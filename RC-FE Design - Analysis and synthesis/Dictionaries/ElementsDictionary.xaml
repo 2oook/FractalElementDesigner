@@ -28,4 +28,20 @@
         <schemeElements:BottomGroundControl/>
     </ControlTemplate>
 
+    <ControlTemplate x:Key="TopConnControlTemplateKey">
+        <schemeElements:TopConnControl/>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="BottomConnControlTemplateKey">
+        <schemeElements:BottomConnControl/>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="TopInControlTemplateKey">
+        <schemeElements:TopInControl/>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="BottomInControlTemplateKey">
+        <schemeElements:BottomInControl/>
+    </ControlTemplate>
+
 </ResourceDictionary>

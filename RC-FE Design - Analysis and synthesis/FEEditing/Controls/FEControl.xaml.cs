@@ -43,8 +43,8 @@ namespace FractalElementDesigner.FEEditing
             canvas.PreviewMouseRightButtonDown += FECanvas_PreviewMouseRightButtonDown;
             canvas.ContextMenuOpening += FECanvas_ContextMenuOpening;
 
-            canvas.Width = RootGrid.ActualWidth;
-            canvas.Height = RootGrid.ActualHeight;
+            canvas.Width = 1260;
+            canvas.Height = 890;
 
             Grid.SetColumn(canvas, 0);
             Grid.SetRow(canvas, 0);

@@ -49,7 +49,7 @@ namespace FractalElementDesigner.MathModel
 
             AddRowsAndColsInYMatrix(ref Y, ref I);
 
-            ReduceMatrix(ref Y, 1);
+            ReduceMatrix(ref Y, 4);
 
             var phase = -Y[Y.RowCount-1, Y.ColumnCount-1].Phase * 180 / Math.PI;
 

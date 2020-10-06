@@ -156,6 +156,7 @@
     <Compile Include="MathModel\FESection.cs" />
     <Compile Include="MathModel\FESectionParameters.cs" />
     <Compile Include="MathModel\LayerConnectionItem.cs" />
+    <Compile Include="MathModel\OuterPin.cs" />
     <Compile Include="MathModel\StateOfIndividual.cs" />
     <Compile Include="MathModel\ITwoPortNetwork.cs" />
     <Compile Include="MathModel\SingleStageGeneticAlgorithm.cs" />
@@ -193,8 +194,20 @@
     <Compile Include="FEEditing\Model\RCStructure.cs" />
     <Compile Include="FEEditing\Model\RCStructureBase.cs" />
     <Compile Include="FEEditing\Model\StructureElements\SegmentOfTheStructure.cs" />
+    <Compile Include="SchemeEditing\Controls\Elements\BottomConnControl.xaml.cs">
+      <DependentUpon>BottomConnControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SchemeEditing\Controls\Elements\BottomGroundControl.xaml.cs">
       <DependentUpon>BottomGroundControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemeEditing\Controls\Elements\BottomInControl.xaml.cs">
+      <DependentUpon>BottomInControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemeEditing\Controls\Elements\TopConnControl.xaml.cs">
+      <DependentUpon>TopConnControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemeEditing\Controls\Elements\TopInControl.xaml.cs">
+      <DependentUpon>TopInControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="SchemeEditing\Controls\Elements\TopGroundControl.xaml.cs">
       <DependentUpon>TopGroundControl.xaml</DependentUpon>
@@ -322,11 +335,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SchemeEditing\Controls\Elements\BottomConnControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SchemeEditing\Controls\Elements\BottomGroundControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SchemeEditing\Controls\Elements\BottomInControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SchemeEditing\Controls\Elements\TopConnControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SchemeEditing\Controls\Elements\FElementControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SchemeEditing\Controls\Elements\TopInControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

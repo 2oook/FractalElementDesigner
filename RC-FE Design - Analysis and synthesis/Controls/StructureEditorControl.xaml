@@ -22,7 +22,7 @@
     
     <Grid>
 
-    <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+        <Border BorderThickness="1" BorderBrush="{DynamicResource ResourceKey=MahApps.Brushes.AccentBase}">
         <DockPanel>
 
             <ToolBarTray DockPanel.Dock="Left" Orientation="Vertical">

@@ -257,7 +257,50 @@ namespace FractalElementDesigner.MathModel
             {
                 array = array.Concat(sections[i].Pins.Select(x => x.Number)).ToList();
             }
-            
+
+            Model.PinsNumbering = array.ToArray();
+
+            // инициализация внешних выводов
+            for (int i = 1; i <= sections.First().Pins.Count; i++)
+            {
+                var outer_pin = new OuterPin() { Number = i };
+
+                if (i == 1)
+                {
+                    outer_pin.State = OuterPinState.In;
+                }
+                else
+                {
+                    outer_pin.State = OuterPinState.Gnd;
+                }
+
+                Model.OuterPins.Add(outer_pin);
+            }
+
+            // тест!!!!!!!!!!!!!!!!!!!!!!!!
+            // для схемы из матлаб
+            foreach (var pin in Model.OuterPins)
+            {
+                if (pin.Number == 1)
+                {
+                    pin.State = OuterPinState.Gnd;
+                }
+                else if (pin.Number == 2)
+                {
+                    pin.State = OuterPinState.In;
+                }
+                else if (pin.Number == 3)
+                {
+                    pin.State = OuterPinState.Con;
+                }
+                else
+                {
+                    pin.State = OuterPinState.Con;
+                }
+            }
+            // тест!!!!!!!!!!!!!!!!!!!!!!!!
+
+            // инициализация соединений между секциями
             for (int i = 0; i < sections.Count - 1; i++)
             {
                 //InnerConnections.Add(new Connection()
@@ -267,6 +310,7 @@ namespace FractalElementDesigner.MathModel
                 //});
 
                 // тест!!!!!!!!!!!!!!!!!!!!!!!!
+                // для схемы из матлаб
                 // инициализация 3-х соединений
                 switch (i)
                 {
@@ -312,8 +356,6 @@ namespace FractalElementDesigner.MathModel
                 }
             }
             // тест!!!!!!!!!!!!!!!!!!!!!!!!
-
-            Model.PinsNumbering = array.ToArray();
         }
 
         /// <summary>
