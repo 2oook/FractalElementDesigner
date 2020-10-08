@@ -261,11 +261,11 @@ namespace FractalElementDesigner.MathModel
             Model.PinsNumbering = array.ToArray();
 
             // инициализация внешних выводов
-            for (int i = 1; i <= sections.First().Pins.Count; i++)
+            for (int i = 0; i < sections.First().Pins.Count; i++)
             {
-                var outer_pin = new OuterPin() { Number = i };
+                var outer_pin = new OuterPin();
 
-                if (i == 1)
+                if (i == 0)
                 {
                     outer_pin.State = OuterPinState.In;
                 }
@@ -279,17 +279,19 @@ namespace FractalElementDesigner.MathModel
 
             // тест!!!!!!!!!!!!!!!!!!!!!!!!
             // для схемы из матлаб
-            foreach (var pin in Model.OuterPins)
+            for (int i = 0; i < Model.OuterPins.Count; i++)
             {
-                if (pin.Number == 1)
+                var pin = Model.OuterPins[i];
+
+                if (i == 0)
                 {
                     pin.State = OuterPinState.Gnd;
                 }
-                else if (pin.Number == 2)
+                else if (i == 1)
                 {
                     pin.State = OuterPinState.In;
                 }
-                else if (pin.Number == 3)
+                else if (i == 2)
                 {
                     pin.State = OuterPinState.Con;
                 }

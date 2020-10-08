@@ -51,9 +51,41 @@ namespace FractalElementDesigner.MathModel
 
             ReduceMatrix(ref Y, 4);
 
+            var groundedOuterPins = FindGroundedOuterPinsNumbers(scheme);
+            var connectedOuterPinsMatrix = FindConnectedOuterPinsNumbers(scheme, Y);
+
+            RemoveRowAndColsFromMatrix(ref Y, groundedOuterPins);
+            RemoveRowAndColsFromMatrix(ref connectedOuterPinsMatrix, groundedOuterPins);
+
+            AddRowsAndColsInYMatrix(ref Y, ref connectedOuterPinsMatrix);
+
+            ReduceMatrix(ref Y, 1);
+
             var phase = -Y[Y.RowCount-1, Y.ColumnCount-1].Phase * 180 / Math.PI;
 
             return phase;
+        }
+
+
+        private static List<int> FindGroundedOuterPinsNumbers(FESchemeModel scheme) 
+        {
+            var grounded_pins = scheme.OuterPins.Select((x, i) => new { index = i, pin = x }).Where(x => x.pin.State == OuterPinState.Gnd).Select(x => x.index).ToList();
+            return grounded_pins;
+        }
+
+        private static Matrix<float> FindConnectedOuterPinsNumbers(FESchemeModel scheme, Matrix<Complex> matrix)
+        {
+            var connected_pins = scheme.OuterPins.Select((x, i) => new { index = i , pin = x }).Where(x => x.pin.State == OuterPinState.Con).Select(x => x.index).ToList();
+
+            var connected_pins_mattrix = Matrix<float>.Build.DenseOfArray(new float[matrix.ColumnCount, matrix.RowCount]);
+
+            if (connected_pins.Count == 2)
+            {
+                connected_pins_mattrix[connected_pins[0], connected_pins[1]] = 1;
+                connected_pins_mattrix[connected_pins[1], connected_pins[0]] = 1;
+            }
+
+            return connected_pins_mattrix;
         }
 
         // Метод для понижения порядка матрицы

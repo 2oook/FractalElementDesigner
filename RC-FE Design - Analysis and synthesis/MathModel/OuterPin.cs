@@ -9,8 +9,9 @@ namespace FractalElementDesigner.MathModel
     [Serializable]
     class OuterPin
     {
-        public int Number { get; set; }
-
+        /// <summary>
+        /// Состояние вывода
+        /// </summary>
         public OuterPinState State { get; set; }
     }
 
