@@ -15,6 +15,6 @@ namespace FractalElementDesigner.MathModel
         /// <summary>
         /// Оценка особи
         /// </summary>
-        public int Rate { get; set; }
+        public double Rate { get; set; }
     }
 }

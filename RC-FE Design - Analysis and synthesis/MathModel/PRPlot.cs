@@ -21,7 +21,7 @@ namespace FractalElementDesigner.MathModel
         {
             if (plot != null)
             {
-                var series = new LineSeries() { InterpolationAlgorithm = InterpolationAlgorithms.CanonicalSpline };
+                var series = new LineSeries() { InterpolationAlgorithm = InterpolationAlgorithms.CatmullRomSpline };
 
                 foreach (var point in points)
                 {

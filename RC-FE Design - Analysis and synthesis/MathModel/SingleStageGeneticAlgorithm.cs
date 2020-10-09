@@ -435,7 +435,33 @@ namespace FractalElementDesigner.MathModel
             model.StateInGA.Rate = rate;
             model.PhaseResponsePoints = points;
         }
-        
+
+        public void FitByStandardDeviation(FESchemeModel model)
+        {
+            var points = new List<(double frequency, double phase)>();
+
+            double S = 0;
+
+            double frequency = MinFrequency;
+            // цикл по частотам
+            for (int i = 0; i < PointsCountAtFrequencyAxle; i++)
+            {
+                var phase = SchemePhaseResponseCalculator.CalculatePhase(model, frequency);
+
+                S += Math.Pow(phase - MinFrequency, 2);
+
+                points.Add((frequency, phase));
+
+                frequency += FrequencyIncrement;
+            }
+
+            double rate = Math.Sqrt(S / PointsCountAtFrequencyAxle);
+
+            model.StateInGA.Rate = 1 / rate;
+            model.PhaseResponsePoints = points;
+        }
+
+
         // Метод для оценки популяции
         public void RatePopulation() 
         {
