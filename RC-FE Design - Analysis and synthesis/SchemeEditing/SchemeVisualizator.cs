@@ -247,6 +247,11 @@ namespace FractalElementDesigner.SchemeEditing
             {
                 var outer_pin = scheme.Model.OuterPins[i];
 
+                if (outer_pin.State == OuterPinState.Float)
+                {
+                    continue;
+                }  
+
                 if (MapPinNumberToSection(i) == "first")
                 {
                     sectionPinList = firstSectionPins;

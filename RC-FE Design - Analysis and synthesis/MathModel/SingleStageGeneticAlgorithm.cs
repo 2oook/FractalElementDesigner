@@ -17,6 +17,7 @@ namespace FractalElementDesigner.MathModel
         /// </summary>
         public static event Action<double> OnDoWork;
 
+        // Конструктор
         public SingleStageGeneticAlgorithm(StructureSchemeSynthesisParameters synthesisParameters, int populationCount, FElementScheme schemePrototype)
         {
             SchemePrototype = schemePrototype;
@@ -177,6 +178,7 @@ namespace FractalElementDesigner.MathModel
             Population = schemes;
         }
 
+        // Метод для инициализации индивида
         public void InitiateIndividual(FESchemeModel model)
         {
             foreach (var connection in model.InnerConnections)
@@ -193,6 +195,7 @@ namespace FractalElementDesigner.MathModel
             }
         }
 
+        // Метод для мутации популяции
         public void MutatePopulation()
         {
             // для отладки
@@ -223,10 +226,125 @@ namespace FractalElementDesigner.MathModel
                     var groundCode = random.Next(groundCodes[0], groundCodes[groundCodes.Count - 1]);
 
                     Population[schemeIndexToMutate].Model.InnerConnections[mutateConnectionIndices[j]].ConnectionType = connectionCode;
-                    Population[schemeIndexToMutate].Model.InnerConnections[mutateConnectionIndices[j]].PEType = groundCode;                     
+                    Population[schemeIndexToMutate].Model.InnerConnections[mutateConnectionIndices[j]].PEType = groundCode;
+
+                    MutateOuterPins(Population[schemeIndexToMutate].Model.OuterPins);     
                 }
 
                 mutateConnectionIndices.Clear();
+            }
+        }
+
+        // Метод для мутации внешних выводов схемы
+        public void MutateOuterPins(List<OuterPin> outerPins)
+        {
+            var outerPinsCopy = outerPins.Select((x, i) => new { i, x.State }).ToList();
+
+            var main_rand = random.Next(0, 100);
+
+            var ins = outerPins.Where(x => x.State == OuterPinState.In).ToList();
+            var gnds = outerPins.Where(x => x.State == OuterPinState.Gnd).ToList();
+            var conns = outerPins.Where(x => x.State == OuterPinState.Con).ToList();
+
+            // мутируем in
+            if (main_rand <= 30)
+            {
+                var rnd_for_choice = random.Next(0, 100);
+
+                // обмен
+                if (rnd_for_choice <= 40 & ins.Count == 1)
+                {
+                    int rand_in = random.Next(0, outerPins.Count - 1);
+                    ins[0].State = outerPins[rand_in].State;
+                    outerPins[rand_in].State = OuterPinState.In;
+                }
+                // уменьшение или увеличение количества
+                else
+                {
+                    var in_count = random.Next(1, 3);
+
+                    ins.ForEach(x => x.State = OuterPinState.Float);
+
+                    while (in_count != 0)
+                    {
+                        int rand_in = random.Next(0, outerPins.Count - 1);
+
+                        if (outerPins[rand_in].State == OuterPinState.Float)
+                        {
+                            outerPins[rand_in].State = OuterPinState.In;
+                            in_count--;
+                        }
+                        else if (outerPins[rand_in].State == OuterPinState.Gnd & gnds.Count > 1)
+                        {
+                            outerPins[rand_in].State = OuterPinState.In;
+                            in_count--;
+                        }
+                        else if (outerPins[rand_in].State == OuterPinState.Con)
+                        {
+                            conns.ForEach(x => x.State = OuterPinState.Float);
+                            outerPins[rand_in].State = OuterPinState.In;
+                            in_count--;
+                        }
+                    }
+                }
+            }
+            // мутируем gnd
+            else if (main_rand > 30 & main_rand <= 60)
+            {
+                var rnd_for_choice = random.Next(0, 100);
+
+                // обмен
+                if (rnd_for_choice <= 40 & gnds.Count == 1)
+                {
+                    int rand_in = random.Next(0, outerPins.Count - 1);
+                    gnds[0].State = outerPins[rand_in].State;
+                    outerPins[rand_in].State = OuterPinState.Gnd;
+                }
+                // уменьшение или увеличение количества
+                else
+                {
+                    var in_count = random.Next(1, 3);
+
+                    gnds.ForEach(x => x.State = OuterPinState.Float);
+
+                    while (in_count != 0)
+                    {
+                        int rand_in = random.Next(0, outerPins.Count - 1);
+
+                        if (outerPins[rand_in].State == OuterPinState.Float)
+                        {
+                            outerPins[rand_in].State = OuterPinState.Gnd;
+                            in_count--;
+                        }
+                        else if (outerPins[rand_in].State == OuterPinState.In & ins.Count > 1)
+                        {
+                            outerPins[rand_in].State = OuterPinState.Gnd;
+                            in_count--;
+                        }
+                        else if (outerPins[rand_in].State == OuterPinState.Con)
+                        {
+                            conns.ForEach(x => x.State = OuterPinState.Float);
+                            outerPins[rand_in].State = OuterPinState.Gnd;
+                            in_count--;
+                        }
+                    }
+                }
+            }
+            // мутируем conn
+            else
+            {
+                var rnd_for_choice = random.Next(0, 100);
+
+                if (rnd_for_choice <= 40 & conns.Count > 1)
+                {
+                    int rand = random.Next(0, outerPins.Count - 1);
+                    conns[0].State = outerPins[rand].State;
+                    outerPins[rand].State = OuterPinState.Con;
+                }
+                else
+                {
+                    conns.ForEach(x => x.State = OuterPinState.Float);
+                }
             }
         }
 
@@ -243,23 +361,40 @@ namespace FractalElementDesigner.MathModel
             scheme.Model.InnerConnections[connectionIndex].PEType = groundCode;
         }
 
+        // Метод для скрещивания двух схем
         public FElementScheme Cross(FElementScheme first, FElementScheme second)
         {
+            // Взять за основу первую схему
             var newScheme = first.DeepClone() as FElementScheme;
 
-            var mutateConnectionsCount = random.Next(0, (SchemePrototype.Model.InnerConnections.Count / 2) + 1);
+            // число соединений для скрещивания
+            var crossConnectionsCount = random.Next(0, (SchemePrototype.Model.InnerConnections.Count / 2) + 1);
 
-            for (int i = 0; i < mutateConnectionsCount; i++)
+            for (int i = 0; i < crossConnectionsCount; i++)
             {
                 var mutateConnectionIndex = random.Next(0, SchemePrototype.Model.InnerConnections.Count -1);
 
+                // добавить гены второй схемы в первую
                 newScheme.Model.InnerConnections[mutateConnectionIndex].ConnectionType = second.Model.InnerConnections[mutateConnectionIndex].ConnectionType;
                 newScheme.Model.InnerConnections[mutateConnectionIndex].PEType = second.Model.InnerConnections[mutateConnectionIndex].PEType;
+            }
+
+            // скрестить внешнее подключение схем
+            var main_rand = random.Next(0, 100);
+
+            if (main_rand <= 50) 
+            {
+                newScheme.Model.OuterPins = first.Model.OuterPins;
+            }
+            else
+            {
+                newScheme.Model.OuterPins = second.Model.OuterPins;
             }
 
             return newScheme;
         }
 
+        // Метод для скрещивания популяции
         public void CrossPopulation() 
         {
             var randomizedPopulation = Population.OrderBy(x => random.Next()).ToList();
@@ -273,6 +408,7 @@ namespace FractalElementDesigner.MathModel
             }
         }
 
+        // Функция соответствия модели схемы заданным параметрам
         public void Fit(FESchemeModel model)
         {
             var points = new List<(double frequency, double phase)>();
@@ -299,7 +435,8 @@ namespace FractalElementDesigner.MathModel
             model.StateInGA.Rate = rate;
             model.PhaseResponsePoints = points;
         }
-
+        
+        // Метод для оценки популяции
         public void RatePopulation() 
         {
             foreach (var scheme in Population)
@@ -308,6 +445,7 @@ namespace FractalElementDesigner.MathModel
             }
         }
 
+        // Метод для отбора популяции
         public void SelectPopulation()
         {
             var newPopulation = Population.OrderByDescending(x => x.Model.StateInGA.Rate).Take(100).ToList();
@@ -315,11 +453,13 @@ namespace FractalElementDesigner.MathModel
             Population = newPopulation;
         }
 
+        // Метод для получения популяции
         public List<FElementScheme> GetPopulation() 
         {
             return Population;
         }
 
+        // Метод для старта алгоритма
         public void Start() 
         {
             InitiatePopulation(SchemePrototype);
