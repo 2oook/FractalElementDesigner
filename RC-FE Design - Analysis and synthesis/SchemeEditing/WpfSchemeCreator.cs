@@ -45,6 +45,10 @@ namespace FractalElementDesigner.SchemeEditing
                 {  Constants.TagElementFElement, CreateFElement },
                 {  Constants.TagElementTopGround, CreateTopGround },
                 {  Constants.TagElementBottomGround, CreateBottomGround },
+                {  Constants.TagElementTopIn, CreateTopIn },
+                {  Constants.TagElementBottomIn, CreateBottomIn },
+                {  Constants.TagElementTopConn, CreateTopConn },
+                {  Constants.TagElementBottomConn, CreateBottomConn },
             };
         }
 
@@ -155,6 +159,90 @@ namespace FractalElementDesigner.SchemeEditing
             {
                 ElementType = ElementType.BottomGround,
                 Template = Application.Current.Resources[ResourceConstants.KeyTemplateBottomGround] as ControlTemplate,
+                Style = Application.Current.Resources[ResourceConstants.KeySyleRootThumb] as Style,
+                Uid = Constants.TagElementBottomGround + Constants.TagNameSeparator + id.ToString()
+            };
+
+            SetThumbEvents(thumb);
+            SetPosition(thumb, x, y, snap);
+
+            return thumb;
+        }
+
+        private object CreateTopIn(object[] data, double x, double y, bool snap)
+        {
+            if (data == null || data.Length != 1)
+                return null;
+
+            int id = (int)data[0];
+
+            var thumb = new ElementThumb()
+            {
+                ElementType = ElementType.TopIn,
+                Template = Application.Current.Resources[ResourceConstants.KeyTemplateTopIn] as ControlTemplate,
+                Style = Application.Current.Resources[ResourceConstants.KeySyleRootThumb] as Style,
+                Uid = Constants.TagElementTopGround + Constants.TagNameSeparator + id.ToString()
+            };
+
+            SetThumbEvents(thumb);
+            SetPosition(thumb, x, y, snap);
+
+            return thumb;
+        }
+
+        private object CreateBottomIn(object[] data, double x, double y, bool snap)
+        {
+            if (data == null || data.Length != 1)
+                return null;
+
+            int id = (int)data[0];
+
+            var thumb = new ElementThumb()
+            {
+                ElementType = ElementType.BottomIn,
+                Template = Application.Current.Resources[ResourceConstants.KeyTemplateBottomIn] as ControlTemplate,
+                Style = Application.Current.Resources[ResourceConstants.KeySyleRootThumb] as Style,
+                Uid = Constants.TagElementBottomGround + Constants.TagNameSeparator + id.ToString()
+            };
+
+            SetThumbEvents(thumb);
+            SetPosition(thumb, x, y, snap);
+
+            return thumb;
+        }
+
+        private object CreateTopConn(object[] data, double x, double y, bool snap)
+        {
+            if (data == null || data.Length != 1)
+                return null;
+
+            int id = (int)data[0];
+
+            var thumb = new ElementThumb()
+            {
+                ElementType = ElementType.TopConn,
+                Template = Application.Current.Resources[ResourceConstants.KeyTemplateTopConn] as ControlTemplate,
+                Style = Application.Current.Resources[ResourceConstants.KeySyleRootThumb] as Style,
+                Uid = Constants.TagElementTopGround + Constants.TagNameSeparator + id.ToString()
+            };
+
+            SetThumbEvents(thumb);
+            SetPosition(thumb, x, y, snap);
+
+            return thumb;
+        }
+
+        private object CreateBottomConn(object[] data, double x, double y, bool snap)
+        {
+            if (data == null || data.Length != 1)
+                return null;
+
+            int id = (int)data[0];
+
+            var thumb = new ElementThumb()
+            {
+                ElementType = ElementType.BottomConn,
+                Template = Application.Current.Resources[ResourceConstants.KeyTemplateBottomConn] as ControlTemplate,
                 Style = Application.Current.Resources[ResourceConstants.KeySyleRootThumb] as Style,
                 Uid = Constants.TagElementBottomGround + Constants.TagNameSeparator + id.ToString()
             };

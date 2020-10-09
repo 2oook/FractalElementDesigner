@@ -62,6 +62,10 @@ namespace FractalElementDesigner.SchemeEditing.Editor
                 case Constants.TagElementPin: return Insert.Pin(canvas, point, context, snap);
                 case Constants.TagElementTopGround: return Insert.TopGround(canvas, point, context, snap);
                 case Constants.TagElementBottomGround: return Insert.BottomGround(canvas, point, context, snap);
+                case Constants.TagElementTopIn: return Insert.TopIn(canvas, point, context, snap);
+                case Constants.TagElementBottomIn: return Insert.BottomIn(canvas, point, context, snap);
+                case Constants.TagElementTopConn: return Insert.TopConn(canvas, point, context, snap);
+                case Constants.TagElementBottomConn: return Insert.BottomConn(canvas, point, context, snap);
                 default: return null;
             }
         }

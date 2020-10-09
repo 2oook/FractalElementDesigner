@@ -22,6 +22,10 @@ namespace FractalElementDesigner.SchemeEditing
         public const string KeyTemplateFElement = "FElementControlTemplateKey";
         public const string KeyTemplateTopGround = "TopGroundControlTemplateKey";
         public const string KeyTemplateBottomGround = "BottomGroundControlTemplateKey";
+        public const string KeyTemplateTopIn = "TopInControlTemplateKey";
+        public const string KeyTemplateBottomIn = "BottomInControlTemplateKey";
+        public const string KeyTemplateTopConn = "TopConnControlTemplateKey";
+        public const string KeyTemplateBottomConn = "BottomConnControlTemplateKey";
 
         public const string KeyLandscapePageTemplate = "LandscapePageTemplateKey";
 

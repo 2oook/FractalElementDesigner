@@ -66,5 +66,49 @@ namespace FractalElementDesigner.SchemeEditing.Editor
 
             return thumb;
         }
+
+        public static IElement TopIn(ICanvas canvas, IPoint point, ISchemeCreator creator, bool snap)
+        {
+            var thumb = creator.CreateElement(Constants.TagElementTopIn,
+                new object[] { canvas.GetCounter().Next() },
+                point.X, point.Y, snap) as IThumb;
+
+            canvas.Add(thumb);
+
+            return thumb;
+        }
+
+        public static IElement BottomIn(ICanvas canvas, IPoint point, ISchemeCreator creator, bool snap)
+        {
+            var thumb = creator.CreateElement(Constants.TagElementBottomIn,
+                new object[] { canvas.GetCounter().Next() },
+                point.X, point.Y, snap) as IThumb;
+
+            canvas.Add(thumb);
+
+            return thumb;
+        }
+
+        public static IElement TopConn(ICanvas canvas, IPoint point, ISchemeCreator creator, bool snap)
+        {
+            var thumb = creator.CreateElement(Constants.TagElementTopConn,
+                new object[] { canvas.GetCounter().Next() },
+                point.X, point.Y, snap) as IThumb;
+
+            canvas.Add(thumb);
+
+            return thumb;
+        }
+
+        public static IElement BottomConn(ICanvas canvas, IPoint point, ISchemeCreator creator, bool snap)
+        {
+            var thumb = creator.CreateElement(Constants.TagElementBottomConn,
+                new object[] { canvas.GetCounter().Next() },
+                point.X, point.Y, snap) as IThumb;
+
+            canvas.Add(thumb);
+
+            return thumb;
+        }
     }
 }

@@ -52,7 +52,12 @@ namespace FractalElementDesigner.SchemeEditing
         // Метод для вставки соединений на схему
         public static void InsertConnections(FElementScheme scheme)
         {
-            var sections = scheme.Editor.Context.CurrentCanvas.GetChildren();
+            var sections = new List<System.Windows.UIElement>();
+
+            foreach (var item in scheme.Editor.Context.CurrentCanvas.GetChildren())
+            {
+                sections.Add((System.Windows.UIElement)item);
+            }
 
             var sectionsCnt = sections.Count - 1;
 
@@ -107,8 +112,8 @@ namespace FractalElementDesigner.SchemeEditing
                                 currentSecondSectionPinList = secondSectionPins;
                             }
 
-                            var first = currentFirstSectionPinList.SingleOrDefault(x => x.Name == MapPinNumberToString(k));
-                            var second = currentSecondSectionPinList.SingleOrDefault(x => x.Name == MapPinNumberToString(j));
+                            var first = currentFirstSectionPinList.SingleOrDefault(x => x.Name == MapPinNumberToStringOnInnerConnections(k));
+                            var second = currentSecondSectionPinList.SingleOrDefault(x => x.Name == MapPinNumberToStringOnInnerConnections(j));
                             
                             if (first == null | second == null)
                             {
@@ -138,7 +143,7 @@ namespace FractalElementDesigner.SchemeEditing
                             currentFirstSectionPinList = secondSectionPins;
                         }
 
-                        var pinOnElement = currentFirstSectionPinList.SingleOrDefault(p => p.Name == MapPinNumberToString(g));
+                        var pinOnElement = currentFirstSectionPinList.SingleOrDefault(p => p.Name == MapPinNumberToStringOnInnerConnections(g));
 
                         ElementThumb groundingSection = null;
 
@@ -180,7 +185,9 @@ namespace FractalElementDesigner.SchemeEditing
                         scheme.Editor.Connect(scheme.Editor.Context.CurrentCanvas, groundPin, scheme.Editor.Context.SchemeCreator);
                     }
                 }
-            }         
+            }
+
+            InsertOuterPinsStates(scheme, sections);
 
             // метод для определения номера секции (1я или вторая) по номеру вывода в соединении
             int MapPinNumberToSectionNumber(int pin)
@@ -201,7 +208,7 @@ namespace FractalElementDesigner.SchemeEditing
             }
 
             // метод для нахождения названия вывода по номеру вывода из типового соединения
-            string MapPinNumberToString(int pin)
+            string MapPinNumberToStringOnInnerConnections(int pin)
             {
                 switch (pin)
                 {
@@ -215,6 +222,168 @@ namespace FractalElementDesigner.SchemeEditing
                         return "LeftBottomPin";
                 }
                 
+                return "";
+            }
+        }
+
+
+        public static void InsertOuterPinsStates(FElementScheme scheme, List<System.Windows.UIElement> sections)
+        {
+            FrameworkElement section = null;
+
+            var firstSection = (FrameworkElement)sections[0];
+            var lastSection = (FrameworkElement)sections[sections.Count - 1];
+
+            // получить потомков первой секции и отфильтровать в них пины
+            var firstSectionChildren = FindVisualChild<Canvas>(firstSection);
+            var firstSectionPins = firstSectionChildren.Children.OfType<PinThumb>().ToList();
+            // получить потомков второй секции и отфильтровать в них пины
+            var lastSectionChildren = FindVisualChild<Canvas>(lastSection);
+            var lastSectionPins = lastSectionChildren.Children.OfType<PinThumb>().ToList();
+
+            List<PinThumb> sectionPinList = null;
+
+            for (int i = 0; i < scheme.Model.OuterPins.Count; i++)
+            {
+                var outer_pin = scheme.Model.OuterPins[i];
+
+                if (MapPinNumberToSection(i) == "first")
+                {
+                    sectionPinList = firstSectionPins;
+                }
+                else
+                {
+                    sectionPinList = lastSectionPins;
+                }
+
+                var pinOnElement = sectionPinList.SingleOrDefault(p => p.Name == MapPinNumberToStringOnOuterConnections(i));
+
+                var elementTag = string.Empty;
+
+                double x = 0;
+                double y = 0;
+
+                if (i == 0 || i == 3)
+                {
+                    section = firstSection;
+                }
+                else if (i == 1 || i == 2)
+                {
+                    section = lastSection;
+                }
+
+                if (i == 0)
+                {
+                    elementTag = SwitchFotTopElements(outer_pin.State);
+                    x = ((ElementThumb)section).GetX() + pinOnElement.GetX() - 15;
+                    y = ((ElementThumb)section).GetY() - pinOnElement.GetY() - 30;
+                }
+                else if (i == 1)
+                {
+                    elementTag = SwitchFotTopElements(outer_pin.State);
+                    x = ((ElementThumb)section).GetX() + pinOnElement.GetX() - 15;
+                    y = ((ElementThumb)section).GetY() - pinOnElement.GetY() - 30;
+                }
+                else if (i == 2)
+                {
+                    elementTag = SwitchFotBottomElements(outer_pin.State);
+                    x = ((ElementThumb)section).GetX() + pinOnElement.GetX() - 15;
+                    y = ((ElementThumb)section).GetY() + pinOnElement.GetY() + 30;
+                }
+                else if (i == 3)
+                {
+                    elementTag = SwitchFotBottomElements(outer_pin.State);
+                    x = ((ElementThumb)section).GetX() + pinOnElement.GetX() - 15;
+                    y = ((ElementThumb)section).GetY() + pinOnElement.GetY() + 30;
+                }
+
+                var addedElement = scheme.Editor.Add(scheme.Editor.Context.CurrentCanvas, elementTag, new PointEx(x, y));
+
+                ((FrameworkElement)addedElement).Measure(new Size());
+
+                var addedElementPin = FindVisualChild<PinThumb>(addedElement as DependencyObject);
+
+                scheme.Editor.Connect(scheme.Editor.Context.CurrentCanvas, pinOnElement, scheme.Editor.Context.SchemeCreator);
+                scheme.Editor.Connect(scheme.Editor.Context.CurrentCanvas, addedElementPin, scheme.Editor.Context.SchemeCreator);
+            }
+
+            string SwitchFotTopElements(OuterPinState state) 
+            {
+                var elementTag = string.Empty;
+
+                switch (state)
+                {
+                    case OuterPinState.Gnd:
+                        elementTag = Constants.TagElementTopGround;
+                        break;
+                    case OuterPinState.In:
+                        elementTag = Constants.TagElementTopIn;
+                        break;
+                    case OuterPinState.Float:
+                        break;
+                    case OuterPinState.Con:
+                        elementTag = Constants.TagElementTopConn;
+                        break;
+                }
+
+                return elementTag;
+            }
+
+            string SwitchFotBottomElements(OuterPinState state)
+            {
+                var elementTag = string.Empty;
+
+                switch (state)
+                {
+                    case OuterPinState.Gnd:
+                        elementTag = Constants.TagElementBottomGround;
+                        break;
+                    case OuterPinState.In:
+                        elementTag = Constants.TagElementBottomIn;
+                        break;
+                    case OuterPinState.Float:
+                        break;
+                    case OuterPinState.Con:
+                        elementTag = Constants.TagElementBottomConn;
+                        break;
+                }
+
+                return elementTag;
+            }
+
+            // метод для определения номера секции (1я или вторая) по номеру вывода в соединении
+            string MapPinNumberToSection(int pin)
+            {
+                switch (pin)
+                {
+                    case 0:
+                        return "first";
+                    case 1:
+                        return "last";
+                    case 2:
+                        return "last";
+                    case 3:
+                        return "first";
+                }
+
+                return "";
+            }
+
+            // метод для нахождения названия вывода по номеру вывода 
+            string MapPinNumberToStringOnOuterConnections(int pin)
+            {
+                switch (pin)
+                {
+                    case 0:
+                        return "LeftTopPin";
+                    case 1:
+                        return "RightTopPin";
+                    case 2:
+                        return "RightBottomPin";
+                    case 3:
+                        return "LeftBottomPin";
+                }
+
                 return "";
             }
         }

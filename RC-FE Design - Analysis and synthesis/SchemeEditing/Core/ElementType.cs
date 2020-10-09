@@ -14,6 +14,10 @@ namespace FractalElementDesigner.SchemeEditing.Core
         Unknown,
         SchemeElement,
         TopGround,
-        BottomGround
+        BottomGround,
+        TopIn,
+        BottomIn,
+        TopConn,
+        BottomConn
     }
 }

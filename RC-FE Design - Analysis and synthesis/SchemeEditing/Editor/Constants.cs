@@ -20,6 +20,12 @@ namespace FractalElementDesigner.SchemeEditing.Editor
         public const string TagElementTopGround = "TopGround";
         public const string TagElementBottomGround = "BottomGround";
 
+        public const string TagElementTopIn = "TopIn";
+        public const string TagElementBottomIn = "BottomIn";
+
+        public const string TagElementTopConn = "TopConn";
+        public const string TagElementBottomConn = "BottomConn";
+
         public const string WireStartType = "Start";
         public const string WireEndType = "End";
 
