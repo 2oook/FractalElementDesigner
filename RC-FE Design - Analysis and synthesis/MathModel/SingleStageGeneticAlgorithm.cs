@@ -436,6 +436,41 @@ namespace FractalElementDesigner.MathModel
             model.PhaseResponsePoints = points;
         }
 
+        public void FitVersion2(FESchemeModel model)
+        {
+            var points = new List<(double frequency, double phase)>();
+
+            double rate = 0;
+
+            double frequency = MinFrequency;
+            // цикл по частотам
+            for (int i = 0; i < PointsCountAtFrequencyAxle; i++)
+            {
+                var phase = SchemePhaseResponseCalculator.CalculatePhase(model, frequency);
+
+                // если точка попадает в окно
+                if (phase > LowerCharacteristicBound)
+                {
+                    rate += 1 / (Math.Abs(LowerCharacteristicBound - phase) + 1);
+                }
+                else if (phase < UpperCharacteristicBound)
+                {
+                    rate += 1 / (Math.Abs(phase - UpperCharacteristicBound) +1);
+                }
+                else
+                {
+                    rate++;
+                }
+
+                points.Add((frequency, phase));
+
+                frequency += FrequencyIncrement;
+            }
+
+            model.StateInGA.Rate = rate;
+            model.PhaseResponsePoints = points;
+        }
+
         public void FitByStandardDeviation(FESchemeModel model)
         {
             var points = new List<(double frequency, double phase)>();
@@ -467,7 +502,8 @@ namespace FractalElementDesigner.MathModel
         {
             foreach (var scheme in Population)
             {
-                Fit(scheme.Model);            
+                Fit(scheme.Model);
+                //FitVersion2(scheme.Model);
             }
         }
 
