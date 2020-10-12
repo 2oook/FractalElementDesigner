@@ -269,6 +269,17 @@ namespace FractalElementDesigner.ViewModels
 
         #region Команды
 
+        private ICommand testCommand;
+        public ICommand TestCommand
+        {
+            get { return testCommand; }
+            set
+            {
+                testCommand = value;
+                RaisePropertyChanged(nameof(TestCommand));
+            }
+        }
+
         private ICommand newProjectCommand;
         /// <summary>
         /// Команда для создания нового проекта
@@ -442,6 +453,10 @@ namespace FractalElementDesigner.ViewModels
             LoadProjectCommand = new RelayCommand(LoadProject);
             SaveProjectCommand = new RelayCommand(SaveProject);
 
+            // удалить
+            TestCommand = new RelayCommand(Test);
+            // удалить
+
             ChoiceOfSchemeCommand = new RelayCommand(ChoiceOfScheme, IsChoiceOfSchemePossible);
 
             SchemeSynthesisCommand = new RelayCommand(SynthesizeScheme, IsSchemeSynthesisPossible);
@@ -449,6 +464,15 @@ namespace FractalElementDesigner.ViewModels
 
             CellApplyToolCommand = new RelayCommand<Cell>(ApplyToolForElementCell);
         }
+
+        // удалить
+        private bool TestingBool = false;
+        private void Test() 
+        {
+            TestingBool = true;
+            CreateNewProject();
+        }
+        // удалить
 
         /// <summary>
         /// Метод для применения инструмента к ячейке элемента
@@ -481,7 +505,6 @@ namespace FractalElementDesigner.ViewModels
                 });
             }
         }
-
 
         // Метод для создания конструкции
         private void CreateStructure()
@@ -530,7 +553,11 @@ namespace FractalElementDesigner.ViewModels
 
                 var project = Projects.SingleOrDefault(x => x.Items.Contains(scheme));
 
-                if (project.Items.Count > 0)
+                if (project.Items.Count > 1)
+                {
+                    return false;
+                }
+                else if (project.Items.Count == 1)
                 {
                     return true;
                 }
@@ -768,7 +795,7 @@ namespace FractalElementDesigner.ViewModels
         {
             //удалить
 
-            // TODO организовать получение параметров синтеза
+            // TODO организовать получение параметров синтеза СХЕМЫ
 
             // создать окно
             var window = new StructureSchemeSynthesisParametersWindow();
@@ -883,12 +910,18 @@ namespace FractalElementDesigner.ViewModels
                     //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
                     //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
                     //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
-                    //DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                    //{                      
-                    //    SelectedProjectTreeItem = schemes[0];
-                    //    ChoiceOfScheme();
-                    //    CreateStructure();
-                    //});
+                    if (TestingBool) 
+                    {
+                        DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                        {
+                            SelectedProjectTreeItem = schemes[0];
+                            ChoiceOfScheme();
+                            CreateStructure();
+                        });
+                    }
+                    //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
+                    //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
+                    //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
                 }
                 catch (Exception ex)
                 {
@@ -925,53 +958,59 @@ namespace FractalElementDesigner.ViewModels
         {
             _Page = (StructureDesigningPage)page;
 
-            // тест
-            // тест
-            // тест
-            //_Page.schemeEditorControl.SchemeControl.Loaded += (object sender, RoutedEventArgs e) => 
-            //{
-            //    // создать проект
-            //    var project = new Project() { Name = "Проект №1" };
+            //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
+            //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
+            //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
+            if (TestingBool)
+            {
+                _Page.schemeEditorControl.SchemeControl.Loaded += (object sender, RoutedEventArgs e) =>
+                {
+                    // создать проект
+                    var project = new Project() { Name = "Проект №1" };
 
-            //    Projects.Add(project);
+                    Projects.Add(project);
 
-            //    var plot = new PRPlot();
+                    var plot = new PRPlot();
 
-            //    var schemePrototype = new FElementScheme(new StructureSchemeSynthesisParameters().FESections) { Name = "Схема", Elements = { plot } };
+                    var schemePrototype = new FElementScheme(new StructureSchemeSynthesisParameters().FESections) { Name = "Схема", Elements = { plot } };
 
-            //    schemePrototype.Model.PhaseResponsePoints = InnerSchemePhaseResponseCalculator.CalculatePhaseResponseInScheme(
-            //    1, 3, 50, schemePrototype.Model);
+                    schemePrototype.Model.PhaseResponsePoints = InnerSchemePhaseResponseCalculator.CalculatePhaseResponseInScheme(
+                    1, 3, 50, schemePrototype.Model);
 
-            //    PRPlot.InitializatePhaseResponsePlot(schemePrototype.Model.PhaseResponsePoints, plot);
+                    PRPlot.InitializatePhaseResponsePlot(schemePrototype.Model.PhaseResponsePoints, plot);
 
-            //    // Создать отображение схемы из полученной модели
-            //    CreateSchemeInEditor(schemePrototype);
+                    // Создать отображение схемы из полученной модели
+                    CreateSchemeInEditor(schemePrototype);
 
-            //    project.Items.Add(schemePrototype);
+                    project.Items.Add(schemePrototype);
 
-            //    // создать окно
-            //    var window = new NewStructureWindow();
-            //    // создать vm для окна создания новой структуры
-            //    var newStructureWindowViewModel = new NewStructureWindowViewModel(window);
-            //    // вывести окно ввода параметров структуры
-            //    window.DataContext = newStructureWindowViewModel;
-            //    var dialogResult = window.ShowDialog();
+                    // создать окно
+                    var window = new NewStructureWindow();
+                    // создать vm для окна создания новой структуры
+                    var newStructureWindowViewModel = new NewStructureWindowViewModel(window);
+                    // вывести окно ввода параметров структуры
+                    window.DataContext = newStructureWindowViewModel;
+                    var dialogResult = window.ShowDialog();
 
-            //    // если не было подтверждения выйти
-            //    if (dialogResult.HasValue == false)
-            //    {
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        if (dialogResult.Value == false)
-            //        {
-            //            return;
-            //        }
-            //    }
+                    // если не было подтверждения выйти
+                    if (dialogResult.HasValue == false)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        if (dialogResult.Value == false)
+                        {
+                            return;
+                        }
+                    }
 
-            //    CreateStructureAsync(project, schemePrototype, newStructureWindowViewModel.CurrentStructure);
-            //};
+                    CreateStructureAsync(project, schemePrototype, newStructureWindowViewModel.CurrentStructure);
+                };
+            }
+            //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
+            //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
+            //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
         }
 
         #endregion

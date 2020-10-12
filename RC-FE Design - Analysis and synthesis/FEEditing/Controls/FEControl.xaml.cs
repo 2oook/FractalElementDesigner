@@ -43,14 +43,13 @@ namespace FractalElementDesigner.FEEditing
             canvas.PreviewMouseRightButtonDown += FECanvas_PreviewMouseRightButtonDown;
             canvas.ContextMenuOpening += FECanvas_ContextMenuOpening;
 
-            canvas.Width = 1260;
-            canvas.Height = 890;
+            canvas.Width = RootGrid.ActualWidth;
+            canvas.Height = RootGrid.ActualHeight;
 
             Grid.SetColumn(canvas, 0);
             Grid.SetRow(canvas, 0);
 
-            var tg = new TransformGroup() { Children = { new ScaleTransform() { ScaleX = 1, ScaleY = 1 }, new SkewTransform(), new RotateTransform(), new TranslateTransform() } };
-            RootGrid.RenderTransform = tg;
+            RootGrid.RenderTransform = new TransformGroup() { Children = { new ScaleTransform() { ScaleX = 1, ScaleY = 1 }, new SkewTransform(), new RotateTransform(), new TranslateTransform() } };
 
             return canvas;
         }
@@ -298,8 +297,7 @@ namespace FractalElementDesigner.FEEditing
         {
             if (Keyboard.Modifiers == ModifierKeys.Shift) return;
 
-            var canvas = Editor.Context.CurrentCanvas;
-            var point = e.GetPosition(canvas as FECanvas);
+            var point = e.GetPosition(RootGrid);
             Editor.Context.ZoomPoint = new PointEx(point.X, point.Y);
 
             if (e.Delta > 0)
