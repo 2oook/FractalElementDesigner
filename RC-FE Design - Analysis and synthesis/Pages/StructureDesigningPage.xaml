@@ -44,7 +44,7 @@
             </Grid.RowDefinitions>
 
             <DockPanel Grid.Row="0">
-                <Button DockPanel.Dock="Left" HorizontalAlignment="Left" Content="На главную" Command="{Binding GoToMainPageCommand}" Padding="5"  Margin="5" FontSize="14"/>
+                <!--<Button DockPanel.Dock="Left" HorizontalAlignment="Left" Content="На главную" Command="{Binding GoToMainPageCommand}" Padding="5"  Margin="5" FontSize="14"/>-->
                 <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Синтез"  Command="{Binding SchemeSynthesisCommand}" Padding="5"  Margin="5" FontSize="14"/>
             </DockPanel>
 

@@ -15,6 +15,9 @@
     <sys:Double x:Key="GroundHeightKey">30</sys:Double>
     <sys:Double x:Key="GroundWidthKey">30</sys:Double>
 
+    <sys:Double x:Key="SchemeCanvasHeightKey">860</sys:Double>
+    <sys:Double x:Key="SchemeCanvasWidthKey">1280</sys:Double>
+
     <!-- colors -->
 
     <SolidColorBrush x:Key="LogicBackgroundColorKey" Color="White"/>

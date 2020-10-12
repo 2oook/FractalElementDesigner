@@ -34,6 +34,7 @@ namespace FractalElementDesigner.SchemeEditing
             var startVerticalAxeCoordinate = sheetHeight / 2;
             var startVerticalCoordinate = startVerticalAxeCoordinate - (elementHeight / 2);
 
+            // переделать на фиксированные значения ширины и высоты 
             var sheetWidth = scheme.Editor.Context.CurrentCanvas.GetWidth();
             var horizontalPartOfWidth = sheetWidth / scheme.Model.FESections.Count;
             var startHorizontalAxeCoordinate = horizontalPartOfWidth / 2;

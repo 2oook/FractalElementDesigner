@@ -4,6 +4,7 @@
 using FractalElementDesigner.SchemeEditing.Controls;
 using FractalElementDesigner.SchemeEditing.Core;
 using FractalElementDesigner.SchemeEditing.Editor;
+using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,23 +26,6 @@ namespace FractalElementDesigner.SchemeEditing.Views
         public SchemeControl()
         {
             InitializeComponent();
-
-            Loaded += SchemeControl_Loaded;
-        }
-
-        private void SchemeControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            SchemeCanvas.Width = RootGrid.ActualWidth;
-            SchemeCanvas.Height = RootGrid.ActualHeight;
-
-            SchemeBackgroud.Width = RootGrid.ActualWidth;
-            SchemeBackgroud.Height = RootGrid.ActualHeight;
-
-            SchemeTemplate.Width = RootGrid.ActualWidth;
-            SchemeTemplate.Height = RootGrid.ActualHeight;
-
-            var tg = new TransformGroup() { Children = { new ScaleTransform() { ScaleX = 1, ScaleY = 1 }, new SkewTransform(), new RotateTransform(), new TranslateTransform() } };
-            RootGrid.RenderTransform = tg;
         }
 
         public ICanvas CreateSchemeCanvas()
@@ -55,8 +39,8 @@ namespace FractalElementDesigner.SchemeEditing.Views
             canvas.PreviewMouseRightButtonDown += Canvas_PreviewMouseRightButtonDown;
             canvas.ContextMenuOpening += Canvas_ContextMenuOpening;
 
-            canvas.Width = RootGrid.ActualWidth;
-            canvas.Height = RootGrid.ActualHeight;
+            canvas.Width = (double)Application.Current.FindResource("SchemeCanvasWidthKey"); ;
+            canvas.Height = (double)Application.Current.FindResource("SchemeCanvasHeightKey"); ;
 
             Grid.SetColumn(canvas, 0);
             Grid.SetRow(canvas, 0);
@@ -326,8 +310,7 @@ namespace FractalElementDesigner.SchemeEditing.Views
             if (Keyboard.Modifiers == ModifierKeys.Shift)
                 return;
 
-            var canvas = Editor.Context.CurrentCanvas;
-            var point = e.GetPosition(canvas as SchemeCanvas);
+            var point = e.GetPosition(RootGrid);
             Editor.Context.ZoomPoint = new PointEx(point.X, point.Y);
 
             if (e.Delta > 0)

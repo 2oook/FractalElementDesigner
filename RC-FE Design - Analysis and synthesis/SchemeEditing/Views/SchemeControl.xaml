@@ -47,16 +47,17 @@
                     Visibility="Visible">
             </Canvas>
 
-            <Canvas x:Name="SchemeTemplate" ClipToBounds="False" Background="{DynamicResource LogicTransparentColorKey}">
-                <Rectangle                    
+            <Canvas x:Name="SchemeTemplate" ClipToBounds="False" Background="{DynamicResource LogicTransparentColorKey}"
+                    Width="{Binding ElementName=SchemeCanvas, Path=Width}" Height="{Binding ElementName=SchemeCanvas, Path=Height}" >
+                <Rectangle              
                     Width="{Binding ElementName=SchemeCanvas, Path=Width}"
                     Height="{Binding ElementName=SchemeCanvas, Path=Height}" 
                     Stroke="Black" StrokeThickness="2"/>
             </Canvas>
 
             <controls:SchemeCanvas x:Name="SchemeCanvas"   
-                                    Width="1260" 
-                                    Height="890"
+                                    Width="{DynamicResource SchemeCanvasWidthKey}" 
+                                    Height="{DynamicResource SchemeCanvasHeightKey}"
                                     Grid.Column="0" Grid.Row="0"
                                     Background="{DynamicResource LogicTransparentColorKey}" 
                                     ContextMenu="{StaticResource SchemeCanvasContextMenuKey}"
