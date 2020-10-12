@@ -32,12 +32,12 @@ namespace FractalElementDesigner.SchemeEditing.Views
         {
             var canvas = new SchemeCanvas() { Name = "SchemeCanvas", Background = (SolidColorBrush)Application.Current.Resources["LogicTransparentColorKey"] };
 
-            canvas.MouseLeftButtonDown += Canvas_MouseLeftButtonDown;
-            canvas.MouseLeftButtonUp += Canvas_MouseLeftButtonUp;
-            canvas.PreviewMouseLeftButtonDown += Canvas_PreviewMouseLeftButtonDown;
-            canvas.MouseMove += Canvas_MouseMove;
-            canvas.PreviewMouseRightButtonDown += Canvas_PreviewMouseRightButtonDown;
-            canvas.ContextMenuOpening += Canvas_ContextMenuOpening;
+            //canvas.MouseLeftButtonDown += Canvas_MouseLeftButtonDown;
+            //canvas.MouseLeftButtonUp += Canvas_MouseLeftButtonUp;
+            //canvas.PreviewMouseLeftButtonDown += Canvas_PreviewMouseLeftButtonDown;
+            //canvas.PreviewMouseRightButtonDown += Canvas_PreviewMouseRightButtonDown;
+            //canvas.MouseMove += Canvas_MouseMove;
+            //canvas.ContextMenuOpening += Canvas_ContextMenuOpening;
 
             canvas.Width = (double)Application.Current.FindResource("SchemeCanvasWidthKey"); ;
             canvas.Height = (double)Application.Current.FindResource("SchemeCanvasHeightKey"); ;

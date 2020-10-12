@@ -132,32 +132,32 @@ namespace FractalElementDesigner.Controls
 
         private void SetThumbEvents(ElementThumb thumb)
         {
-            thumb.DragDelta += (sender, e) =>
-            {
-                var canvas = Editor.Context.CurrentCanvas;
-                var element = sender as IThumb;
+            //thumb.DragDelta += (sender, e) =>
+            //{
+            //    var canvas = Editor.Context.CurrentCanvas;
+            //    var element = sender as IThumb;
 
-                double dX = e.HorizontalChange;
-                double dY = e.VerticalChange;
+            //    double dX = e.HorizontalChange;
+            //    double dY = e.VerticalChange;
 
-                Editor.Drag(canvas, element, dX, dY);
-            };
+            //    Editor.Drag(canvas, element, dX, dY);
+            //};
 
-            thumb.DragStarted += (sender, e) =>
-            {
-                var canvas = Editor.Context.CurrentCanvas;
-                var element = sender as IThumb;
+            //thumb.DragStarted += (sender, e) =>
+            //{
+            //    var canvas = Editor.Context.CurrentCanvas;
+            //    var element = sender as IThumb;
 
-                Editor.DragStart(canvas, element);
-            };
+            //    Editor.DragStart(canvas, element);
+            //};
 
-            thumb.DragCompleted += (sender, e) =>
-            {
-                var canvas = Editor.Context.CurrentCanvas;
-                var element = sender as IThumb;
+            //thumb.DragCompleted += (sender, e) =>
+            //{
+            //    var canvas = Editor.Context.CurrentCanvas;
+            //    var element = sender as IThumb;
 
-                Editor.DragEnd(canvas, element);
-            };
+            //    Editor.DragEnd(canvas, element);
+            //};
         }
 
         private void DeselectAll()

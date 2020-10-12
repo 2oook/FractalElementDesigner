@@ -18,13 +18,13 @@
             <MenuItem x:Name="InsertFElement" Header="Insert _FElement" Click="InsertFElement_Click" InputGestureText="F"/>
 
             <Separator/>
-            
+
             <MenuItem x:Name="EditDelete" Header="_Delete" Click="EditDelete_Click" InputGestureText="Del"/>
-             
+
         </ContextMenu>
 
     </UserControl.Resources>
-
+    
     <Border x:Name="RootBorder" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" ClipToBounds="True" PreviewMouseWheel="Border_PreviewMouseWheel">
 
         <Grid x:Name="RootGrid" RenderTransformOrigin="0.0,0.0" Background="{DynamicResource LogicBackgroundColorKey}" ClipToBounds="False">
@@ -48,7 +48,8 @@
             </Canvas>
 
             <Canvas x:Name="SchemeTemplate" ClipToBounds="False" Background="{DynamicResource LogicTransparentColorKey}"
-                    Width="{Binding ElementName=SchemeCanvas, Path=Width}" Height="{Binding ElementName=SchemeCanvas, Path=Height}" >
+                    Width="{Binding ElementName=SchemeCanvas, Path=Width}" 
+                    Height="{Binding ElementName=SchemeCanvas, Path=Height}" >
                 <Rectangle              
                     Width="{Binding ElementName=SchemeCanvas, Path=Width}"
                     Height="{Binding ElementName=SchemeCanvas, Path=Height}" 
