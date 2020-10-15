@@ -36,7 +36,8 @@ namespace FractalElementDesigner.MathModel
                     MajorGridlineColor = OxyColors.LightGray, 
                     Position = AxisPosition.Left, 
                     Unit = "град", 
-                    AxisTitleDistance = 10 
+                    AxisTitleDistance = 10,
+                    IntervalLength = 100
                 });
 
                 plot.Model.Axes.Add(new LogarithmicAxis() { 
@@ -44,7 +45,9 @@ namespace FractalElementDesigner.MathModel
                     MajorGridlineStyle = LineStyle.Automatic,
                     MajorGridlineColor = OxyColors.LightGray, 
                     Position = AxisPosition.Bottom, 
-                    Base = 10 
+                    Base = 10,
+                    IntervalLength = 300,
+                    UseSuperExponentialFormat = true
                 });
 
                 plot.Model.Series.Add(series);
