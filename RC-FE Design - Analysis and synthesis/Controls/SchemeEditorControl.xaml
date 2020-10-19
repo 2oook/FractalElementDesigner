@@ -4,16 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:commands="clr-namespace:FractalElementDesigner.Commands"
-              xmlns:local="clr-namespace:FractalElementDesigner.SchemeEditing.Views"
-              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-              Dialog:DialogParticipation.Register="{Binding}"
+             xmlns:local="clr-namespace:FractalElementDesigner.SchemeEditing.Views"
+             xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             Dialog:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid Background="{DynamicResource LogicBackgroundColorKey}">
 
-        <local:SchemeControl x:Name="SchemeControl" Grid.Column="0" Grid.Row="1" Margin="5"/>
-
+        <Border BorderThickness="1" BorderBrush="{DynamicResource ResourceKey=MahApps.Brushes.AccentBase}">
+            
+            <local:SchemeControl x:Name="SchemeControl" Grid.Column="0" Grid.Row="1" Margin="5"/>
+            
+        </Border>
     </Grid>
     
 </UserControl>

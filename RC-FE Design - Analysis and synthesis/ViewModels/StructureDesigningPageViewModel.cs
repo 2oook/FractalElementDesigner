@@ -553,11 +553,11 @@ namespace FractalElementDesigner.ViewModels
 
                 var project = Projects.SingleOrDefault(x => x.Items.Contains(scheme));
 
-                if (project.Items.Count > 1)
+                if (project.Items.Where(x => x is FElementScheme).Count() > 1)
                 {
                     return false;
                 }
-                else if (project.Items.Count == 1)
+                else if (project.Items.Where(x => x is FElementScheme).Count() == 1)
                 {
                     return true;
                 }

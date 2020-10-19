@@ -45,11 +45,9 @@
 
             <DockPanel Grid.Row="0">
                 <!--<Button DockPanel.Dock="Left" HorizontalAlignment="Left" Content="На главную" Command="{Binding GoToMainPageCommand}" Padding="5"  Margin="5" FontSize="14"/>-->
-                <Button DockPanel.Dock="Left" HorizontalAlignment="Left" Content="Тест"  Command="{Binding TestCommand}" Padding="5"  Margin="5" FontSize="14"/>
-                <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Синтез"  Command="{Binding SchemeSynthesisCommand}" Padding="5"  Margin="5" FontSize="14"/>
             </DockPanel>
 
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Margin="0,4,0,0">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -61,11 +59,11 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Column="0">
-                    <controls:HomePageControl Visibility="{Binding Path=HomePageVisibility}" Margin="5,0,5,0"/>
-                    <controls:SchemeEditorControl x:Name="schemeEditorControl" Visibility="{Binding Path=SchemeEditorVisibility}" Margin="5,0,5,0"/>
-                    <controls:PlotControl x:Name="plotControl" Visibility="{Binding Path=PlotVisibility}" Margin="5,0,5,0"/>
-                    <controls:StructureEditorControl  x:Name="structureEditorControl" Visibility="{Binding StructureEditorVisibility, TargetNullValue=Hidden}" Margin="5,0,5,0"/>
+                <Grid Grid.Column="0" Margin="5,0.5,5,0">
+                    <controls:HomePageControl Visibility="{Binding Path=HomePageVisibility}" />
+                    <controls:SchemeEditorControl x:Name="schemeEditorControl" Visibility="{Binding Path=SchemeEditorVisibility}"/>
+                    <controls:PlotControl x:Name="plotControl" Visibility="{Binding Path=PlotVisibility}"/>
+                    <controls:StructureEditorControl  x:Name="structureEditorControl" Visibility="{Binding StructureEditorVisibility, TargetNullValue=Hidden}"/>
                 </Grid>
 
                 <controls:ProcessesIndicationControl Grid.Row="1"/>
@@ -77,12 +75,16 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto" MinWidth="150" MaxWidth="600"/>
+                                <ColumnDefinition Width="auto" MinWidth="200" MaxWidth="600"/>
                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
 
-                            <GridSplitter Grid.Column="1" Width="4" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns"/>
+                            <GridSplitter Grid.Column="1" Grid.RowSpan="2" Width="4" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns"/>
 
-                            <TabControl Grid.Column="2" IsEnabled="{Binding Path=IsProjectTreeEnabled}" Grid.IsSharedSizeScope="True" >
+                            <TabControl Grid.Row="0" Grid.Column="2" IsEnabled="{Binding Path=IsProjectTreeEnabled}" Grid.IsSharedSizeScope="True" >
                                 <TabItem Header="Проект" mah:HeaderedControlHelper.HeaderFontSize="16">
 
                                         <Grid>
@@ -176,6 +178,13 @@
                                 </TabItem>
 
                             </TabControl>
+
+                            <DockPanel Grid.Row="1" Grid.Column="2">
+                                <Button DockPanel.Dock="Left" Content="Пересчитать"  Command="{Binding RecalculateCommand}" Padding="5"  Margin="5" FontSize="14"/>
+                                <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Синтез"  Command="{Binding SchemeSynthesisCommand}" Padding="5"  Margin="5" FontSize="14"/>
+                                <Button Content="Тест"  Command="{Binding TestCommand}" Padding="5"  Margin="5" FontSize="14"/>
+                            </DockPanel>
+
                         </Grid>
                         
                     </Expander>

@@ -23,6 +23,7 @@
     <Grid>
 
         <Border BorderThickness="1" BorderBrush="{DynamicResource ResourceKey=MahApps.Brushes.AccentBase}">
+            
         <DockPanel>
 
             <ToolBarTray DockPanel.Dock="Left" Orientation="Vertical">
@@ -45,7 +46,8 @@
             <editor:FEControl x:Name="FEControl"  DockPanel.Dock="Right"/>
 
         </DockPanel>
-    </Border>
+            
+        </Border>
 
     </Grid>
 </UserControl>

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="clr-namespace:FractalElementDesigner.SchemeEditing.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="890" d:DesignWidth="1260"
+             d:DesignHeight="{DynamicResource SchemeCanvasHeightKey}" d:DesignWidth="{DynamicResource SchemeCanvasWidthKey}"
              MouseMove="UserControl_MouseMove" 
              MouseDown="UserControl_MouseDown" 
              MouseUp="UserControl_MouseUp"
