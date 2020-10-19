@@ -94,6 +94,12 @@ namespace FractalElementDesigner.SchemeEditing
                     {
                         if (connectionMatrix.ConnectionMatrix[k, j] == 1)
                         {
+                            // исключить диагональ соединения выводов
+                            if ((k == 0 & j == 2) | (k == 2 & j == 0) | (k == 1 & j == 3) | (k == 3 & j == 1))
+                            {
+                                continue;
+                            }
+
                             // определить набор пинов секции для поиска вывода в зависимости от номера соединяемого вывода
                             if (MapPinNumberToSectionNumber(k) == 1)
                             {
