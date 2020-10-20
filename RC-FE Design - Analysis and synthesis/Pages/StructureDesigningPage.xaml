@@ -110,6 +110,11 @@
                                                         <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Создать конструкцию" Command="{Binding Path=CreateStructureCommand}"/>
                                                     </ContextMenu>
 
+                                                    <ContextMenu x:Key="projectTreeFElementStructureContextMenu">
+                                                        <!--<MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Выбрать схему" Command="{Binding Path=ChoiceOfSchemeCommand}"/>
+                                                        <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Создать конструкцию" Command="{Binding Path=CreateStructureCommand}"/>-->
+                                                    </ContextMenu>
+
                                                     <Style x:Key="projectTreeFElementSchemeStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
                                                         <Setter Property="ContextMenu" Value="{StaticResource projectTreeFElementSchemeContextMenu}"/>
                                                     </Style>

@@ -5,15 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:controls="clr-namespace:FractalElementDesigner.SchemeEditing.Controls"
       mc:Ignorable="d" 
-      d:DesignHeight="60" d:DesignWidth="120">
+      d:DesignHeight="80" d:DesignWidth="165">
 
     <Canvas x:Name="mainElementCanvas" Width="{StaticResource FEElementWidthKey}" Height="{StaticResource FEElementHeightKey}" Style="{StaticResource ControlCanvasStyleKey}">
 
         <Canvas x:Name="RootElement" Width="{StaticResource FEElementWidthKey}" Height="{StaticResource FEElementHeightKey}" Style="{StaticResource RootCanvasStyleKey}">
-            <Path Data="M 0,0 L 120,0 M 0,25 L 120,25 M 0,0 L 0,25 M 120,0 L 120,25" Style="{StaticResource ElementPathStyleKey}" />
-            <!--<Path Data="M 0,30 L 120,30" Style="{StaticResource ElementPathStyleKey}" />-->
-            <Path Data="M 0,35 L 120,35 M 0,60 L 120,60 M 0,35 L 0,60 M 120,35 L 120,60" Style="{StaticResource ElementPathStyleKey}" />
-            <Grid Width="120" Height="60">
+            <Path Data="M 0,0 L 165,0 M 0,30 L 165,30 M 0,0 L 0,30 M 165,0 L 165,30" Style="{StaticResource ElementPathStyleKey}" />
+            <Path Data="M 0,40 L 165,40" Style="{StaticResource ElementPathStyleKey}"/>
+            <Path Data="M 0,50 L 165,50 M 0,80 L 165,80 M 0,50 L 0,80 M 165,50 L 165,80" Style="{StaticResource ElementPathStyleKey}" />
+            <Grid Width="165" Height="80">
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource LogicTextStyleKey}"/>
             </Grid>
         </Canvas>
@@ -24,23 +24,23 @@
 
         <Line Canvas.Left="-15" Canvas.Top="15" X1="0" Y1="0" X2="15" Y2="0" Stroke="Black" />
 
-        <controls:PinThumb x:Name="RightTopPin" Uid="RightTopPin" Canvas.Left="135" Canvas.Top="15" 
+        <controls:PinThumb x:Name="RightTopPin" Uid="RightTopPin" Canvas.Left="180" Canvas.Top="15" 
                            Template="{StaticResource PinThumbControlTemplateKey}"
                            Style="{StaticResource PinThumbStyleKey}"/>
 
-        <Line Canvas.Left="135" Canvas.Top="15" X1="0" Y1="0" X2="-15" Y2="0" Stroke="Black" />
+        <Line Canvas.Left="180" Canvas.Top="15" X1="0" Y1="0" X2="-15" Y2="0" Stroke="Black" />
 
-        <controls:PinThumb x:Name="LeftBottomPin" Uid="LeftBottomPin" Canvas.Left="-15" Canvas.Top="45" 
+        <controls:PinThumb x:Name="LeftBottomPin" Uid="LeftBottomPin" Canvas.Left="-15" Canvas.Top="65" 
                            Template="{StaticResource PinThumbControlTemplateKey}"
                            Style="{StaticResource PinThumbStyleKey}"/>
 
-        <Line Canvas.Left="-15" Canvas.Top="45" X1="0" Y1="0" X2="15" Y2="0" Stroke="Black" />
+        <Line Canvas.Left="-15" Canvas.Top="65" X1="0" Y1="0" X2="15" Y2="0" Stroke="Black" />
 
-        <controls:PinThumb x:Name="RightBottomPin" Uid="RightBottomPin" Canvas.Left="135" Canvas.Top="45" 
+        <controls:PinThumb x:Name="RightBottomPin" Uid="RightBottomPin" Canvas.Left="180" Canvas.Top="65" 
                            Template="{StaticResource PinThumbControlTemplateKey}"
                            Style="{StaticResource PinThumbStyleKey}"/>
 
-        <Line Canvas.Left="135" Canvas.Top="45" X1="0" Y1="0" X2="-15" Y2="0" Stroke="Black" />
+        <Line Canvas.Left="180" Canvas.Top="65" X1="0" Y1="0" X2="-15" Y2="0" Stroke="Black" />
 
     </Canvas>
     

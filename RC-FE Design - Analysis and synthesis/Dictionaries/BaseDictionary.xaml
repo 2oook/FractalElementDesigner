@@ -10,8 +10,8 @@
     <sys:Double x:Key="PageStrokeThicknessKey">1.0</sys:Double>
 
     <!-- dimensions of elements -->
-    <sys:Double x:Key="FEElementHeightKey">60</sys:Double>
-    <sys:Double x:Key="FEElementWidthKey">120</sys:Double>
+    <sys:Double x:Key="FEElementHeightKey">80</sys:Double>
+    <sys:Double x:Key="FEElementWidthKey">165</sys:Double>
     <sys:Double x:Key="GroundHeightKey">30</sys:Double>
     <sys:Double x:Key="GroundWidthKey">30</sys:Double>
 
