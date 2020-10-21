@@ -10,23 +10,91 @@
         mc:Ignorable="d"
         Title="Задание параметров" SizeToContent="WidthAndHeight" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
 
-    <Grid Margin="10">
-        <StackPanel Orientation="Vertical" Grid.IsSharedSizeScope="True">
+    <Grid Margin="10" DataContext="{Binding StructureSchemeSynthesisParametersInstance}">
+        <Grid Grid.IsSharedSizeScope="True">
 
-            <StackPanel DataContext="{Binding StructureSchemeSynthesisParametersInstance}">
-                <GroupBox Header="Параметры синтеза">
-                    <StackPanel Margin="5">
-                        <GroupBox Header="Параметры генетического алгоритма" Margin="0,0,0,10">
-                            <StackPanel>
-                                <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <GroupBox Grid.Column="0" Header="Параметры генетического алгоритма" Margin="0,0,10,0">
+                    <StackPanel>
+                        <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Количество итераций 1-го такта ГА" Grid.Column="0" Padding="0,0,5,0" />
+                            <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80">
+                                <TextBox.Text>
+                                    <Binding Path="IterationCountForFirstStepOfGA" Mode="TwoWay">
+                                        <Binding.ValidationRules>
+                                            <DataErrorValidationRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                        <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Количество полных тактов ГА" Grid.Column="0" Padding="0,0,5,0" />
+                            <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80">
+                                <TextBox.Text>
+                                    <Binding Path="CountOfWholeStepsOfGA" Mode="TwoWay">
+                                        <Binding.ValidationRules>
+                                            <DataErrorValidationRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                        <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Количество точек на частотной оси" Grid.Column="0" Padding="0,0,5,0" />
+                            <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80">
+                                <TextBox.Text>
+                                    <Binding Path="PointsCountAtFrequencyAxle" Mode="TwoWay">
+                                        <Binding.ValidationRules>
+                                            <DataErrorValidationRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Top" Header="Оптимизируемые параметры">
+                    <StackPanel>
+                        <GroupBox Header="Отклонение ЧХ"  Margin="5,5,5,0">
+                            <DockPanel>
+                                <Grid DockPanel.Dock="Left" Margin="5">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                        <ColumnDefinition Width="auto" SharedSizeGroup="optimizingParamsColumnWidth"/>
                                         <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="Количество итераций 1-го такта ГА" Grid.Column="0" Padding="0,0,5,0" />
+                                    <TextBlock Text="PH(+)=" Grid.Column="0" Padding="0,0,5,0" />
                                     <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80">
                                         <TextBox.Text>
-                                            <Binding Path="IterationCountForFirstStepOfGA" Mode="TwoWay">
+                                            <Binding Path="PositiveDeviationOfTheFrequencyCharacteristic" Mode="TwoWay">
                                                 <Binding.ValidationRules>
                                                     <DataErrorValidationRule/>
                                                 </Binding.ValidationRules>
@@ -34,15 +102,15 @@
                                         </TextBox.Text>
                                     </TextBox>
                                 </Grid>
-                                <Grid Margin="5">
+                                <Grid DockPanel.Dock="Right" HorizontalAlignment="Center" Margin="5">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
+                                        <ColumnDefinition Width="auto" SharedSizeGroup="optimizingParamsColumnWidth"/>
                                         <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="Количество полных тактов ГА" Grid.Column="0" Padding="0,0,5,0" />
+                                    <TextBlock Text="PH(-)=" Grid.Column="0" Padding="0,0,5,0" />
                                     <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80">
                                         <TextBox.Text>
-                                            <Binding Path="CountOfWholeStepsOfGA" Mode="TwoWay">
+                                            <Binding Path="NegativeDeviationOfTheFrequencyCharacteristic" Mode="TwoWay">
                                                 <Binding.ValidationRules>
                                                     <DataErrorValidationRule/>
                                                 </Binding.ValidationRules>
@@ -50,107 +118,52 @@
                                         </TextBox.Text>
                                     </TextBox>
                                 </Grid>
-                                <Grid Margin="5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto" SharedSizeGroup="paramTextBlockWidth"/>
-                                        <ColumnDefinition Width="1*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Text="Количество точек на частотной оси" Grid.Column="0" Padding="0,0,5,0" />
-                                    <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80">
-                                        <TextBox.Text>
-                                            <Binding Path="PointsCountAtFrequencyAxle" Mode="TwoWay">
-                                                <Binding.ValidationRules>
-                                                    <DataErrorValidationRule/>
-                                                </Binding.ValidationRules>
-                                            </Binding>
-                                        </TextBox.Text>
-                                    </TextBox>
-                                </Grid>
-                            </StackPanel>
+                            </DockPanel>
                         </GroupBox>
-                        <GroupBox Header="Оптимизируемые параметры">
-                            <StackPanel>
-                                <GroupBox Header="Отклонение ЧХ"  Margin="5,5,5,0">
-                                    <DockPanel>
-                                        <Grid DockPanel.Dock="Left" Margin="5">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="auto" SharedSizeGroup="optimizingParamsColumnWidth"/>
-                                                <ColumnDefinition Width="1*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="PH(+)=" Grid.Column="0" Padding="0,0,5,0" />
-                                            <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80">
-                                                <TextBox.Text>
-                                                    <Binding Path="PositiveDeviationOfTheFrequencyCharacteristic" Mode="TwoWay">
-                                                        <Binding.ValidationRules>
-                                                            <DataErrorValidationRule/>
-                                                        </Binding.ValidationRules>
-                                                    </Binding>
-                                                </TextBox.Text>
-                                            </TextBox>
-                                        </Grid>
-                                        <Grid DockPanel.Dock="Right" HorizontalAlignment="Center" Margin="5">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="auto" SharedSizeGroup="optimizingParamsColumnWidth"/>
-                                                <ColumnDefinition Width="1*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="PH(-)=" Grid.Column="0" Padding="0,0,5,0" />
-                                            <TextBox Grid.Column="1" MinWidth="50" MaxWidth="80">
-                                                <TextBox.Text>
-                                                    <Binding Path="NegativeDeviationOfTheFrequencyCharacteristic" Mode="TwoWay">
-                                                        <Binding.ValidationRules>
-                                                            <DataErrorValidationRule/>
-                                                        </Binding.ValidationRules>
-                                                    </Binding>
-                                                </TextBox.Text>
-                                            </TextBox>
-                                        </Grid>
-                                    </DockPanel>
-                                </GroupBox>
-                                <GroupBox Header="Диапазон изменения частоты"  Margin="5,0,5,0">
-                                    <DockPanel>
-                                        <Grid DockPanel.Dock="Left" Margin="5">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="auto" SharedSizeGroup="optimizingParamsColumnWidth"/>
-                                                <ColumnDefinition Width="1*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="lg(Fmin)=" Grid.Column="0" Padding="0,0,5,0" />
-                                            <TextBox Text="{Binding Path=MinFrequencyLn, Mode=TwoWay}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-                                        </Grid>
-                                        <Grid DockPanel.Dock="Right" HorizontalAlignment="Center" Margin="5">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="auto" SharedSizeGroup="optimizingParamsColumnWidth"/>
-                                                <ColumnDefinition Width="1*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="lg(Fmax)=" Grid.Column="0" Padding="0,0,5,0" />
-                                            <TextBox Text="{Binding Path=MaxFrequencyLn, Mode=TwoWay}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-                                        </Grid>
-                                    </DockPanel>
-                                </GroupBox>
-                                <GroupBox Header="Уровни ЧХ"  Margin="5,0,5,5">
-                                    <DockPanel>
-                                        <Grid DockPanel.Dock="Left" Margin="5">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="auto" SharedSizeGroup="optimizingParamsColumnWidth"/>
-                                                <ColumnDefinition Width="1*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="PH(Fmin)=" Grid.Column="0" Padding="0,0,5,0" />
-                                            <TextBox Text="{Binding Path=MinLevelOfFrequencyCharacteristic, Mode=TwoWay}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-                                        </Grid>
-                                        <Grid DockPanel.Dock="Right" HorizontalAlignment="Center" Margin="5">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="auto" SharedSizeGroup="optimizingParamsColumnWidth"/>
-                                                <ColumnDefinition Width="1*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="PH(Fmax)=" Grid.Column="0" Padding="0,0,5,0" />
-                                            <TextBox Text="{Binding Path=MaxLevelOfFrequencyCharacteristic, Mode=TwoWay}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
-                                        </Grid>
-                                    </DockPanel>
-                                </GroupBox>
-                            </StackPanel>
+                        <GroupBox Header="Диапазон изменения частоты"  Margin="5,0,5,0">
+                            <DockPanel>
+                                <Grid DockPanel.Dock="Left" Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" SharedSizeGroup="optimizingParamsColumnWidth"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="lg(Fmin)=" Grid.Column="0" Padding="0,0,5,0" />
+                                    <TextBox Text="{Binding Path=MinFrequencyLn, Mode=TwoWay}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                                </Grid>
+                                <Grid DockPanel.Dock="Right" HorizontalAlignment="Center" Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" SharedSizeGroup="optimizingParamsColumnWidth"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="lg(Fmax)=" Grid.Column="0" Padding="0,0,5,0" />
+                                    <TextBox Text="{Binding Path=MaxFrequencyLn, Mode=TwoWay}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                                </Grid>
+                            </DockPanel>
+                        </GroupBox>
+                        <GroupBox Header="Уровни ЧХ"  Margin="5,0,5,5">
+                            <DockPanel>
+                                <Grid DockPanel.Dock="Left" Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" SharedSizeGroup="optimizingParamsColumnWidth"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="PH(Fmin)=" Grid.Column="0" Padding="0,0,5,0" />
+                                    <TextBox Text="{Binding Path=MinLevelOfFrequencyCharacteristic, Mode=TwoWay}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                                </Grid>
+                                <Grid DockPanel.Dock="Right" HorizontalAlignment="Center" Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" SharedSizeGroup="optimizingParamsColumnWidth"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="PH(Fmax)=" Grid.Column="0" Padding="0,0,5,0" />
+                                    <TextBox Text="{Binding Path=MaxLevelOfFrequencyCharacteristic, Mode=TwoWay}" Grid.Column="1" MinWidth="50" MaxWidth="80"/>
+                                </Grid>
+                            </DockPanel>
                         </GroupBox>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="Технологические параметры">
+
+                <GroupBox Grid.Column="0" Grid.Row="1" Margin="0,0,10,0" VerticalAlignment="Top" Header="Технологические параметры">
                     <StackPanel Orientation="Horizontal">
                         <Grid Margin="5">
                             <Grid.ColumnDefinitions>
@@ -186,18 +199,19 @@
                         </Grid>
                     </StackPanel>
                 </GroupBox>
-            </StackPanel>
 
-            <Grid Margin="0,10,0,0">
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="0,0,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="OK" Grid.Column="0" Command="{Binding Path=OkCommand}" Margin="0,0,5,0"/>
+                <Button Content="OK" Grid.Column="0" Command="{Binding DataContext.OkCommand, RelativeSource={RelativeSource AncestorType=Window,Mode=FindAncestor} }" Margin="0,0,5,0"/>
                 <Button Content="ОТМЕНА" Grid.Column="1" Margin="5,0,0,0" Click="Cancel_Button_Click"/>
             </Grid>
             
-        </StackPanel>
+        </Grid>
     </Grid>
     
 </mah:MetroWindow>
