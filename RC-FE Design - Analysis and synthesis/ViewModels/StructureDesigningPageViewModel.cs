@@ -33,6 +33,7 @@ using FractalElementDesigner.SchemeEditing.Controls;
 using System.Threading;
 using FractalElementDesigner.FEEditing.Elements;
 using FractalElementDesigner.MathModel.Structure;
+using System.Runtime.InteropServices;
 
 namespace FractalElementDesigner.ViewModels
 {
@@ -465,10 +466,18 @@ namespace FractalElementDesigner.ViewModels
             CellApplyToolCommand = new RelayCommand<Cell>(ApplyToolForElementCell);
         }
 
+        public class LibraryImport
+        {
+            [DllImport(@"RCWorkbenchLibrary", ExactSpelling = false, EntryPoint = "TestMeth", CallingConvention = CallingConvention.StdCall)]
+            public static extern int TestMeth();
+        }
+
         // удалить
         private bool TestingBool = false;
         private void Test() 
         {
+            LibraryImport.TestMeth();
+
             TestingBool = true;
             CreateNewProject();
         }
