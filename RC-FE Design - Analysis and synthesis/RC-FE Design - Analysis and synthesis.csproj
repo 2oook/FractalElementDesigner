@@ -194,6 +194,7 @@
     <Compile Include="FEEditing\Model\RCStructure.cs" />
     <Compile Include="FEEditing\Model\RCStructureBase.cs" />
     <Compile Include="FEEditing\Model\StructureElements\SegmentOfTheStructure.cs" />
+    <Compile Include="RCWorkbenchLibrary.cs" />
     <Compile Include="SchemeEditing\Controls\Elements\BottomConnControl.xaml.cs">
       <DependentUpon>BottomConnControl.xaml</DependentUpon>
     </Compile>

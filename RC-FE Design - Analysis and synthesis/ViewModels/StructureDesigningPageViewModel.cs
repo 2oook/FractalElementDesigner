@@ -1,14 +1,4 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.CommandWpf;
-using MahApps.Metro.Controls.Dialogs;
-using FractalElementDesigner.FEEditing;
-using FractalElementDesigner.FEEditing.Model;
-using FractalElementDesigner.FEEditing.Model.StructureElements;
-using FractalElementDesigner.Navigating.Interfaces;
-using FractalElementDesigner.Pages;
-using FractalElementDesigner.Windows;
-using Microsoft.WindowsAPICodePack.Dialogs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -18,22 +8,22 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using FractalElementDesigner.IO;
-using FractalElementDesigner.SchemeEditing.Views;
 using FractalElementDesigner.MathModel;
 using System.Threading.Tasks;
 using FractalElementDesigner.StructureSchemeSynthesis;
-using System.Windows.Threading;
 using GalaSoft.MvvmLight.Threading;
-using FractalElementDesigner.SchemeEditing.Editor;
-using FractalElementDesigner.SchemeEditing.Core;
 using FractalElementDesigner.FEEditing.Controls;
 using FractalElementDesigner.SchemeEditing;
-using System.Windows.Media;
-using FractalElementDesigner.SchemeEditing.Controls;
-using System.Threading;
-using FractalElementDesigner.FEEditing.Elements;
 using FractalElementDesigner.MathModel.Structure;
-using System.Runtime.InteropServices;
+using GalaSoft.MvvmLight.CommandWpf;
+using MahApps.Metro.Controls.Dialogs;
+using FractalElementDesigner.FEEditing;
+using FractalElementDesigner.FEEditing.Model;
+using FractalElementDesigner.FEEditing.Model.StructureElements;
+using FractalElementDesigner.Navigating.Interfaces;
+using FractalElementDesigner.Pages;
+using FractalElementDesigner.Windows;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace FractalElementDesigner.ViewModels
 {
@@ -466,17 +456,11 @@ namespace FractalElementDesigner.ViewModels
             CellApplyToolCommand = new RelayCommand<Cell>(ApplyToolForElementCell);
         }
 
-        public class LibraryImport
-        {
-            [DllImport(@"RCWorkbenchLibrary", ExactSpelling = false, EntryPoint = "TestMeth", CallingConvention = CallingConvention.StdCall)]
-            public static extern int TestMeth();
-        }
-
         // удалить
         private bool TestingBool = false;
         private void Test() 
         {
-            LibraryImport.TestMeth();
+            RCWorkbenchLibrary.TestMeth();
 
             TestingBool = true;
             CreateNewProject();
