@@ -21,7 +21,7 @@
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
 
             <Button Content="Новый проект" Command="{Binding NewProjectCommand}" FontWeight="Bold" FontSize="14" Padding="5"  Margin="5,5,5,2"/>
-            <Button Content="Открыть проект" Command="{Binding LoadProjectCommand}" FontWeight="Bold" FontSize="14" Padding="5" Margin="5,5,5,2" />
+            <!--<Button Content="Открыть проект" Command="{Binding LoadProjectCommand}" FontWeight="Bold" FontSize="14" Padding="5" Margin="5,5,5,2" />-->
 
         </StackPanel>
     </Grid>

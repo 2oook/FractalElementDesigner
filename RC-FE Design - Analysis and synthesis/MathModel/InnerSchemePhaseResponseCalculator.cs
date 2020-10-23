@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MathNet.Numerics;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +23,8 @@ namespace FractalElementDesigner.MathModel
 
             double increment = (maxFrequency - minFrequency) / pointsCount;
             double frequency = minFrequency;
+
+            // последовательная реализация
             // цикл по частотам
             for (int i = 0; i <= pointsCount; i++)
             {
