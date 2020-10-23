@@ -185,9 +185,6 @@
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SynthesisPage.xaml.cs">
-      <DependentUpon>SynthesisPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ProjectTree\IProjectTreeItem.cs" />
     <Compile Include="ProjectTree\Project.cs" />
     <Compile Include="FEEditing\Model\Layer.cs" />
@@ -329,10 +326,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\SynthesisPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
