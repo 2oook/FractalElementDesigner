@@ -39,7 +39,7 @@ namespace FractalElementDesigner.MathModel
 
             // для примера
             // рассчитать ФЧХ для схемы
-            scheme.Model.PhaseResponsePoints = InnerSchemePhaseResponseCalculator.CalculatePhaseResponseInScheme(
+            scheme.Model.PhaseResponsePoints = SchemePhaseResponseCalculatorByFrequencies.CalculatePhaseResponseInScheme(
                 synthesisParameters.MinFrequencyLn, synthesisParameters.MaxFrequencyLn, synthesisParameters.PointsCountAtFrequencyAxle, scheme.Model);
             // для примера
             var t = ga.GetPopulation();

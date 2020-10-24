@@ -967,7 +967,7 @@ namespace FractalElementDesigner.ViewModels
 
                     var schemePrototype = new FElementScheme(new StructureSchemeSynthesisParameters().FESections) { Name = "Схема", Elements = { plot } };
 
-                    schemePrototype.Model.PhaseResponsePoints = InnerSchemePhaseResponseCalculator.CalculatePhaseResponseInScheme(
+                    schemePrototype.Model.PhaseResponsePoints = SchemePhaseResponseCalculatorByFrequencies.CalculatePhaseResponseInScheme(
                     1, 3, 50, schemePrototype.Model);
 
                     PRPlot.InitializatePhaseResponsePlot(schemePrototype.Model.PhaseResponsePoints, plot);

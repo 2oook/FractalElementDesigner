@@ -11,7 +11,7 @@ namespace FractalElementDesigner.MathModel
     /// <summary>
     /// Класс для расчёта ФЧХ схемы
     /// </summary>
-    class InnerSchemePhaseResponseCalculator
+    class SchemePhaseResponseCalculatorByFrequencies
     {
         // Метод для расчёта ФЧХ схемы
         public static List<(double frequency, double phase)> CalculatePhaseResponseInScheme(double minFrequencyLn, double maxFrequencyLn, double pointsCount, FESchemeModel scheme) 

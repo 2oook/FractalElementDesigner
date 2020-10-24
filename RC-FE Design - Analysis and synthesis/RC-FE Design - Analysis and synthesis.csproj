@@ -162,7 +162,7 @@
     <Compile Include="MathModel\SingleStageGeneticAlgorithm.cs" />
     <Compile Include="MathModel\IFESchemeModelPrototype.cs" />
     <Compile Include="MathModel\IGeneticAlgorithm.cs" />
-    <Compile Include="MathModel\InnerSchemePhaseResponseCalculator.cs" />
+    <Compile Include="MathModel\SchemePhaseResponseCalculatorByFrequencies.cs" />
     <Compile Include="MathModel\SchemePhaseResponseCalculator.cs" />
     <Compile Include="MathModel\Pin.cs" />
     <Compile Include="MathModel\AllowablePinsConnection.cs" />
