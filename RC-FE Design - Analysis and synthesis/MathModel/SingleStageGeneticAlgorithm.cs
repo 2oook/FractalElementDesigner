@@ -63,6 +63,9 @@ namespace FractalElementDesigner.MathModel
             MinConnectionCodeValue = ConnectionCodes.Keys.Min();
         }
 
+        /// <summary>
+        /// Коды соединений
+        /// </summary>
         private Dictionary<int, List<int>> ConnectionCodes = new Dictionary<int, List<int>>();
 
         /// <summary>
@@ -155,6 +158,9 @@ namespace FractalElementDesigner.MathModel
         /// </summary>
         public List<FElementScheme> Population;
 
+        /// <summary>
+        /// Прототип схемы
+        /// </summary>
         private FElementScheme SchemePrototype;
 
         /// <summary>
@@ -348,6 +354,7 @@ namespace FractalElementDesigner.MathModel
             }
         }
 
+        // Метод для мутации соединений схемы
         public void MutateSchemeConnection(FElementScheme scheme, int connectionIndex)
         {
             // сгенерировать код соединения

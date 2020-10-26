@@ -290,7 +290,7 @@ namespace FractalElementDesigner.MathModel
             }
         }
 
-        // найти номер вывода в схеме по номеру вывода элемента
+        // метод для поиска номера вывода в схеме по номеру вывода элемента
         private static int MapIndexToGlobal(int pin, Connection connection)
         {
             // спроецировать внутреннюю нумерацию шаблонного соединения на выводы двух БКЭ

@@ -9,6 +9,9 @@ using System.Windows.Media;
 
 namespace FractalElementDesigner.SchemeEditing.Controls
 {
+    /// <summary>
+    /// Класс для отображения выделения элементов
+    /// </summary>
     public class SelectionAdorner : Adorner
     {
         #region Properties

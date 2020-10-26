@@ -66,6 +66,7 @@ namespace FractalElementDesigner.Pages
             }
         }
 
+        // Метод для поиска элемента дерева
         static TreeViewItem VisualUpwardSearch(DependencyObject source)
         {
             while (source != null && !(source is TreeViewItem))

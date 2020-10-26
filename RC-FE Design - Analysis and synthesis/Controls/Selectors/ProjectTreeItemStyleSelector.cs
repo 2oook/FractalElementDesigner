@@ -16,9 +16,13 @@ namespace FractalElementDesigner.Controls.Selectors
     /// </summary>
     public class ProjectTreeItemStyleSelector : StyleSelector
     {
+        // Стиль для схемы
         public Style FElementSchemeStyle { get; set; }
+        // Стиль для конструкции
         public Style FElementStructureStyle { get; set; }
+        // Стиль для графика
         public Style PRPlotStyle { get; set; }
+        // Стиль по-умолчанию
         public Style DefaultStyle { get; set; }
 
         // Метод для переключения стиля узла дерева проекта

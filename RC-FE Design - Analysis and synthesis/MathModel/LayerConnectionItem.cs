@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace FractalElementDesigner.MathModel
 {
     /// <summary>
-    /// Отображение пина на двухмерную реализацию
+    /// Отображение вывода на двухмерную реализацию
     /// </summary>
     class LayerConnectionItem
     {

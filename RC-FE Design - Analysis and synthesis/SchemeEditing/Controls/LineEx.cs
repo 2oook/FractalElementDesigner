@@ -11,6 +11,9 @@ using System.Windows.Shapes;
 
 namespace FractalElementDesigner.SchemeEditing.Controls
 {
+    /// <summary>
+    /// Класс представляет размещаемую в области редактирования линию
+    /// </summary>
     public class LineEx : Shape, ILine
     {
         #region Properties

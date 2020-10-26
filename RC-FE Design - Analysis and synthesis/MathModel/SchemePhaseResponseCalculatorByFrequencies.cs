@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace FractalElementDesigner.MathModel
 {
     /// <summary>
-    /// Класс для расчёта ФЧХ схемы
+    /// Класс для расчёта ФЧХ схемы по частотам
     /// </summary>
     class SchemePhaseResponseCalculatorByFrequencies
     {
-        // Метод для расчёта ФЧХ схемы
+        // Метод для расчёта ФЧХ схемы по частотам
         public static List<(double frequency, double phase)> CalculatePhaseResponseInScheme(double minFrequencyLn, double maxFrequencyLn, double pointsCount, FESchemeModel scheme) 
         {
             var points = new List<(double frequency, double phase)>();

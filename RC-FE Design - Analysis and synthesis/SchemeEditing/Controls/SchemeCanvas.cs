@@ -9,6 +9,9 @@ using System.Windows.Media;
 
 namespace FractalElementDesigner.SchemeEditing.Controls
 {
+    /// <summary>
+    /// Класс представляет холст для размещения элементов схемы
+    /// </summary>
     public class SchemeCanvas : Canvas, ICanvas
     {
         #region ICanvas

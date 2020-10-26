@@ -400,6 +400,9 @@ namespace FractalElementDesigner.ViewModels
 
         #region Методы
 
+        /// <summary>
+        /// Метод для установки видимости в "скрыто" всем элементам
+        /// </summary>
         private void InvalidateAllVisualViewers() 
         {
             HomePageVisibility = Visibility.Hidden;
@@ -408,6 +411,10 @@ namespace FractalElementDesigner.ViewModels
             PlotVisibility = Visibility.Hidden;
         }
 
+        /// <summary>
+        /// Метод для установки окружения в зависимости от установленного итема в дереве проекта
+        /// </summary>
+        /// <param name="value"></param>
         private void SetChosenProjectTreeItemEnvironment(object value) 
         {
             if (value is Project project)

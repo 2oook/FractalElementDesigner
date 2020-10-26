@@ -16,7 +16,9 @@ namespace FractalElementDesigner.Controls.Selectors
     /// </summary>
     public class ProjectTreeItemDataTemplateSelector : DataTemplateSelector
     {
+        // Шаблон данных представляющий схему
         public DataTemplate FElementSchemeDataTemplate { get; set; }
+        // Шаблон данных представляющий конструкцию
         public DataTemplate FElementStructureDataTemplate { get; set; }
 
         // Метод для переключения шаблона узла дерева проекта

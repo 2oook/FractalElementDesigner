@@ -9,6 +9,9 @@ using System.Windows.Controls.Primitives;
 
 namespace FractalElementDesigner.SchemeEditing.Controls
 {
+    /// <summary>
+    /// Класс представляет размещаемый в области редактирования вывод соединения для подключения
+    /// </summary>
     public class PinThumb : Thumb, IThumb
     {
         #region IElement

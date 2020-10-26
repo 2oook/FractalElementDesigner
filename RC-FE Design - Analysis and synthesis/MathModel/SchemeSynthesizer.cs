@@ -51,6 +51,7 @@ namespace FractalElementDesigner.MathModel
             return ga.GetPopulation();
         }
 
+        // Обработчик выполнения работы ГА
         private static void SingleStageGeneticAlgorithm_OnDoWork(double obj)
         {
             OnDoWork(obj);

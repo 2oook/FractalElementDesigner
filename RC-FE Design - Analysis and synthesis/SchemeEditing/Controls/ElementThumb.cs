@@ -9,6 +9,9 @@ using System.Windows.Controls.Primitives;
 
 namespace FractalElementDesigner.SchemeEditing.Controls
 {
+    /// <summary>
+    /// Класс представляет размещаемый в области редактирования объект
+    /// </summary>
     public class ElementThumb : Thumb, IThumb
     {
         #region IsSelected Attached Property

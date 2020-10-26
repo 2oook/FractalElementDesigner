@@ -26,7 +26,9 @@ namespace FractalElementDesigner.Controls
     /// </summary>
     public partial class SchemeEditorControl : UserControl
     {
-
+        /// <summary>
+        /// Конструктор
+        /// </summary>
         public SchemeEditorControl()
         {
             InitializeComponent();
@@ -36,21 +38,29 @@ namespace FractalElementDesigner.Controls
             InitializeWindowEvents();
         }
 
-        #region Fields
+        #region Поля
 
-        public SchemeEditing.Editor.SchemeEditor Editor { get; private set; }
+        /// <summary>
+        /// Ссылка на редактор
+        /// </summary>
+        public SchemeEditor Editor { get; private set; }
 
+        /// <summary>
+        /// Точка по-умолчанию
+        /// </summary>
         private PointEx InsertDefaultPoint { get; set; } = new PointEx(325.0, 30.0);
 
         #endregion
 
-        #region Initialize
+        #region Инициализация
 
+        // Метод для инициализации контрола 
         private void InitializeSchemeControl()
         {
             this.SchemeControl.Editor = this.Editor;
         }
 
+        // Метод для инициализации событий окна
         private void InitializeWindowEvents()
         {
             this.Loaded += (sender, e) =>
@@ -68,6 +78,7 @@ namespace FractalElementDesigner.Controls
             };
         }
 
+        // Метод для инициализации редактора
         public void InitializeEditor()
         {
             Editor = new SchemeEditor();
@@ -87,6 +98,7 @@ namespace FractalElementDesigner.Controls
             Editor.Context.SchemeCreator = GetSchemeCreator();
         }
 
+        // Метод для инициализации нового объекта редактора
         public SchemeEditor InitializeNewEditor(ICanvas canvas)
         {
             var editor = new SchemeEditor();
@@ -116,20 +128,7 @@ namespace FractalElementDesigner.Controls
             return editor;
         }
 
-        private ISchemeCreator GetSchemeCreator()
-        {
-            var creator = new WpfSchemeCreator();
-
-            creator.SetThumbEvents = (thumb) => SetThumbEvents(thumb);
-            creator.SetPosition = (element, left, top, snap) => Editor.SetPosition(element, left, top, snap);
-
-            creator.GetCounter = () => Editor.Context.CurrentCanvas.GetCounter();
-            creator.SetCanvas(this.SchemeControl.SchemeCanvas);
-
-
-            return creator;
-        }
-
+        // Метод для установки обработчиков событий для Thumb
         private void SetThumbEvents(ElementThumb thumb)
         {
             //thumb.DragDelta += (sender, e) =>
@@ -160,6 +159,26 @@ namespace FractalElementDesigner.Controls
             //};
         }
 
+        #endregion
+
+        #region Работа с редактором
+
+        // Метод для получения ссылки на SchemeCreator
+        private ISchemeCreator GetSchemeCreator()
+        {
+            var creator = new WpfSchemeCreator();
+
+            creator.SetThumbEvents = (thumb) => SetThumbEvents(thumb);
+            creator.SetPosition = (element, left, top, snap) => Editor.SetPosition(element, left, top, snap);
+
+            creator.GetCounter = () => Editor.Context.CurrentCanvas.GetCounter();
+            creator.SetCanvas(this.SchemeControl.SchemeCanvas);
+
+
+            return creator;
+        }
+
+        // Метод для снятия выделения
         private void DeselectAll()
         {
             var canvas = Editor.Context.CurrentCanvas;
@@ -168,26 +187,31 @@ namespace FractalElementDesigner.Controls
             Editor.MouseEventRightDown(canvas);
         }
 
+        // Метод для перемещения элемента вверх
         private void MoveUp()
         {
             Editor.MoveUp(Editor.Context.CurrentCanvas);
         }
 
+        // Метод для перемещения элемента вниз
         private void MoveDown()
         {
             Editor.MoveDown(Editor.Context.CurrentCanvas);
         }
 
+        // Метод для перемещения элемента влево
         private void MoveLeft()
         {
             Editor.MoveLeft(Editor.Context.CurrentCanvas);
         }
 
+        // Метод для перемещения элемента вправо
         private void MoveRight()
         {
             Editor.MoveRight(Editor.Context.CurrentCanvas);
         }
 
+        // Метод для удаления элемента 
         private void Delete()
         {
             Editor.Delete();
@@ -195,8 +219,9 @@ namespace FractalElementDesigner.Controls
 
         #endregion
 
-        #region Handle Key Events
+        #region Обработка нажатий клавиатуры
 
+        // Обработчик нажатий клавиатуры
         private void HandleKeyEvents(KeyEventArgs e)
         {
             var canvas = Editor.Context.CurrentCanvas;
@@ -231,8 +256,9 @@ namespace FractalElementDesigner.Controls
 
         #endregion
 
-        #region Connect
+        #region Соединения
 
+        // Метод для соединения выводов
         private void Connect()
         {
             var canvas = SchemeControl.SchemeCanvas;
@@ -247,6 +273,7 @@ namespace FractalElementDesigner.Controls
             if (result == false) Editor.MouseEventLeftDown(canvas, point);
         }
 
+        // Метод получения объектов на которых пришлось попадание мышью в редакторе
         public List<DependencyObject> HitTest(Visual visual, IPoint point, double radius)
         {
             var elements = new List<DependencyObject>();
@@ -272,6 +299,7 @@ namespace FractalElementDesigner.Controls
             return elements;
         }
 
+        // Метод для получения точки вставки
         private PointEx GetInsertionPoint()
         {
             PointEx insertionPoint = null;
@@ -293,8 +321,9 @@ namespace FractalElementDesigner.Controls
 
         #endregion
 
-        #region Insert
+        #region Вставка
 
+        // Метод для вставки БКЭ
         private void InsertFEElement(ICanvas canvas, PointEx point)
         {
             var element = Insert.FElement(canvas,

@@ -57,7 +57,9 @@ namespace FractalElementDesigner.ViewModels
 
         #region Константы
 
-        public static readonly string SchemeEditorPageViewModelAlias = "SchemeEditorPageVM";
+        /// <summary>
+        /// Название-константа страницы  проектирования
+        /// </summary>
         public static readonly string StructureDesigningPageViewModelAlias = "StructureDesigningPageVM";
 
         #endregion
@@ -137,7 +139,7 @@ namespace FractalElementDesigner.ViewModels
         #endregion
 
         /// <summary>
-        /// Событие изменения свойства
+        /// Ссылка на обработчик события изменения свойства
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
