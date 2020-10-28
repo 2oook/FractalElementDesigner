@@ -5,13 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:oxy="http://oxyplot.org/wpf"
              xmlns:local="clr-namespace:FractalElementDesigner.Controls"
+             DataContext="{x:Null}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Border BorderThickness="1" BorderBrush="{DynamicResource ResourceKey=MahApps.Brushes.AccentBase}">
 
         <Grid>
-            <oxy:PlotView x:Name="plotView"/>
+            <oxy:PlotView x:Name="plotView" Model="{Binding Model}"/>
         </Grid>
 
     </Border>

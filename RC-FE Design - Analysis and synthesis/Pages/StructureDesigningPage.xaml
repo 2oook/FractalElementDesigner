@@ -62,7 +62,7 @@
                 <Grid Grid.Column="0" Margin="5,0.5,5,0">
                     <controls:HomePageControl Visibility="{Binding Path=HomePageVisibility}" />
                     <controls:SchemeEditorControl x:Name="schemeEditorControl" Visibility="{Binding Path=SchemeEditorVisibility}"/>
-                    <controls:PlotControl x:Name="plotControl" Visibility="{Binding Path=PlotVisibility}"/>
+                    <controls:PlotControl x:Name="plotControl" Visibility="{Binding Path=DataContext.PlotVisibility, RelativeSource={RelativeSource AncestorType=Page, Mode=FindAncestor}}"/>
                     <controls:StructureEditorControl  x:Name="structureEditorControl" Visibility="{Binding StructureEditorVisibility, TargetNullValue=Hidden}"/>
                 </Grid>
 
@@ -115,6 +115,11 @@
                                                         <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Создать конструкцию" Command="{Binding Path=CreateStructureCommand}"/>-->
                                                     </ContextMenu>
 
+                                                    <ContextMenu x:Key="projectTreePlotContextMenu">
+                                                        <MenuItem  Header="Логарифмический" Command="{Binding Path=SetLogarithmicAxleCommand}"/>
+                                                        <MenuItem  Header="Линейный" Command="{Binding Path=SetLinearAxleCommand}"/>
+                                                    </ContextMenu>
+
                                                     <Style x:Key="projectTreeFElementSchemeStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
                                                         <Setter Property="ContextMenu" Value="{StaticResource projectTreeFElementSchemeContextMenu}"/>
                                                     </Style>
@@ -124,7 +129,7 @@
                                                     </Style>
 
                                                     <Style x:Key="projectTreePRPlotStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
-                                                        <Setter Property="ContextMenu" Value="{StaticResource projectTreeSchemePlotContextMenu}"/>
+                                                        <Setter Property="ContextMenu" Value="{StaticResource projectTreePlotContextMenu}"/>
                                                     </Style>
 
                                                     <Style x:Key="projectTreeDefaultStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">

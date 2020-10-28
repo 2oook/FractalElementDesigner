@@ -429,7 +429,7 @@ namespace FractalElementDesigner.ViewModels
             else if (value is PRPlot plot)
             {
                 PlotVisibility = Visibility.Visible;
-                _Page.plotControl.plotView.Model = plot.Model;
+                _Page.plotControl.DataContext = plot;
             }
             else if (value is RCStructure structure)
             {
@@ -896,7 +896,7 @@ namespace FractalElementDesigner.ViewModels
 
                         // Инициализировать график
                         var plot = _scheme.Elements.Where(x => x is PRPlot).SingleOrDefault() as PRPlot;
-                        PRPlot.InitializatePhaseResponsePlot(_scheme.Model.PhaseResponsePoints, plot);
+                        plot.InitializatePhaseResponsePlot(_scheme.Model.PhaseResponsePoints);
 
                         // Создать отображение схемы из полученной модели
                         CreateSchemeInEditor(_scheme);
@@ -977,7 +977,7 @@ namespace FractalElementDesigner.ViewModels
                     schemePrototype.Model.PhaseResponsePoints = SchemePhaseResponseCalculatorByFrequencies.CalculatePhaseResponseInScheme(
                     1, 3, 50, schemePrototype.Model);
 
-                    PRPlot.InitializatePhaseResponsePlot(schemePrototype.Model.PhaseResponsePoints, plot);
+                    plot.InitializatePhaseResponsePlot(schemePrototype.Model.PhaseResponsePoints);
 
                     // Создать отображение схемы из полученной модели
                     CreateSchemeInEditor(schemePrototype);
