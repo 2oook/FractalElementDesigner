@@ -24,6 +24,8 @@ namespace FractalElementDesigner.Pages
         public StructureDesigningPage()
         {
             InitializeComponent();
+
+            Focus();
         }
 
         /// <summary>
