@@ -118,7 +118,7 @@ namespace FractalElementDesigner.FEEditing.Model
 
             var R_C_0 = new RCStructureTemplate()
             {
-                Name = "R-C-0",
+                Name = RCStructureTypeConstants.R_C_0,
                 StructureProperties = commonProperties,
                 StructureLayers = new ObservableCollection<Layer>() { 
                     new Layer() { Name = "R-C" + layer_name } }
@@ -128,7 +128,7 @@ namespace FractalElementDesigner.FEEditing.Model
 
             var R_CG_0 = new RCStructureTemplate()
             {
-                Name = "R-CG-0",
+                Name = RCStructureTypeConstants.R_CG_0,
                 StructureProperties = commonProperties.Concat(N_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
                     new Layer() { Name = "R-CG" + layer_name } }
@@ -138,7 +138,7 @@ namespace FractalElementDesigner.FEEditing.Model
 
             var R_C_NR = new RCStructureTemplate()
             {
-                Name = "R-C-NR",
+                Name = RCStructureTypeConstants.R_C_NR,
                 StructureProperties = commonProperties.Concat(N_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
                     new Layer() { Name = "R-C" + layer_name },
@@ -149,7 +149,7 @@ namespace FractalElementDesigner.FEEditing.Model
 
             var R_CG_NR = new RCStructureTemplate()
             {
-                Name = "R-CG-NR",
+                Name = RCStructureTypeConstants.R_CG_NR,
                 StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
                     new Layer() { Name = "R-CG" + layer_name }, 
@@ -160,7 +160,7 @@ namespace FractalElementDesigner.FEEditing.Model
 
             var R_CG_NR_plus_CP = new RCStructureTemplate()
             {
-                Name = "R-CG-NR+КП",
+                Name = RCStructureTypeConstants.R_CG_NR_plus_CP,
                 StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(P_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
                     new Layer() { Name = "R-CG" + layer_name }, 
@@ -171,7 +171,7 @@ namespace FractalElementDesigner.FEEditing.Model
 
             var R_plus_R_C_NR = new RCStructureTemplate()
             {
-                Name = "(R+R)-C-NR",
+                Name = RCStructureTypeConstants.R_plus_R_C_NR,
                 StructureProperties = commonProperties.Concat(N_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
                     new Layer() { Name = "R-C" + layer_name }, 
@@ -182,7 +182,7 @@ namespace FractalElementDesigner.FEEditing.Model
 
             var R_plus_R_CG_NR = new RCStructureTemplate()
             {
-                Name = "(R+R)-CG-NR",
+                Name = RCStructureTypeConstants.R_plus_R_CG_NR,
                 StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
                     new Layer() { Name = "R-CG" + layer_name }, 
@@ -193,7 +193,7 @@ namespace FractalElementDesigner.FEEditing.Model
 
             var R_plus_R_CG_NR_plus_CP = new RCStructureTemplate()
             {
-                Name = "(R+R)-CG-NR+КП",
+                Name = RCStructureTypeConstants.R_plus_R_CG_NR_plus_CP,
                 StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(P_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
                     new Layer() { Name = "R-CG" + layer_name }, 

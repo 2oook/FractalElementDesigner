@@ -135,6 +135,7 @@
     <Compile Include="FEEditing\Interfaces\ICanvas.cs" />
     <Compile Include="FEEditing\Interfaces\IElement.cs" />
     <Compile Include="FEEditing\IToolCreator.cs" />
+    <Compile Include="FEEditing\Model\RCStructureTypeConstants.cs" />
     <Compile Include="FEEditing\Model\StructureElements\Cell.cs" />
     <Compile Include="FEEditing\Model\StructureElements\CellType.cs" />
     <Compile Include="FEEditing\Model\RCStructureTemplate.cs" />
@@ -191,7 +192,9 @@
     <Compile Include="FEEditing\Model\RCStructure.cs" />
     <Compile Include="FEEditing\Model\RCStructureBase.cs" />
     <Compile Include="FEEditing\Model\StructureElements\SegmentOfTheStructure.cs" />
-    <Compile Include="RCWorkbenchLibrary.cs" />
+    <Compile Include="RCWorkbenchLibrary\Helpers\CellTypeToRCWorkbenchConverter.cs" />
+    <Compile Include="RCWorkbenchLibrary\Helpers\RCStructureEnumToRCWorkbenchConverter.cs" />
+    <Compile Include="RCWorkbenchLibrary\RCWorkbenchLibraryEntry.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="SchemeEditing\Controls\Elements\BottomConnControl.xaml.cs">
       <DependentUpon>BottomConnControl.xaml</DependentUpon>

@@ -24,6 +24,7 @@ using FractalElementDesigner.Navigating.Interfaces;
 using FractalElementDesigner.Pages;
 using FractalElementDesigner.Windows;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using FractalElementDesigner.RCWorkbenchLibrary;
 
 namespace FractalElementDesigner.ViewModels
 {
@@ -467,7 +468,7 @@ namespace FractalElementDesigner.ViewModels
         private bool TestingBool = false;
         private void Test() 
         {
-            RCWorkbenchLibrary.TestMeth();
+            RCWorkbenchLibraryEntry.TestMeth();
 
             TestingBool = true;
             CreateNewProject();

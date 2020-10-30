@@ -24,7 +24,7 @@ namespace FractalElementDesigner.ViewModels
             _newStructureWindow = newStructureWindow;
 
             // установить выбор структуры по умолчанию
-            structureTypes.TryGetValue("R-CG-NR", out var selectedStructureType);
+            structureTypes.TryGetValue(RCStructureTypeConstants.R_CG_NR, out var selectedStructureType);
             SelectedStructureType = selectedStructureType;
 
             InitializeCommands();
