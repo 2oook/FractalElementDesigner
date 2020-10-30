@@ -185,6 +185,7 @@ namespace FractalElementDesigner.MathModel
         /// <summary>
         /// Событие изменения свойства
         /// </summary>
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
