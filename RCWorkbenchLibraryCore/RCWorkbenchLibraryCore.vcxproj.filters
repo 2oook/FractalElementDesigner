@@ -14,22 +14,16 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="code">
-      <UniqueIdentifier>{4a7c40b5-3c90-464d-a8d2-a74c49660109}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="code\parser">
-      <UniqueIdentifier>{8fbd3b6d-6c08-4b1f-861a-bd3adc6dbd8d}</UniqueIdentifier>
+      <UniqueIdentifier>{63be9124-708d-4cb8-b857-266900b61173}</UniqueIdentifier>
     </Filter>
     <Filter Include="text">
-      <UniqueIdentifier>{14e04eb3-6b45-4fcd-b500-f8476a8b87a2}</UniqueIdentifier>
+      <UniqueIdentifier>{4c0b107a-06d2-4211-bad5-4c1cc2077c2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="code\parser">
+      <UniqueIdentifier>{c7f38123-ab84-4371-967e-07d0a411a505}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="code\parser\mpCompat.h">
       <Filter>code\parser</Filter>
     </ClInclude>
@@ -210,56 +204,8 @@
     <ClInclude Include="code\TargetFunction.h">
       <Filter>code</Filter>
     </ClInclude>
-    <ClInclude Include="text\GASettings.h">
-      <Filter>text</Filter>
-    </ClInclude>
-    <ClInclude Include="text\ThreadGA.h">
-      <Filter>text</Filter>
-    </ClInclude>
-    <ClInclude Include="text\Unit1.h">
-      <Filter>text</Filter>
-    </ClInclude>
-    <ClInclude Include="text\Unit2.h">
-      <Filter>text</Filter>
-    </ClInclude>
-    <ClInclude Include="text\Unit3.h">
-      <Filter>text</Filter>
-    </ClInclude>
-    <ClInclude Include="text\Unit4.h">
-      <Filter>text</Filter>
-    </ClInclude>
-    <ClInclude Include="text\Unit5.h">
-      <Filter>text</Filter>
-    </ClInclude>
-    <ClInclude Include="text\Unit6.h">
-      <Filter>text</Filter>
-    </ClInclude>
-    <ClInclude Include="text\Unit7.h">
-      <Filter>text</Filter>
-    </ClInclude>
-    <ClInclude Include="text\Unit8.h">
-      <Filter>text</Filter>
-    </ClInclude>
-    <ClInclude Include="text\Unit9.h">
-      <Filter>text</Filter>
-    </ClInclude>
-    <ClInclude Include="text\Unit10.h">
-      <Filter>text</Filter>
-    </ClInclude>
-    <ClInclude Include="text\Unit11.h">
-      <Filter>text</Filter>
-    </ClInclude>
-    <ClInclude Include="text\Unit12.h">
-      <Filter>text</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="code\parser\mpError.cpp">
       <Filter>code\parser</Filter>
     </ClCompile>
@@ -404,47 +350,91 @@
     <ClCompile Include="code\TargetFunction.cpp">
       <Filter>code</Filter>
     </ClCompile>
-    <ClCompile Include="text\GASettings.cpp">
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="text\GASettings.cpp">
       <Filter>text</Filter>
-    </ClCompile>
-    <ClCompile Include="text\ThreadGA.cpp">
+    </None>
+    <None Include="text\GASettings.h">
       <Filter>text</Filter>
-    </ClCompile>
-    <ClCompile Include="text\Unit1.cpp">
+    </None>
+    <None Include="text\ThreadGA.cpp">
       <Filter>text</Filter>
-    </ClCompile>
-    <ClCompile Include="text\Unit2.cpp">
+    </None>
+    <None Include="text\ThreadGA.h">
       <Filter>text</Filter>
-    </ClCompile>
-    <ClCompile Include="text\Unit3.cpp">
+    </None>
+    <None Include="text\Unit1.cpp">
       <Filter>text</Filter>
-    </ClCompile>
-    <ClCompile Include="text\Unit4.cpp">
+    </None>
+    <None Include="text\Unit1.h">
       <Filter>text</Filter>
-    </ClCompile>
-    <ClCompile Include="text\Unit5.cpp">
+    </None>
+    <None Include="text\Unit2.cpp">
       <Filter>text</Filter>
-    </ClCompile>
-    <ClCompile Include="text\Unit6.cpp">
+    </None>
+    <None Include="text\Unit2.h">
       <Filter>text</Filter>
-    </ClCompile>
-    <ClCompile Include="text\Unit7.cpp">
+    </None>
+    <None Include="text\Unit3.cpp">
       <Filter>text</Filter>
-    </ClCompile>
-    <ClCompile Include="text\Unit8.cpp">
+    </None>
+    <None Include="text\Unit3.h">
       <Filter>text</Filter>
-    </ClCompile>
-    <ClCompile Include="text\Unit9.cpp">
+    </None>
+    <None Include="text\Unit4.cpp">
       <Filter>text</Filter>
-    </ClCompile>
-    <ClCompile Include="text\Unit10.cpp">
+    </None>
+    <None Include="text\Unit4.h">
       <Filter>text</Filter>
-    </ClCompile>
-    <ClCompile Include="text\Unit11.cpp">
+    </None>
+    <None Include="text\Unit5.cpp">
       <Filter>text</Filter>
-    </ClCompile>
-    <ClCompile Include="text\Unit12.cpp">
+    </None>
+    <None Include="text\Unit5.h">
       <Filter>text</Filter>
-    </ClCompile>
+    </None>
+    <None Include="text\Unit6.cpp">
+      <Filter>text</Filter>
+    </None>
+    <None Include="text\Unit6.h">
+      <Filter>text</Filter>
+    </None>
+    <None Include="text\Unit7.cpp">
+      <Filter>text</Filter>
+    </None>
+    <None Include="text\Unit7.h">
+      <Filter>text</Filter>
+    </None>
+    <None Include="text\Unit8.cpp">
+      <Filter>text</Filter>
+    </None>
+    <None Include="text\Unit8.h">
+      <Filter>text</Filter>
+    </None>
+    <None Include="text\Unit9.cpp">
+      <Filter>text</Filter>
+    </None>
+    <None Include="text\Unit9.h">
+      <Filter>text</Filter>
+    </None>
+    <None Include="text\Unit10.cpp">
+      <Filter>text</Filter>
+    </None>
+    <None Include="text\Unit10.h">
+      <Filter>text</Filter>
+    </None>
+    <None Include="text\Unit11.cpp">
+      <Filter>text</Filter>
+    </None>
+    <None Include="text\Unit11.h">
+      <Filter>text</Filter>
+    </None>
+    <None Include="text\Unit12.cpp">
+      <Filter>text</Filter>
+    </None>
+    <None Include="text\Unit12.h">
+      <Filter>text</Filter>
+    </None>
   </ItemGroup>
 </Project>
