@@ -11,4 +11,4 @@ extern "C" RCWORKBENCH_LIBRARY_API  void __stdcall CreateCAnalyseParameters(int 
 extern "C" RCWORKBENCH_LIBRARY_API  void __stdcall SetFrequencyRange(double Wmin, double Wmax, int n);
 extern "C" RCWORKBENCH_LIBRARY_API  void __stdcall CreateRCGNRStructure(double R, double C, int x, int y, double Kf, double G, double H, double N);
 extern "C" RCWORKBENCH_LIBRARY_API  void __stdcall SetElementTypeToStructureCell(int Layer, int x, int y, int ElementType);
-extern "C" RCWORKBENCH_LIBRARY_API  void __stdcall CalculateYParameters(complex<double>** result, int resultSize);
+extern "C" RCWORKBENCH_LIBRARY_API  void __cdecl CalculateYParameters(double *** result, int resultSize);

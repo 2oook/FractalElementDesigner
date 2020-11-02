@@ -96,7 +96,7 @@ public:
             {
                 pJob = (CJob*)poverlapped;
                 // pJob->Data->m_w[key] - частота // pJob->Data->m_MatY[key] - левый треугольник матрицы разложенный в вектор проводимости для частоты  // Dest -> m_MatY
-                if ((WaitForSingleObject(pJob->isBadStructureEvent, 0) == WAIT_TIMEOUT) && (pJob->Structure->YParameters(pJob->Data->m_w[key], pJob->Data->m_MatY[key]) == -1))
+                if ((WaitForSingleObject(pJob->isBadStructureEvent, 0) == WAIT_TIMEOUT) && (pJob->Structure->YParameters(pJob->Data->m_w[key], pJob->Data->m_MatY[key], pJob->Data->y_result[key]) == -1))
                     SetEvent(pJob->isBadStructureEvent);
                 SetEvent(pJob->isDoneEvents[key]);
             }

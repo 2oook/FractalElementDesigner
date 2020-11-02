@@ -1764,7 +1764,7 @@ void CRCStructure::AddToMatrix(complex<double> **Ym, int u0, int u1, const compl
 }
 
 // вычислить Y-параметры для частоты w // Dest -> m_MatY
-int CRCStructure::YParameters(double w, complex<double> *Dest) 
+int CRCStructure::YParameters(double w, complex<double> *Dest, double ** y_result) 
 {
   //LARGE_INTEGER freq, count0, count1, count2, count3, count4, count5;
   //QueryPerformanceCounter(&count0);
@@ -1804,8 +1804,18 @@ int CRCStructure::YParameters(double w, complex<double> *Dest)
   {
     if (fabs(Ym[kp1][0].real()) < 1e-37)
       ExitCode = -1;
-    for (int kp2=0; kp2<kkk-kp1; ++kp2)
-      Dest[k++]=Ym[kp1][kp2];
+    for (int kp2 = 0; kp2 < kkk - kp1; ++kp2) 
+    {
+        Dest[k] = Ym[kp1][kp2];
+
+        if (y_result != NULL)
+        {
+            y_result[k][0] = Dest[k].real();
+            y_result[k][1] = Dest[k].imag();
+        }
+
+        k++;
+    }
   }
 
   for (int i=0; i<m_Nodes; ++i)

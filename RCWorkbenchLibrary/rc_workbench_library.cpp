@@ -60,9 +60,9 @@ extern void __stdcall SetElementTypeToStructureCell(int Layer, int x, int y, int
     mainClassInstance->Structure5->SetElementType(Layer, x, y, (EnumRCElementType)ElementType);
 };
 
-extern void __stdcall CalculateYParameters(complex<double>** result, int resultSize)
+extern void __cdecl CalculateYParameters(double*** result, int resultSize)
 {
     mainClassInstance->ExitCode = mainClassInstance->CalculateYParameters(mainClassInstance->Structure5, mainClassInstance->pAnalyseParameters->m_pT);
 
-    result = mainClassInstance->pAnalyseParameters->m_pT->m_MatY;
+    result = mainClassInstance->pAnalyseParameters->m_pT->y_result;
 };

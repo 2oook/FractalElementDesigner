@@ -128,14 +128,14 @@ public:
 
   int CharacteristicT(CRCStructureCalculateData *T, CRCStructure *Structure)
   {
-    Structure->YParameters(0.0, m_Cond);
+    Structure->YParameters(0.0, m_Cond, NULL);
     for (int i=0; i<T->m_length; ++i)
       T->m_T[i] = m_K*T->m_MatY[i][1]/(m_K*(T->m_MatY[i][1]+T->m_MatY[i][2])-T->m_MatY[i][2]-m_L/m_Cond[0]);
     return 0;
   }
   int CharacteristicZ(CRCStructureCalculateData *T, CRCStructure *Structure)
   {
-    Structure->YParameters(0.0, m_Cond);
+    Structure->YParameters(0.0, m_Cond, NULL);
     for (int i=0; i<T->m_length; ++i)
       T->m_T[i] = 1.0/(T->m_MatY[i][0] + (T->m_MatY[i][1]*T->m_MatY[i][1] - m_K*T->m_MatY[i][1]*(T->m_MatY[i][0]+T->m_MatY[i][1]))/(m_K*(T->m_MatY[i][1]+T->m_MatY[i][2])-T->m_MatY[i][2]-m_L/m_Cond[0]));
     return 0;
@@ -161,14 +161,14 @@ public:
 
   int CharacteristicT(CRCStructureCalculateData *T, CRCStructure *Structure)
   {
-    Structure->YParameters(0.0, m_Cond);
+    Structure->YParameters(0.0, m_Cond, NULL);
     for (int i=0; i<T->m_length; ++i)
       T->m_T[i] = (T->m_MatY[i][1]+T->m_MatY[i][2])/(T->m_MatY[i][2]+m_L/m_Cond[0]);
     return 0;
   }
   int CharacteristicZ(CRCStructureCalculateData *T, CRCStructure *Structure)
   {
-    Structure->YParameters(0.0, m_Cond);
+    Structure->YParameters(0.0, m_Cond, NULL);
     for (int i=0; i<T->m_length; ++i)
       T->m_T[i] = (T->m_MatY[i][2]+m_L/m_Cond[0])/((T->m_MatY[i][0]+T->m_MatY[i][1]+T->m_MatY[i][1]+T->m_MatY[i][2])*m_L/m_Cond[0]+T->m_MatY[i][0]*T->m_MatY[i][2]-T->m_MatY[i][1]*T->m_MatY[i][1]);
     return 0;
@@ -278,14 +278,14 @@ public:
 
   int CharacteristicT(CRCStructureCalculateData *T, CRCStructure *Structure)
   {
-    Structure->YParameters(0.0, m_Cond);
+    Structure->YParameters(0.0, m_Cond, NULL);
     for (int i=0; i<T->m_length; ++i)
       T->m_T[i] = -m_K*T->m_MatY[i][1]/(m_K*T->m_MatY[i][4]+T->m_MatY[i][3]+m_L/m_Cond[0]);
     return 0;
   }
   int CharacteristicZ(CRCStructureCalculateData *T, CRCStructure *Structure)
   {
-    Structure->YParameters(0.0, m_Cond);
+    Structure->YParameters(0.0, m_Cond, NULL);
     for (int i=0; i<T->m_length; ++i)
       T->m_T[i] = 1.0/(T->m_MatY[i][0] - (m_K*T->m_MatY[i][1]*T->m_MatY[i][2]+T->m_MatY[i][1]*T->m_MatY[i][1])/(m_K*T->m_MatY[i][4]+T->m_MatY[i][3]+m_L/m_Cond[0]));
     return 0;
@@ -308,14 +308,14 @@ public:
 
   int CharacteristicT(CRCStructureCalculateData *T, CRCStructure *Structure)
   {
-    Structure->YParameters(0.0, m_Cond);
+    Structure->YParameters(0.0, m_Cond, NULL);
     for (int i=0; i<T->m_length; ++i)
       T->m_T[i] = -m_K*T->m_MatY[i][1]/(m_K*T->m_MatY[i][5]+T->m_MatY[i][4]+m_L/m_Cond[0]);
     return 0;
   }
   int CharacteristicZ(CRCStructureCalculateData *T, CRCStructure *Structure)
   {
-    Structure->YParameters(0.0, m_Cond);
+    Structure->YParameters(0.0, m_Cond, NULL);
     for (int i=0; i<T->m_length; ++i)
       T->m_T[i] = 1.0/(T->m_MatY[i][0] - (m_K*T->m_MatY[i][1]*T->m_MatY[i][2]+T->m_MatY[i][1]*T->m_MatY[i][1])/(m_K*T->m_MatY[i][5]+T->m_MatY[i][4]+m_L/m_Cond[0]));
     return 0;
@@ -339,14 +339,14 @@ public:
 
   int CharacteristicT(CRCStructureCalculateData *T, CRCStructure *Structure)
   {
-    Structure->YParameters(0.0, m_Cond);
+    Structure->YParameters(0.0, m_Cond, NULL);
     for (int i=0; i<T->m_length; ++i)
       T->m_T[i] = -m_K*T->m_MatY[i][8]/(m_K*(T->m_MatY[i][3]+T->m_MatY[i][6])+T->m_MatY[i][9]+m_L/m_Cond[0]);
     return 0;
   }
   int CharacteristicZ(CRCStructureCalculateData *T, CRCStructure *Structure)
   {
-    Structure->YParameters(0.0, m_Cond);
+    Structure->YParameters(0.0, m_Cond, NULL);
     for (int i=0; i<T->m_length; ++i)
       T->m_T[i] = 1.0/(T->m_MatY[i][7] - (m_K*T->m_MatY[i][8]*(T->m_MatY[i][2]+T->m_MatY[i][5])+T->m_MatY[i][8]*T->m_MatY[i][8])/(m_K*(T->m_MatY[i][3]+T->m_MatY[i][6])+T->m_MatY[i][9]+m_L/m_Cond[0]));
     return 0;
@@ -369,7 +369,7 @@ public:
 
   int CharacteristicT(CRCStructureCalculateData *T, CRCStructure *Structure)
   {
-    Structure->YParameters(0.0, m_Cond);
+    Structure->YParameters(0.0, m_Cond, NULL);
     for (int i=0; i<T->m_length; ++i)
       T->m_T[i] = -m_K*(T->m_MatY[i][2]+T->m_MatY[i][5])/(m_K*T->m_MatY[i][8]+T->m_MatY[i][7]+m_L/m_Cond[0]);
     return 0;
@@ -377,7 +377,7 @@ public:
   int CharacteristicZ(CRCStructureCalculateData *T, CRCStructure *Structure)
   {
     complex<double> y1323;
-    Structure->YParameters(0.0, m_Cond);
+    Structure->YParameters(0.0, m_Cond, NULL);
     for (int i=0; i<T->m_length; ++i)
     {
       y1323 = T->m_MatY[i][2] + T->m_MatY[i][5];

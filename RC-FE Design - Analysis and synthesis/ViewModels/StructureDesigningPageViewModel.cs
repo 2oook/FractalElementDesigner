@@ -498,23 +498,65 @@ namespace FractalElementDesigner.ViewModels
             //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 3, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
             // изменение ячеек слоёв структуры
 
-            IntPtr[] complexTypeArray = new IntPtr[100];
+            int first_dimention = 100;
 
-            for (int i = 0; i < 100; i++)
-                complexTypeArray[i] = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Complex)));
+            IntPtr[,,] complexTypeArray = new IntPtr[first_dimention, 36, 2];
 
-            RCWorkbenchLibraryEntry.CalculateYParameters(complexTypeArray, 100);
+            for (int i = 0; i < first_dimention; i++)
+            {
+                for (int j = 0; j < 36; j++)
+                {
+                    complexTypeArray[i, j, 0] = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(double)));
+                    complexTypeArray[i, j, 1] = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(double)));
+                }
+            }
 
-            Complex[] myComplexTypeArray = new Complex[100];
+            RCWorkbenchLibraryEntry.CalculateYParameters(complexTypeArray, first_dimention);
 
-            for (int i = 0; i < 100; i++)
-                myComplexTypeArray[i] = (Complex)Marshal.PtrToStructure(complexTypeArray[i], typeof(Complex));
+            Complex[,] myComplexTypeArray = new Complex[first_dimention, 36];
 
-            for (int i = 0; i < 100; i++)
-                Marshal.FreeHGlobal(complexTypeArray[i]);
+            for (int i = 0; i < first_dimention; i++)
+            {
+                for (int j = 0; j < 36; j++)
+                {
+                    myComplexTypeArray[i, j] = new Complex((double)Marshal.PtrToStructure(complexTypeArray[i, j, 0], typeof(double)),
+                        (double)Marshal.PtrToStructure(complexTypeArray[i, j, 1], typeof(double)));
+                }
+            }
+
+            for (int i = 0; i < first_dimention; i++)
+            {
+                for (int j = 0; j < 36; j++)
+                {
+                    for (int k = 0; k < 2; k++)
+                    {
+                        Marshal.FreeHGlobal(complexTypeArray[i, j, k]);
+                    }
+                }
+            }
+
+            //IntPtr[] complexTypeArray = new IntPtr[first_dimention];
+
+            //for (int i = 0; i < first_dimention; i++)
+            //{
+            //    complexTypeArray[i] = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(double)));
+            //}
+
+            //RCWorkbenchLibraryEntry.CalculateYParameters(complexTypeArray, first_dimention);
+
+            //Complex[,] myComplexTypeArray = new Complex[first_dimention, 36];
+
+            //for (int i = 0; i < first_dimention; i++)
+            //{
+            //    for (int j = 0; j < 36; j++)
+            //    {
+            //        myComplexTypeArray[i, j] = new Complex((double)Marshal.PtrToStructure(complexTypeArray[i, j, 0], typeof(double)),
+            //            (double)Marshal.PtrToStructure(complexTypeArray[i, j, 1], typeof(double)));
+            //    }
+            //}
 
 
-            
+
 
             TestingBool = true;
             CreateNewProject();
