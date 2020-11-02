@@ -25,6 +25,9 @@ using FractalElementDesigner.Pages;
 using FractalElementDesigner.Windows;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using FractalElementDesigner.RCWorkbenchLibrary;
+using FractalElementDesigner.RCWorkbenchLibrary.Helpers;
+using System.Runtime.InteropServices;
+using System.Numerics;
 
 namespace FractalElementDesigner.ViewModels
 {
@@ -468,7 +471,50 @@ namespace FractalElementDesigner.ViewModels
         private bool TestingBool = false;
         private void Test() 
         {
-            RCWorkbenchLibraryEntry.TestMeth();
+            RCWorkbenchLibraryEntry.InitiateLibrary();
+
+            // симулировать pAnalyseParameters // СХЕМА №3
+            RCWorkbenchLibraryEntry.CreateCAnalyseParameters(/*8*/2, 3, 0.98, 0.1, false, 100);
+
+            // установить диапазон частот
+            RCWorkbenchLibraryEntry.SetFrequencyRange(0.0, 100.0, 100);
+
+            // создать структуру
+            RCWorkbenchLibraryEntry.CreateRCGNRStructure(1.0, 1.0, 10, 10, 1.0, 0.001, 100, 0.218);
+
+            // изменение ячеек слоёв структуры
+            // установить КП
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
+
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 1, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
+            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 3, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
+
+            // пронумеровать КП
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 1, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 3, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+            // изменение ячеек слоёв структуры
+
+            IntPtr[] complexTypeArray = new IntPtr[100];
+
+            for (int i = 0; i < 100; i++)
+                complexTypeArray[i] = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Complex)));
+
+            RCWorkbenchLibraryEntry.CalculateYParameters(complexTypeArray, 100);
+
+            Complex[] myComplexTypeArray = new Complex[100];
+
+            for (int i = 0; i < 100; i++)
+                myComplexTypeArray[i] = (Complex)Marshal.PtrToStructure(complexTypeArray[i], typeof(Complex));
+
+            for (int i = 0; i < 100; i++)
+                Marshal.FreeHGlobal(complexTypeArray[i]);
+
+
+            
 
             TestingBool = true;
             CreateNewProject();

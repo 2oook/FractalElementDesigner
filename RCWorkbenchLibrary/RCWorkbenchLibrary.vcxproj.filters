@@ -21,7 +21,10 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RCWorkbenchLibrary.h">
+    <ClInclude Include="rc_workbench_library.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="main_class.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -32,7 +35,7 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RCWorkbenchLibrary.cpp">
+    <ClCompile Include="rc_workbench_library.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
