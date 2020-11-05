@@ -25,7 +25,6 @@ extern void __stdcall InitiateLibrary()
 
 extern void __stdcall CreateCAnalyseParameters(int Scheme, int Characteristic, double K, double L, bool Log, int Length)
 {
-    // ñèìóëèðîâàòü pAnalyseParameters // ÑÕÅÌÀ ¹3
     mainClassInstance->pAnalyseParameters = new CAnalyseParameters(Scheme, Characteristic, K, L, Log, Length);
 };
 
@@ -62,7 +61,20 @@ extern void __stdcall SetElementTypeToStructureCell(int Layer, int x, int y, int
 
 extern void __cdecl CalculateYParameters(double result[][SECOND_DIMENSION_FOR_8_CONTACTS], int first_dimention_size, int second_dimention_size)
 {
-    mainClassInstance->pAnalyseParameters->m_pT = new CRCStructureCalculateData(first_dimention_size, result);
+    mainClassInstance->pAnalyseParameters->m_pT->y_result = result;
 
     mainClassInstance->ExitCode = mainClassInstance->CalculateYParameters(mainClassInstance->Structure5, mainClassInstance->pAnalyseParameters->m_pT);
+};
+
+extern int __stdcall GetCPQuantity()
+{
+    return mainClassInstance->Structure5->GetKPQuantity();
+};
+
+extern void __stdcall GetFrequences(double* frequences)
+{
+    for (size_t i = 0; i < mainClassInstance->pAnalyseParameters->m_pT->m_length; i++)
+    {
+        frequences[i] = mainClassInstance->pAnalyseParameters->m_pT->m_w[i];
+    }
 };

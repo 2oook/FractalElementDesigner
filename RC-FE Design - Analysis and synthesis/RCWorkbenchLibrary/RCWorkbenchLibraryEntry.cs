@@ -30,5 +30,11 @@ namespace FractalElementDesigner.RCWorkbenchLibrary
 
         [DllImport(@"RCWorkbenchLibrary", ExactSpelling = false, EntryPoint = "CalculateYParameters", CallingConvention = CallingConvention.Cdecl)]
         public static extern void CalculateYParameters([In, Out] double[,] result, int first_dimention_size, int second_dimention_size);
+
+        [DllImport(@"RCWorkbenchLibrary", ExactSpelling = false, EntryPoint = "GetCPQuantity", CallingConvention = CallingConvention.StdCall)]
+        public static extern int GetCPQuantity();
+
+        [DllImport(@"RCWorkbenchLibrary", ExactSpelling = false, EntryPoint = "GetFrequences", CallingConvention = CallingConvention.StdCall)]
+        public static extern void GetFrequences([In, Out] double[] frequences);
     }
 }

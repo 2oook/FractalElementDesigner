@@ -32,16 +32,17 @@ public:
 
     for (int i=0; i<m_length; ++i)
     {   // 36 - это количество €чеек в треугольнике матрице + главна€ диагональ???? в матрице 8х8 // потому что существует только схема максимум дл€ 8ми  ѕ
-      m_MatY[i] = new complex<double>[SECOND_DIMENSION_FOR_8_CONTACTS]; // 8 контактных площадок 
+      m_MatY[i] = new complex<double>[SECOND_DIMENSION_FOR_8_CONTACTS](); // 8 контактных площадок 
 
       m_char[0][i] = 0;
     }
   }
 
-  CRCStructureCalculateData(int length, double (*result)[SECOND_DIMENSION_FOR_8_CONTACTS]) : CRCStructureCalculateData(length)
+  /*CRCStructureCalculateData(CRCStructureCalculateData* orig_object, double (*result)[SECOND_DIMENSION_FOR_8_CONTACTS]) : CRCStructureCalculateData(orig_object->m_length)
   {
       y_result = result;
-  }
+      m_w = orig_object->m_w;
+  }*/
 
   ~CRCStructureCalculateData()
   {

@@ -39,7 +39,7 @@ namespace FractalElementDesigner.ViewModels
         public StructureDesigningPageViewModel()
         {
             InitializeCommands();
-
+            Test();
             SchemeSynthesizer.OnDoWork += OnDoWork;
             SchemeSynthesizer.OnStateChange += OnProgressStateChange;
             StructureCreator.OnDoWork += OnDoWork;
@@ -473,8 +473,8 @@ namespace FractalElementDesigner.ViewModels
         {
             RCWorkbenchLibraryEntry.InitiateLibrary();
 
-            // симулировать pAnalyseParameters // СХЕМА №3
-            RCWorkbenchLibraryEntry.CreateCAnalyseParameters(/*8*/2, 3, 0.98, 0.1, false, 100);
+            // симулировать pAnalyseParameters // СХЕМА №
+            RCWorkbenchLibraryEntry.CreateCAnalyseParameters(5, 3, 0.98, 0.1, false, 100);
 
             // установить диапазон частот
             RCWorkbenchLibraryEntry.SetFrequencyRange(0.0, 100.0, 100);
@@ -487,81 +487,36 @@ namespace FractalElementDesigner.ViewModels
             RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
             RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
 
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 1, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 3, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
 
             // пронумеровать КП
             RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
             RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
 
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 1, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 3, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
             // изменение ячеек слоёв структуры
 
-            int first_dimention = 100;
+            int first_dimension = 100;
+            int second_dimension = 36;
 
-            IntPtr[,,] complexTypeArray = new IntPtr[first_dimention, 36, 2];
+            double[] frequences = new double[first_dimension];
+            RCWorkbenchLibraryEntry.GetFrequences(frequences);
 
-            for (int i = 0; i < first_dimention; i++)
-            {
-                for (int j = 0; j < 36; j++)
-                {
-                    complexTypeArray[i, j, 0] = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(double)));
-                    complexTypeArray[i, j, 1] = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(double)));
-                }
-            }
+            double[,] y_parameters_double = new double[first_dimension, second_dimension];
+            RCWorkbenchLibraryEntry.CalculateYParameters(y_parameters_double, first_dimension, second_dimension);
 
-            RCWorkbenchLibraryEntry.CalculateYParameters(complexTypeArray, first_dimention);
+            int outer_pins_count = RCWorkbenchLibraryEntry.GetCPQuantity();
 
-            Complex[,] myComplexTypeArray = new Complex[first_dimention, 36];
-
-            for (int i = 0; i < first_dimention; i++)
-            {
-                for (int j = 0; j < 36; j++)
-                {
-                    myComplexTypeArray[i, j] = new Complex((double)Marshal.PtrToStructure(complexTypeArray[i, j, 0], typeof(double)),
-                        (double)Marshal.PtrToStructure(complexTypeArray[i, j, 1], typeof(double)));
-                }
-            }
-
-            for (int i = 0; i < first_dimention; i++)
-            {
-                for (int j = 0; j < 36; j++)
-                {
-                    for (int k = 0; k < 2; k++)
-                    {
-                        Marshal.FreeHGlobal(complexTypeArray[i, j, k]);
-                    }
-                }
-            }
-
-            //IntPtr[] complexTypeArray = new IntPtr[first_dimention];
-
-            //for (int i = 0; i < first_dimention; i++)
-            //{
-            //    complexTypeArray[i] = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(double)));
-            //}
-
-            //RCWorkbenchLibraryEntry.CalculateYParameters(complexTypeArray, first_dimention);
-
-            //Complex[,] myComplexTypeArray = new Complex[first_dimention, 36];
-
-            //for (int i = 0; i < first_dimention; i++)
-            //{
-            //    for (int j = 0; j < 36; j++)
-            //    {
-            //        myComplexTypeArray[i, j] = new Complex((double)Marshal.PtrToStructure(complexTypeArray[i, j, 0], typeof(double)),
-            //            (double)Marshal.PtrToStructure(complexTypeArray[i, j, 1], typeof(double)));
-            //    }
-            //}
-
-
-
+            var matrix = MatrixHelper.GetYParametersMatricesFromRCWorkbenchArray(y_parameters_double, outer_pins_count);
 
             TestingBool = true;
-            CreateNewProject();
+            CreateNewProject();          
         }
         // удалить
+
+        
 
         /// <summary>
         /// Метод для применения инструмента к ячейке элемента
