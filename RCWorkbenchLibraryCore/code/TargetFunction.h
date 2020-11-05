@@ -5,6 +5,7 @@
 
 #include <complex>
 #include "ap.h"
+#include "../definitions.h"
 using namespace std;
 
 class CRCStructureCalculateData
@@ -13,7 +14,7 @@ public:
   int m_length;
   double *m_w, *m_char[5];
   complex<double> **m_MatY, *m_T, *m_Tapprox;
-  double*** y_result;
+  double(* y_result)[SECOND_DIMENSION_FOR_8_CONTACTS];
   ap::real_1d_array m_sol, NumResR, NumResI, DenResR, DenResI;
 
   CRCStructureCalculateData(int length)
@@ -29,21 +30,17 @@ public:
     m_Tapprox = new complex<double>[m_length];
     m_MatY = new complex<double>*[m_length];// левые треугольники разложенных в вектор матриц проводимости по частотам 
 
-    y_result = new double** [m_length];
-
     for (int i=0; i<m_length; ++i)
     {   // 36 - это количество ячеек в треугольнике матрице + главная диагональ???? в матрице 8х8 // потому что существует только схема максимум для 8ми КП
-      m_MatY[i] = new complex<double>[36]; // 8 контактных площадок 
-
-      y_result[i] = new double* [36];
-
-      for (size_t k = 0; k < 36; k++)
-      {
-          y_result[i][k] = new double[2];
-      }
+      m_MatY[i] = new complex<double>[SECOND_DIMENSION_FOR_8_CONTACTS]; // 8 контактных площадок 
 
       m_char[0][i] = 0;
     }
+  }
+
+  CRCStructureCalculateData(int length, double (*result)[SECOND_DIMENSION_FOR_8_CONTACTS]) : CRCStructureCalculateData(length)
+  {
+      y_result = result;
   }
 
   ~CRCStructureCalculateData()

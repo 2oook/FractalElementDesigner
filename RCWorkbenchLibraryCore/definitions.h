@@ -1,0 +1,3 @@
+#pragma once
+
+#define SECOND_DIMENSION_FOR_8_CONTACTS 36

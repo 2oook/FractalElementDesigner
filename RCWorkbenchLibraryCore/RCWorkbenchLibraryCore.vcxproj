@@ -197,6 +197,7 @@
     <ClInclude Include="code\RCStructure.h" />
     <ClInclude Include="code\Scheme.h" />
     <ClInclude Include="code\TargetFunction.h" />
+    <ClInclude Include="definitions.h" />
     <None Include="text\GASettings.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>

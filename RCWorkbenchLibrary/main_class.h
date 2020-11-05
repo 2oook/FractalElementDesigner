@@ -5,6 +5,7 @@
 #include <windows.h>
 #include "../rcworkbenchlibrarycore/code/RCStructure.h"
 #include "../rcworkbenchlibrarycore/code/CAnalyseParameters.h"
+#include "../rcworkbenchlibrarycore/definitions.h"
 
 class MainClass
 {

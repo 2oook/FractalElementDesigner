@@ -29,6 +29,6 @@ namespace FractalElementDesigner.RCWorkbenchLibrary
         public static extern void SetElementTypeToStructureCell(int Layer, int x, int y, int ElementType);
 
         [DllImport(@"RCWorkbenchLibrary", ExactSpelling = false, EntryPoint = "CalculateYParameters", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void CalculateYParameters([In, Out] IntPtr[,,] result, int resultSize);
+        public static extern void CalculateYParameters([In, Out] double[,] result, int first_dimention_size, int second_dimention_size);
     }
 }

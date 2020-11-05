@@ -204,6 +204,9 @@
     <ClInclude Include="code\TargetFunction.h">
       <Filter>code</Filter>
     </ClInclude>
+    <ClInclude Include="definitions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\parser\mpError.cpp">

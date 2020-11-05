@@ -208,7 +208,7 @@ public:
   void MoveKP(int prob, int max_value, bool isfit);
   bool Cross(CRCStructure *S, int prob, int MaxWidth, int MaxHeight, bool ExchangeLayers);
   void Mutate(int prob_res, int prob_cond, bool isfit, int x, int y, int width, int height, int prob1);
-  int YParameters(double w, complex<double> *Dest, double** y_result);
+  int YParameters(double w, complex<double> *Dest, double* y_result);
   void KPV();
   void KPH();
   void WaveCast(int ***pWave, int *pShortWay, int *pLongWay);
