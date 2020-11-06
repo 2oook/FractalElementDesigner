@@ -231,7 +231,48 @@ namespace FractalElementDesigner.MathModel.Structure
 
             newStructure.Initialize(verticalStructureDimensionValue, horizontalStructureDimensionValue);
 
+            InitializeCellsTypesOfTheStructure(structure, verticalStructureDimensionValue, horizontalStructureDimensionValue);
+
             return newStructure;
+        }
+
+        // Метод для инициализации ячеек в редакторе структуры
+        private static void InitializeCellsTypesOfTheStructure(RCStructure structure, int verticalStructureDimensionValue, int horizontalStructureDimensionValue) 
+        {
+            // обойти слои структуры
+            foreach (var layer in structure.StructureLayers)
+            {
+                for (int r = 0; r < verticalStructureDimensionValue; r++)
+                {
+                    for (int c = 0; c < horizontalStructureDimensionValue; c++)
+                    {
+                        layer.Cells[r][c].CellType = DefineCellType(r, c, verticalStructureDimensionValue, horizontalStructureDimensionValue, layer.Name == RCStructureLayerTypeConstants.NR ? CellType.R : CellType.RC);
+                    }
+                }
+            }
+
+            CellType DefineCellType(int i, int j, int rowCount, int columnCount, CellType _layerType)
+            {
+                // первая строка или последняя
+                if (i == 0 || i == rowCount - 1)
+                {
+                    if (j != 0 | j != columnCount - 1)
+                    {
+                        return CellType.PlaceForContact;
+                    }
+                }
+                // первая колонка или последняя
+                if (j == 0 || j == columnCount - 1)
+                {
+                    // установить угловые ячейки как неактивные
+                    if (i != 0 | i != rowCount - 1)
+                    {
+                        return CellType.PlaceForContact;
+                    }
+                }
+
+                return _layerType;
+            }
         }
     }
 }

@@ -10,6 +10,16 @@ using System.Threading.Tasks;
 namespace FractalElementDesigner.FEEditing.Model
 {
     /// <summary>
+    /// Класс констант названий слоёв структуры
+    /// </summary>
+    static class RCStructureLayerTypeConstants
+    {
+        public const string R_C = "R-C";
+        public const string R_CG = "R-CG";
+        public const string NR = "NR";
+    }
+
+    /// <summary>
     /// Класс структуры
     /// </summary>
     class RCStructure : RCStructureBase
@@ -114,14 +124,12 @@ namespace FractalElementDesigner.FEEditing.Model
                 }
             };
 
-            var layer_name = " слой";
-
             var R_C_0 = new RCStructureTemplate()
             {
                 Name = RCStructureTypeConstants.R_C_0,
                 StructureProperties = commonProperties,
                 StructureLayers = new ObservableCollection<Layer>() { 
-                    new Layer() { Name = "R-C" + layer_name } }
+                    new Layer() { Name = RCStructureLayerTypeConstants.R_C } }
             };
 
             AllTemplateStructures.Add(R_C_0.Name, R_C_0);
@@ -131,7 +139,7 @@ namespace FractalElementDesigner.FEEditing.Model
                 Name = RCStructureTypeConstants.R_CG_0,
                 StructureProperties = commonProperties.Concat(N_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
-                    new Layer() { Name = "R-CG" + layer_name } }
+                    new Layer() { Name = RCStructureLayerTypeConstants.R_CG } }
             };
 
             AllTemplateStructures.Add(R_CG_0.Name, R_CG_0);
@@ -141,8 +149,8 @@ namespace FractalElementDesigner.FEEditing.Model
                 Name = RCStructureTypeConstants.R_C_NR,
                 StructureProperties = commonProperties.Concat(N_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
-                    new Layer() { Name = "R-C" + layer_name },
-                    new Layer() { Name = "NR" + layer_name } }
+                    new Layer() { Name = RCStructureLayerTypeConstants.R_C },
+                    new Layer() { Name = RCStructureLayerTypeConstants.NR } }
             };
 
             AllTemplateStructures.Add(R_C_NR.Name, R_C_NR);
@@ -152,8 +160,8 @@ namespace FractalElementDesigner.FEEditing.Model
                 Name = RCStructureTypeConstants.R_CG_NR,
                 StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
-                    new Layer() { Name = "R-CG" + layer_name }, 
-                    new Layer() { Name = "NR" + layer_name } }
+                    new Layer() { Name = RCStructureLayerTypeConstants.R_CG }, 
+                    new Layer() { Name = RCStructureLayerTypeConstants.NR } }
             };
 
             AllTemplateStructures.Add(R_CG_NR.Name, R_CG_NR);
@@ -163,8 +171,8 @@ namespace FractalElementDesigner.FEEditing.Model
                 Name = RCStructureTypeConstants.R_CG_NR_plus_CP,
                 StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(P_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
-                    new Layer() { Name = "R-CG" + layer_name }, 
-                    new Layer() { Name = "NR" + layer_name } }
+                    new Layer() { Name = RCStructureLayerTypeConstants.R_CG }, 
+                    new Layer() { Name = RCStructureLayerTypeConstants.NR } }
             };
 
             AllTemplateStructures.Add(R_CG_NR_plus_CP.Name, R_CG_NR_plus_CP);
@@ -174,8 +182,8 @@ namespace FractalElementDesigner.FEEditing.Model
                 Name = RCStructureTypeConstants.R_plus_R_C_NR,
                 StructureProperties = commonProperties.Concat(N_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
-                    new Layer() { Name = "R-C" + layer_name }, 
-                    new Layer() { Name = "NR" + layer_name } }
+                    new Layer() { Name = RCStructureLayerTypeConstants.R_C }, 
+                    new Layer() { Name = RCStructureLayerTypeConstants.NR } }
             };
 
             AllTemplateStructures.Add(R_plus_R_C_NR.Name, R_plus_R_C_NR);
@@ -185,8 +193,8 @@ namespace FractalElementDesigner.FEEditing.Model
                 Name = RCStructureTypeConstants.R_plus_R_CG_NR,
                 StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
-                    new Layer() { Name = "R-CG" + layer_name }, 
-                    new Layer() { Name = "NR" + layer_name } }
+                    new Layer() { Name = RCStructureLayerTypeConstants.R_CG }, 
+                    new Layer() { Name = RCStructureLayerTypeConstants.NR } }
             };
 
             AllTemplateStructures.Add(R_plus_R_CG_NR.Name, R_plus_R_CG_NR);
@@ -196,8 +204,8 @@ namespace FractalElementDesigner.FEEditing.Model
                 Name = RCStructureTypeConstants.R_plus_R_CG_NR_plus_CP,
                 StructureProperties = commonProperties.Concat(G_H_Properties).Concat(N_Property).Concat(P_Property).Concat(Proportions_Property).ToDictionary(x => x.Key, x => x.Value),
                 StructureLayers = new ObservableCollection<Layer>() { 
-                    new Layer() { Name = "R-CG" + layer_name }, 
-                    new Layer() { Name = "NR" + layer_name } }
+                    new Layer() { Name = RCStructureLayerTypeConstants.R_CG }, 
+                    new Layer() { Name = RCStructureLayerTypeConstants.NR } }
             };
 
             AllTemplateStructures.Add(R_plus_R_CG_NR_plus_CP.Name, R_plus_R_CG_NR_plus_CP);

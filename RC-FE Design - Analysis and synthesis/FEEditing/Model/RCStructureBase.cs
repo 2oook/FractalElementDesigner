@@ -118,6 +118,7 @@ namespace FractalElementDesigner.FEEditing.Model
         /// <summary>
         /// Событие изменения свойства
         /// </summary>
+        [field:NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>

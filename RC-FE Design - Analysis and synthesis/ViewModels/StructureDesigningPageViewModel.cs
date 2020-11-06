@@ -913,7 +913,7 @@ namespace FractalElementDesigner.ViewModels
                     // тест
                     // тест
                     
-                    // TODO выполнить по выбору пользователя
+                    // TODO выполнить по выбору пользователя // ПОМЕСТИТЬ В КОМАНДУ // ТЕСТОВЫЙ ВЫЗОВ
                     StartStructureSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, currentProject, structure);
                 }
                 catch (Exception ex)
