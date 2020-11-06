@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:FractalElementDesigner.Controls"
              xmlns:editor="clr-namespace:FractalElementDesigner.FEEditing"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="900">
     <UserControl.Resources>
         <Style x:Key="radioButtonStyle" TargetType="RadioButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
             <Setter Property="Template">
@@ -43,7 +43,35 @@
                 </ToolBar>
             </ToolBarTray>
 
-            <editor:FEControl x:Name="FEControl"  DockPanel.Dock="Right"/>
+                <Grid DockPanel.Dock="Right">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <editor:FEControl x:Name="FEControl" Grid.Column="0" />
+
+                    <Grid Grid.Column="1" Grid.RowSpan="2" >
+                        <Expander ExpandDirection="Left" IsExpanded="True">
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto" MinWidth="400" MaxWidth="800"/>
+                                </Grid.ColumnDefinitions>
+
+                                <GridSplitter Grid.Column="1" Grid.RowSpan="2" Width="4" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns"/>
+
+                                <local:PlotControl Grid.Column="2"/>
+
+                            </Grid>
+
+                        </Expander>
+                    </Grid>
+
+                </Grid>
 
         </DockPanel>
             

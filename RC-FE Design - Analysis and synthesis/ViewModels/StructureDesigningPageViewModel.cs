@@ -39,7 +39,7 @@ namespace FractalElementDesigner.ViewModels
         public StructureDesigningPageViewModel()
         {
             InitializeCommands();
-            Test();
+
             SchemeSynthesizer.OnDoWork += OnDoWork;
             SchemeSynthesizer.OnStateChange += OnProgressStateChange;
             StructureCreator.OnDoWork += OnDoWork;
@@ -471,52 +471,79 @@ namespace FractalElementDesigner.ViewModels
         private bool TestingBool = false;
         private void Test() 
         {
-            RCWorkbenchLibraryEntry.InitiateLibrary();
+            //RCWorkbenchLibraryEntry.InitiateLibrary();
 
-            // симулировать pAnalyseParameters // СХЕМА №
-            RCWorkbenchLibraryEntry.CreateCAnalyseParameters(5, 3, 0.98, 0.1, false, 100);
+            //// симулировать pAnalyseParameters // СХЕМА №
+            //RCWorkbenchLibraryEntry.CreateCAnalyseParameters(5, 3, 0.98, 0.1, false, 100);
 
-            // установить диапазон частот
-            RCWorkbenchLibraryEntry.SetFrequencyRange(0.0, 100.0, 100);
+            //// установить диапазон частот
+            //RCWorkbenchLibraryEntry.SetFrequencyRange(0.0, 100.0, 100);
 
-            // создать структуру
-            RCWorkbenchLibraryEntry.CreateRCGNRStructure(1.0, 1.0, 10, 10, 1.0, 0.001, 100, 0.218);
+            //// создать структуру
+            //RCWorkbenchLibraryEntry.CreateRCGNRStructure(1.0, 1.0, 10, 10, 1.0, 0.001, 100, 0.218);
 
-            // изменение ячеек слоёв структуры
-            // установить КП
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
+            //// изменение ячеек слоёв структуры
+            //// установить КП
+            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
+            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
 
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
+            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
+            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
 
-            // пронумеровать КП
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+            //// пронумеровать КП
+            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
 
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-            // изменение ячеек слоёв структуры
+            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+            //// изменение ячеек слоёв структуры
 
-            int first_dimension = 100;
-            int second_dimension = 36;
+            //int first_dimension = 100;
+            //int second_dimension = 36;
 
-            double[] frequences = new double[first_dimension];
-            RCWorkbenchLibraryEntry.GetFrequences(frequences);
+            //double[] frequences = new double[first_dimension];
+            //RCWorkbenchLibraryEntry.GetFrequences(frequences);
 
-            double[,] y_parameters_double = new double[first_dimension, second_dimension];
-            RCWorkbenchLibraryEntry.CalculateYParameters(y_parameters_double, first_dimension, second_dimension);
+            //double[,] y_parameters_double = new double[first_dimension, second_dimension];
+            //RCWorkbenchLibraryEntry.CalculateYParameters(y_parameters_double, first_dimension, second_dimension);
 
-            int outer_pins_count = RCWorkbenchLibraryEntry.GetCPQuantity();
+            //int outer_pins_count = RCWorkbenchLibraryEntry.GetCPQuantity();
 
-            var matrix = MatrixHelper.GetYParametersMatricesFromRCWorkbenchArray(y_parameters_double, outer_pins_count);
+            //var matrix = MatrixHelper.GetYParametersMatricesFromRCWorkbenchArray(y_parameters_double, outer_pins_count);
 
-            TestingBool = true;
-            CreateNewProject();          
+
+            // быстрый тест
+            // быстрый тест
+            // быстрый тест
+            var prj = new Project() { Name="ТЕСТОВЫЙ ПРОЕКТ" };
+
+            Projects.Add(prj);
+
+            var sch = new FElementScheme(new StructureSchemeSynthesisParameters().FESections);
+            sch.Name = "ТЕСТОВАЯ СХЕМА";
+            prj.Items.Add(sch);
+
+            var canvas = _Page.schemeEditorControl.SchemeControl.CreateSchemeCanvas();
+
+            if (canvas == null)
+                return;
+
+            var editor = _Page.schemeEditorControl.InitializeNewEditor(canvas);
+            sch.Editor = editor;
+
+            SelectedProjectTreeItem = sch;
+
+            CreateStructure();
+            // быстрый тест
+            // быстрый тест
+            // быстрый тест
+
+            //TestingBool = true;
+            //CreateNewProject();          
         }
         // удалить
 
-        
+
 
         /// <summary>
         /// Метод для применения инструмента к ячейке элемента
@@ -1005,6 +1032,9 @@ namespace FractalElementDesigner.ViewModels
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
+
+            Test();
+
             if (TestingBool)
             {
                 _Page.schemeEditorControl.SchemeControl.Loaded += (object sender, RoutedEventArgs e) =>

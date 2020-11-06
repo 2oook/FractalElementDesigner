@@ -68,10 +68,10 @@ namespace FractalElementDesigner.FEEditing
                 // если объект редактора не null очистить область редактирования и расположить в ней текущий редактор
                 if (editor != null)
                 {
-                    RootGrid.Children.Clear();
-                    RootGrid.Children.Add(value.Context.CurrentCanvas as FECanvas);
+                    RootGrid.Children.Clear();                   
                 }
 
+                RootGrid.Children.Add(value.Context.CurrentCanvas as FECanvas);
                 editor = value;
             }
         }
