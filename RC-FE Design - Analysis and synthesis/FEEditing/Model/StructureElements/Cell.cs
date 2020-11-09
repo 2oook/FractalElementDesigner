@@ -139,10 +139,10 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
                     if ((cell.CellType & CellType.PlaceForContact) != CellType.PlaceForContact) result = false;
                     break;
                 case ToolType.RCCellDisposer:
-                    
+                    if ((cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact) result = false;
                     break;
                 case ToolType.RCellDisposer:
-                    
+                    if ((cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact) result = false;
                     break;
                 case ToolType.ShuntCellDisposer:
                     if (!CheckContactCellPlacing(cell, CellType.Shunt) && (cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact) result = false;
@@ -155,11 +155,15 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
             {
                 var _layer = cell.MainCell.CellsInLayer.Single(x => x.Value == _cell).Key;
 
-                // либо верхняя строка либо нижняя
-                if (_cell.MainCell.Position.x == 0 || _cell.MainCell.Position.x == _layer.Cells.First().Count -1)
+                // верхняя строка 
+                if (_cell.MainCell.Position.x == 0)
                 {
                     var left_cell_type = _layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y - 1].CellType;
                     var right_cell_type = _layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y + 1].CellType;
+                    // ячейка слева снизу
+                    var down_left_cell_type = _layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y - 1].CellType;
+                    // ячейка справа снизу
+                    var down_right_cell_type = _layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y + 1].CellType;
 
                     // ячейка слева
                     if ((left_cell_type == CellType.Shunt & left_cell_type != needed_cell_type) || (left_cell_type == CellType.Contact & left_cell_type != needed_cell_type))
@@ -171,12 +175,53 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
                     {
                         return false;
                     }
+                    else if ((down_left_cell_type == CellType.Shunt & down_left_cell_type != needed_cell_type) || (down_left_cell_type == CellType.Contact & down_left_cell_type != needed_cell_type))
+                    {
+                        return false;
+                    }
+                    else if ((down_right_cell_type == CellType.Shunt & down_right_cell_type != needed_cell_type) || (down_right_cell_type == CellType.Contact & down_right_cell_type != needed_cell_type))
+                    {
+                        return false;
+                    }
                 }
-                // либо левый столбец либо правый
-                else if (_cell.MainCell.Position.y == 0 || _cell.MainCell.Position.y == _layer.Cells.Count - 1)
+                // нижняя
+                else if (_cell.MainCell.Position.x == _layer.Cells.First().Count - 1)
+                {
+                    var left_cell_type = _layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y - 1].CellType;
+                    var right_cell_type = _layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y + 1].CellType;
+                    // ячейка слева сверху
+                    var up_left_cell_type = _layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y - 1].CellType;
+                    // ячейка справа сверху
+                    var up_right_cell_type = _layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y + 1].CellType;
+
+                    // ячейка слева
+                    if ((left_cell_type == CellType.Shunt & left_cell_type != needed_cell_type) || (left_cell_type == CellType.Contact & left_cell_type != needed_cell_type))
+                    {
+                        return false;
+                    }
+                    // ячейка справа
+                    else if ((right_cell_type == CellType.Shunt & right_cell_type != needed_cell_type) || (right_cell_type == CellType.Contact & right_cell_type != needed_cell_type))
+                    {
+                        return false;
+                    }
+                    else if ((up_left_cell_type == CellType.Shunt & up_left_cell_type != needed_cell_type) || (up_left_cell_type == CellType.Contact & up_left_cell_type != needed_cell_type))
+                    {
+                        return false;
+                    }
+                    else if ((up_right_cell_type == CellType.Shunt & up_right_cell_type != needed_cell_type) || (up_right_cell_type == CellType.Contact & up_right_cell_type != needed_cell_type))
+                    {
+                        return false;
+                    }
+                }
+                // левый столбец
+                else if (_cell.MainCell.Position.y == 0)
                 {
                     var up_cell_type = _layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y].CellType;
                     var down_cell_type = _layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y].CellType;
+                    // ячейка справа снизу
+                    var down_right_cell_type = _layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y + 1].CellType;
+                    // ячейка справа сверху
+                    var up_right_cell_type = _layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y + 1].CellType;
 
                     // ячейка сверху
                     if ((up_cell_type == CellType.Shunt & up_cell_type != needed_cell_type) || (up_cell_type == CellType.Contact & up_cell_type != needed_cell_type))
@@ -185,6 +230,43 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
                     }
                     // ячейка снизу
                     else if ((down_cell_type == CellType.Shunt & down_cell_type != needed_cell_type) || (down_cell_type == CellType.Contact & down_cell_type != needed_cell_type))
+                    {
+                        return false;
+                    }
+                    else if ((up_right_cell_type == CellType.Shunt & up_right_cell_type != needed_cell_type) || (up_right_cell_type == CellType.Contact & up_right_cell_type != needed_cell_type))
+                    {
+                        return false;
+                    }
+                    else if ((down_right_cell_type == CellType.Shunt & down_right_cell_type != needed_cell_type) || (down_right_cell_type == CellType.Contact & down_right_cell_type != needed_cell_type))
+                    {
+                        return false;
+                    }
+                }
+                // правый
+                else if (_cell.MainCell.Position.y == _layer.Cells.Count - 1)
+                {
+                    var up_cell_type = _layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y].CellType;
+                    var down_cell_type = _layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y].CellType;
+                    // ячейка слева снизу
+                    var down_left_cell_type = _layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y - 1].CellType;
+                    // ячейка слева сверху
+                    var up_left_cell_type = _layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y - 1].CellType;
+
+                    // ячейка сверху
+                    if ((up_cell_type == CellType.Shunt & up_cell_type != needed_cell_type) || (up_cell_type == CellType.Contact & up_cell_type != needed_cell_type))
+                    {
+                        return false;
+                    }
+                    // ячейка снизу
+                    else if ((down_cell_type == CellType.Shunt & down_cell_type != needed_cell_type) || (down_cell_type == CellType.Contact & down_cell_type != needed_cell_type))
+                    {
+                        return false;
+                    }
+                    else if ((up_left_cell_type == CellType.Shunt & up_left_cell_type != needed_cell_type) || (up_left_cell_type == CellType.Contact & up_left_cell_type != needed_cell_type))
+                    {
+                        return false;
+                    }
+                    else if ((down_left_cell_type == CellType.Shunt & down_left_cell_type != needed_cell_type) || (down_left_cell_type == CellType.Contact & down_left_cell_type != needed_cell_type))
                     {
                         return false;
                     }
