@@ -20,6 +20,11 @@ namespace FractalElementDesigner.FEEditing.Model
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
+        /// Номер
+        /// </summary>
+        public int Number { get; set; }
+
+        /// <summary>
         /// Ссылка на структуру
         /// </summary>
         public RCStructure ParentStructure { get; set; }

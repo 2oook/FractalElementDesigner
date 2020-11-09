@@ -80,7 +80,7 @@ namespace FractalElementDesigner.FEEditing.Model
 
                     foreach (var layer in StructureLayers)
                     {
-                        var cell_in_layer = new Cell();
+                        var cell_in_layer = new Cell() { Layer = layer };
 
                         // список выводов можно задать в виде параметра метода
                         cell_in_layer.Pins = new List<Pin>()

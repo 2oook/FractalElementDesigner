@@ -52,7 +52,7 @@ namespace FractalElementDesigner.ViewModels
 
             EditorTools.Add("Numerate", toolCreator.CreateTool(ToolType.ContactNumerator));
             EditorTools.Add("Cut", toolCreator.CreateTool(ToolType.CutCellDisposer));
-            EditorTools.Add("RC", toolCreator.CreateTool(ToolType.RCCellDisposer));
+            //EditorTools.Add("RC", toolCreator.CreateTool(ToolType.RCCellDisposer));
             EditorTools.Add("R", toolCreator.CreateTool(ToolType.RCellDisposer));
             EditorTools.Add("Contact", toolCreator.CreateTool(ToolType.ContactCellDisposer));
             EditorTools.Add("Forbid", toolCreator.CreateTool(ToolType.ForbidContactDisposer));
@@ -605,6 +605,18 @@ namespace FractalElementDesigner.ViewModels
 
                 var project = Projects.SingleOrDefault(x => x.Items.Contains(scheme));
 
+                // инициализировать библиотеку
+                RCWorkbenchLibraryEntry.InitiateLibrary();
+
+                // симулировать pAnalyseParameters // СХЕМА №
+                RCWorkbenchLibraryEntry.CreateCAnalyseParameters(5, 3, 0.98, 0.1, false, 100);
+
+                // установить диапазон частот
+                RCWorkbenchLibraryEntry.SetFrequencyRange(0.0, 100.0, 100);
+
+                // создать структуру
+                RCWorkbenchLibraryEntry.CreateRCGNRStructure(1.0, 1.0, 10, 10, 1.0, 0.001, 100, 0.218);
+
                 CreateStructureAsync(project, scheme, newStructureWindowViewModel.CurrentStructure);
             }
         }
@@ -1033,7 +1045,7 @@ namespace FractalElementDesigner.ViewModels
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
 
-            //Test();
+            Test();
 
             if (TestingBool)
             {

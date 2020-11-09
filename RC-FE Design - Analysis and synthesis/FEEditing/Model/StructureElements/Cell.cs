@@ -1,4 +1,6 @@
 ﻿using FractalElementDesigner.MathModel.Structure;
+using FractalElementDesigner.RCWorkbenchLibrary;
+using FractalElementDesigner.RCWorkbenchLibrary.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +19,11 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
         /// Выводы ячейки
         /// </summary>
         public List<Pin> Pins = new List<Pin>();
+
+        /// <summary>
+        /// Слой
+        /// </summary>
+        public Layer Layer { get; set; }
 
         /// <summary>
         /// Сегмент содержащий ячейку
@@ -57,58 +64,130 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
                         cell.CellType = CellType.None;
                         break;
                     case ToolType.ContactNumerator:
+                        {
+                            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(
+                              Layer.Number,
+                              MainCell.Position.x - 1,
+                              MainCell.Position.y - 1,
+                              CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+                        }
                         break;
                     case ToolType.ContactCellDisposer:
                         if (cell.CellType == CellType.Contact)
                         {
                             cell.CellType = CellType.PlaceForContact;
+                            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(
+                                Layer.Number, 
+                                MainCell.Position.x - 1, 
+                                MainCell.Position.y - 1, 
+                                CellTypeToRCWorkbenchConverter.Convert(CellType.None));
                         }
                         else if ((cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact)
                         {
                             cell.CellType = CellType.Contact;
+                            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(
+                               Layer.Number,
+                               MainCell.Position.x - 1,
+                               MainCell.Position.y - 1,
+                               CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
                         }
                         break;
                     case ToolType.ForbidContactDisposer:
                         if (cell.CellType == CellType.Forbid)
                         {
                             cell.CellType = CellType.PlaceForContact;
+                            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(
+                              Layer.Number,
+                              MainCell.Position.x - 1,
+                              MainCell.Position.y - 1,
+                              CellTypeToRCWorkbenchConverter.Convert(CellType.None));
                         }
                         else if ((cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact)
                         {
                             cell.CellType = CellType.Forbid;
+                            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(
+                              Layer.Number,
+                              MainCell.Position.x - 1,
+                              MainCell.Position.y - 1,
+                              CellTypeToRCWorkbenchConverter.Convert(CellType.Forbid));
                         }
                         break;
                     case ToolType.ShuntCellDisposer:
                         if (cell.CellType == CellType.Shunt)
                         {
                             cell.CellType = CellType.PlaceForContact;
+                            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(
+                              Layer.Number,
+                              MainCell.Position.x - 1,
+                              MainCell.Position.y - 1,
+                              CellTypeToRCWorkbenchConverter.Convert(CellType.None));
                         }
                         else if ((cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact)
                         {
                             cell.CellType = CellType.Shunt;
+                            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(
+                              Layer.Number,
+                              MainCell.Position.x - 1,
+                              MainCell.Position.y - 1,
+                              CellTypeToRCWorkbenchConverter.Convert(CellType.Shunt));
                         }
                         break;
                     case ToolType.CutCellDisposer:
-                        cell.CellType = CellType.Cut;
+                        {
+                            cell.CellType = CellType.Cut;
+                            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(
+                              Layer.Number,
+                              MainCell.Position.x - 1,
+                              MainCell.Position.y - 1,
+                              CellTypeToRCWorkbenchConverter.Convert(CellType.Cut));
+                        }
                         break;
                     case ToolType.RCCellDisposer:
                         if (cell.CellType == CellType.RC)
                         {
                             cell.CellType = CellType.Cut;
+                            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(
+                              Layer.Number,
+                              MainCell.Position.x - 1,
+                              MainCell.Position.y - 1,
+                              CellTypeToRCWorkbenchConverter.Convert(CellType.Cut));
                         }
                         else
                         {
                             cell.CellType = CellType.RC;
+                            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(
+                              Layer.Number,
+                              MainCell.Position.x - 1,
+                              MainCell.Position.y - 1,
+                              CellTypeToRCWorkbenchConverter.Convert(CellType.RC));
                         }
                         break;
                     case ToolType.RCellDisposer:
                         if (cell.CellType == CellType.R)
                         {
                             cell.CellType = CellType.Cut;
+                            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(
+                              Layer.Number,
+                              MainCell.Position.x - 1,
+                              MainCell.Position.y - 1,
+                              CellTypeToRCWorkbenchConverter.Convert(CellType.Cut));
                         }
                         else
                         {
-                            cell.CellType = CellType.R;
+                            if (cell.Layer.Name == RCStructureLayerTypeConstants.R_CG || cell.Layer.Name == RCStructureLayerTypeConstants.R_C)
+                            {
+                                cell.CellType = CellType.RC;
+                            }
+                            else
+                            {
+                                cell.CellType = CellType.R;
+                            }
+
+                            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(
+                              Layer.Number,
+                              MainCell.Position.x - 1,
+                              MainCell.Position.y - 1,
+                              CellTypeToRCWorkbenchConverter.Convert(CellType.R));
                         }
                         break;
                     default:
@@ -121,7 +200,7 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
         private static bool CheckToolApplyPossibility(IEditingTool tool, Cell cell)
         {
             var result = true;
-            
+
             switch (tool.Type)
             {
                 case ToolType.None:
@@ -139,10 +218,10 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
                     if ((cell.CellType & CellType.PlaceForContact) != CellType.PlaceForContact) result = false;
                     break;
                 case ToolType.RCCellDisposer:
-                    if ((cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact) result = false;
+                    if ((cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact || cell.CellType == CellType.None) result = false;
                     break;
                 case ToolType.RCellDisposer:
-                    if ((cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact) result = false;
+                    if ((cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact || cell.CellType == CellType.None) result = false;
                     break;
                 case ToolType.ShuntCellDisposer:
                     if (!CheckContactCellPlacing(cell, CellType.Shunt) && (cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact) result = false;
@@ -151,19 +230,17 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
                     break;
             }
 
-            bool CheckContactCellPlacing(Cell _cell, CellType needed_cell_type) 
+            bool CheckContactCellPlacing(Cell _cell, CellType needed_cell_type)
             {
-                var _layer = cell.MainCell.CellsInLayer.Single(x => x.Value == _cell).Key;
-
                 // верхняя строка 
                 if (_cell.MainCell.Position.x == 0)
                 {
-                    var left_cell_type = _layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y - 1].CellType;
-                    var right_cell_type = _layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y + 1].CellType;
+                    var left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y - 1].CellType;
+                    var right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y + 1].CellType;
                     // ячейка слева снизу
-                    var down_left_cell_type = _layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y - 1].CellType;
+                    var down_left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y - 1].CellType;
                     // ячейка справа снизу
-                    var down_right_cell_type = _layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y + 1].CellType;
+                    var down_right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y + 1].CellType;
 
                     // ячейка слева
                     if ((left_cell_type == CellType.Shunt & left_cell_type != needed_cell_type) || (left_cell_type == CellType.Contact & left_cell_type != needed_cell_type))
@@ -185,14 +262,14 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
                     }
                 }
                 // нижняя
-                else if (_cell.MainCell.Position.x == _layer.Cells.First().Count - 1)
+                else if (_cell.MainCell.Position.x == _cell.Layer.Cells.First().Count - 1)
                 {
-                    var left_cell_type = _layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y - 1].CellType;
-                    var right_cell_type = _layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y + 1].CellType;
+                    var left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y - 1].CellType;
+                    var right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y + 1].CellType;
                     // ячейка слева сверху
-                    var up_left_cell_type = _layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y - 1].CellType;
+                    var up_left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y - 1].CellType;
                     // ячейка справа сверху
-                    var up_right_cell_type = _layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y + 1].CellType;
+                    var up_right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y + 1].CellType;
 
                     // ячейка слева
                     if ((left_cell_type == CellType.Shunt & left_cell_type != needed_cell_type) || (left_cell_type == CellType.Contact & left_cell_type != needed_cell_type))
@@ -216,12 +293,12 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
                 // левый столбец
                 else if (_cell.MainCell.Position.y == 0)
                 {
-                    var up_cell_type = _layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y].CellType;
-                    var down_cell_type = _layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y].CellType;
+                    var up_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y].CellType;
+                    var down_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y].CellType;
                     // ячейка справа снизу
-                    var down_right_cell_type = _layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y + 1].CellType;
+                    var down_right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y + 1].CellType;
                     // ячейка справа сверху
-                    var up_right_cell_type = _layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y + 1].CellType;
+                    var up_right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y + 1].CellType;
 
                     // ячейка сверху
                     if ((up_cell_type == CellType.Shunt & up_cell_type != needed_cell_type) || (up_cell_type == CellType.Contact & up_cell_type != needed_cell_type))
@@ -243,14 +320,14 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
                     }
                 }
                 // правый
-                else if (_cell.MainCell.Position.y == _layer.Cells.Count - 1)
+                else if (_cell.MainCell.Position.y == _cell.Layer.Cells.Count - 1)
                 {
-                    var up_cell_type = _layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y].CellType;
-                    var down_cell_type = _layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y].CellType;
+                    var up_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y].CellType;
+                    var down_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y].CellType;
                     // ячейка слева снизу
-                    var down_left_cell_type = _layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y - 1].CellType;
+                    var down_left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y - 1].CellType;
                     // ячейка слева сверху
-                    var up_left_cell_type = _layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y - 1].CellType;
+                    var up_left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y - 1].CellType;
 
                     // ячейка сверху
                     if ((up_cell_type == CellType.Shunt & up_cell_type != needed_cell_type) || (up_cell_type == CellType.Contact & up_cell_type != needed_cell_type))
