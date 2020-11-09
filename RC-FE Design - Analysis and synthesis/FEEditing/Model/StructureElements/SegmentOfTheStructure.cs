@@ -28,7 +28,12 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
         public string Number { get; set; }
 
         /// <summary>
-        /// Словарь выводов сегмента по слоям
+        /// Позиция сегмента в структуре
+        /// </summary>
+        public (int x, int y) Position;
+
+        /// <summary>
+        /// Словарь ячеек сегмента по слоям (1 ячейка на слой)
         /// </summary>
         public Dictionary<Layer, Cell> CellsInLayer { get; set; } = new Dictionary<Layer, Cell>();
 

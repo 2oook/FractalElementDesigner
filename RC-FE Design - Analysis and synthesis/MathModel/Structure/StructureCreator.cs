@@ -246,7 +246,8 @@ namespace FractalElementDesigner.MathModel.Structure
                 {
                     for (int c = 0; c < horizontalStructureDimensionValue; c++)
                     {
-                        layer.Cells[r][c].CellType = DefineCellType(r, c, verticalStructureDimensionValue, horizontalStructureDimensionValue, layer.Name == RCStructureLayerTypeConstants.NR ? CellType.R : CellType.RC);
+                        layer.Cells[r][c].CellType = DefineCellType(r, c, verticalStructureDimensionValue, horizontalStructureDimensionValue,
+                            layer.Name == RCStructureLayerTypeConstants.NR ? CellType.R : CellType.RC);
                     }
                 }
             }
@@ -256,18 +257,26 @@ namespace FractalElementDesigner.MathModel.Structure
                 // первая строка или последняя
                 if (i == 0 || i == rowCount - 1)
                 {
-                    if (j != 0 | j != columnCount - 1)
+                    if (j != 0 && j != columnCount - 1)
                     {
                         return CellType.PlaceForContact;
+                    }
+                    else
+                    {
+                        return CellType.None;
                     }
                 }
                 // первая колонка или последняя
                 if (j == 0 || j == columnCount - 1)
                 {
                     // установить угловые ячейки как неактивные
-                    if (i != 0 | i != rowCount - 1)
+                    if (i != 0 && i != rowCount - 1)
                     {
                         return CellType.PlaceForContact;
+                    }
+                    else
+                    {
+                        return CellType.None;
                     }
                 }
 

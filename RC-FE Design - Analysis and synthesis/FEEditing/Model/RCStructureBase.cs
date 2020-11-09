@@ -74,7 +74,7 @@ namespace FractalElementDesigner.FEEditing.Model
 
                 for (int c = 0; c < horizontalStructureDimensionValue; c++)
                 {
-                    var cell = new SegmentOfTheStructure(r.ToString() + c.ToString());
+                    var cell = new SegmentOfTheStructure(r.ToString() + c.ToString()) { Position = { x = r, y = c } };
 
                     int pins_counter = 0;
 

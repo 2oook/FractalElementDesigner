@@ -57,25 +57,59 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
                         cell.CellType = CellType.None;
                         break;
                     case ToolType.ContactNumerator:
-
+                        break;
+                    case ToolType.ContactCellDisposer:
+                        if (cell.CellType == CellType.Contact)
+                        {
+                            cell.CellType = CellType.PlaceForContact;
+                        }
+                        else if ((cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact)
+                        {
+                            cell.CellType = CellType.Contact;
+                        }
+                        break;
+                    case ToolType.ForbidContactDisposer:
+                        if (cell.CellType == CellType.Forbid)
+                        {
+                            cell.CellType = CellType.PlaceForContact;
+                        }
+                        else if ((cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact)
+                        {
+                            cell.CellType = CellType.Forbid;
+                        }
+                        break;
+                    case ToolType.ShuntCellDisposer:
+                        if (cell.CellType == CellType.Shunt)
+                        {
+                            cell.CellType = CellType.PlaceForContact;
+                        }
+                        else if ((cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact)
+                        {
+                            cell.CellType = CellType.Shunt;
+                        }
                         break;
                     case ToolType.CutCellDisposer:
                         cell.CellType = CellType.Cut;
                         break;
-                    case ToolType.ContactCellDisposer:
-                        cell.CellType = CellType.Contact;
-                        break;
-                    case ToolType.ForbidContactDisposer:
-                        cell.CellType = CellType.Forbid;
-                        break;
                     case ToolType.RCCellDisposer:
-                        cell.CellType = CellType.RC;
+                        if (cell.CellType == CellType.RC)
+                        {
+                            cell.CellType = CellType.Cut;
+                        }
+                        else
+                        {
+                            cell.CellType = CellType.RC;
+                        }
                         break;
                     case ToolType.RCellDisposer:
-                        cell.CellType = CellType.R;
-                        break;
-                    case ToolType.ShuntCellDisposer:
-                        cell.CellType = CellType.Shunt;
+                        if (cell.CellType == CellType.R)
+                        {
+                            cell.CellType = CellType.Cut;
+                        }
+                        else
+                        {
+                            cell.CellType = CellType.R;
+                        }
                         break;
                     default:
                         break;
@@ -87,7 +121,7 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
         private static bool CheckToolApplyPossibility(IEditingTool tool, Cell cell)
         {
             var result = true;
-
+            
             switch (tool.Type)
             {
                 case ToolType.None:
@@ -99,22 +133,64 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
                     if (cell.CellType != CellType.R && cell.CellType != CellType.RC) result = false;
                     break;
                 case ToolType.ContactCellDisposer:
-                    if (cell.CellType != CellType.PlaceForContact && cell.CellType != CellType.Forbid && cell.CellType != CellType.Shunt) result = false;
+                    if (!CheckContactCellPlacing(cell, CellType.Contact) && (cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact) result = false;
                     break;
                 case ToolType.ForbidContactDisposer:
-                    if (cell.CellType != CellType.PlaceForContact && cell.CellType != CellType.Contact && cell.CellType != CellType.Shunt) result = false;
+                    if ((cell.CellType & CellType.PlaceForContact) != CellType.PlaceForContact) result = false;
                     break;
                 case ToolType.RCCellDisposer:
-                    if (cell.CellType != CellType.R && cell.CellType != CellType.Cut) result = false;
+                    
                     break;
                 case ToolType.RCellDisposer:
-                    if (cell.CellType != CellType.RC && cell.CellType != CellType.Cut) result = false;
+                    
                     break;
                 case ToolType.ShuntCellDisposer:
-                    if (cell.CellType != CellType.PlaceForContact && cell.CellType != CellType.Forbid && cell.CellType != CellType.Contact) result = false;
+                    if (!CheckContactCellPlacing(cell, CellType.Shunt) && (cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact) result = false;
                     break;
                 default:
                     break;
+            }
+
+            bool CheckContactCellPlacing(Cell _cell, CellType needed_cell_type) 
+            {
+                var _layer = cell.MainCell.CellsInLayer.Single(x => x.Value == _cell).Key;
+
+                // либо верхняя строка либо нижняя
+                if (_cell.MainCell.Position.x == 0 || _cell.MainCell.Position.x == _layer.Cells.First().Count -1)
+                {
+                    var left_cell_type = _layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y - 1].CellType;
+                    var right_cell_type = _layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y + 1].CellType;
+
+                    // ячейка слева
+                    if ((left_cell_type == CellType.Shunt & left_cell_type != needed_cell_type) || (left_cell_type == CellType.Contact & left_cell_type != needed_cell_type))
+                    {
+                        return false;
+                    }
+                    // ячейка справа
+                    else if ((right_cell_type == CellType.Shunt & right_cell_type != needed_cell_type) || (right_cell_type == CellType.Contact & right_cell_type != needed_cell_type))
+                    {
+                        return false;
+                    }
+                }
+                // либо левый столбец либо правый
+                else if (_cell.MainCell.Position.y == 0 || _cell.MainCell.Position.y == _layer.Cells.Count - 1)
+                {
+                    var up_cell_type = _layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y].CellType;
+                    var down_cell_type = _layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y].CellType;
+
+                    // ячейка сверху
+                    if ((up_cell_type == CellType.Shunt & up_cell_type != needed_cell_type) || (up_cell_type == CellType.Contact & up_cell_type != needed_cell_type))
+                    {
+                        return false;
+                    }
+                    // ячейка снизу
+                    else if ((down_cell_type == CellType.Shunt & down_cell_type != needed_cell_type) || (down_cell_type == CellType.Contact & down_cell_type != needed_cell_type))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
             }
 
             return result;

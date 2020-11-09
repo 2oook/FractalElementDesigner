@@ -20,6 +20,11 @@ namespace FractalElementDesigner.FEEditing.Model
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
+        /// Ссылка на структуру
+        /// </summary>
+        public RCStructure ParentStructure { get; set; }
+
+        /// <summary>
         /// Матрица ячеек слоя
         /// </summary>
         public ObservableCollection<ObservableCollection<Cell>> Cells { get; set; } 

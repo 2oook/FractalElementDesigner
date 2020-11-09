@@ -196,7 +196,7 @@ namespace FractalElementDesigner.ViewModels
                     // добавить слои в соответствии с шаблоном
                     foreach (var layer in SelectedStructureType.StructureLayers)
                     {
-                        CurrentStructure.StructureLayers.Add(new Layer() { Name = layer.Name });
+                        CurrentStructure.StructureLayers.Add(new Layer() { Name = layer.Name, ParentStructure = CurrentStructure });
                     }
 
                     // скопировать значения из словаря для валидации в словарь свойств структуры
