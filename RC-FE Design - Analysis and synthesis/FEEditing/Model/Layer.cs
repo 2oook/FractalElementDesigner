@@ -1,4 +1,5 @@
 ﻿using FractalElementDesigner.FEEditing.Model.StructureElements;
+using FractalElementDesigner.ProjectTree;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +13,7 @@ namespace FractalElementDesigner.FEEditing.Model
     /// Слой структуры
     /// </summary>
     [Serializable]
-    class Layer
+    class Layer: IProjectTreeItem
     {
         /// <summary>
         /// Название

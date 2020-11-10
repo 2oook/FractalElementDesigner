@@ -22,6 +22,8 @@ namespace FractalElementDesigner.Controls.Selectors
         public Style FElementStructureStyle { get; set; }
         // Стиль для графика
         public Style PRPlotStyle { get; set; }
+        // Стиль для слоя
+        public Style LayerStructureStyle { get; set; }
         // Стиль по-умолчанию
         public Style DefaultStyle { get; set; }
 
@@ -41,6 +43,10 @@ namespace FractalElementDesigner.Controls.Selectors
                 else if (projectTreeItem is RCStructureBase)
                 {
                     return FElementStructureStyle;
+                }
+                else if (projectTreeItem is Layer)
+                {
+                    return LayerStructureStyle;
                 }
             }
 

@@ -88,112 +88,116 @@
                             <TabControl Grid.Row="0" Grid.Column="2" IsEnabled="{Binding Path=IsProjectTreeEnabled}" Grid.IsSharedSizeScope="True" >
                                 <TabItem Header="Проект" mah:HeaderedControlHelper.HeaderFontSize="16">
 
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="1*"/>
-                                            </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
 
                                         <TreeView ItemsSource="{Binding Path=Projects}" >
 
-                                                <TreeView.Resources>
+                                            <TreeView.Resources>
 
-                                                    <Style x:Key="treeViewItemBaseStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
-                                                        <Setter Property="IsExpanded" Value="True"/>
-                                                        <EventSetter Event="PreviewMouseRightButtonDown" Handler="OnPreviewMouseRightButtonDown"/>
-                                                    </Style>
+                                                <Style x:Key="treeViewItemBaseStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                                                    <Setter Property="IsExpanded" Value="True"/>
+                                                    <EventSetter Event="PreviewMouseRightButtonDown" Handler="OnPreviewMouseRightButtonDown"/>
+                                                </Style>
 
-                                                    <ContextMenu x:Key="projectTreeSchemePlotContextMenu" Visibility="Hidden">
+                                                <ContextMenu x:Key="projectTreeFElementSchemeContextMenu">
+                                                    <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Выбрать схему" Command="{Binding Path=ChoiceOfSchemeCommand}"/>
+                                                    <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Создать конструкцию" Command="{Binding Path=CreateStructureCommand}"/>
+                                                </ContextMenu>
 
-                                                    </ContextMenu>
+                                                <ContextMenu x:Key="projectTreeFElementStructureContextMenu">
+                                                    <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Пересчитать" Command="{Binding Path=RecalculateStructureCommand}"/>
+                                                </ContextMenu>
 
-                                                    <ContextMenu x:Key="projectTreeFElementSchemeContextMenu">
-                                                        <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Выбрать схему" Command="{Binding Path=ChoiceOfSchemeCommand}"/>
-                                                        <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Создать конструкцию" Command="{Binding Path=CreateStructureCommand}"/>
-                                                    </ContextMenu>
+                                                <ContextMenu x:Key="projectTreeLayerStructureContextMenu">
+                                                    <!--<MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Пересчитать" Command="{Binding Path=RecalculateStructureCommand}"/>-->
+                                                </ContextMenu>
 
-                                                    <ContextMenu x:Key="projectTreeFElementStructureContextMenu">
-                                                        <!--<MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Выбрать схему" Command="{Binding Path=ChoiceOfSchemeCommand}"/>
-                                                        <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Создать конструкцию" Command="{Binding Path=CreateStructureCommand}"/>-->
-                                                    </ContextMenu>
+                                                <ContextMenu x:Key="projectTreePlotContextMenu">
+                                                    <MenuItem  Header="Логарифмический" Command="{Binding Path=SetLogarithmicAxleCommand}"/>
+                                                    <MenuItem  Header="Линейный" Command="{Binding Path=SetLinearAxleCommand}"/>
+                                                </ContextMenu>
 
-                                                    <ContextMenu x:Key="projectTreePlotContextMenu">
-                                                        <MenuItem  Header="Логарифмический" Command="{Binding Path=SetLogarithmicAxleCommand}"/>
-                                                        <MenuItem  Header="Линейный" Command="{Binding Path=SetLinearAxleCommand}"/>
-                                                    </ContextMenu>
+                                                <Style x:Key="projectTreeFElementSchemeStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
+                                                    <Setter Property="ContextMenu" Value="{StaticResource projectTreeFElementSchemeContextMenu}"/>
+                                                </Style>
 
-                                                    <Style x:Key="projectTreeFElementSchemeStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
-                                                        <Setter Property="ContextMenu" Value="{StaticResource projectTreeFElementSchemeContextMenu}"/>
-                                                    </Style>
+                                                <Style x:Key="projectTreeFElementStructureStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
+                                                    <Setter Property="ContextMenu" Value="{StaticResource projectTreeFElementStructureContextMenu}"/>
+                                                </Style>
 
-                                                    <Style x:Key="projectTreeFElementStructureStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
+                                                <Style x:Key="projectTreePRPlotStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
+                                                    <Setter Property="ContextMenu" Value="{StaticResource projectTreePlotContextMenu}"/>
+                                                </Style>
 
-                                                    </Style>
+                                                <Style x:Key="projectTreeLayerStructureStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
+                                                    <Setter Property="ContextMenu" Value="{StaticResource projectTreeLayerStructureContextMenu}"/>
+                                                </Style>
 
-                                                    <Style x:Key="projectTreePRPlotStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
-                                                        <Setter Property="ContextMenu" Value="{StaticResource projectTreePlotContextMenu}"/>
-                                                    </Style>
+                                                <Style x:Key="projectTreeDefaultStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
 
-                                                    <Style x:Key="projectTreeDefaultStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
+                                                </Style>
 
-                                                    </Style>
+                                                <HierarchicalDataTemplate x:Key="FElementSchemeDataTemplate" ItemsSource="{Binding Path=Elements}" ItemTemplateSelector="{x:Null}">
+                                                    <!--схема-->
+                                                    <TextBlock Text="{Binding Path=Name}"/>
+                                                    <HierarchicalDataTemplate.ItemTemplate>
+                                                        <HierarchicalDataTemplate>
+                                                            <!--график-->
+                                                            <TextBlock Text="{Binding Path=Name}"/>
+                                                        </HierarchicalDataTemplate>
+                                                    </HierarchicalDataTemplate.ItemTemplate>
+                                                </HierarchicalDataTemplate>
 
-                                                    <HierarchicalDataTemplate x:Key="FElementSchemeDataTemplate" ItemsSource="{Binding Path=Elements}" ItemTemplateSelector="{x:Null}">
-                                                        <!--схема-->
-                                                        <TextBlock Text="{Binding Path=Name}"/>
-                                                        <HierarchicalDataTemplate.ItemTemplate>
-                                                            <HierarchicalDataTemplate>
-                                                                <!--график-->
-                                                                <TextBlock Text="{Binding Path=Name}"/>
-                                                            </HierarchicalDataTemplate>
-                                                        </HierarchicalDataTemplate.ItemTemplate>
-                                                    </HierarchicalDataTemplate>
+                                                <HierarchicalDataTemplate x:Key="FElementStructureDataTemplate" ItemsSource="{Binding Path=StructureLayers}" ItemTemplateSelector="{x:Null}">
+                                                    <!--структура-->
+                                                    <TextBlock Text="{Binding Path=Name}"/>
+                                                    <HierarchicalDataTemplate.ItemTemplate>
+                                                        <HierarchicalDataTemplate>
+                                                            <!--слой-->
+                                                            <TextBlock Text="{Binding Path=Name}"/>
+                                                        </HierarchicalDataTemplate>
+                                                    </HierarchicalDataTemplate.ItemTemplate>
+                                                </HierarchicalDataTemplate>
 
-                                                    <HierarchicalDataTemplate x:Key="FElementStructureDataTemplate" ItemsSource="{Binding Path=StructureLayers}" ItemTemplateSelector="{x:Null}">
-                                                        <!--структура-->
-                                                        <TextBlock Text="{Binding Path=Name}"/>
-                                                        <HierarchicalDataTemplate.ItemTemplate>
-                                                            <HierarchicalDataTemplate>
-                                                                <!--слой-->
-                                                                <TextBlock Text="{Binding Path=Name}"/>
-                                                            </HierarchicalDataTemplate>
-                                                        </HierarchicalDataTemplate.ItemTemplate>
-                                                    </HierarchicalDataTemplate>
+                                            </TreeView.Resources>
 
-                                                </TreeView.Resources>
+                                            <e:Interaction.Behaviors>
+                                                <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding SelectedProjectTreeItem, Mode=TwoWay}" />
+                                            </e:Interaction.Behaviors>
 
-                                                <e:Interaction.Behaviors>
-                                                    <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding SelectedProjectTreeItem, Mode=TwoWay}" />
-                                                </e:Interaction.Behaviors>
-
-                                                <TreeView.ItemContainerStyleSelector>
-                                                    <selectors:ProjectTreeItemStyleSelector FElementSchemeStyle="{StaticResource ResourceKey=projectTreeFElementSchemeStyle}" 
+                                            <TreeView.ItemContainerStyleSelector>
+                                                <selectors:ProjectTreeItemStyleSelector FElementSchemeStyle="{StaticResource ResourceKey=projectTreeFElementSchemeStyle}" 
                                                                                     FElementStructureStyle ="{StaticResource ResourceKey=projectTreeFElementStructureStyle}"
                                                                                     PRPlotStyle ="{StaticResource ResourceKey=projectTreePRPlotStyle}"
+                                                                                    LayerStructureStyle ="{StaticResource ResourceKey=projectTreeLayerStructureStyle}"
                                                                                     DefaultStyle="{StaticResource ResourceKey=projectTreeDefaultStyle}"/>
-                                                </TreeView.ItemContainerStyleSelector>
+                                            </TreeView.ItemContainerStyleSelector>
 
-                                                <TreeView.ItemTemplate>
-                                                    <HierarchicalDataTemplate ItemsSource="{Binding Path=Items}">
-                                                        <!--проект-->
-                                                        <TextBlock Text="{Binding Path=Name}"/>
-                                                        <HierarchicalDataTemplate.ItemTemplateSelector>
-                                                            <selectors:ProjectTreeItemDataTemplateSelector FElementSchemeDataTemplate="{StaticResource ResourceKey=FElementSchemeDataTemplate}"
-                                                                                            FElementStructureDataTemplate="{StaticResource ResourceKey=FElementStructureDataTemplate}"/>
-                                                        </HierarchicalDataTemplate.ItemTemplateSelector>
-                                                    </HierarchicalDataTemplate>
-                                                </TreeView.ItemTemplate>
-                                            </TreeView>
+                                            <TreeView.ItemTemplate>
+                                                <HierarchicalDataTemplate ItemsSource="{Binding Path=Items}">
+                                                    <!--проект-->
+                                                    <TextBlock Text="{Binding Path=Name}"/>
+                                                    <HierarchicalDataTemplate.ItemTemplateSelector>
+                                                        <selectors:ProjectTreeItemDataTemplateSelector FElementSchemeDataTemplate="{StaticResource ResourceKey=FElementSchemeDataTemplate}"
+                                                                                        FElementStructureDataTemplate="{StaticResource ResourceKey=FElementStructureDataTemplate}"/>
+                                                    </HierarchicalDataTemplate.ItemTemplateSelector>
+                                                </HierarchicalDataTemplate>
+                                            </TreeView.ItemTemplate>
+                                        </TreeView>
 
-                                        </Grid>
-                                   
+                                    </Grid>
+
                                 </TabItem>
 
                             </TabControl>
 
                             <DockPanel Grid.Row="1" Grid.Column="2">
-                                <!--<Button DockPanel.Dock="Left" Content="Пересчитать"  Command="{Binding RecalculateCommand}" Padding="5"  Margin="5" FontSize="14"/>-->
+                                <Button DockPanel.Dock="Left" Content="Пересчитать"  Command="{Binding RecalculateStructureCommand}" Padding="5"  Margin="5" FontSize="14"/>
                                 <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Синтез"  Command="{Binding SchemeSynthesisCommand}" Padding="5"  Margin="5" FontSize="14"/>
-                                <!--<Button Content="Тест"  Command="{Binding TestCommand}" Padding="5"  Margin="5" FontSize="14"/>-->
+                                <Button Content="Тест"  Command="{Binding TestCommand}" Padding="5"  Margin="5" FontSize="14"/>
                             </DockPanel>
 
                         </Grid>

@@ -275,6 +275,20 @@ namespace FractalElementDesigner.ViewModels
             }
         }
 
+        private ICommand recalculateStructureCommand;
+        /// <summary>
+        /// Команда для пересчёта структуры
+        /// </summary>
+        public ICommand RecalculateStructureCommand
+        {
+            get { return recalculateStructureCommand; }
+            set
+            {
+                recalculateStructureCommand = value;
+                RaisePropertyChanged(nameof(RecalculateStructureCommand));
+            }
+        }
+
         private ICommand newProjectCommand;
         /// <summary>
         /// Команда для создания нового проекта
@@ -435,7 +449,7 @@ namespace FractalElementDesigner.ViewModels
                 PlotVisibility = Visibility.Visible;
                 _Page.plotControl.DataContext = plot;
             }
-            else if (value is RCStructure structure)
+            else if (value is RCStructureBase structure)
             {
                 StructureEditorVisibility = Visibility.Visible;
             }
@@ -463,6 +477,7 @@ namespace FractalElementDesigner.ViewModels
 
             SchemeSynthesisCommand = new RelayCommand(SynthesizeScheme, IsSchemeSynthesisPossible);
             CreateStructureCommand = new RelayCommand(CreateStructure, IsStructureCreatingPossible);
+            RecalculateStructureCommand = new RelayCommand(RecalculateStructure, IsStructureRecalculatingPossible);
 
             CellApplyToolCommand = new RelayCommand<Cell>(ApplyToolForElementCell);
         }
@@ -619,6 +634,28 @@ namespace FractalElementDesigner.ViewModels
 
                 CreateStructureAsync(project, scheme, newStructureWindowViewModel.CurrentStructure);
             }
+        }
+
+        /// <summary>
+        /// Метод для пересчёта струтктуры
+        /// </summary>
+        private void RecalculateStructure() 
+        {
+
+        }
+
+        /// <summary>
+        /// Метод определяющий возможность пересчёта конструкции схемы
+        /// </summary>
+        /// <returns>Разрешающий флаг</returns>
+        private bool IsStructureRecalculatingPossible()
+        {
+            if (SelectedProjectTreeItem is RCStructureBase structure)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -1045,7 +1082,7 @@ namespace FractalElementDesigner.ViewModels
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
 
-            //Test();
+            Test();
 
             if (TestingBool)
             {
