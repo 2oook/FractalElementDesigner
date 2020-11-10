@@ -56,16 +56,16 @@ namespace FractalElementDesigner.MathModel
         // Метод для установки логарифмической оси для частот
         private void SetLogarithmicAxle(object param) 
         {
-            if (Model == null)
+            if (PlotModel == null)
             {
                 return;
             }
 
-            Model.Axes.Clear();
+            PlotModel.Axes.Clear();
 
-            Model.ResetAllAxes();
+            PlotModel.ResetAllAxes();
 
-            Model.Axes.Add(new LinearAxis()
+            PlotModel.Axes.Add(new LinearAxis()
             {
                 Title = "φ",
                 MajorGridlineStyle = LineStyle.Automatic,
@@ -76,7 +76,7 @@ namespace FractalElementDesigner.MathModel
                 IntervalLength = 50
             });
 
-            Model.Axes.Add(new LogarithmicAxis()
+            PlotModel.Axes.Add(new LogarithmicAxis()
             {
                 Title = "ωRC",
                 MajorGridlineStyle = LineStyle.Automatic,
@@ -87,22 +87,22 @@ namespace FractalElementDesigner.MathModel
                 UseSuperExponentialFormat = true
             });
 
-            Model.InvalidatePlot(false);
+            PlotModel.InvalidatePlot(false);
         }
 
         // Метод для установки линейной оси для частот
         private void SetLinearAxle(object param)
         {
-            if (Model == null)
+            if (PlotModel == null)
             {
                 return;
             }
 
-            Model.Axes.Clear();
+            PlotModel.Axes.Clear();
 
-            Model.ResetAllAxes();
+            PlotModel.ResetAllAxes();
 
-            Model.Axes.Add(new LinearAxis()
+            PlotModel.Axes.Add(new LinearAxis()
             {
                 Title = "φ",
                 MajorGridlineStyle = LineStyle.Automatic,
@@ -113,7 +113,7 @@ namespace FractalElementDesigner.MathModel
                 IntervalLength = 50
             });
 
-            Model.Axes.Add(new LinearAxis()
+            PlotModel.Axes.Add(new LinearAxis()
             {
                 Title = "ωRC",
                 MajorGridlineStyle = LineStyle.Automatic,
@@ -122,7 +122,7 @@ namespace FractalElementDesigner.MathModel
                 IntervalLength = 50
             });
 
-            Model.InvalidatePlot(false);
+            PlotModel.InvalidatePlot(false);
         }
 
         // Метод для инициализации графика
@@ -135,9 +135,9 @@ namespace FractalElementDesigner.MathModel
                 series.Points.Add(new DataPoint(point.Item1, point.Item2));
             }
 
-            Model = new PlotModel() { Title = "ФЧХ" };
+            PlotModel = new PlotModel() { Title = "ФЧХ" };
 
-            Model.Axes.Add(new LinearAxis()
+            PlotModel.Axes.Add(new LinearAxis()
             {
                 Title = "φ",
                 MajorGridlineStyle = LineStyle.Automatic,
@@ -148,7 +148,7 @@ namespace FractalElementDesigner.MathModel
                 IntervalLength = 50
             });
 
-            Model.Axes.Add(new LogarithmicAxis()
+            PlotModel.Axes.Add(new LogarithmicAxis()
             {
                 Title = "ωRC",
                 MajorGridlineStyle = LineStyle.Automatic,
@@ -159,7 +159,7 @@ namespace FractalElementDesigner.MathModel
                 UseSuperExponentialFormat = true
             });
 
-            Model.Series.Add(series);         
+            PlotModel.Series.Add(series);         
         }
 
         /// <summary>
@@ -172,13 +172,13 @@ namespace FractalElementDesigner.MathModel
         /// <summary>
         /// Модель графика
         /// </summary>
-        public PlotModel Model 
+        public PlotModel PlotModel 
         { 
             get => model;
             set 
             {
                 model = value;
-                RaisePropertyChanged(nameof(Model));
+                RaisePropertyChanged(nameof(PlotModel));
             } 
         }
 
@@ -194,10 +194,7 @@ namespace FractalElementDesigner.MathModel
         /// <param name="propName">Имя свойства</param>
         protected virtual void RaisePropertyChanged(string propName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

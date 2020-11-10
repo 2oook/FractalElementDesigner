@@ -86,7 +86,7 @@ namespace FractalElementDesigner.MathModel
         }
 
         // Метод для понижения порядка матрицы
-        private static void ReduceMatrix(ref Matrix<Complex> matrix, int upTo)
+        public static void ReduceMatrix(ref Matrix<Complex> matrix, int upTo)
         {
             Matrix<Complex> temp;
 
@@ -107,7 +107,7 @@ namespace FractalElementDesigner.MathModel
         }
 
         // метод для сложения столбцов и строк соединённых выводов
-        private static void AddRowsAndColsInYMatrix(ref Matrix<Complex> Y, ref Matrix<float> I) 
+        public static void AddRowsAndColsInYMatrix(ref Matrix<Complex> Y, ref Matrix<float> I) 
         {
             var indicesForRemove = new List<int>();
 
@@ -156,7 +156,7 @@ namespace FractalElementDesigner.MathModel
         }
 
         // метод для удаления строк и столбцов из матрицы
-        private static void RemoveRowAndColsFromMatrix<T>(ref Matrix<T> matrix, List<int> indices) where T : struct , IEquatable<T>, IFormattable
+        public static void RemoveRowAndColsFromMatrix<T>(ref Matrix<T> matrix, List<int> indices) where T : struct , IEquatable<T>, IFormattable
         {
             // число для корректировки индекса в матрице, т.к. число столбцов и строк матрицы уменьшается во время работы цикла
             int adjustCounter;

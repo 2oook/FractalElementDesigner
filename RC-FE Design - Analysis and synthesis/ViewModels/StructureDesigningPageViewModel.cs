@@ -28,6 +28,8 @@ using FractalElementDesigner.RCWorkbenchLibrary;
 using FractalElementDesigner.RCWorkbenchLibrary.Helpers;
 using System.Runtime.InteropServices;
 using System.Numerics;
+using MathNet.Numerics.LinearAlgebra;
+using OxyPlot;
 
 namespace FractalElementDesigner.ViewModels
 {
@@ -187,6 +189,20 @@ namespace FractalElementDesigner.ViewModels
             {
                 progressState = value;
                 RaisePropertyChanged(nameof(ProgressState));
+            }
+        }
+
+        private PlotModel structurePlotModel;
+        /// <summary>
+        /// Модель графика структуры
+        /// </summary>
+        public PlotModel PlotModel
+        {
+            get { return structurePlotModel; }
+            set 
+            { 
+                structurePlotModel = value;
+                RaisePropertyChanged(nameof(PlotModel));
             }
         }
 
@@ -637,11 +653,65 @@ namespace FractalElementDesigner.ViewModels
         }
 
         /// <summary>
-        /// Метод для пересчёта струтктуры
+        /// Метод для пересчёта структуры
         /// </summary>
         private void RecalculateStructure() 
         {
+            if (SelectedProjectTreeItem is RCStructureBase structure) 
+            {
+                // проверка возможности анализа структуры
+                if (true)
+                {
 
+                }
+
+                // анализ структуры
+                int first_dimension = 100;
+                int second_dimension = 36;
+
+                double[] frequences = new double[first_dimension];
+                RCWorkbenchLibraryEntry.GetFrequences(frequences);
+
+                double[,] y_parameters_double = new double[first_dimension, second_dimension];
+                RCWorkbenchLibraryEntry.CalculateYParameters(y_parameters_double, first_dimension, second_dimension);
+
+                int outer_pins_count = RCWorkbenchLibraryEntry.GetCPQuantity();
+
+                var matrices = MatrixHelper.GetYParametersMatricesFromRCWorkbenchArray(y_parameters_double, outer_pins_count);
+
+                // для схемы №5 !!!!
+                // для схемы №5 !!!!
+                var I = Matrix<float>.Build.DenseOfArray(new float[4, 4]);
+                // установить диагональ
+                var diagonal = Vector<float>.Build.Dense(4, 1);
+                I.SetDiagonal(diagonal);
+
+                I[2, 3] = 1;
+                I[3, 2] = 1;
+                // для схемы №5 !!!!
+                // для схемы №5 !!!!
+
+                for (int i = 0; i < matrices.Count; i++)
+                {
+                    var matrix = matrices[i];
+
+                    SchemePhaseResponseCalculator.AddRowsAndColsInYMatrix(ref matrix, ref I);
+
+                    //SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref matrix, );
+
+                    SchemePhaseResponseCalculator.ReduceMatrix(ref matrix, 1);
+
+                    var phase = -matrix[matrix.RowCount - 1, matrix.ColumnCount - 1].Phase * 180 / Math.PI;
+
+                    structure.PhaseResponsePoints.Add((frequences[i], phase));
+                }
+
+                var plot = new PRPlot();
+
+                plot.InitializatePhaseResponsePlot(structure.PhaseResponsePoints);
+
+                PlotModel = plot.PlotModel;
+            }   
         }
 
         /// <summary>
@@ -1097,8 +1167,7 @@ namespace FractalElementDesigner.ViewModels
 
                     var schemePrototype = new FElementScheme(new StructureSchemeSynthesisParameters().FESections) { Name = "Схема", Elements = { plot } };
 
-                    schemePrototype.Model.PhaseResponsePoints = SchemePhaseResponseCalculatorByFrequencies.CalculatePhaseResponseInScheme(
-                    1, 3, 50, schemePrototype.Model);
+                    schemePrototype.Model.PhaseResponsePoints = SchemePhaseResponseCalculatorByFrequencies.CalculatePhaseResponseInScheme(1, 3, 50, schemePrototype.Model);
 
                     plot.InitializatePhaseResponsePlot(schemePrototype.Model.PhaseResponsePoints);
 
@@ -1149,10 +1218,7 @@ namespace FractalElementDesigner.ViewModels
         /// <param name="propName">Имя свойства</param>
         protected virtual void RaisePropertyChanged(string propName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

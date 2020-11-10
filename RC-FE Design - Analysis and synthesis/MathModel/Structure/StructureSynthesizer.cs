@@ -36,8 +36,7 @@ namespace FractalElementDesigner.MathModel.Structure
 
             // для примера
             // рассчитать ФЧХ для конструкции
-            structure.PhaseResponsePoints = PhaseResponseCalculatorForStructureForAllFrequencies.CalculatePhaseResponseInStructure(
-                synthesisParameters.MinFrequencyLn, synthesisParameters.MaxFrequencyLn, synthesisParameters.PointsCountAtFrequencyAxle, structure);
+            //structure.PhaseResponsePoints = PhaseResponseCalculatorForStructureForAllFrequencies.CalculatePhaseResponseInStructure(synthesisParameters.MinFrequencyLn, synthesisParameters.MaxFrequencyLn, synthesisParameters.PointsCountAtFrequencyAxle, structure);
             // для примера
             //var t = ga.GetPopulation();
             //t.Add(scheme);

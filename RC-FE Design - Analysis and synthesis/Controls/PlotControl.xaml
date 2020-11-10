@@ -12,7 +12,7 @@
     <Border BorderThickness="1" BorderBrush="{DynamicResource ResourceKey=MahApps.Brushes.AccentBase}">
 
         <Grid>
-            <oxy:PlotView x:Name="plotView" Model="{Binding Model}"/>
+            <oxy:PlotView x:Name="plotView" Model="{Binding PlotModel}"/>
         </Grid>
 
     </Border>

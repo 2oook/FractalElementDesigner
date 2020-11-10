@@ -58,7 +58,7 @@ namespace FractalElementDesigner.FEEditing.Model
         /// Точки функции ФЧХ
         /// </summary>
         [NonSerialized]
-        public List<(double frequency, double phase)> PhaseResponsePoints;
+        public List<(double frequency, double phase)> PhaseResponsePoints = new List<(double frequency, double phase)>();
 
         // Метод для инициализации структуры
         public void Initialize(int verticalStructureDimensionValue, int horizontalStructureDimensionValue)
@@ -127,10 +127,7 @@ namespace FractalElementDesigner.FEEditing.Model
         /// <param name="propName">Имя свойства</param>
         protected virtual void RaisePropertyChanged(string propName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }
