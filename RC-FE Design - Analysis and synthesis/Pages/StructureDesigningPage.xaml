@@ -191,9 +191,9 @@
                             </TabControl>
 
                             <DockPanel Grid.Row="1" Grid.Column="2">
-                                <Button DockPanel.Dock="Left" Content="Пересчитать"  Command="{Binding RecalculateCommand}" Padding="5"  Margin="5" FontSize="14"/>
+                                <!--<Button DockPanel.Dock="Left" Content="Пересчитать"  Command="{Binding RecalculateCommand}" Padding="5"  Margin="5" FontSize="14"/>-->
                                 <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Синтез"  Command="{Binding SchemeSynthesisCommand}" Padding="5"  Margin="5" FontSize="14"/>
-                                <Button Content="Тест"  Command="{Binding TestCommand}" Padding="5"  Margin="5" FontSize="14"/>
+                                <!--<Button Content="Тест"  Command="{Binding TestCommand}" Padding="5"  Margin="5" FontSize="14"/>-->
                             </DockPanel>
 
                         </Grid>
