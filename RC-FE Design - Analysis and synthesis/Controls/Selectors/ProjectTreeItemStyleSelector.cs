@@ -18,6 +18,8 @@ namespace FractalElementDesigner.Controls.Selectors
     {
         // Стиль для схемы
         public Style FElementSchemeStyle { get; set; }
+        // Стиль для оболочки конструкции
+        public Style FElementStructureWrapperStyle { get; set; }
         // Стиль для конструкции
         public Style FElementStructureStyle { get; set; }
         // Стиль для графика
@@ -39,6 +41,10 @@ namespace FractalElementDesigner.Controls.Selectors
                 else if (projectTreeItem is PRPlot)
                 {
                     return PRPlotStyle;
+                }
+                else if (projectTreeItem is StructureInProjectTree)
+                {
+                    return FElementStructureWrapperStyle;
                 }
                 else if (projectTreeItem is RCStructureBase)
                 {

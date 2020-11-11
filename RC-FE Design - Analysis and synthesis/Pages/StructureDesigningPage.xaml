@@ -72,6 +72,14 @@
                 <Grid Grid.Column="1" Grid.RowSpan="2" >
                     <Expander ExpandDirection="Left" IsExpanded="True">
 
+                        <Expander.Header>
+                            <TextBlock Text="ДЕРЕВО ПРОЕКТА">
+                                <TextBlock.LayoutTransform>
+                                    <RotateTransform Angle="90"/>
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+                        </Expander.Header>
+
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -107,8 +115,12 @@
                                                     <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Создать конструкцию" Command="{Binding Path=CreateStructureCommand}"/>
                                                 </ContextMenu>
 
-                                                <ContextMenu x:Key="projectTreeFElementStructureContextMenu">
+                                                <ContextMenu x:Key="projectTreeFElementStructureWrapperContextMenu">
                                                     <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Пересчитать" Command="{Binding Path=RecalculateStructureCommand}"/>
+                                                </ContextMenu>
+
+                                                <ContextMenu x:Key="projectTreeFElementStructureContextMenu">
+                                                    <!--<MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Пересчитать" Command="{Binding Path=RecalculateStructureCommand}"/>-->
                                                 </ContextMenu>
 
                                                 <ContextMenu x:Key="projectTreeLayerStructureContextMenu">
@@ -126,6 +138,10 @@
 
                                                 <Style x:Key="projectTreeFElementStructureStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
                                                     <Setter Property="ContextMenu" Value="{StaticResource projectTreeFElementStructureContextMenu}"/>
+                                                </Style>
+
+                                                <Style x:Key="projectTreeFElementStructureWrapperStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
+                                                    <Setter Property="ContextMenu" Value="{StaticResource projectTreeFElementStructureWrapperContextMenu}"/>
                                                 </Style>
 
                                                 <Style x:Key="projectTreePRPlotStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource treeViewItemBaseStyle}">
@@ -151,15 +167,29 @@
                                                     </HierarchicalDataTemplate.ItemTemplate>
                                                 </HierarchicalDataTemplate>
 
-                                                <HierarchicalDataTemplate x:Key="FElementStructureDataTemplate" ItemsSource="{Binding Path=StructureLayers}" ItemTemplateSelector="{x:Null}">
+                                                <DataTemplate x:Key="plotDataTemplate">
+                                                    <!--график-->
+                                                    <TextBlock Text="{Binding Path=Name}"/>
+                                                </DataTemplate>
+
+                                                <HierarchicalDataTemplate x:Key="layersHierarchicalDataTemplate" ItemsSource="{Binding Path=StructureLayers}" ItemTemplateSelector="{x:Null}">
                                                     <!--структура-->
                                                     <TextBlock Text="{Binding Path=Name}"/>
-                                                    <HierarchicalDataTemplate.ItemTemplate>
+                                                    <HierarchicalDataTemplate.ItemTemplate >
                                                         <HierarchicalDataTemplate>
                                                             <!--слой-->
                                                             <TextBlock Text="{Binding Path=Name}"/>
                                                         </HierarchicalDataTemplate>
                                                     </HierarchicalDataTemplate.ItemTemplate>
+                                                </HierarchicalDataTemplate>
+
+                                                <HierarchicalDataTemplate x:Key="StructureInProjectTreeDataTemplate" ItemsSource="{Binding Path=Items}">
+                                                    <!--обертка структуры-->
+                                                    <TextBlock Text="{Binding Path=Name}"/>
+                                                    <HierarchicalDataTemplate.ItemTemplateSelector>
+                                                        <selectors:StructureItemDataTemplateSelector PlotDataTemplate="{StaticResource ResourceKey=plotDataTemplate}"
+                                                                                                     LayersDataTemplate="{StaticResource ResourceKey=layersHierarchicalDataTemplate}"/>
+                                                    </HierarchicalDataTemplate.ItemTemplateSelector>
                                                 </HierarchicalDataTemplate>
 
                                             </TreeView.Resources>
@@ -170,10 +200,11 @@
 
                                             <TreeView.ItemContainerStyleSelector>
                                                 <selectors:ProjectTreeItemStyleSelector FElementSchemeStyle="{StaticResource ResourceKey=projectTreeFElementSchemeStyle}" 
-                                                                                    FElementStructureStyle ="{StaticResource ResourceKey=projectTreeFElementStructureStyle}"
-                                                                                    PRPlotStyle ="{StaticResource ResourceKey=projectTreePRPlotStyle}"
-                                                                                    LayerStructureStyle ="{StaticResource ResourceKey=projectTreeLayerStructureStyle}"
-                                                                                    DefaultStyle="{StaticResource ResourceKey=projectTreeDefaultStyle}"/>
+                                                                                        FElementStructureStyle ="{StaticResource ResourceKey=projectTreeFElementStructureStyle}"
+                                                                                        FElementStructureWrapperStyle ="{StaticResource ResourceKey=projectTreeFElementStructureWrapperStyle}"
+                                                                                        PRPlotStyle ="{StaticResource ResourceKey=projectTreePRPlotStyle}"
+                                                                                        LayerStructureStyle ="{StaticResource ResourceKey=projectTreeLayerStructureStyle}"
+                                                                                        DefaultStyle="{StaticResource ResourceKey=projectTreeDefaultStyle}"/>
                                             </TreeView.ItemContainerStyleSelector>
 
                                             <TreeView.ItemTemplate>
@@ -182,7 +213,7 @@
                                                     <TextBlock Text="{Binding Path=Name}"/>
                                                     <HierarchicalDataTemplate.ItemTemplateSelector>
                                                         <selectors:ProjectTreeItemDataTemplateSelector FElementSchemeDataTemplate="{StaticResource ResourceKey=FElementSchemeDataTemplate}"
-                                                                                        FElementStructureDataTemplate="{StaticResource ResourceKey=FElementStructureDataTemplate}"/>
+                                                                                        StructureInProjectTreeDataTemplate="{StaticResource ResourceKey=StructureInProjectTreeDataTemplate}"/>
                                                     </HierarchicalDataTemplate.ItemTemplateSelector>
                                                 </HierarchicalDataTemplate>
                                             </TreeView.ItemTemplate>

@@ -30,6 +30,7 @@ using System.Runtime.InteropServices;
 using System.Numerics;
 using MathNet.Numerics.LinearAlgebra;
 using OxyPlot;
+using FractalElementDesigner.ProjectTree;
 
 namespace FractalElementDesigner.ViewModels
 {
@@ -189,20 +190,6 @@ namespace FractalElementDesigner.ViewModels
             {
                 progressState = value;
                 RaisePropertyChanged(nameof(ProgressState));
-            }
-        }
-
-        private PlotModel structurePlotModel;
-        /// <summary>
-        /// Модель графика структуры
-        /// </summary>
-        public PlotModel PlotModel
-        {
-            get { return structurePlotModel; }
-            set 
-            { 
-                structurePlotModel = value;
-                RaisePropertyChanged(nameof(PlotModel));
             }
         }
 
@@ -465,7 +452,11 @@ namespace FractalElementDesigner.ViewModels
                 PlotVisibility = Visibility.Visible;
                 _Page.plotControl.DataContext = plot;
             }
-            else if (value is RCStructureBase structure)
+            else if (value is StructureInProjectTree structureInProject)
+            {
+                StructureEditorVisibility = Visibility.Visible;
+            }
+            else if (value is RCStructureBase)
             {
                 StructureEditorVisibility = Visibility.Visible;
             }
@@ -657,61 +648,70 @@ namespace FractalElementDesigner.ViewModels
         /// </summary>
         private void RecalculateStructure() 
         {
-            if (SelectedProjectTreeItem is RCStructureBase structure) 
+            try
             {
-                // проверка возможности анализа структуры
-                if (true)
+                if (SelectedProjectTreeItem is StructureInProjectTree structureInProject) 
                 {
+                    // проверка возможности анализа структуры
+                    if (true)
+                    {
 
+                    }
+
+                    var structure = structureInProject.Items.Where(x => x is RCStructureBase).Single() as RCStructureBase;
+
+                    // анализ структуры
+                    int first_dimension = 100;
+                    int second_dimension = 36;
+
+                    double[] frequences = new double[first_dimension];
+                    RCWorkbenchLibraryEntry.GetFrequences(frequences);
+
+                    double[,] y_parameters_double = new double[first_dimension, second_dimension];
+                    RCWorkbenchLibraryEntry.CalculateYParameters(y_parameters_double, first_dimension, second_dimension);
+
+                    int outer_pins_count = RCWorkbenchLibraryEntry.GetCPQuantity();
+
+                    var matrices = MatrixHelper.GetYParametersMatricesFromRCWorkbenchArray(y_parameters_double, outer_pins_count);
+
+                    // для схемы №5 !!!!
+                    // для схемы №5 !!!!
+
+                    var I = Matrix<float>.Build.DenseOfArray(new float[4, 4]);
+                    // установить диагональ
+                    I.SetDiagonal(Vector<float>.Build.Dense(4, 1));
+
+                    I[2, 3] = 1;
+                    I[3, 2] = 1;
+
+                    var pe = new List<int>();
+
+                    // для схемы №5 !!!!
+                    // для схемы №5 !!!!
+
+                    structure.PhaseResponsePoints.Clear();
+
+                    for (int i = 0; i < matrices.Count; i++)
+                    {
+                        var matrix = matrices[i];
+
+                        var phase = SchemePhaseResponseCalculator.ConsiderOuterScheme(ref matrix, ref I, pe);
+
+                        structure.PhaseResponsePoints.Add((frequences[i], phase));
+                    }
+
+                    var plot = structureInProject.Items.Where(x => x is PRPlot).Single() as PRPlot;
+
+                    plot.InitializatePhaseResponsePlot(structure.PhaseResponsePoints);
+
+                    _Page.plotControl.DataContext = plot;
+                    _Page.structureEditorControl.structurePlot.DataContext = plot.Clone();
                 }
+            }
+            catch (Exception ex)
+            {
 
-                // анализ структуры
-                int first_dimension = 100;
-                int second_dimension = 36;
-
-                double[] frequences = new double[first_dimension];
-                RCWorkbenchLibraryEntry.GetFrequences(frequences);
-
-                double[,] y_parameters_double = new double[first_dimension, second_dimension];
-                RCWorkbenchLibraryEntry.CalculateYParameters(y_parameters_double, first_dimension, second_dimension);
-
-                int outer_pins_count = RCWorkbenchLibraryEntry.GetCPQuantity();
-
-                var matrices = MatrixHelper.GetYParametersMatricesFromRCWorkbenchArray(y_parameters_double, outer_pins_count);
-
-                // для схемы №5 !!!!
-                // для схемы №5 !!!!
-                var I = Matrix<float>.Build.DenseOfArray(new float[4, 4]);
-                // установить диагональ
-                var diagonal = Vector<float>.Build.Dense(4, 1);
-                I.SetDiagonal(diagonal);
-
-                I[2, 3] = 1;
-                I[3, 2] = 1;
-                // для схемы №5 !!!!
-                // для схемы №5 !!!!
-
-                for (int i = 0; i < matrices.Count; i++)
-                {
-                    var matrix = matrices[i];
-
-                    SchemePhaseResponseCalculator.AddRowsAndColsInYMatrix(ref matrix, ref I);
-
-                    //SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref matrix, );
-
-                    SchemePhaseResponseCalculator.ReduceMatrix(ref matrix, 1);
-
-                    var phase = -matrix[matrix.RowCount - 1, matrix.ColumnCount - 1].Phase * 180 / Math.PI;
-
-                    structure.PhaseResponsePoints.Add((frequences[i], phase));
-                }
-
-                var plot = new PRPlot();
-
-                plot.InitializatePhaseResponsePlot(structure.PhaseResponsePoints);
-
-                PlotModel = plot.PlotModel;
-            }   
+            }
         }
 
         /// <summary>
@@ -720,7 +720,7 @@ namespace FractalElementDesigner.ViewModels
         /// <returns>Разрешающий флаг</returns>
         private bool IsStructureRecalculatingPossible()
         {
-            if (SelectedProjectTreeItem is RCStructureBase structure)
+            if (SelectedProjectTreeItem is StructureInProjectTree structureInProjectTree)
             {
                 return true;
             }
@@ -969,8 +969,11 @@ namespace FractalElementDesigner.ViewModels
 
                 Projects.Add(project);
 
-                var schemePrototype = new FElementScheme(
-                    structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance.FESections) { Name = "Схема", Elements = { new PRPlot() } };
+                var schemePrototype = new FElementScheme(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance.FESections) 
+                { 
+                    Name = "Схема", 
+                    Elements = { new PRPlot() } 
+                };
 
                 StartSchemeSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, schemePrototype);
             }
@@ -1022,18 +1025,21 @@ namespace FractalElementDesigner.ViewModels
 
                     // создать конструкцию элемента
                     var structure = StructureCreator.Create(scheme, _structure);
+                    var structure_in_project = new StructureInProjectTree() { Name = structure.Name };
+                    structure_in_project.Items.Add(structure);
+                    structure_in_project.Items.Add(new PRPlot());
 
                     DispatcherHelper.CheckBeginInvokeOnUI(() =>
                     {
                         StructureCreator.InsertVisual(structure, _Page.structureEditorControl.FEControl);
-                        currentProject.Items.Add(structure);
+                        currentProject.Items.Add(structure_in_project);
                     });
 
                     // тест
                     // тест
                     
                     // TODO выполнить по выбору пользователя // ПОМЕСТИТЬ В КОМАНДУ // ТЕСТОВЫЙ ВЫЗОВ
-                    StartStructureSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, currentProject, structure);
+                    //StartStructureSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, currentProject, structure);
                 }
                 catch (Exception ex)
                 {

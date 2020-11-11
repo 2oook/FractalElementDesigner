@@ -128,6 +128,8 @@ namespace FractalElementDesigner.MathModel
         // Метод для инициализации графика
         public void InitializatePhaseResponsePlot(List<(double, double)> points)
         {
+            Points = points;
+
             var series = new LineSeries() { InterpolationAlgorithm = InterpolationAlgorithms.CatmullRomSpline };
 
             foreach (var point in points)
@@ -180,6 +182,22 @@ namespace FractalElementDesigner.MathModel
                 model = value;
                 RaisePropertyChanged(nameof(PlotModel));
             } 
+        }
+
+        /// <summary>
+        /// Точки 
+        /// </summary>
+        [NonSerialized]
+        public List<(double frequency, double phase)> Points;
+
+        // Метод для клонирования графика
+        public PRPlot Clone()
+        {
+            var plot = new PRPlot();
+
+            plot.InitializatePhaseResponsePlot(Points);
+
+            return plot;
         }
 
         /// <summary>

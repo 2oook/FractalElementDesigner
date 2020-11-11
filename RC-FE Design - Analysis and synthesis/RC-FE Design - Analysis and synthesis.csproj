@@ -129,6 +129,7 @@
     </Compile>
     <Compile Include="Controls\Selectors\ProjectTreeItemDataTemplateSelector.cs" />
     <Compile Include="Controls\Selectors\ProjectTreeItemStyleSelector.cs" />
+    <Compile Include="Controls\Selectors\StructureItemDataTemplateSelector.cs" />
     <Compile Include="Controls\StructureEditorControl.xaml.cs">
       <DependentUpon>StructureEditorControl.xaml</DependentUpon>
     </Compile>
@@ -207,6 +208,7 @@
     <Compile Include="FEEditing\Model\RCStructure.cs" />
     <Compile Include="FEEditing\Model\RCStructureBase.cs" />
     <Compile Include="FEEditing\Model\StructureElements\SegmentOfTheStructure.cs" />
+    <Compile Include="ProjectTree\StructureInProjectTree.cs" />
     <Compile Include="RCWorkbenchLibrary\Helpers\CellTypeToRCWorkbenchConverter.cs" />
     <Compile Include="RCWorkbenchLibrary\Helpers\RCStructureEnumToRCWorkbenchConverter.cs" />
     <Compile Include="RCWorkbenchLibrary\MatrixHelper.cs" />

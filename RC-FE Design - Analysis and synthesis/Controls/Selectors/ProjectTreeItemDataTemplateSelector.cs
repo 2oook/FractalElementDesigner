@@ -19,7 +19,7 @@ namespace FractalElementDesigner.Controls.Selectors
         // Шаблон данных представляющий схему
         public DataTemplate FElementSchemeDataTemplate { get; set; }
         // Шаблон данных представляющий конструкцию
-        public DataTemplate FElementStructureDataTemplate { get; set; }
+        public DataTemplate StructureInProjectTreeDataTemplate { get; set; }
 
         // Метод для переключения шаблона узла дерева проекта
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
@@ -30,9 +30,9 @@ namespace FractalElementDesigner.Controls.Selectors
                 {
                     return FElementSchemeDataTemplate;
                 }
-                else if (projectTreeItem is RCStructureBase)
+                else if (projectTreeItem is StructureInProjectTree)
                 {
-                    return FElementStructureDataTemplate;
+                    return StructureInProjectTreeDataTemplate;
                 }
             }
 

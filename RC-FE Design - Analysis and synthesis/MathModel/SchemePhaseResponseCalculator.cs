@@ -85,6 +85,20 @@ namespace FractalElementDesigner.MathModel
             return connected_pins_mattrix;
         }
 
+        // Метод для реализации учёта внешней схемы включения
+        public static double ConsiderOuterScheme(ref Matrix<Complex> matrix, ref Matrix<float> I, List<int> pe) 
+        {
+            AddRowsAndColsInYMatrix(ref matrix, ref I);
+
+            RemoveRowAndColsFromMatrix(ref matrix, pe);
+
+            ReduceMatrix(ref matrix, 1);
+
+            var phase = -matrix[matrix.RowCount - 1, matrix.ColumnCount - 1].Phase * 180 / Math.PI;
+
+            return phase;
+        }
+
         // Метод для понижения порядка матрицы
         public static void ReduceMatrix(ref Matrix<Complex> matrix, int upTo)
         {

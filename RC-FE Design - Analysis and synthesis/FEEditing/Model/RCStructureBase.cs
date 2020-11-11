@@ -29,7 +29,7 @@ namespace FractalElementDesigner.FEEditing.Model
         /// Метод для получения следующего номера структуры
         /// </summary>
         /// <returns>Номер структуры</returns>
-        protected static int GetNextStructureNumber() 
+        protected static int GetNextStructureNumber()
         {
             return StructureCurrentNumber++;
         }
@@ -49,10 +49,19 @@ namespace FractalElementDesigner.FEEditing.Model
         /// </summary>
         public ObservableCollection<ObservableCollection<SegmentOfTheStructure>> Segments { get; set; } = new ObservableCollection<ObservableCollection<SegmentOfTheStructure>>();
 
+        private ObservableCollection<Layer> structureLayers = new ObservableCollection<Layer>();
         /// <summary>
         /// Словарь слоёв структуры
         /// </summary>
-        public ObservableCollection<Layer> StructureLayers { get; set; } = new ObservableCollection<Layer>();
+        public ObservableCollection<Layer> StructureLayers 
+        { 
+            get => structureLayers; 
+            set
+            {
+                structureLayers = value;
+                RaisePropertyChanged(nameof(StructureLayers));
+            } 
+        }
 
         /// <summary>
         /// Точки функции ФЧХ
@@ -64,7 +73,7 @@ namespace FractalElementDesigner.FEEditing.Model
         public void Initialize(int verticalStructureDimensionValue, int horizontalStructureDimensionValue)
         {
             // число выводов слоя сегмента
-            var pins_count_in_layer = 4; 
+            var pins_count_in_layer = 4;
             // найти общее число выводов сегмента 
             PinsCountOfSegment = pins_count_in_layer * StructureLayers.Count;
 
@@ -106,7 +115,7 @@ namespace FractalElementDesigner.FEEditing.Model
                 Segments.Add(row);
             }
 
-            foreach (var layer in StructureLayers) 
+            foreach (var layer in StructureLayers)
             {
                 // найти ячейки слоя
                 var cells_in_layer = new ObservableCollection<ObservableCollection<Cell>>(Segments.Select(x => new ObservableCollection<Cell>(x.Select(y => y.CellsInLayer[layer]))));
@@ -118,7 +127,7 @@ namespace FractalElementDesigner.FEEditing.Model
         /// <summary>
         /// Событие изменения свойства
         /// </summary>
-        [field:NonSerialized]
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
