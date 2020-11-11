@@ -6,8 +6,11 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FractalElementDesigner.RCWorkbenchLibrary
+namespace FractalElementDesigner.RCWorkbenchLibrary.Helpers
 {
+    /// <summary>
+    /// Помощник для адаптации матрицы из RCWorkbench в пригодную для обработки матрицу
+    /// </summary>
     class MatrixHelper
     {
         // Метод для получения преобразованных матриц из векторов полученных из RC Workbench по частотам

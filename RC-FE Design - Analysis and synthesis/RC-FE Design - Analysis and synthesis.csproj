@@ -209,9 +209,10 @@
     <Compile Include="FEEditing\Model\RCStructureBase.cs" />
     <Compile Include="FEEditing\Model\StructureElements\SegmentOfTheStructure.cs" />
     <Compile Include="ProjectTree\StructureInProjectTree.cs" />
+    <Compile Include="RCWorkbenchLibrary\ByRCWorkbenchStructureCreator.cs" />
     <Compile Include="RCWorkbenchLibrary\Helpers\CellTypeToRCWorkbenchConverter.cs" />
     <Compile Include="RCWorkbenchLibrary\Helpers\RCStructureEnumToRCWorkbenchConverter.cs" />
-    <Compile Include="RCWorkbenchLibrary\MatrixHelper.cs" />
+    <Compile Include="RCWorkbenchLibrary\Helpers\MatrixHelper.cs" />
     <Compile Include="RCWorkbenchLibrary\RCWorkbenchLibraryEntry.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="SchemeEditing\Controls\Elements\BottomConnControl.xaml.cs">

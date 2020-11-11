@@ -627,17 +627,8 @@ namespace FractalElementDesigner.ViewModels
 
                 var project = Projects.SingleOrDefault(x => x.Items.Contains(scheme));
 
-                // инициализировать библиотеку
-                RCWorkbenchLibraryEntry.InitiateLibrary();
-
-                // симулировать pAnalyseParameters // СХЕМА №
-                RCWorkbenchLibraryEntry.CreateCAnalyseParameters(5, 3, 0.98, 0.1, false, 100);
-
-                // установить диапазон частот
-                RCWorkbenchLibraryEntry.SetFrequencyRange(0.0, 100.0, 100);
-
-                // создать структуру
-                RCWorkbenchLibraryEntry.CreateRCGNRStructure(1.0, 1.0, 10, 10, 1.0, 0.001, 100, 0.218);
+                // создать структуру на стороне библиотеки
+                ByRCWorkbenchStructureCreator.CreateStructure(scheme, newStructureWindowViewModel.CurrentStructure);
 
                 CreateStructureAsync(project, scheme, newStructureWindowViewModel.CurrentStructure);
             }
