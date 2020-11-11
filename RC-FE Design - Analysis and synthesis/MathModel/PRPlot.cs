@@ -161,7 +161,11 @@ namespace FractalElementDesigner.MathModel
                 UseSuperExponentialFormat = true
             });
 
-            PlotModel.Series.Add(series);         
+            PlotModel.Series.Add(series);
+
+            PlotModel.ResetAllAxes();
+
+            PlotModel.InvalidatePlot(false);
         }
 
         /// <summary>

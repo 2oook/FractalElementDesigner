@@ -691,7 +691,7 @@ namespace FractalElementDesigner.ViewModels
 
                     structure.PhaseResponsePoints.Clear();
 
-                    for (int i = 0; i < matrices.Count; i++)
+                    for (int i = 1; i < matrices.Count; i++)
                     {
                         var matrix = matrices[i];
 
@@ -704,7 +704,7 @@ namespace FractalElementDesigner.ViewModels
 
                     plot.InitializatePhaseResponsePlot(structure.PhaseResponsePoints);
 
-                    _Page.plotControl.DataContext = plot;
+                    _Page.plotControl.DataContext = plot.Clone();
                     _Page.structureEditorControl.structurePlot.DataContext = plot.Clone();
                 }
             }
