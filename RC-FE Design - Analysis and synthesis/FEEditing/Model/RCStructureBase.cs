@@ -12,6 +12,7 @@ using FractalElementDesigner.FEEditing.Model.StructureElements;
 using FractalElementDesigner.MathModel.Structure;
 using MathNet.Numerics.LinearAlgebra;
 using System.Numerics;
+using FractalElementDesigner.StructureSchemeSynthesis;
 
 namespace FractalElementDesigner.FEEditing.Model
 {
@@ -64,6 +65,11 @@ namespace FractalElementDesigner.FEEditing.Model
         }
 
         /// <summary>
+        /// Параметры
+        /// </summary>
+        public StructureSchemeSynthesisParameters SynthesisParameters;
+
+        /// <summary>
         /// Точки функции ФЧХ
         /// </summary>
         [NonSerialized]
@@ -83,7 +89,7 @@ namespace FractalElementDesigner.FEEditing.Model
 
                 for (int c = 0; c < horizontalStructureDimensionValue; c++)
                 {
-                    var cell = new SegmentOfTheStructure(r.ToString() + c.ToString()) { Position = { x = r, y = c } };
+                    var cell = new SegmentOfTheStructure(r.ToString() + c.ToString()) { Position = { x = c, y = r } };
 
                     int pins_counter = 0;
 
@@ -122,7 +128,6 @@ namespace FractalElementDesigner.FEEditing.Model
                 layer.Cells = cells_in_layer;
             }
         }
-
 
         /// <summary>
         /// Событие изменения свойства

@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.ComponentModel;
+using FractalElementDesigner.StructureSchemeSynthesis;
 
 namespace FractalElementDesigner.ViewModels
 {
@@ -19,9 +20,10 @@ namespace FractalElementDesigner.ViewModels
     /// </summary>
     class NewStructureWindowViewModel : INotifyPropertyChanged
     {
-        public NewStructureWindowViewModel(NewStructureWindow newStructureWindow)
+        public NewStructureWindowViewModel(NewStructureWindow newStructureWindow, StructureSchemeSynthesisParameters synthesisParameters)
         {
             _newStructureWindow = newStructureWindow;
+            _SynthesisParameters = synthesisParameters;
 
             // установить выбор структуры по умолчанию
             structureTypes.TryGetValue(RCStructureTypeConstants.R_CG_NR, out var selectedStructureType);
@@ -34,6 +36,11 @@ namespace FractalElementDesigner.ViewModels
         /// Ссылка на окно
         /// </summary>
         private readonly NewStructureWindow _newStructureWindow;
+
+        /// <summary>
+        /// Параметры
+        /// </summary>
+        private StructureSchemeSynthesisParameters _SynthesisParameters;
 
         /// <summary>
         /// Экземпляр регулярного выражения соответствующее вещественному числу
@@ -204,6 +211,8 @@ namespace FractalElementDesigner.ViewModels
                     {
                         property.Value = double.Parse(StructureProperties[property.Name].Value);
                     }
+
+                    CurrentStructure.SynthesisParameters = _SynthesisParameters;
 
                     _newStructureWindow.AcceptUserInput();
                 }

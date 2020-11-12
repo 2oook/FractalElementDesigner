@@ -71,6 +71,11 @@ extern int __stdcall GetCPQuantity()
     return mainClassInstance->Structure5->GetKPQuantity();
 };
 
+extern void __stdcall ClearCPNumbers()
+{
+    mainClassInstance->Structure5->ClearKPNumbers();
+};
+
 extern void __stdcall GetFrequences(double* frequences)
 {
     for (size_t i = 0; i < mainClassInstance->pAnalyseParameters->m_pT->m_length; i++)

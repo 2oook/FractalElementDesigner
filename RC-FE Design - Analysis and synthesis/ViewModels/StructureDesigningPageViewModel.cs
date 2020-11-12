@@ -541,7 +541,9 @@ namespace FractalElementDesigner.ViewModels
 
             Projects.Add(prj);
 
-            var sch = new FElementScheme(new StructureSchemeSynthesisParameters().FESections);
+            var params_ = new StructureSchemeSynthesisParameters();
+
+            var sch = new FElementScheme(params_);
             sch.Name = "ТЕСТОВАЯ СХЕМА";
             prj.Items.Add(sch);
 
@@ -607,7 +609,7 @@ namespace FractalElementDesigner.ViewModels
                 // создать окно
                 var window = new NewStructureWindow();
                 // создать vm для окна создания новой структуры
-                var newStructureWindowViewModel = new NewStructureWindowViewModel(window);
+                var newStructureWindowViewModel = new NewStructureWindowViewModel(window, scheme.SynthesisParameters);
                 // вывести окно ввода параметров структуры
                 window.DataContext = newStructureWindowViewModel;
                 var dialogResult = window.ShowDialog();
@@ -652,7 +654,7 @@ namespace FractalElementDesigner.ViewModels
                     var structure = structureInProject.Items.Where(x => x is RCStructureBase).Single() as RCStructureBase;
 
                     // анализ структуры
-                    int first_dimension = 100;
+                    int first_dimension = structure.SynthesisParameters.PointsCountAtFrequencyAxle;
                     int second_dimension = 36;
 
                     double[] frequences = new double[first_dimension];
@@ -682,7 +684,7 @@ namespace FractalElementDesigner.ViewModels
 
                     structure.PhaseResponsePoints.Clear();
 
-                    for (int i = 1; i < matrices.Count; i++)
+                    for (int i = 0; i < matrices.Count; i++)
                     {
                         var matrix = matrices[i];
 
@@ -825,7 +827,7 @@ namespace FractalElementDesigner.ViewModels
 
                 project.Items.Clear();
 
-                StartSchemeSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, scheme);
+                StartSchemeSynthesisAsync(project, scheme);
             }
         }
 
@@ -960,13 +962,13 @@ namespace FractalElementDesigner.ViewModels
 
                 Projects.Add(project);
 
-                var schemePrototype = new FElementScheme(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance.FESections) 
+                var schemePrototype = new FElementScheme(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance) 
                 { 
                     Name = "Схема", 
-                    Elements = { new PRPlot() } 
+                    Elements = { new PRPlot() }
                 };
 
-                StartSchemeSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, project, schemePrototype);
+                StartSchemeSynthesisAsync(project, schemePrototype);
             }
             catch (Exception ex)
             {
@@ -977,37 +979,6 @@ namespace FractalElementDesigner.ViewModels
         // Метод для асинхронного создания конструкции элемента
         private async void CreateStructureAsync(Project currentProject, FElementScheme scheme, RCStructure _structure) 
         {
-            //удалить
-
-            // TODO организовать получение параметров синтеза СХЕМЫ
-
-            // создать окно
-            var window = new StructureSchemeSynthesisParametersWindow();
-            // создать vm для окна 
-            var structureSchemeSynthesisParametersViewModel = new StructureSchemeSynthesisParametersWindowViewModel(window);
-            // вывести окно ввода параметров 
-            window.DataContext = structureSchemeSynthesisParametersViewModel;
-            var dialogResult = window.ShowDialog();
-
-            // если не было подтверждения выйти
-            if (dialogResult.HasValue == false)
-            {
-                return;
-            }
-            else
-            {
-                if (dialogResult.Value == false)
-                {
-                    return;
-                }
-            }
-
-            // TODO организовать получение параметров синтеза
-
-            //удалить
-
-
-
             await Task.Run(() =>
             {
                 try
@@ -1067,14 +1038,14 @@ namespace FractalElementDesigner.ViewModels
 
 
         // Метод для запуска синтеза схемы асинхронно
-        private async void StartSchemeSynthesisAsync(StructureSchemeSynthesisParameters structureSchemeSynthesisParametersInstance, Project currentProject, FElementScheme scheme) 
+        private async void StartSchemeSynthesisAsync(Project currentProject, FElementScheme scheme) 
         {
             await Task.Run(() =>
             {
                 try
                 {
                     // синтезировать схему
-                    var schemes = SchemeSynthesizer.Synthesize(structureSchemeSynthesisParametersInstance, scheme);
+                    var schemes = SchemeSynthesizer.Synthesize(scheme);
 
                     for (int i = 0; i < schemes.Count; i++)
                     {
@@ -1162,7 +1133,7 @@ namespace FractalElementDesigner.ViewModels
 
                     var plot = new PRPlot();
 
-                    var schemePrototype = new FElementScheme(new StructureSchemeSynthesisParameters().FESections) { Name = "Схема", Elements = { plot } };
+                    var schemePrototype = new FElementScheme(new StructureSchemeSynthesisParameters()) { Name = "Схема", Elements = { plot } };
 
                     schemePrototype.Model.PhaseResponsePoints = SchemePhaseResponseCalculatorByFrequencies.CalculatePhaseResponseInScheme(1, 3, 50, schemePrototype.Model);
 
@@ -1176,7 +1147,7 @@ namespace FractalElementDesigner.ViewModels
                     // создать окно
                     var window = new NewStructureWindow();
                     // создать vm для окна создания новой структуры
-                    var newStructureWindowViewModel = new NewStructureWindowViewModel(window);
+                    var newStructureWindowViewModel = new NewStructureWindowViewModel(window, schemePrototype.SynthesisParameters);
                     // вывести окно ввода параметров структуры
                     window.DataContext = newStructureWindowViewModel;
                     var dialogResult = window.ShowDialog();

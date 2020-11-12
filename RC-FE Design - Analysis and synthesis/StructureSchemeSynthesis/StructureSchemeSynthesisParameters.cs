@@ -12,6 +12,7 @@ namespace FractalElementDesigner.StructureSchemeSynthesis
     /// <summary>
     /// Класс параметров синтеза схемы структуры
     /// </summary>
+    [Serializable]
     public class StructureSchemeSynthesisParameters : IDataErrorInfo
     {
         // TODO ---- этот конструктор нужно заменить вводом

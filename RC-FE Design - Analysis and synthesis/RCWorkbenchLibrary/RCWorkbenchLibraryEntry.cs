@@ -34,6 +34,9 @@ namespace FractalElementDesigner.RCWorkbenchLibrary
         [DllImport(@"RCWorkbenchLibrary", ExactSpelling = false, EntryPoint = "GetCPQuantity", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetCPQuantity();
 
+        [DllImport(@"RCWorkbenchLibrary", ExactSpelling = false, EntryPoint = "ClearCPNumbers", CallingConvention = CallingConvention.StdCall)]
+        public static extern void ClearCPNumbers();
+
         [DllImport(@"RCWorkbenchLibrary", ExactSpelling = false, EntryPoint = "GetFrequences", CallingConvention = CallingConvention.StdCall)]
         public static extern void GetFrequences([In, Out] double[] frequences);
     }

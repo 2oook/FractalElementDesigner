@@ -80,7 +80,7 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
                                 Layer.Number, 
                                 MainCell.Position.x - 1, 
                                 MainCell.Position.y - 1, 
-                                CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+                                CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
                         }
                         else if ((cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact)
                         {
@@ -91,6 +91,7 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
                                MainCell.Position.y - 1,
                                CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
                         }
+                        RCWorkbenchLibraryEntry.ClearCPNumbers();
                         break;
                     case ToolType.ForbidContactDisposer:
                         if (cell.CellType == CellType.Forbid)
@@ -120,7 +121,7 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
                               Layer.Number,
                               MainCell.Position.x - 1,
                               MainCell.Position.y - 1,
-                              CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+                              CellTypeToRCWorkbenchConverter.Convert(CellType.Shunt));
                         }
                         else if ((cell.CellType & CellType.PlaceForContact) == CellType.PlaceForContact)
                         {
@@ -232,124 +233,131 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
 
             bool CheckContactCellPlacing(Cell _cell, CellType needed_cell_type)
             {
-                // верхняя строка 
-                if (_cell.MainCell.Position.x == 0)
+                try
                 {
-                    var left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y - 1].CellType;
-                    var right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y + 1].CellType;
-                    // ячейка слева снизу
-                    var down_left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y - 1].CellType;
-                    // ячейка справа снизу
-                    var down_right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y + 1].CellType;
+                    // верхняя строка 
+                    if (_cell.MainCell.Position.y == 0)
+                    {
+                        var left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.y][_cell.MainCell.Position.x - 1].CellType;
+                        var right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.y][_cell.MainCell.Position.x + 1].CellType;
+                        // ячейка слева снизу
+                        var down_left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.y + 1][_cell.MainCell.Position.x - 1].CellType;
+                        // ячейка справа снизу
+                        var down_right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.y + 1][_cell.MainCell.Position.x + 1].CellType;
 
-                    // ячейка слева
-                    if ((left_cell_type == CellType.Shunt & left_cell_type != needed_cell_type) || (left_cell_type == CellType.Contact & left_cell_type != needed_cell_type))
-                    {
-                        return false;
+                        // ячейка слева
+                        if ((left_cell_type == CellType.Shunt & left_cell_type != needed_cell_type) || (left_cell_type == CellType.Contact & left_cell_type != needed_cell_type))
+                        {
+                            return false;
+                        }
+                        // ячейка справа
+                        else if ((right_cell_type == CellType.Shunt & right_cell_type != needed_cell_type) || (right_cell_type == CellType.Contact & right_cell_type != needed_cell_type))
+                        {
+                            return false;
+                        }
+                        else if ((down_left_cell_type == CellType.Shunt & down_left_cell_type != needed_cell_type) || (down_left_cell_type == CellType.Contact & down_left_cell_type != needed_cell_type))
+                        {
+                            return false;
+                        }
+                        else if ((down_right_cell_type == CellType.Shunt & down_right_cell_type != needed_cell_type) || (down_right_cell_type == CellType.Contact & down_right_cell_type != needed_cell_type))
+                        {
+                            return false;
+                        }
                     }
-                    // ячейка справа
-                    else if ((right_cell_type == CellType.Shunt & right_cell_type != needed_cell_type) || (right_cell_type == CellType.Contact & right_cell_type != needed_cell_type))
+                    // нижняя
+                    else if (_cell.MainCell.Position.y == _cell.Layer.Cells.Count - 1)
                     {
-                        return false;
+                        var left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.y][_cell.MainCell.Position.x - 1].CellType;
+                        var right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.y][_cell.MainCell.Position.x + 1].CellType;
+                        // ячейка слева сверху
+                        var up_left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.y - 1][_cell.MainCell.Position.x - 1].CellType;
+                        // ячейка справа сверху
+                        var up_right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.y - 1][_cell.MainCell.Position.x + 1].CellType;
+
+                        // ячейка слева
+                        if ((left_cell_type == CellType.Shunt & left_cell_type != needed_cell_type) || (left_cell_type == CellType.Contact & left_cell_type != needed_cell_type))
+                        {
+                            return false;
+                        }
+                        // ячейка справа
+                        else if ((right_cell_type == CellType.Shunt & right_cell_type != needed_cell_type) || (right_cell_type == CellType.Contact & right_cell_type != needed_cell_type))
+                        {
+                            return false;
+                        }
+                        else if ((up_left_cell_type == CellType.Shunt & up_left_cell_type != needed_cell_type) || (up_left_cell_type == CellType.Contact & up_left_cell_type != needed_cell_type))
+                        {
+                            return false;
+                        }
+                        else if ((up_right_cell_type == CellType.Shunt & up_right_cell_type != needed_cell_type) || (up_right_cell_type == CellType.Contact & up_right_cell_type != needed_cell_type))
+                        {
+                            return false;
+                        }
                     }
-                    else if ((down_left_cell_type == CellType.Shunt & down_left_cell_type != needed_cell_type) || (down_left_cell_type == CellType.Contact & down_left_cell_type != needed_cell_type))
+                    // левый столбец
+                    else if (_cell.MainCell.Position.x == 0)
                     {
-                        return false;
+                        var up_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.y - 1][_cell.MainCell.Position.x].CellType;
+                        var down_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.y + 1][_cell.MainCell.Position.x].CellType;
+                        // ячейка справа снизу
+                        var down_right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.y + 1][_cell.MainCell.Position.x + 1].CellType;
+                        // ячейка справа сверху
+                        var up_right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.y - 1][_cell.MainCell.Position.x + 1].CellType;
+
+                        // ячейка сверху
+                        if ((up_cell_type == CellType.Shunt & up_cell_type != needed_cell_type) || (up_cell_type == CellType.Contact & up_cell_type != needed_cell_type))
+                        {
+                            return false;
+                        }
+                        // ячейка снизу
+                        else if ((down_cell_type == CellType.Shunt & down_cell_type != needed_cell_type) || (down_cell_type == CellType.Contact & down_cell_type != needed_cell_type))
+                        {
+                            return false;
+                        }
+                        else if ((up_right_cell_type == CellType.Shunt & up_right_cell_type != needed_cell_type) || (up_right_cell_type == CellType.Contact & up_right_cell_type != needed_cell_type))
+                        {
+                            return false;
+                        }
+                        else if ((down_right_cell_type == CellType.Shunt & down_right_cell_type != needed_cell_type) || (down_right_cell_type == CellType.Contact & down_right_cell_type != needed_cell_type))
+                        {
+                            return false;
+                        }
                     }
-                    else if ((down_right_cell_type == CellType.Shunt & down_right_cell_type != needed_cell_type) || (down_right_cell_type == CellType.Contact & down_right_cell_type != needed_cell_type))
+                    // правый
+                    else if (_cell.MainCell.Position.x == _cell.Layer.Cells.First().Count - 1)
                     {
-                        return false;
+                        var up_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.y - 1][_cell.MainCell.Position.x].CellType;
+                        var down_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.y + 1][_cell.MainCell.Position.x].CellType;
+                        // ячейка слева снизу
+                        var down_left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.y + 1][_cell.MainCell.Position.x - 1].CellType;
+                        // ячейка слева сверху
+                        var up_left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.y - 1][_cell.MainCell.Position.x - 1].CellType;
+
+                        // ячейка сверху
+                        if ((up_cell_type == CellType.Shunt & up_cell_type != needed_cell_type) || (up_cell_type == CellType.Contact & up_cell_type != needed_cell_type))
+                        {
+                            return false;
+                        }
+                        // ячейка снизу
+                        else if ((down_cell_type == CellType.Shunt & down_cell_type != needed_cell_type) || (down_cell_type == CellType.Contact & down_cell_type != needed_cell_type))
+                        {
+                            return false;
+                        }
+                        else if ((up_left_cell_type == CellType.Shunt & up_left_cell_type != needed_cell_type) || (up_left_cell_type == CellType.Contact & up_left_cell_type != needed_cell_type))
+                        {
+                            return false;
+                        }
+                        else if ((down_left_cell_type == CellType.Shunt & down_left_cell_type != needed_cell_type) || (down_left_cell_type == CellType.Contact & down_left_cell_type != needed_cell_type))
+                        {
+                            return false;
+                        }
                     }
+
+                    return true;
                 }
-                // нижняя
-                else if (_cell.MainCell.Position.x == _cell.Layer.Cells.First().Count - 1)
+                catch (Exception ex)
                 {
-                    var left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y - 1].CellType;
-                    var right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x][_cell.MainCell.Position.y + 1].CellType;
-                    // ячейка слева сверху
-                    var up_left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y - 1].CellType;
-                    // ячейка справа сверху
-                    var up_right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y + 1].CellType;
-
-                    // ячейка слева
-                    if ((left_cell_type == CellType.Shunt & left_cell_type != needed_cell_type) || (left_cell_type == CellType.Contact & left_cell_type != needed_cell_type))
-                    {
-                        return false;
-                    }
-                    // ячейка справа
-                    else if ((right_cell_type == CellType.Shunt & right_cell_type != needed_cell_type) || (right_cell_type == CellType.Contact & right_cell_type != needed_cell_type))
-                    {
-                        return false;
-                    }
-                    else if ((up_left_cell_type == CellType.Shunt & up_left_cell_type != needed_cell_type) || (up_left_cell_type == CellType.Contact & up_left_cell_type != needed_cell_type))
-                    {
-                        return false;
-                    }
-                    else if ((up_right_cell_type == CellType.Shunt & up_right_cell_type != needed_cell_type) || (up_right_cell_type == CellType.Contact & up_right_cell_type != needed_cell_type))
-                    {
-                        return false;
-                    }
-                }
-                // левый столбец
-                else if (_cell.MainCell.Position.y == 0)
-                {
-                    var up_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y].CellType;
-                    var down_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y].CellType;
-                    // ячейка справа снизу
-                    var down_right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y + 1].CellType;
-                    // ячейка справа сверху
-                    var up_right_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y + 1].CellType;
-
-                    // ячейка сверху
-                    if ((up_cell_type == CellType.Shunt & up_cell_type != needed_cell_type) || (up_cell_type == CellType.Contact & up_cell_type != needed_cell_type))
-                    {
-                        return false;
-                    }
-                    // ячейка снизу
-                    else if ((down_cell_type == CellType.Shunt & down_cell_type != needed_cell_type) || (down_cell_type == CellType.Contact & down_cell_type != needed_cell_type))
-                    {
-                        return false;
-                    }
-                    else if ((up_right_cell_type == CellType.Shunt & up_right_cell_type != needed_cell_type) || (up_right_cell_type == CellType.Contact & up_right_cell_type != needed_cell_type))
-                    {
-                        return false;
-                    }
-                    else if ((down_right_cell_type == CellType.Shunt & down_right_cell_type != needed_cell_type) || (down_right_cell_type == CellType.Contact & down_right_cell_type != needed_cell_type))
-                    {
-                        return false;
-                    }
-                }
-                // правый
-                else if (_cell.MainCell.Position.y == _cell.Layer.Cells.Count - 1)
-                {
-                    var up_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y].CellType;
-                    var down_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y].CellType;
-                    // ячейка слева снизу
-                    var down_left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x + 1][_cell.MainCell.Position.y - 1].CellType;
-                    // ячейка слева сверху
-                    var up_left_cell_type = _cell.Layer.Cells[_cell.MainCell.Position.x - 1][_cell.MainCell.Position.y - 1].CellType;
-
-                    // ячейка сверху
-                    if ((up_cell_type == CellType.Shunt & up_cell_type != needed_cell_type) || (up_cell_type == CellType.Contact & up_cell_type != needed_cell_type))
-                    {
-                        return false;
-                    }
-                    // ячейка снизу
-                    else if ((down_cell_type == CellType.Shunt & down_cell_type != needed_cell_type) || (down_cell_type == CellType.Contact & down_cell_type != needed_cell_type))
-                    {
-                        return false;
-                    }
-                    else if ((up_left_cell_type == CellType.Shunt & up_left_cell_type != needed_cell_type) || (up_left_cell_type == CellType.Contact & up_left_cell_type != needed_cell_type))
-                    {
-                        return false;
-                    }
-                    else if ((down_left_cell_type == CellType.Shunt & down_left_cell_type != needed_cell_type) || (down_left_cell_type == CellType.Contact & down_left_cell_type != needed_cell_type))
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
+                    return false;
+                } 
             }
 
             return result;

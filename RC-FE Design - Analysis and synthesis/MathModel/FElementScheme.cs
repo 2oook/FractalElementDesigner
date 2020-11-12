@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
+using FractalElementDesigner.StructureSchemeSynthesis;
 
 namespace FractalElementDesigner.MathModel
 {
@@ -245,8 +246,12 @@ namespace FractalElementDesigner.MathModel
         /// <summary>
         /// Конструктор
         /// </summary>
-        public FElementScheme(List<FESection> sections)
+        public FElementScheme(StructureSchemeSynthesisParameters synthesisParameters)
         {
+            SynthesisParameters = synthesisParameters;
+
+            var sections = synthesisParameters.FESections;
+
             sections = sections.OrderBy(x => x.Number).ToList();
 
             Model.FESections = sections;
@@ -359,6 +364,11 @@ namespace FractalElementDesigner.MathModel
             }
             // тест!!!!!!!!!!!!!!!!!!!!!!!!
         }
+
+        /// <summary>
+        /// Параметры
+        /// </summary>
+        public StructureSchemeSynthesisParameters SynthesisParameters;
 
         /// <summary>
         /// Модель схемы

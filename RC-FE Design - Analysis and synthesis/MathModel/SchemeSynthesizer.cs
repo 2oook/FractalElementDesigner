@@ -27,11 +27,11 @@ namespace FractalElementDesigner.MathModel
         public static event Action<string> OnStateChange;
 
         // Метод для синтезирования схемы включения элемента
-        public static List<FElementScheme> Synthesize(StructureSchemeSynthesisParameters synthesisParameters, FElementScheme scheme) 
+        public static List<FElementScheme> Synthesize(FElementScheme scheme) 
         {
             OnStateChange("Выполнение синтеза");
 
-            IGeneticAlgorithm ga = new SingleStageGeneticAlgorithm(synthesisParameters, 100, scheme);
+            IGeneticAlgorithm ga = new SingleStageGeneticAlgorithm(100, scheme);
 
             SingleStageGeneticAlgorithm.OnDoWork += SingleStageGeneticAlgorithm_OnDoWork;
 
@@ -40,7 +40,9 @@ namespace FractalElementDesigner.MathModel
             // для примера
             // рассчитать ФЧХ для схемы
             scheme.Model.PhaseResponsePoints = SchemePhaseResponseCalculatorByFrequencies.CalculatePhaseResponseInScheme(
-                synthesisParameters.MinFrequencyLn, synthesisParameters.MaxFrequencyLn, synthesisParameters.PointsCountAtFrequencyAxle, scheme.Model);
+                scheme.SynthesisParameters.MinFrequencyLn, 
+                scheme.SynthesisParameters.MaxFrequencyLn, 
+                scheme.SynthesisParameters.PointsCountAtFrequencyAxle, scheme.Model);
             // для примера
             var t = ga.GetPopulation();
             t.Add(scheme);

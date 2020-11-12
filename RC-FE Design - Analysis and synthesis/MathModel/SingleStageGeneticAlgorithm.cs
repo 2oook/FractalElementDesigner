@@ -18,25 +18,25 @@ namespace FractalElementDesigner.MathModel
         public static event Action<double> OnDoWork;
 
         // Конструктор
-        public SingleStageGeneticAlgorithm(StructureSchemeSynthesisParameters synthesisParameters, int populationCount, FElementScheme schemePrototype)
+        public SingleStageGeneticAlgorithm(int populationCount, FElementScheme schemePrototype)
         {
             SchemePrototype = schemePrototype;
 
             PopulationCount = populationCount;
             PopulationCountToMutate = (int)(populationCount * MutateCoefficient);
 
-            CountOfWholeStepsOfGA = synthesisParameters.CountOfWholeStepsOfGA;
-            PointsCountAtFrequencyAxle = synthesisParameters.PointsCountAtFrequencyAxle;
-            PositiveDeviationOfTheFrequencyCharacteristic = synthesisParameters.PositiveDeviationOfTheFrequencyCharacteristic;
-            NegativeDeviationOfTheFrequencyCharacteristic = synthesisParameters.NegativeDeviationOfTheFrequencyCharacteristic;
+            CountOfWholeStepsOfGA = schemePrototype.SynthesisParameters.CountOfWholeStepsOfGA;
+            PointsCountAtFrequencyAxle = schemePrototype.SynthesisParameters.PointsCountAtFrequencyAxle;
+            PositiveDeviationOfTheFrequencyCharacteristic = schemePrototype.SynthesisParameters.PositiveDeviationOfTheFrequencyCharacteristic;
+            NegativeDeviationOfTheFrequencyCharacteristic = schemePrototype.SynthesisParameters.NegativeDeviationOfTheFrequencyCharacteristic;
 
-            MinFrequency = Math.Pow(10, synthesisParameters.MinFrequencyLn);
-            MaxFrequency = Math.Pow(10, synthesisParameters.MaxFrequencyLn);
+            MinFrequency = Math.Pow(10, schemePrototype.SynthesisParameters.MinFrequencyLn);
+            MaxFrequency = Math.Pow(10, schemePrototype.SynthesisParameters.MaxFrequencyLn);
 
             FrequencyIncrement = (MaxFrequency - MinFrequency) / PointsCountAtFrequencyAxle;
 
-            MinLevelOfFrequencyCharacteristic = synthesisParameters.MinLevelOfFrequencyCharacteristic;
-            MaxLevelOfFrequencyCharacteristic = synthesisParameters.MaxLevelOfFrequencyCharacteristic;
+            MinLevelOfFrequencyCharacteristic = schemePrototype.SynthesisParameters.MinLevelOfFrequencyCharacteristic;
+            MaxLevelOfFrequencyCharacteristic = schemePrototype.SynthesisParameters.MaxLevelOfFrequencyCharacteristic;
 
             // сформировать окно корректности ФЧХ
             if (MaxLevelOfFrequencyCharacteristic < MinLevelOfFrequencyCharacteristic)
