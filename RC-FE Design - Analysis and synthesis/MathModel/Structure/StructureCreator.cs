@@ -33,9 +33,9 @@ namespace FractalElementDesigner.MathModel.Structure
         // Метод для создания конструкции элемента
         public static RCStructure Create(FElementScheme scheme, RCStructure structure)
         {
-            FitLayerToScheme(structure, scheme.Model);
-
             OnStateChange("Создание конструкции");
+
+            FitLayerToScheme(structure, scheme.Model);
 
             // для отладки
             // для отладки
@@ -49,13 +49,11 @@ namespace FractalElementDesigner.MathModel.Structure
             // для отладки
             // для отладки
 
+            var made_structure = InitializeStructure(structure);
+
             OnStateChange("");
 
-            var t = InitializeStructure(structure);
-
-            
-
-            return t;
+            return made_structure;
         }
 
         public static void InsertVisual(RCStructure structure, FEControl structureEditorControl) 
@@ -76,9 +74,11 @@ namespace FractalElementDesigner.MathModel.Structure
         // Метод для наложения полученной схемы на слои структуры
         private static void FitLayerToScheme(RCStructure structure, FESchemeModel schemeModel) 
         {
+
+
             var schemeInLayerContext = ExpandConnectionsAndGroundsOnLayers(structure, schemeModel);
 
-            // обойти слои структуры
+            // обойти слои структуры // вид сбоку
             foreach (var layer in schemeInLayerContext.Keys)
             {
                 var layerData = schemeInLayerContext[layer];

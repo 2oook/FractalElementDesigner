@@ -12,13 +12,15 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
     [Flags]
     public enum CellType
     {
-        None = 0,
-        PlaceForContact = 1,
-        Contact = 3,
-        Forbid = 7,
-        Shunt = 15,
-        Cut = 2,
-        RC = 6,
-        R = 14
+        None = 0,// ячейка без назначения
+        PlaceForContact = 1,// место для расположения КП или шунта
+        Contact = 3,// КП
+        Forbid = 7,// запрет КП
+        Shunt = 15,// шунт 
+        Cut = 2,// вырез (емкость)
+        RC = 6,// верхняя резистивная площадка
+        R = 14,// нижняя резистивная площадка
+        Rk = 8,// верхняя резистивная площадка с контактом
+        NRk = 10// нижняя резистивная площадка с контактом
     }
 }

@@ -21,6 +21,107 @@ namespace FractalElementDesigner.StructureSchemeSynthesis
             // TODO
             // осуществить ввод из формы
 
+            // Настройки для проверки по MATLAB
+            // Настройки для проверки по MATLAB
+            // Настройки для проверки по MATLAB
+
+            //var G = this.G;
+            //var Rk = this.Rk;
+
+            //var val = this.Rp.Split('^');
+            //var exp_base = double.Parse(val[0]);
+            //var exp = double.Parse(val[1]);
+
+            //var Rp = Math.Pow(exp_base, exp);
+
+            //var sec1 = new FESection(new FESectionParameters()
+            //{
+            //    C = 0.000_000_000_2,
+            //    R = 118_718,
+            //    N = 13.1,
+            //    L = 3,
+            //    G = 3,
+            //    Rk = Rk,
+            //    Rp = Rp             
+            //}, 
+            //new List<Pin>()
+            //{
+            //    new Pin() { Number = 0 },
+            //    new Pin() { Number = 4 },
+            //    new Pin() { Number = 5 },
+            //    new Pin() { Number = 3 }
+            //}, 
+            //1);
+
+            //FESections.Add(sec1);
+
+            //var sec2 = new FESection(new FESectionParameters()
+            //{
+            //    C = 0.000_000_000_2,
+            //    R = 118_718,
+            //    N = 13.1,
+            //    L = 9.5,
+            //    G = 9.5,
+            //    Rk = Rk,
+            //    Rp = Rp
+            //},
+            //new List<Pin>()
+            //{
+            //    new Pin() { Number = 6 },
+            //    new Pin() { Number = 8 },
+            //    new Pin() { Number = 9 },
+            //    new Pin() { Number = 7 }
+            //},
+            //2);
+
+            //FESections.Add(sec2);
+
+            //var sec3 = new FESection(new FESectionParameters()
+            //{
+            //    C = 0.000_000_000_2,
+            //    R = 118_718,
+            //    N = 13.1,
+            //    L = 8.1,
+            //    G = 8.1,
+            //    Rk = Rk,
+            //    Rp = Rp
+            //}, 
+            //new List<Pin>()
+            //{
+            //    new Pin() { Number = 10 },
+            //    new Pin() { Number = 12 },
+            //    new Pin() { Number = 13 },
+            //    new Pin() { Number = 11 }
+            //}, 
+            //3);
+
+            //FESections.Add(sec3);
+
+            //var sec4 = new FESection(new FESectionParameters()
+            //{
+            //    C = 0.000_000_000_2,
+            //    R = 118_718,
+            //    N = 13.1,
+            //    L = 7.8,
+            //    G = 7.8,
+            //    Rk = Rk,
+            //    Rp = Rp
+            //},
+            //new List<Pin>()
+            //{
+            //    new Pin() { Number = 14 },
+            //    new Pin() { Number = 1 },
+            //    new Pin() { Number = 2 },
+            //    new Pin() { Number = 15 }
+            //},
+            //4);
+
+            // Настройки для проверки по MATLAB
+            // Настройки для проверки по MATLAB
+            // Настройки для проверки по MATLAB
+
+            // Настройки для проверки по WORKBENCH 
+
             var G = this.G;
             var Rk = this.Rk;
 
@@ -32,32 +133,32 @@ namespace FractalElementDesigner.StructureSchemeSynthesis
 
             var sec1 = new FESection(new FESectionParameters()
             {
-                C = 0.000_000_000_2,
-                R = 118_718,
-                N = 13.1,
+                C = 1.0,
+                R = 1.0,
+                N = 0.218,
                 L = 3,
-                G = 3,
+                G = 0.001,
                 Rk = Rk,
-                Rp = Rp             
-            }, 
+                Rp = Rp
+            },
             new List<Pin>()
             {
                 new Pin() { Number = 0 },
                 new Pin() { Number = 4 },
                 new Pin() { Number = 5 },
                 new Pin() { Number = 3 }
-            }, 
+            },
             1);
 
             FESections.Add(sec1);
 
             var sec2 = new FESection(new FESectionParameters()
             {
-                C = 0.000_000_000_2,
-                R = 118_718,
-                N = 13.1,
-                L = 9.5,
-                G = 9.5,
+                C = 1.0,
+                R = 1.0,
+                N = 0.218,
+                L = 3,
+                G = 0.001,
                 Rk = Rk,
                 Rp = Rp
             },
@@ -74,32 +175,32 @@ namespace FractalElementDesigner.StructureSchemeSynthesis
 
             var sec3 = new FESection(new FESectionParameters()
             {
-                C = 0.000_000_000_2,
-                R = 118_718,
-                N = 13.1,
-                L = 8.1,
-                G = 8.1,
+                C = 1.0,
+                R = 1.0,
+                N = 0.218,
+                L = 3,
+                G = 0.001,
                 Rk = Rk,
                 Rp = Rp
-            }, 
+            },
             new List<Pin>()
             {
                 new Pin() { Number = 10 },
                 new Pin() { Number = 12 },
                 new Pin() { Number = 13 },
                 new Pin() { Number = 11 }
-            }, 
+            },
             3);
 
             FESections.Add(sec3);
 
             var sec4 = new FESection(new FESectionParameters()
             {
-                C = 0.000_000_000_2,
-                R = 118_718,
-                N = 13.1,
-                L = 7.8,
-                G = 7.8,
+                C = 1.0,
+                R = 1.0,
+                N = 0.218,
+                L = 3,
+                G = 0.001,
                 Rk = Rk,
                 Rp = Rp
             },
@@ -111,6 +212,8 @@ namespace FractalElementDesigner.StructureSchemeSynthesis
                 new Pin() { Number = 15 }
             },
             4);
+
+            // Настройки для проверки по WORKBENCH 
 
             FESections.Add(sec4);
             // TODO

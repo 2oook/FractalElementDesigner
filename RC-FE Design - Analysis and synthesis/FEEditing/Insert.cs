@@ -23,8 +23,11 @@ namespace FractalElementDesigner.FEEditing
         // Метод для вставки слоя структуры в элемент Canvas
         public static void StructureLayer(FECanvas canvas, RCStructureBase structure, Layer layer)
         {
-            double height = 60;
-            double width = 60;
+            double contactCellHeight = 30;
+            double contactCellWidth = 30;
+
+            double mainCellHeight = 60;
+            double mainCellWidth = 60;
 
             double structureWidth = 0;
             double structureHeight = 0;
@@ -35,13 +38,13 @@ namespace FractalElementDesigner.FEEditing
 
             for (int i = 0; i < cells_array.Count; i++)
             {
-                structureHeight += height;
+                structureHeight += mainCellHeight;
                 _grid.RowDefinitions.Add(new RowDefinition());
             }
 
             for (int j = 0; j < cells_array[0].Count; j++)
             {
-                structureWidth += width;
+                structureWidth += mainCellWidth;
                 _grid.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
@@ -49,10 +52,35 @@ namespace FractalElementDesigner.FEEditing
             {
                 var row = cells_array[i];
 
+                double _height = mainCellHeight;
+
                 for (int j = 0; j < row.Count; j++)
                 {
+                    double _width = mainCellWidth;
+
+                    // первая строка
+                    if (i == 0)
+                    {
+                        _height = contactCellHeight;
+                    }
+                    // последняя строка
+                    if (i == cells_array.Count - 1)
+                    {
+                        _height = contactCellHeight;
+                    }
+                    // первая колонка
+                    if (j == 0)
+                    {
+                        _width = contactCellWidth;
+                    }
+                    // последняя колонка
+                    if (j == row.Count - 1)
+                    {
+                        _width = contactCellWidth;
+                    }
+
                     // создать контрол ячейки
-                    var cell = new CellControl(height, width);
+                    var cell = new CellControl(_height, _width);
                     // связать отображение с объектом структуры
                     cell.DataContext = cells_array[i][j].CellsInLayer[layer];
 
@@ -60,109 +88,6 @@ namespace FractalElementDesigner.FEEditing
                     Grid.SetColumn(cell, j);
                     _grid.Children.Add(cell);
                 }
-            }
-
-            FitCanvasToStructure(structureWidth, structureHeight, canvas);
-
-            PlaceCanvasInCenter(_grid, canvas);
-        }
-
-        // Метод для вставки слоя структуры в элемент Canvas
-        public static void StructureLayer(FECanvas canvas, RCStructureBase structure, Layer layer, CellType layerType)
-        {
-            double _BorderCellHeight = 30;
-            double _BorderCellWidth = 30;
-
-            double _CommonCellHeight = 60;
-            double _CommonCellWidth = 60;
-
-            double structureWidth = 0;
-            double structureHeight = 0;
-
-            var _grid = new Grid();
-
-            var cells_array = structure.Segments;
-
-            for (int i = 0; i < cells_array.Count; i++)
-            {
-                _grid.RowDefinitions.Add(new RowDefinition());
-
-                double height = _CommonCellHeight;
-
-                var row = cells_array[i];
-
-                for (int j = 0; j < row.Count; j++)
-                {
-                    double width = _CommonCellWidth;
-                    CellType cellType = layerType;
-
-                    // первая строка
-                    if (i == 0)
-                    {
-                        structureWidth += width;
-                        _grid.ColumnDefinitions.Add(new ColumnDefinition());
-                        height = _BorderCellHeight;
-
-                        if (j != 0 | j != row.Count - 1)
-                        {
-                            cellType = CellType.PlaceForContact;
-                        }
-                    }
-                    // последняя строка
-                    if (i == cells_array.Count - 1)
-                    {
-                        height = _BorderCellHeight;
-
-                        if (j != 0 | j != row.Count - 1)
-                        {
-                            cellType = CellType.PlaceForContact;
-                        }
-                    }
-                    // первая колонка
-                    if (j == 0)
-                    {
-                        width = _BorderCellWidth;
-
-                        // установить угловые ячейки как неактивные
-                        if (i == 0 | i == cells_array.Count - 1)
-                        {
-                            cellType = CellType.None;
-                        }
-                        else
-                        {
-                            cellType = CellType.PlaceForContact;
-                        }
-                    }
-                    // последняя колонка
-                    if (j == row.Count - 1)
-                    {
-                        width = _BorderCellWidth;
-
-                        // установить угловые ячейки как неактивные
-                        if (i == 0 | i == cells_array.Count - 1)
-                        {
-                            cellType = CellType.None;
-                        }
-                        else
-                        {
-                            cellType = CellType.PlaceForContact;
-                        }
-                    }
-
-                    cells_array[i][j].CellsInLayer[layer].CellType = cellType;
-
-                    // создать контрол ячейки
-                    var cell = new CellControl(height, width);
-                    // связать отображение с объектом структуры
-                    cell.DataContext = cells_array[i][j].CellsInLayer[layer];
-
-                    Grid.SetRow(cell, i);
-                    Grid.SetColumn(cell, j);
-
-                    _grid.Children.Add(cell);               
-                }
-
-                structureHeight += height;
             }
 
             FitCanvasToStructure(structureWidth, structureHeight, canvas);

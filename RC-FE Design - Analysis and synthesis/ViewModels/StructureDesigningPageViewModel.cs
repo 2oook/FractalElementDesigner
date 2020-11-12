@@ -629,9 +629,6 @@ namespace FractalElementDesigner.ViewModels
 
                 var project = Projects.SingleOrDefault(x => x.Items.Contains(scheme));
 
-                // создать структуру на стороне библиотеки
-                ByRCWorkbenchStructureCreator.CreateStructure(scheme, newStructureWindowViewModel.CurrentStructure);
-
                 CreateStructureAsync(project, scheme, newStructureWindowViewModel.CurrentStructure);
             }
         }
@@ -897,7 +894,7 @@ namespace FractalElementDesigner.ViewModels
 
                             layer.Editor = editor;
 
-                            FEEditing.Insert.ExistingStructureLayer(editor.Context.CurrentCanvas as FECanvas, structure, layer);
+                            Insert.ExistingStructureLayer(editor.Context.CurrentCanvas as FECanvas, structure, layer);
                         }
                     }
 
@@ -987,6 +984,10 @@ namespace FractalElementDesigner.ViewModels
 
                     // создать конструкцию элемента
                     var structure = StructureCreator.Create(scheme, _structure);
+
+                    // создать структуру на стороне библиотеки
+                    ByRCWorkbenchStructureCreator.CreateStructure(scheme, _structure);
+
                     var structure_in_project = new StructureInProjectTree() { Name = structure.Name };
                     structure_in_project.Items.Add(structure);
                     structure_in_project.Items.Add(new PRPlot());
