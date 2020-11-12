@@ -21,7 +21,7 @@ namespace FractalElementDesigner.RCWorkbenchLibrary
             // инициализировать библиотеку
             RCWorkbenchLibraryEntry.InitiateLibrary();
 
-            // симулировать pAnalyseParameters // СХЕМА №
+            // СХЕМА не важна // характеристика - ФЧХ входного импеданса
             RCWorkbenchLibraryEntry.CreateCAnalyseParameters(5, 3, 0.98, 0.1, false, scheme.SynthesisParameters.PointsCountAtFrequencyAxle);
 
             var maxFrequency = Math.Pow(10, scheme.SynthesisParameters.MaxFrequencyLn);

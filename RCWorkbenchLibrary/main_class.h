@@ -17,7 +17,12 @@ public:
     static HANDLE hStopCompletionPort;
     HANDLE hCompletionPort;
     HANDLE* phThreads;
+    
+#ifdef _DEBUG
     int nThreads = 1;
+#else
+    int nThreads = 8;
+#endif
 
     int ExitCode = 0;
 
