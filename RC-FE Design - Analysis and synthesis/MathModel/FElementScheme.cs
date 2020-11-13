@@ -10,6 +10,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using FractalElementDesigner.StructureSchemeSynthesis;
+using FractalElementDesigner.FEEditing.Model.StructureElements;
 
 namespace FractalElementDesigner.MathModel
 {
@@ -23,6 +24,11 @@ namespace FractalElementDesigner.MathModel
         /// Допустимые подключения двух четырехполюсников
         /// </summary>
         public static Dictionary<int, AllowablePinsConnection> AllowablePinsConnections;
+
+        /// <summary>
+        /// Допустимые подключения в виде типа структуры и типов ячеек по слоям
+        /// </summary>
+        public static Dictionary<(int, int), List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>> AllowablePinsConnectionsOnLayer;
 
         /// <summary>
         /// Статический конструктор
@@ -241,6 +247,187 @@ namespace FractalElementDesigner.MathModel
                     }   
                 }
             };
+
+            AllowablePinsConnectionsOnLayer = new Dictionary<(int, int), List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>>()
+            {
+                {
+                    (1, 1), 
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.Rk_C_NRk, GetCellTypeList(StructureSegmentTypeEnum.Rk_C_NRk))
+                    }
+                },
+                {
+                    (2, 1),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.Rv,  GetCellTypeList(StructureSegmentTypeEnum.Rv)),
+                        (StructureSegmentTypeEnum.Rk_C_NRk, GetCellTypeList(StructureSegmentTypeEnum.Rk_C_NRk))
+                    }
+                },
+                {
+                    (2, 2),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.R_C_NRk, GetCellTypeList(StructureSegmentTypeEnum.R_C_NRk)),
+                        (StructureSegmentTypeEnum.Rv, GetCellTypeList(StructureSegmentTypeEnum.Rv)),
+                        (StructureSegmentTypeEnum.Rk_C_NRk, GetCellTypeList(StructureSegmentTypeEnum.Rk_C_NRk))
+                    }
+                },
+                {
+                    (3, 1),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.Rk_C_NRk, GetCellTypeList(StructureSegmentTypeEnum.Rk_C_NRk)),
+                        (StructureSegmentTypeEnum.Rv, GetCellTypeList(StructureSegmentTypeEnum.Rv))
+                    }
+                },
+                {
+                    (3, 2),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.Rk_C_NRk, GetCellTypeList(StructureSegmentTypeEnum.Rk_C_NRk)),
+                        (StructureSegmentTypeEnum.Rv, GetCellTypeList(StructureSegmentTypeEnum.Rv)),
+                        (StructureSegmentTypeEnum.R_C_NRk, GetCellTypeList(StructureSegmentTypeEnum.R_C_NRk))
+                    }
+                },
+                {
+                    (4, 1),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.Rv, GetCellTypeList(StructureSegmentTypeEnum.Rv))
+                    }
+                },
+                 {
+                    (4, 2),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.Rv, GetCellTypeList(StructureSegmentTypeEnum.Rv)),
+                        (StructureSegmentTypeEnum.R_C_NRk, GetCellTypeList(StructureSegmentTypeEnum.R_C_NRk))
+                    }
+                },
+                  {
+                    (4, 3),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.R_C_NRk, GetCellTypeList(StructureSegmentTypeEnum.R_C_NRk)),
+                        (StructureSegmentTypeEnum.Rv, GetCellTypeList(StructureSegmentTypeEnum.Rv))
+                    }
+                },
+                   {
+                    (4, 4),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.R_C_NRk, GetCellTypeList(StructureSegmentTypeEnum.R_C_NRk))
+                    }
+                },
+                    {
+                    (5, 1),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.Rk_C_NRk, GetCellTypeList(StructureSegmentTypeEnum.Rk_C_NRk)),
+                        (StructureSegmentTypeEnum.Rn, GetCellTypeList(StructureSegmentTypeEnum.Rn))
+                    }
+                },
+                     {
+                    (5, 2),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.Rk_C_NRk, GetCellTypeList(StructureSegmentTypeEnum.Rk_C_NRk)),
+                        (StructureSegmentTypeEnum.Rn, GetCellTypeList(StructureSegmentTypeEnum.Rn)),
+                        (StructureSegmentTypeEnum.Rk_C_NR, GetCellTypeList(StructureSegmentTypeEnum.Rk_C_NR))
+                    }
+                },
+                     {
+                    (6, 1),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.Rn, GetCellTypeList(StructureSegmentTypeEnum.Rn))
+                    }
+                },
+                 {
+                    (6, 2),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.Rk_C_NR, GetCellTypeList(StructureSegmentTypeEnum.Rk_C_NR)),
+                        (StructureSegmentTypeEnum.Rn, GetCellTypeList(StructureSegmentTypeEnum.Rn))
+                    }
+                },
+                  {
+                    (6, 3),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.Rn, GetCellTypeList(StructureSegmentTypeEnum.Rn)),
+                        (StructureSegmentTypeEnum.Rk_C_NR, GetCellTypeList(StructureSegmentTypeEnum.Rk_C_NR))
+                    }
+                },
+                   {
+                    (6, 4),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.Rk_C_NR, GetCellTypeList(StructureSegmentTypeEnum.Rk_C_NR))
+                    }
+                },
+{
+                    (7, 1),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.R_C_NR, GetCellTypeList(StructureSegmentTypeEnum.R_C_NR))
+                    }
+                },
+                 {
+                    (7, 2),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.Rk_C_NR, GetCellTypeList(StructureSegmentTypeEnum.Rk_C_NR))
+                    }
+                },
+                  {
+                    (7, 3),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.R_C_NRk, GetCellTypeList(StructureSegmentTypeEnum.R_C_NRk))
+                    }
+                },
+                  {
+                    (8, 1),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.Rn, GetCellTypeList(StructureSegmentTypeEnum.Rn)),
+                        (StructureSegmentTypeEnum.Rk_C_NRk, GetCellTypeList(StructureSegmentTypeEnum.Rk_C_NRk))
+                    }
+                },
+                 {
+                    (8, 2),
+                    new List<(StructureSegmentTypeEnum structureSegmentsTypes, List<CellType> cellsTypes)>()
+                    {
+                        (StructureSegmentTypeEnum.Rk_C_NR, GetCellTypeList(StructureSegmentTypeEnum.Rk_C_NR)),
+                        (StructureSegmentTypeEnum.Rn, GetCellTypeList(StructureSegmentTypeEnum.Rn)),
+                        (StructureSegmentTypeEnum.Rk_C_NRk, GetCellTypeList(StructureSegmentTypeEnum.Rk_C_NRk))
+                    }
+                }
+            };
+
+            List<CellType> GetCellTypeList(StructureSegmentTypeEnum structureSegmentType) 
+            {
+                switch (structureSegmentType)
+                {
+                    case StructureSegmentTypeEnum.R_C_NR:
+                        return new List<CellType>() { CellType.RC, CellType.R };
+                    case StructureSegmentTypeEnum.Rv:
+                        return new List<CellType>() { CellType.RC, CellType.Cut };
+                    case StructureSegmentTypeEnum.Rn:
+                        return new List<CellType>() { CellType.Cut, CellType.R };
+                    case StructureSegmentTypeEnum.Rk_C_NRk:
+                        return new List<CellType>() { CellType.Rk, CellType.NRk };
+                    case StructureSegmentTypeEnum.R_C_NRk:
+                        return new List<CellType>() { CellType.RC, CellType.NRk };
+                    case StructureSegmentTypeEnum.Rk_C_NR:
+                        return new List<CellType>() { CellType.Rk, CellType.R };
+                    default:
+                        return new List<CellType>() { CellType.RC, CellType.R };
+                }
+            }
         }
 
         /// <summary>

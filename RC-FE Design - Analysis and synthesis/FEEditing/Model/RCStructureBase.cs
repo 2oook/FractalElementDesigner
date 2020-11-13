@@ -129,6 +129,53 @@ namespace FractalElementDesigner.FEEditing.Model
             }
         }
 
+        // Метод для инициализации структуры по схеме
+        public void InitializeByScheme(int verticalStructureDimensionValue, int horizontalStructureDimensionValue, MathModel.FElementScheme scheme)
+        {
+            // число выводов слоя сегмента
+            var pins_count_in_layer = 4;
+            // найти общее число выводов сегмента 
+            PinsCountOfSegment = pins_count_in_layer * StructureLayers.Count;
+
+            for (int r = 0; r < verticalStructureDimensionValue; r++)
+            {
+                var row = new ObservableCollection<SegmentOfTheStructure>();
+
+                for (int c = 0; c < horizontalStructureDimensionValue; c++)
+                {
+                    var cell = new SegmentOfTheStructure(r.ToString() + c.ToString()) { Position = { x = c, y = r } };
+
+                    int pins_counter = 0;
+
+                    foreach (var layer in StructureLayers)
+                    {
+                        var cell_in_layer = layer.Cells[r][c];
+
+                        // список выводов можно задать в виде параметра метода
+                        cell_in_layer.Pins = new List<Pin>()
+                        {
+                            new Pin() { Number = 1 + pins_counter, CellInLayer = cell_in_layer },
+                            new Pin() { Number = 2 + pins_counter, CellInLayer = cell_in_layer },
+                            new Pin() { Number = 4 + pins_counter, CellInLayer = cell_in_layer },
+                            new Pin() { Number = 3 + pins_counter, CellInLayer = cell_in_layer }
+                        };
+
+                        cell_in_layer.MainCell = cell;
+
+                        cell.CellsInLayer.Add(layer, cell_in_layer);
+
+                        pins_counter += cell_in_layer.Pins.Count;
+                    }
+
+                    cell.YParametersMatrix = Matrix<Complex>.Build.DenseOfArray(new Complex[pins_counter, pins_counter]);
+
+                    row.Add(cell);
+                }
+
+                Segments.Add(row);
+            }
+        }
+
         /// <summary>
         /// Событие изменения свойства
         /// </summary>

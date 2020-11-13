@@ -45,6 +45,10 @@ namespace FractalElementDesigner.FEEditing.Converters
                         return Application.Current.FindResource("RColorKey");
                     case CellType.Shunt:
                         return Application.Current.FindResource("ShuntColorKey");
+                    case CellType.Rk:
+                        return Application.Current.FindResource("RkColorKey");
+                    case CellType.NRk:
+                        return Application.Current.FindResource("NRkColorKey");
                 }
             }
 

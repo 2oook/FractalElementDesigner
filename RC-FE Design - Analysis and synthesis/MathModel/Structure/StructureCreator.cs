@@ -31,26 +31,31 @@ namespace FractalElementDesigner.MathModel.Structure
         public static event Action<string> OnStateChange;
 
         // Метод для создания конструкции элемента
-        public static RCStructure Create(FElementScheme scheme, RCStructure structure)
+        public static RCStructure Create(RCStructure structure)
         {
             OnStateChange("Создание конструкции");
-
-            FitLayerToScheme(structure, scheme.Model);
-
-            // для отладки
-            // для отладки
-            // для отладки
-            for (int i = 0; i < 100; i++)
-            {
-                Thread.Sleep(5);
-                OnDoWork(i + 1);
-            }
-            // для отладки
-            // для отладки
-            // для отладки
+            OnDoWork(0);
 
             var made_structure = InitializeStructure(structure);
 
+            OnDoWork(100);
+            OnStateChange("");
+
+            return made_structure;
+        }
+
+        public static RCStructure CreateStructureByScheme(FElementScheme scheme, RCStructure structure)
+        {
+            OnStateChange("Создание конструкции");
+            OnDoWork(0);
+
+            FitLayersToScheme(structure, scheme.Model);
+
+            OnDoWork(50);
+
+            var made_structure = InitializeStructureByScheme(scheme, structure);
+
+            OnDoWork(100);
             OnStateChange("");
 
             return made_structure;
@@ -72,64 +77,79 @@ namespace FractalElementDesigner.MathModel.Structure
         }
 
         // Метод для наложения полученной схемы на слои структуры
-        private static void FitLayerToScheme(RCStructure structure, FESchemeModel schemeModel) 
+        private static void FitLayersToScheme(RCStructure structure, FESchemeModel schemeModel) 
         {
+            var upperLayer = structure.StructureLayers.First();
+            var lowerLayer = structure.StructureLayers.Last();
 
+            int rowCount = 12;
 
-            var schemeInLayerContext = ExpandConnectionsAndGroundsOnLayers(structure, schemeModel);
+            AddColumnToStructure(upperLayer, rowCount, CellType.Contact, CellType.None, CellType.None);
+            AddColumnToStructure(lowerLayer, rowCount, CellType.Contact, CellType.None, CellType.None);
 
-            // обойти слои структуры // вид сбоку
-            foreach (var layer in schemeInLayerContext.Keys)
+            AddColumnToStructure(upperLayer, rowCount, CellType.Rk, CellType.Forbid, CellType.Forbid);
+            AddColumnToStructure(lowerLayer, rowCount, CellType.NRk, CellType.Forbid, CellType.Forbid);
+
+            for (int c = 0; c < schemeModel.InnerConnections.Count; c++)
             {
-                var layerData = schemeInLayerContext[layer];
+                var columns = FElementScheme.AllowablePinsConnectionsOnLayer[(schemeModel.InnerConnections[c].ConnectionType, schemeModel.InnerConnections[c].PEType)];
+
+                for (int i = 0; i < 5; i++)
+                {
+                    AddColumnToStructure(upperLayer, rowCount, CellType.RC, CellType.Forbid, CellType.Forbid);
+                    AddColumnToStructure(lowerLayer, rowCount, CellType.R, CellType.Forbid, CellType.Forbid);
+                }
+
+                foreach (var column in columns)
+                {
+                    AddColumnToStructure(upperLayer, rowCount, column.cellsTypes[0], CellType.Forbid, CellType.Forbid);
+                    AddColumnToStructure(lowerLayer, rowCount, column.cellsTypes[1], CellType.Forbid, CellType.Forbid);
+                }
             }
 
-            CellType DefineCellType(int i, int j, int rowCount, CellType _layerType)
+            for (int i = 0; i < 5; i++)
             {
-                // первая строка
+                AddColumnToStructure(upperLayer, rowCount, CellType.RC, CellType.Forbid, CellType.Forbid);
+                AddColumnToStructure(lowerLayer, rowCount, CellType.R, CellType.Forbid, CellType.Forbid);
+            }
+
+            AddColumnToStructure(upperLayer, rowCount, CellType.Rk, CellType.Forbid, CellType.Forbid);
+            AddColumnToStructure(lowerLayer, rowCount, CellType.NRk, CellType.Forbid, CellType.Forbid);
+
+            AddColumnToStructure(upperLayer, rowCount, CellType.Contact, CellType.None, CellType.None);
+            AddColumnToStructure(lowerLayer, rowCount, CellType.Contact, CellType.None, CellType.None);
+        }
+
+        private static void AddColumnToStructure(Layer layer, int rowsCount, CellType mainCellType, CellType upperCellType, CellType lowerCellType) 
+        {
+            // rowsCount включает ячейки для контактных площадок
+
+            if (layer.Cells.Count == 0)
+            {
+                // для всех строк структуры
+                for (int i = 0; i < rowsCount; i++)
+                {
+                    layer.Cells.Add(new ObservableCollection<Cell>());
+                }
+            }
+
+            // для всех строк структуры
+            for (int i = 0; i < layer.Cells.Count; i++)
+            {
+                var row = layer.Cells;
+
                 if (i == 0)
                 {
-                    if (j != 0 | j != rowCount - 1)
-                    {
-                        return CellType.PlaceForContact;
-                    }
+                    row[i].Add(new Cell() { Layer = layer, CellType = upperCellType });
                 }
-                // последняя строка
-                if (i == rowCount - 1)
+                else if (i == layer.Cells.Count-1)
                 {
-                    if (j != 0 | j != rowCount - 1)
-                    {
-                        return CellType.PlaceForContact;
-                    }
+                    row[i].Add(new Cell() { Layer = layer, CellType = lowerCellType });
                 }
-                // первая колонка
-                if (j == 0)
+                else
                 {
-                    // установить угловые ячейки как неактивные
-                    if (i == 0 | i == rowCount - 1)
-                    {
-                        return CellType.None;
-                    }
-                    else
-                    {
-                        return CellType.PlaceForContact;
-                    }
+                    row[i].Add(new Cell() { Layer = layer, CellType = mainCellType });
                 }
-                // последняя колонка
-                if (j == rowCount - 1)
-                {
-                    // установить угловые ячейки как неактивные
-                    if (i == 0 | i == rowCount - 1)
-                    {
-                        return CellType.None;
-                    }
-                    else
-                    {
-                        return CellType.PlaceForContact;
-                    }
-                }
-
-                return _layerType;
             }
         }
 
@@ -234,6 +254,16 @@ namespace FractalElementDesigner.MathModel.Structure
             InitializeCellsTypesOfTheStructure(structure, verticalStructureDimensionValue, horizontalStructureDimensionValue);
 
             return newStructure;
+        }
+
+        // Метод для инициализации структуры по схеме
+        public static RCStructure InitializeStructureByScheme(FElementScheme scheme, RCStructure structure)
+        {
+            var first_layer = structure.StructureLayers.First();
+
+            structure.InitializeByScheme(first_layer.Cells.Count, first_layer.Cells.First().Count, scheme);
+
+            return structure;
         }
 
         // Метод для инициализации ячеек в редакторе структуры

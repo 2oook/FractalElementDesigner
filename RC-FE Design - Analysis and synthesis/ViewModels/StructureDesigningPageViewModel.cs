@@ -557,7 +557,30 @@ namespace FractalElementDesigner.ViewModels
 
             SelectedProjectTreeItem = sch;
 
-            CreateStructure();
+            // создать окно
+            var window = new NewStructureWindow();
+            // создать vm для окна создания новой структуры
+            var newStructureWindowViewModel = new NewStructureWindowViewModel(window, sch.SynthesisParameters);
+            // вывести окно ввода параметров структуры
+            window.DataContext = newStructureWindowViewModel;
+            var dialogResult = window.ShowDialog();
+
+            // если не было подтверждения выйти
+            if (dialogResult.HasValue == false)
+            {
+                return;
+            }
+            else
+            {
+                if (dialogResult.Value == false)
+                {
+                    return;
+                }
+            }
+
+            var project = Projects.SingleOrDefault(x => x.Items.Contains(sch));
+
+            CreateStructureAsync(project, sch, newStructureWindowViewModel.CurrentStructure, false);
             // быстрый тест
             // быстрый тест
             // быстрый тест
@@ -629,7 +652,7 @@ namespace FractalElementDesigner.ViewModels
 
                 var project = Projects.SingleOrDefault(x => x.Items.Contains(scheme));
 
-                CreateStructureAsync(project, scheme, newStructureWindowViewModel.CurrentStructure);
+                CreateStructureAsync(project, scheme, newStructureWindowViewModel.CurrentStructure, true);
             }
         }
 
@@ -974,7 +997,7 @@ namespace FractalElementDesigner.ViewModels
         }
 
         // Метод для асинхронного создания конструкции элемента
-        private async void CreateStructureAsync(Project currentProject, FElementScheme scheme, RCStructure _structure) 
+        private async void CreateStructureAsync(Project currentProject, FElementScheme scheme, RCStructure _structure, bool by_scheme) 
         {
             await Task.Run(() =>
             {
@@ -982,8 +1005,17 @@ namespace FractalElementDesigner.ViewModels
                 {
                     scheme.IsLocked = true;
 
+                    RCStructure structure;
+
                     // создать конструкцию элемента
-                    var structure = StructureCreator.Create(scheme, _structure);
+                    if (by_scheme)
+                    {
+                        structure = StructureCreator.CreateStructureByScheme(scheme, _structure);
+                    }
+                    else
+                    {
+                        structure = StructureCreator.Create(_structure);
+                    }
 
                     // создать структуру на стороне библиотеки
                     ByRCWorkbenchStructureCreator.CreateStructure(scheme, _structure);
@@ -1166,7 +1198,44 @@ namespace FractalElementDesigner.ViewModels
                         }
                     }
 
-                    CreateStructureAsync(project, schemePrototype, newStructureWindowViewModel.CurrentStructure);
+                    var _structure = newStructureWindowViewModel.CurrentStructure;
+
+                    try
+                    {
+                        schemePrototype.IsLocked = true;
+
+                        // создать конструкцию элемента
+                        var structure = StructureCreator.Create(_structure);
+
+                        // создать структуру на стороне библиотеки
+                        ByRCWorkbenchStructureCreator.CreateStructure(schemePrototype, _structure);
+
+                        var structure_in_project = new StructureInProjectTree() { Name = structure.Name };
+                        structure_in_project.Items.Add(structure);
+                        structure_in_project.Items.Add(new PRPlot());
+
+                        DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                        {
+                            StructureCreator.InsertVisual(structure, _Page.structureEditorControl.FEControl);
+                            project.Items.Add(structure_in_project);
+                        });
+
+                        // тест
+                        // тест
+
+                        // TODO выполнить по выбору пользователя // ПОМЕСТИТЬ В КОМАНДУ // ТЕСТОВЫЙ ВЫЗОВ
+                        //StartStructureSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, currentProject, structure);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+
+                        _dialogCoordinator.ShowMessageAsync(this, "", "Ошибка создания конструкции" + Environment.NewLine + ex.Message);
+                    }
+                    finally
+                    {
+                        schemePrototype.IsLocked = false;
+                    }
                 };
             }
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить

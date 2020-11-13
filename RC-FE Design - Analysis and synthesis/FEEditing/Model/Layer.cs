@@ -33,7 +33,7 @@ namespace FractalElementDesigner.FEEditing.Model
         /// <summary>
         /// Матрица ячеек слоя
         /// </summary>
-        public ObservableCollection<ObservableCollection<Cell>> Cells { get; set; } 
+        public ObservableCollection<ObservableCollection<Cell>> Cells { get; set; } = new ObservableCollection<ObservableCollection<Cell>>();
 
         private Editor editor;
         /// <summary>

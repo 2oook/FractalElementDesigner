@@ -11,5 +11,7 @@
     <SolidColorBrush x:Key="RCColorKey" Color="#FF484646"/>
     <SolidColorBrush x:Key="RColorKey" Color="#FF45AB0F"/>
     <SolidColorBrush x:Key="ShuntColorKey" Color="#FF6B9CF1"/>
+    <SolidColorBrush x:Key="RkColorKey" Color="#FF5247E4"/>
+    <SolidColorBrush x:Key="NRkColorKey" Color="#FF6073D3"/>
 
 </ResourceDictionary>
