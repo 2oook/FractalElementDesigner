@@ -21,6 +21,11 @@ namespace FractalElementDesigner
     /// </summary>
     public partial class App : Application
     {
+        static App() 
+        {
+            DispatcherHelper.Initialize();
+        }
+
         /// <summary>
         /// Обработчик старта приложения
         /// </summary>
@@ -43,8 +48,6 @@ namespace FractalElementDesigner
             window.DataContext = new MainViewModel(new ViewModelsResolver(DialogCoordinator.Instance));
 
             window.Show();
-
-            DispatcherHelper.Initialize();
         }
     }
 }
