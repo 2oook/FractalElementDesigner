@@ -997,7 +997,7 @@ namespace FractalElementDesigner.ViewModels
         }
 
         // Метод для асинхронного создания конструкции элемента
-        private async void CreateStructureAsync(Project currentProject, FElementScheme scheme, RCStructure _structure, bool by_scheme) 
+        private async void CreateStructureAsync(Project currentProject, FElementScheme scheme, RCStructure structure, bool by_scheme) 
         {
             await Task.Run(() =>
             {
@@ -1005,20 +1005,19 @@ namespace FractalElementDesigner.ViewModels
                 {
                     scheme.IsLocked = true;
 
-                    RCStructure structure;
-
                     // создать конструкцию элемента
                     if (by_scheme)
                     {
-                        structure = StructureCreator.CreateStructureByScheme(scheme, _structure);
+                        structure = StructureCreator.CreateStructureByScheme(scheme, structure);
+                        // создать структуру на стороне библиотеки
+                        ByRCWorkbenchStructureCreator.CreateStructureByScheme(scheme, structure);
                     }
                     else
                     {
-                        structure = StructureCreator.Create(_structure);
+                        structure = StructureCreator.Create(structure);
+                        // создать структуру на стороне библиотеки
+                        ByRCWorkbenchStructureCreator.CreateStructure(scheme, structure);
                     }
-
-                    // создать структуру на стороне библиотеки
-                    ByRCWorkbenchStructureCreator.CreateStructure(scheme, _structure);
 
                     var structure_in_project = new StructureInProjectTree() { Name = structure.Name };
                     structure_in_project.Items.Add(structure);
@@ -1153,7 +1152,7 @@ namespace FractalElementDesigner.ViewModels
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
 
-            Test();
+            //Test();
 
             if (TestingBool)
             {

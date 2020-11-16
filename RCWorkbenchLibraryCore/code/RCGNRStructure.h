@@ -15,6 +15,12 @@ protected:
   double Mat_nr[8][8];
   void InitMatR();
   void InitMatNR();
+
+  double Mat_rv[8][8];
+  double Mat_rn[8][8];
+  void InitMatRv();
+  void InitMatRn();
+
   int FixElement(int Element);
   void FillGlobalMatrix(complex<double> **Ym, double w);
 
@@ -26,6 +32,9 @@ public:
     m_N = N;
     InitMatR();
     InitMatNR();
+
+    InitMatRv();
+    InitMatRn();
   }
 
   CRCGNRStructure(const CRCGNRStructure& S) : CRCStructure(S)
@@ -35,6 +44,9 @@ public:
     m_N = S.m_N;
     InitMatR();
     InitMatNR();
+
+    InitMatRv();
+    InitMatRn();
   }
 
   CRCGNRStructure(FILE *f) : CRCStructure(f, 2)
@@ -44,6 +56,9 @@ public:
     fread(&m_N, sizeof(double), 1, f);
     InitMatR();
     InitMatNR();
+
+    InitMatRv();
+    InitMatRn();
   }
 
   CRCStructure* clone() const
@@ -64,6 +79,9 @@ public:
     CRCStructure::Resize(new_x, new_y);
     InitMatR();
     InitMatNR();
+
+    InitMatRv();
+    InitMatRn();
   }
 
   void Dorabotka();

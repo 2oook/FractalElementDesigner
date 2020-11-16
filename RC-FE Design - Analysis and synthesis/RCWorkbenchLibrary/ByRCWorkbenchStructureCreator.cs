@@ -48,5 +48,34 @@ namespace FractalElementDesigner.RCWorkbenchLibrary
                 100,
                 scheme.Model.FESections.First().SectionParameters.N);
         }
+
+        public static void CreateStructureByScheme(FElementScheme scheme, RCStructure structure)
+        {
+            // параметры секций задаются отдельно, но для RCWorkbench (в текущей реализации) нужно задавать из один раз на всю структуру
+            // поэтому они обобщаются (берутся с первой секции)           
+
+            // инициализировать библиотеку
+            RCWorkbenchLibraryEntry.InitiateLibrary();
+
+            // СХЕМА не важна // характеристика - ФЧХ входного импеданса
+            RCWorkbenchLibraryEntry.CreateCAnalyseParameters(5, 3, 0.98, 0.1, false, scheme.SynthesisParameters.PointsCountAtFrequencyAxle);
+
+            var maxFrequency = Math.Pow(10, scheme.SynthesisParameters.MaxFrequencyLn);
+            var minFrequency = Math.Pow(10, scheme.SynthesisParameters.MinFrequencyLn);
+
+            // установить диапазон частот
+            RCWorkbenchLibraryEntry.SetFrequencyRange(minFrequency, maxFrequency, scheme.SynthesisParameters.PointsCountAtFrequencyAxle);
+
+            // создать структуру
+            RCWorkbenchLibraryEntry.CreateRCGNRStructure(
+                scheme.Model.FESections.First().SectionParameters.R,
+                scheme.Model.FESections.First().SectionParameters.C,
+                structure.Segments.First().Count,
+                structure.Segments.Count,
+                1.0,
+                scheme.Model.FESections.First().SectionParameters.G,
+                100,
+                scheme.Model.FESections.First().SectionParameters.N);
+        }
     }
 }

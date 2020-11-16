@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace FractalElementDesigner.RCWorkbenchLibrary.Helpers
 {
     /// <summary>
-    /// Конвертер типа ячейки 
+    /// Конвертер типа ячейки для интеграции с RCWorkbench
     /// </summary>
     class CellTypeToRCWorkbenchConverter
     {
@@ -30,10 +30,14 @@ namespace FractalElementDesigner.RCWorkbenchLibrary.Helpers
                     return 3;
                 case CellType.R:
                     return 1;
+                case CellType.Rk:
+                    return 104;
+                case CellType.NRk:
+                    return 160;
                 case CellType.Shunt:
                     return 24;
                 default:
-                    return -1;
+                    throw new Exception();
             }
         }
 
@@ -51,6 +55,10 @@ namespace FractalElementDesigner.RCWorkbenchLibrary.Helpers
                     return CellType.RC;
                 case 8:
                     return CellType.Contact;
+                case 104:
+                    return CellType.Rk;
+                case 160:
+                    return CellType.NRk;
                 case 16:
                     return CellType.Forbid;
                 case 24:
@@ -62,7 +70,7 @@ namespace FractalElementDesigner.RCWorkbenchLibrary.Helpers
                 case 259:
                     throw new NotImplementedException();
                 default:
-                    return CellType.None;
+                    throw new Exception();
             }
         }
     }

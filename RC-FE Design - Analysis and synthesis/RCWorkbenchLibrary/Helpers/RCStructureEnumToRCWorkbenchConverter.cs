@@ -33,7 +33,7 @@ namespace FractalElementDesigner.RCWorkbenchLibrary.Helpers
                 case RCStructureTypeConstants.R_plus_R_CG_NR_plus_CP:
                     return 0x48435252;
                 default:
-                    return -1;
+                    throw new Exception();
             }
         }
 
@@ -58,7 +58,7 @@ namespace FractalElementDesigner.RCWorkbenchLibrary.Helpers
                 case 0x48435252:
                     return RCStructureTypeConstants.R_plus_R_CG_NR_plus_CP;
                 default:
-                    return "";
+                    throw new Exception();
             }
         }
     }

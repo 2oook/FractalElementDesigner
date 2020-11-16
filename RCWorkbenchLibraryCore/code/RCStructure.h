@@ -132,6 +132,10 @@ enum EnumRCElementType
   RCET_EMPTY = 0,
   RCET_R = 1,
   RCET_RC = 3,
+
+  RCET_Rk = 104,
+  RCET_NRk = 160,
+
   RCET_KPNORMAL = 8,
   RCET_KPRESTRICT = 16,
   RCET_KPSHUNT = 24,
