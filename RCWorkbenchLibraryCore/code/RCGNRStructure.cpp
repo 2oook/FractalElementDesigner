@@ -47,6 +47,15 @@ void CRCGNRStructure::InitMatNR()
 
 void CRCGNRStructure::FillGlobalMatrix(complex<double> **Ym, double w)
 {
+    // RkCNRk
+    complex<double> Mat_Rk_C_NRk[8][8]; // Y - параметры Rk_C_NRk - €чейки
+
+
+    // RCNRk
+
+    // RkCNR
+
+    // RCNR
   complex<double> Mat_rcnr[8][8]; // Y - параметры RCNR - €чейки
 
   //double Z_x = m_R*2.0*(1.0+m_N)*(double)m_y/((double)m_x);

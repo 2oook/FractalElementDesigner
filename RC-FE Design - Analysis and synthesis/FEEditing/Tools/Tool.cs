@@ -1,12 +1,4 @@
-﻿using GalaSoft.MvvmLight.CommandWpf;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using GalaSoft.MvvmLight;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace FractalElementDesigner.FEEditing
 {
@@ -55,10 +47,7 @@ namespace FractalElementDesigner.FEEditing
         /// <param name="propName">Имя свойства</param>
         protected virtual void RaisePropertyChanged(string propName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

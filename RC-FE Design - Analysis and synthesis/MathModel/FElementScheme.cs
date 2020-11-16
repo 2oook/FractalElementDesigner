@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FractalElementDesigner.StructureSchemeSynthesis;
 using FractalElementDesigner.FEEditing.Model.StructureElements;
+using FractalElementDesigner.MathModel.Structure;
 
 namespace FractalElementDesigner.MathModel
 {
@@ -425,7 +426,7 @@ namespace FractalElementDesigner.MathModel
                     case StructureSegmentTypeEnum.Rk_C_NR:
                         return new List<CellType>() { CellType.Rk, CellType.R };
                     default:
-                        return new List<CellType>() { CellType.RC, CellType.R };
+                        throw new Exception();
                 }
             }
         }

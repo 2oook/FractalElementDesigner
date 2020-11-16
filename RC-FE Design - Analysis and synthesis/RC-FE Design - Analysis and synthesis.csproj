@@ -185,7 +185,7 @@
     <Compile Include="MathModel\AllowablePinsConnection.cs" />
     <Compile Include="MathModel\PRPlot.cs" />
     <Compile Include="MathModel\SchemeSynthesizer.cs" />
-    <Compile Include="MathModel\StructureSegmentTypeEnum.cs" />
+    <Compile Include="MathModel\Structure\StructureSegmentTypeEnum.cs" />
     <Compile Include="MathModel\Structure\StructureCreator.cs" />
     <Compile Include="MathModel\Structure\PhaseResponseCalculatorForStructureForAllFrequencies.cs" />
     <Compile Include="MathModel\Structure\Pin.cs" />
