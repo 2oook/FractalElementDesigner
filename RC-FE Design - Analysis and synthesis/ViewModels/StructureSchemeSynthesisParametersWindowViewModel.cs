@@ -117,10 +117,7 @@ namespace FractalElementDesigner.ViewModels
         /// <param name="propName">Имя свойства</param>
         protected virtual void RaisePropertyChanged(string propName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.ComponentModel;
 using FractalElementDesigner.StructureSchemeSynthesis;
+using FractalElementDesigner.MathModel.Structure;
 
 namespace FractalElementDesigner.ViewModels
 {
@@ -200,19 +201,7 @@ namespace FractalElementDesigner.ViewModels
                 }
                 else
                 {
-                    // добавить слои в соответствии с шаблоном
-                    foreach (var layer in SelectedStructureType.StructureLayers)
-                    {
-                        CurrentStructure.StructureLayers.Add(new Layer() { Name = layer.Name, ParentStructure = CurrentStructure });
-                    }
-
-                    // скопировать значения из словаря для валидации в словарь свойств структуры
-                    foreach (var property in CurrentStructure.StructureProperties.Values)
-                    {
-                        property.Value = double.Parse(StructureProperties[property.Name].Value);
-                    }
-
-                    CurrentStructure.SynthesisParameters = _SynthesisParameters;
+                    StructureFromStructureTemplateInitializer.Initialize(SelectedStructureType, CurrentStructure, StructureProperties, _SynthesisParameters);
 
                     _newStructureWindow.AcceptUserInput();
                 }
@@ -244,13 +233,9 @@ namespace FractalElementDesigner.ViewModels
         /// <param name="propName">Имя свойства</param>
         protected virtual void RaisePropertyChanged(string propName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
-
 
     /// <summary>
     /// Класс свойства структуры для валидации

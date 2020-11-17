@@ -1,5 +1,6 @@
 ﻿using FractalElementDesigner.FEEditing.Model;
 using FractalElementDesigner.MathModel;
+using FractalElementDesigner.RCWorkbenchLibrary.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,12 +71,30 @@ namespace FractalElementDesigner.RCWorkbenchLibrary
             RCWorkbenchLibraryEntry.CreateRCGNRStructure(
                 scheme.Model.FESections.First().SectionParameters.R,
                 scheme.Model.FESections.First().SectionParameters.C,
-                structure.Segments.First().Count,
-                structure.Segments.Count,
+                structure.Segments.First().Count - 2,
+                structure.Segments.Count - 2,
                 1.0,
                 scheme.Model.FESections.First().SectionParameters.G,
                 100,
                 scheme.Model.FESections.First().SectionParameters.N);
+
+            ApplyCellTypesToRCWorkbenchStrructure(structure);
+        }
+
+        // Метод для применения типов ячеек к структуре на стороне RCWorkbench
+        private static void ApplyCellTypesToRCWorkbenchStrructure(RCStructure structure) 
+        {
+            foreach (var layer in structure.StructureLayers)
+            {
+                foreach (var row in layer.Cells)
+                {
+                    foreach (var cell in row)
+                    {
+                        RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(layer.Number, cell.MainCell.Position.x - 1, cell.MainCell.Position.y - 1, 
+                            CellTypeToRCWorkbenchConverter.Convert(cell.CellType));
+                    }
+                } 
+            }
         }
     }
 }
