@@ -31,6 +31,7 @@ using System.Numerics;
 using MathNet.Numerics.LinearAlgebra;
 using OxyPlot;
 using FractalElementDesigner.ProjectTree;
+using System.Threading;
 
 namespace FractalElementDesigner.ViewModels
 {
@@ -624,6 +625,34 @@ namespace FractalElementDesigner.ViewModels
             var project = Projects.SingleOrDefault(x => x.Items.Contains(sch));
 
             CreateStructureAsync(project, sch, newStructureWindowViewModel.CurrentStructure, false);
+
+            Thread.Sleep(2000);
+
+            // изменение ячеек слоёв структуры
+            // установить КП
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
+
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
+
+            // пронумеровать КП
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+
+            // rk c nr
+            RCWorkbenchLibraryEntry.SetElementTypeDirectlyToStructureCell(0, 1, 1, CellTypeToRCWorkbenchConverter.Convert(CellType.Rk));
+
+            // rk c nrk
+            RCWorkbenchLibraryEntry.SetElementTypeDirectlyToStructureCell(0, 2, 1, CellTypeToRCWorkbenchConverter.Convert(CellType.Rk));
+            RCWorkbenchLibraryEntry.SetElementTypeDirectlyToStructureCell(1, 2, 1, CellTypeToRCWorkbenchConverter.Convert(CellType.NRk));
+
+            // r c nrk
+            RCWorkbenchLibraryEntry.SetElementTypeDirectlyToStructureCell(1, 3, 1, CellTypeToRCWorkbenchConverter.Convert(CellType.NRk));
+
             // быстрый тест
             // быстрый тест
             // быстрый тест

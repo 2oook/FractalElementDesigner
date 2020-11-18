@@ -126,7 +126,7 @@ enum EnumRCStructureType
   RRCGNRA= 0x48435252,
 };
 
-enum EnumRCElementType
+enum EnumRCElementType  
 {
   RCET_NONE = -1,// инструмент "стрелка" либо не выбранный инструмент // при отмене инструмента тип инструмента не сбрасывается
   RCET_EMPTY = 0,
@@ -205,6 +205,7 @@ public:
 
   void CopyStructure(CRCStructure *S);
   bool SetElementType(int Layer, int x, int y, EnumRCElementType ElementType);
+  bool SetElementTypeDirectly(int Layer, int x, int y, EnumRCElementType ElementType);
   void ClearKPNumbers();
   unsigned int GetKPQuantity();
   int GetKPSummaryLength();

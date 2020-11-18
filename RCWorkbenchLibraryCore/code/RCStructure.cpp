@@ -461,6 +461,48 @@ void CRCStructure::KPH()
   }
 }
 
+bool CRCStructure::SetElementTypeDirectly(int Layer, int x, int y, EnumRCElementType ElementType)
+{
+    bool bChanged = false;
+
+    if (x >= 0 && x < m_x && y >= 0 && y < m_y)
+    {
+        int temp = m_pMatrix[x][y];
+
+        // если слой нижний
+        if (Layer == 1)
+        {
+
+        }
+        else
+        {
+                
+        }
+
+        switch (temp)
+        {
+        case 0:// вырез в обоих слоях
+            break;
+        case 1:// вырез снизу
+            break;
+        case 4:// вырез сверху
+            break;
+        case 7:// полная структура
+            break;
+        case 8:// 
+            break;
+        case 12:// 
+            break;
+        case 14:// 
+            break;
+        }
+
+        bChanged = (temp != m_pMatrix[x][y]);
+    }
+
+    return bChanged;
+}
+
 // редактирование структуры через графический редактор
 bool CRCStructure::SetElementType(int Layer, int x, int y, EnumRCElementType ElementType)
 {
@@ -507,11 +549,11 @@ bool CRCStructure::SetElementType(int Layer, int x, int y, EnumRCElementType Ele
     {
       if (x>=0 && x<m_x && y>=0 && y<m_y)
       {
-        int temp = m_pMatrix[x][y];
-        m_pMatrix[x][y] &= ~(3<<(Layer<<1));
-        m_pMatrix[x][y] |= (ElementType<<(Layer<<1));
-        m_pMatrix[x][y] = FixElement(m_pMatrix[x][y]);
-        bChanged = (temp != m_pMatrix[x][y]);
+            int temp = m_pMatrix[x][y];
+            m_pMatrix[x][y] &= ~(3<<(Layer<<1));
+            m_pMatrix[x][y] |= (ElementType<<(Layer<<1));
+            m_pMatrix[x][y] = FixElement(m_pMatrix[x][y]);
+            bChanged = (temp != m_pMatrix[x][y]);
       }
     }
     break;

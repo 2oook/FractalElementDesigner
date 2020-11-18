@@ -71,7 +71,6 @@ namespace FractalElementDesigner.MathModel.Structure
 
                 layer.Editor = editor;
 
-
                 Insert.StructureLayer(editor.Context.CurrentCanvas as FECanvas, structure, layer);
             }
         }

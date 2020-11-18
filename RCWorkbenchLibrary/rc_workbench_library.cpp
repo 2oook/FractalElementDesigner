@@ -59,6 +59,12 @@ extern void __stdcall SetElementTypeToStructureCell(int Layer, int x, int y, int
     mainClassInstance->Structure5->SetElementType(Layer, x, y, (EnumRCElementType)ElementType);
 };
 
+extern void __stdcall SetElementTypeDirectlyToStructureCell(int Layer, int x, int y, int ElementType)
+{
+    // установить тип €чейки напр€мую
+    mainClassInstance->Structure5->SetElementTypeDirectly(Layer, x, y, (EnumRCElementType)ElementType);
+};
+
 extern void __cdecl CalculateYParameters(double result[][SECOND_DIMENSION_FOR_8_CONTACTS], int first_dimention_size, int second_dimention_size)
 {
     mainClassInstance->pAnalyseParameters->m_pT->y_result = result;

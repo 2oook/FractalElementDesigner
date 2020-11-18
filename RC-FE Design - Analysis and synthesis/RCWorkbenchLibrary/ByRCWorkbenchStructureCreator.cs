@@ -1,4 +1,5 @@
 ﻿using FractalElementDesigner.FEEditing.Model;
+using FractalElementDesigner.FEEditing.Model.StructureElements;
 using FractalElementDesigner.MathModel;
 using FractalElementDesigner.RCWorkbenchLibrary.Helpers;
 using System;
@@ -90,8 +91,16 @@ namespace FractalElementDesigner.RCWorkbenchLibrary
                 {
                     foreach (var cell in row)
                     {
-                        RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(layer.Number, cell.MainCell.Position.x - 1, cell.MainCell.Position.y - 1, 
-                            CellTypeToRCWorkbenchConverter.Convert(cell.CellType));
+                        if (cell.CellType == CellType.Rk | cell.CellType == CellType.NRk)
+                        {
+                            RCWorkbenchLibraryEntry.SetElementTypeDirectlyToStructureCell(layer.Number, cell.MainCell.Position.x - 1, cell.MainCell.Position.y - 1,
+                                CellTypeToRCWorkbenchConverter.Convert(cell.CellType));
+                        }
+                        else
+                        {
+                            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(layer.Number, cell.MainCell.Position.x - 1, cell.MainCell.Position.y - 1,
+                                CellTypeToRCWorkbenchConverter.Convert(cell.CellType));
+                        }
                     }
                 } 
             }

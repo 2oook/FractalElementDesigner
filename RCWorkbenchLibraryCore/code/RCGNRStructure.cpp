@@ -249,7 +249,7 @@ void CRCGNRStructure::Dorabotka()
 
 int CRCGNRStructure::FixElement(int Element)
 {
-  static const int fixtable[] = {0, 1, 0, 1, 4, 7, 4, 7};
+  static const int fixtable[] = {0, 1, 0, 1, 4, 7, 4, 7}; // 0 вырез в двух слоях // 1 вырез снизу // 4 вырез сверху // 7 полная структура 
   return fixtable[Element&7];
 }
 
