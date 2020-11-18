@@ -438,33 +438,76 @@ namespace FractalElementDesigner.ViewModels
         /// <param name="value"></param>
         private void SetChosenProjectTreeItemEnvironment(object value) 
         {
-            if (value is Project project)
+            try
             {
+                if (value is Project project)
+                {
 
+                }
+                else if (value is FElementScheme scheme)
+                {
+                    SchemeEditorVisibility = Visibility.Visible;
+                    _Page.schemeEditorControl.SchemeControl.Editor = scheme.Editor;
+                }
+                else if (value is PRPlot plot)
+                {
+                    PlotVisibility = Visibility.Visible;
+                    _Page.plotControl.DataContext = plot;
+                }
+                else if (value is StructureInProjectTree structureInProject)
+                {
+                    StructureEditorVisibility = Visibility.Visible;
+                    _Page.structureEditorControl.structurePlot.DataContext = null;
+
+                    var _plot = structureInProject.Items.Where(x => x is PRPlot).Single() as PRPlot;
+
+                    if (_plot != null && _plot.Points != null)
+                    {
+                        _Page.structureEditorControl.structurePlot.DataContext = _plot.Clone();
+                    }
+                }
+                else if (value is RCStructureBase)
+                {
+                    StructureEditorVisibility = Visibility.Visible;
+
+                    _Page.structureEditorControl.structurePlot.DataContext = null;
+
+                    // выбрать StructureInProjectTree который содержит value
+                    var _structureInProject = Projects.Where(x => x.Items.Where(y => y is StructureInProjectTree).Count() > 0)
+                        .SelectMany(x => x.Items.Where(y => y is StructureInProjectTree))
+                        .Single(x => (x as StructureInProjectTree).Items.Contains(value)) as StructureInProjectTree;
+
+                    var _plot = _structureInProject.Items.Where(x => x is PRPlot).Single() as PRPlot;
+
+                    if (_plot != null && _plot.Points != null)
+                    {
+                        _Page.structureEditorControl.structurePlot.DataContext = _plot.Clone();
+                    }
+                }
+                else if (value is Layer layer)
+                {
+                    StructureEditorVisibility = Visibility.Visible;
+                    _Page.structureEditorControl.FEControl.Editor = layer.Editor;
+
+                    _Page.structureEditorControl.structurePlot.DataContext = null;
+
+                    // выбрать StructureInProjectTree который содержит layer.ParentStructure
+                    var _structureInProject = Projects.Where(x => x.Items.Where(y => y is StructureInProjectTree).Count() > 0)
+                        .SelectMany(x => x.Items.Where(y => y is StructureInProjectTree))
+                        .Single(x => (x as StructureInProjectTree).Items.Contains(layer.ParentStructure)) as StructureInProjectTree;
+
+                    var _plot = _structureInProject.Items.Where(x => x is PRPlot).Single() as PRPlot;
+
+                    if (_plot != null && _plot.Points != null)
+                    {
+                        _Page.structureEditorControl.structurePlot.DataContext = _plot.Clone();
+                    }
+                }
             }
-            else if (value is FElementScheme scheme)
+            catch (Exception ex)
             {
-                SchemeEditorVisibility = Visibility.Visible;
-                _Page.schemeEditorControl.SchemeControl.Editor = scheme.Editor;
-            }
-            else if (value is PRPlot plot)
-            {
-                PlotVisibility = Visibility.Visible;
-                _Page.plotControl.DataContext = plot;
-            }
-            else if (value is StructureInProjectTree structureInProject)
-            {
-                StructureEditorVisibility = Visibility.Visible;
-            }
-            else if (value is RCStructureBase)
-            {
-                StructureEditorVisibility = Visibility.Visible;
-            }
-            else if (value is Layer layer)
-            {
-                StructureEditorVisibility = Visibility.Visible;
-                _Page.structureEditorControl.FEControl.Editor = layer.Editor;
-            }
+                _dialogCoordinator.ShowMessageAsync(this, "", "Ошибка" + Environment.NewLine + ex.Message);
+            } 
         }
 
         /// <summary>
