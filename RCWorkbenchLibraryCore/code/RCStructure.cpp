@@ -461,43 +461,55 @@ void CRCStructure::KPH()
   }
 }
 
-bool CRCStructure::SetElementTypeDirectly(int Layer, int x, int y, EnumRCElementType ElementType)
+bool CRCStructure::SetElementTypeDirectly(int Layer, int x, int y, EnumRCElementType ElementType)// только для дополнительных структур // установка с предположением о том что изначальная структура это R C NR либо с наличием Rk
 {
     bool bChanged = false;
 
     if (x >= 0 && x < m_x && y >= 0 && y < m_y)
     {
-        int temp = m_pMatrix[x][y];
+        int prevElementType = m_pMatrix[x][y];
+        int newElementType = -1;
 
-        // если слой нижний
-        if (Layer == 1)
+        // какой элемент был
+        switch (prevElementType)
         {
-
-        }
-        else
-        {
-                
-        }
-
-        switch (temp)
-        {
-        case 0:// вырез в обоих слоях
-            break;
-        case 1:// вырез снизу
-            break;
-        case 4:// вырез сверху
-            break;
         case 7:// полная структура
+        {
+            if (ElementType == (int)RCET_Rk)
+            {
+                newElementType = 8;
+            }
+            else if (ElementType == (int)RCET_NRk)
+            {
+                newElementType = 12;
+            }
             break;
-        case 8:// 
+        }
+        case 8:// Rk C NR
+        {
+            if (ElementType == (int)RCET_NRk)
+            {
+                newElementType = 14;
+            }
             break;
-        case 12:// 
+        }
             break;
-        case 14:// 
+        case 12:// R C NRk
+        {
+            if (ElementType == (int)RCET_Rk)
+            {
+                newElementType = 14;
+            }
+            break;
+        }
+            break;
+        case 14:// Rk C NRk
             break;
         }
 
-        bChanged = (temp != m_pMatrix[x][y]);
+        m_pMatrix[x][y] = newElementType;
+
+        bChanged = (prevElementType != m_pMatrix[x][y]);
     }
 
     return bChanged;
@@ -544,13 +556,13 @@ bool CRCStructure::SetElementType(int Layer, int x, int y, EnumRCElementType Ele
     }
     break;
 
-    // если не выбран инструмент
+    // если не выбран инструмент либо выбран инструмент ячейки R или RC
     case RCET_EMPTY: case RCET_R: case RCET_RC:
     {
       if (x>=0 && x<m_x && y>=0 && y<m_y)
       {
             int temp = m_pMatrix[x][y];
-            m_pMatrix[x][y] &= ~(3<<(Layer<<1));
+            m_pMatrix[x][y] &= ~(3<<(Layer<<1)); // очистить 2 бита с конца (для верхнего слоя) или 2 бита с отступом 2 (3 для нижнего слоя)
             m_pMatrix[x][y] |= (ElementType<<(Layer<<1));
             m_pMatrix[x][y] = FixElement(m_pMatrix[x][y]);
             bChanged = (temp != m_pMatrix[x][y]);
