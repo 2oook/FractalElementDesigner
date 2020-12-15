@@ -562,6 +562,13 @@ bool CRCStructure::SetElementType(int Layer, int x, int y, EnumRCElementType Ele
       if (x>=0 && x<m_x && y>=0 && y<m_y)
       {
             int temp = m_pMatrix[x][y];
+
+            // исключить Rk
+            if (temp == 8 || temp == 12 || temp == 14)
+            {
+                break;
+            }
+
             m_pMatrix[x][y] &= ~(3<<(Layer<<1)); // очистить 2 бита с конца (дл€ верхнего сло€) или 2 бита с отступом 2 (3 дл€ нижнего сло€)
             m_pMatrix[x][y] |= (ElementType<<(Layer<<1));
             m_pMatrix[x][y] = FixElement(m_pMatrix[x][y]);
@@ -1085,7 +1092,14 @@ bool CRCStructure::CheckKP()
 // внутренн€€ функци€, возвращает значение, в зависимости есть ли материал в заданном слое
 inline int HaveLayer(int Element, int Layer)
 {
-  return Element & (1 << (Layer << 1));
+    if (Element == 8 || Element == 12 || Element == 14)
+    {
+        return 1;
+    }
+    else
+    {
+        return Element & (1 << (Layer << 1));
+    }
 }
 
 // преобразует конечные элементы в матрицу узлов (теперь граф узлов)
