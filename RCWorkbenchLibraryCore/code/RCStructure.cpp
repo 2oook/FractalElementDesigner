@@ -1017,7 +1017,7 @@ void CRCStructure::Poradok(complex<double> **Ym)
   complex<double> *YL, *src, *dst;
 
   int kp = GetKPQuantity();
-  for (int i=m_Nodes-1; i>=kp; --i)
+  for (int i=m_Nodes-1; i>=kp; --i)// дл€ всех узлов // обход с конца
   {
     if (Ym[i][0] != 0.0)
     {
@@ -1092,6 +1092,7 @@ bool CRCStructure::CheckKP()
 // внутренн€€ функци€, возвращает значение, в зависимости есть ли материал в заданном слое
 inline int HaveLayer(int Element, int Layer)
 {
+    // дл€ элементов типа Rk всегда true
     if (Element == 8 || Element == 12 || Element == 14)
     {
         return 1;

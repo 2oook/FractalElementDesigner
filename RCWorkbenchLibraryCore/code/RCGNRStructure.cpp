@@ -47,8 +47,10 @@ void CRCGNRStructure::InitMatNR()
 
 void CRCGNRStructure::FillGlobalMatrix(complex<double> **Ym, double w)
 {
-    // RkCNRk
-    complex<double> Mat_Rk_C_NRk[8][8]{0}; // Y - параметры Rk_C_NRk - €чейки
+
+#pragma region RkCNRk
+
+    complex<double> Mat_Rk_C_NRk[8][8]{ 0 }; // Y - параметры Rk_C_NRk - €чейки
 
     double Z_x_Rk_C_NRk = m_R * 2.0 * (1.0 + m_N);
     double Z_y_Rk_C_NRk = m_R * 2.0 * (1.0 + m_N);
@@ -87,8 +89,11 @@ void CRCGNRStructure::FillGlobalMatrix(complex<double> **Ym, double w)
     Mat_Rk_C_NRk[6][0] = Mat_Rk_C_NRk[0][6];                                            Mat_Rk_C_NRk[6][1] = 0.0;                                       Mat_Rk_C_NRk[6][2] = Mat_Rk_C_NRk[0][4];                        Mat_Rk_C_NRk[6][3] = Mat_Rk_C_NRk[0][5];    Mat_Rk_C_NRk[6][4] = Mat_Rk_C_NRk[4][6];                                                    Mat_Rk_C_NRk[6][5] = 0.0;                                       Mat_Rk_C_NRk[6][6] = Mat_Rk_C_NRk[4][4];                        Mat_Rk_C_NRk[6][7] = Mat_Rk_C_NRk[4][5];
     Mat_Rk_C_NRk[7][0] = 0.0;                                                           Mat_Rk_C_NRk[7][1] = Mat_Rk_C_NRk[0][6];                        Mat_Rk_C_NRk[7][2] = Mat_Rk_C_NRk[0][5];                        Mat_Rk_C_NRk[7][3] = Mat_Rk_C_NRk[0][4];     Mat_Rk_C_NRk[7][4] = 0.0;                                                                  Mat_Rk_C_NRk[7][5] = Mat_Rk_C_NRk[4][6];                        Mat_Rk_C_NRk[7][6] = Mat_Rk_C_NRk[4][5];                        Mat_Rk_C_NRk[7][7] = Mat_Rk_C_NRk[4][4];
 
-    // RkCNR
-    complex<double> Mat_Rk_C_NR[8][8]{0}; // Y - параметры Rk_C_NR - €чейки
+#pragma endregion
+
+#pragma region RkCNR
+
+    complex<double> Mat_Rk_C_NR[8][8]{ 0 }; // Y - параметры Rk_C_NR - €чейки
 
     double Z_x_Rk_C_NR = m_R * 2.0 * (1.0 + m_N);
     double Z_y_Rk_C_NR = m_R * 2.0 * (1.0 + m_N);
@@ -127,8 +132,11 @@ void CRCGNRStructure::FillGlobalMatrix(complex<double> **Ym, double w)
     Mat_Rk_C_NR[6][0] = Mat_Rk_C_NR[0][6];                                      Mat_Rk_C_NR[6][1] = 0.0;                                    Mat_Rk_C_NR[6][2] = Mat_Rk_C_NR[0][4];                      Mat_Rk_C_NR[6][3] = Mat_Rk_C_NR[0][5];    Mat_Rk_C_NR[6][4] = Mat_Rk_C_NR[4][6];                                                    Mat_Rk_C_NR[6][5] = 0.0;                                       Mat_Rk_C_NR[6][6] = Mat_Rk_C_NR[4][4];                        Mat_Rk_C_NR[6][7] = Mat_Rk_C_NR[4][5];
     Mat_Rk_C_NR[7][0] = 0.0;                                                    Mat_Rk_C_NR[7][1] = Mat_Rk_C_NR[0][6];                      Mat_Rk_C_NR[7][2] = Mat_Rk_C_NR[0][5];                      Mat_Rk_C_NR[7][3] = Mat_Rk_C_NR[0][4];     Mat_Rk_C_NR[7][4] = 0.0;                                                                  Mat_Rk_C_NR[7][5] = Mat_Rk_C_NR[4][6];                        Mat_Rk_C_NR[7][6] = Mat_Rk_C_NR[4][5];                        Mat_Rk_C_NR[7][7] = Mat_Rk_C_NR[4][4];
 
-    // RCNRk
-    complex<double> Mat_R_C_NRk[8][8]{0}; // Y - параметры R_C_NRk - €чейки
+#pragma endregion
+
+#pragma region RCNRk
+
+    complex<double> Mat_R_C_NRk[8][8]{ 0 }; // Y - параметры R_C_NRk - €чейки
 
     double Z_x_R_C_NRk = m_R * 2.0 * (1.0 + m_N);
     double Z_y_R_C_NRk = m_R * 2.0 * (1.0 + m_N);
@@ -167,59 +175,63 @@ void CRCGNRStructure::FillGlobalMatrix(complex<double> **Ym, double w)
     Mat_R_C_NRk[6][0] = Mat_R_C_NRk[0][6];                                          Mat_R_C_NRk[6][1] = 0.0;                                    Mat_R_C_NRk[6][2] = Mat_R_C_NRk[0][4];                      Mat_R_C_NRk[6][3] = Mat_R_C_NRk[0][5];  Mat_R_C_NRk[6][4] = Mat_R_C_NRk[4][6];                                              Mat_R_C_NRk[6][5] = 0.0;                                    Mat_R_C_NRk[6][6] = Mat_R_C_NRk[4][4];                      Mat_R_C_NRk[6][7] = Mat_R_C_NRk[4][5];
     Mat_R_C_NRk[7][0] = 0.0;
 
-    // RCNR
+#pragma endregion
+
+#pragma region RCNR
+
     complex<double> Mat_rcnr[8][8]; // Y - параметры RCNR - €чейки
 
     //double Z_x = m_R*2.0*(1.0+m_N)*(double)m_y/((double)m_x);
     //double Z_y = m_R*2.0*(1.0+m_N)*(double)m_x/((double)m_y);
-    double Z_x = m_R*2.0*(1.0+m_N);
-    double Z_y = m_R*2.0*(1.0+m_N);
+    double Z_x = m_R * 2.0 * (1.0 + m_N);
+    double Z_y = m_R * 2.0 * (1.0 + m_N);
 
     complex<double> p = complex<double>(0.0, w);
-    complex<double> temp = 1.0/m_H + p*m_R*m_C;
-    complex<double> Y = temp/((1.0+m_G*temp)*((double)(4*m_x*m_y))*m_R);
+    complex<double> temp = 1.0 / m_H + p * m_R * m_C;
+    complex<double> Y = temp / ((1.0 + m_G * temp) * ((double)(4 * m_x * m_y)) * m_R);
     //complex<double> temp = 1.0/m_H + p*Z_x*m_C;
     //complex<double> Y = temp/((1.0+m_G*temp)*((double)(4*m_x*m_y))*Z_x); // по идее это неправильно, т.к. G и H нормируютс€ к R, а не к R*2*(N+1)
 
-    complex<double> tetta_x = sqrt(Z_x*Y);
-    complex<double> tetta_y = sqrt(Z_y*Y);
+    complex<double> tetta_x = sqrt(Z_x * Y);
+    complex<double> tetta_y = sqrt(Z_y * Y);
 
     double koeff_x = 1.0 / Z_x;
     double koeff_y = 1.0 / Z_y;
 
-    complex<double> tx = tetta_x/tanh(tetta_x);
-    complex<double> sx = tetta_x/sinh(tetta_x);
-    complex<double> ty = tetta_y/tanh(tetta_y);
-    complex<double> sy = tetta_y/sinh(tetta_y);
+    complex<double> tx = tetta_x / tanh(tetta_x);
+    complex<double> sx = tetta_x / sinh(tetta_x);
+    complex<double> ty = tetta_y / tanh(tetta_y);
+    complex<double> sy = tetta_y / sinh(tetta_y);
 
     tx *= koeff_x;
     sx *= koeff_x;
     ty *= koeff_y;
     sy *= koeff_y;
 
-    double KxN = koeff_x*m_N;
-    double KyN = koeff_y*m_N;
-    double Kx_N = koeff_x/m_N;
-    double Ky_N = koeff_y/m_N;
+    double KxN = koeff_x * m_N;
+    double KyN = koeff_y * m_N;
+    double Kx_N = koeff_x / m_N;
+    double Ky_N = koeff_y / m_N;
 
 
     // при 2x2 не вылазит выше 0dB
     //Mat_rcnr[0][0]=tx+ty+KxN+KyN;  Mat_rcnr[0][1]=-sx-KxN;        Mat_rcnr[0][2]=-sy-KyN;        Mat_rcnr[0][3]=0.0;            Mat_rcnr[0][4]=sx+sy-koeff_x-koeff_y; Mat_rcnr[0][5]=koeff_x-tx;     Mat_rcnr[0][6]=koeff_y-ty;     Mat_rcnr[0][7]=0.0;
 
     // при 2x2 вылазит выше 0dB
-    Mat_rcnr[0][0]=tx+ty+KxN+KyN;  Mat_rcnr[0][1]=-sx-KxN;        Mat_rcnr[0][2]=-sy-KyN;        Mat_rcnr[0][3]=0.0;            Mat_rcnr[0][4]=koeff_x+koeff_y-tx-ty; Mat_rcnr[0][5]=sx-koeff_x;     Mat_rcnr[0][6]=sy-koeff_y;     Mat_rcnr[0][7]=0.0;
-    Mat_rcnr[1][0]=Mat_rcnr[0][1]; Mat_rcnr[1][1]=Mat_rcnr[0][0]; Mat_rcnr[1][2]=0.0;            Mat_rcnr[1][3]=Mat_rcnr[0][2]; Mat_rcnr[1][4]=Mat_rcnr[0][5];        Mat_rcnr[1][5]=Mat_rcnr[0][4]; Mat_rcnr[1][6]=0.0;            Mat_rcnr[1][7]=Mat_rcnr[0][6];
-    Mat_rcnr[2][0]=Mat_rcnr[0][2]; Mat_rcnr[2][1]=0.0;            Mat_rcnr[2][2]=Mat_rcnr[0][0]; Mat_rcnr[2][3]=Mat_rcnr[0][1]; Mat_rcnr[2][4]=Mat_rcnr[0][6];        Mat_rcnr[2][5]=0.0;            Mat_rcnr[2][6]=Mat_rcnr[0][4]; Mat_rcnr[2][7]=Mat_rcnr[0][5];
-    Mat_rcnr[3][0]=0.0;            Mat_rcnr[3][1]=Mat_rcnr[0][2]; Mat_rcnr[3][2]=Mat_rcnr[0][1]; Mat_rcnr[3][3]=Mat_rcnr[0][0]; Mat_rcnr[3][4]=0.0;                   Mat_rcnr[3][5]=Mat_rcnr[0][6]; Mat_rcnr[3][6]=Mat_rcnr[0][5]; Mat_rcnr[3][7]=Mat_rcnr[0][4];
-    Mat_rcnr[4][0]=Mat_rcnr[0][4]; Mat_rcnr[4][1]=Mat_rcnr[0][5]; Mat_rcnr[4][2]=Mat_rcnr[0][6]; Mat_rcnr[4][3]=0.0;            Mat_rcnr[4][4]=tx+ty+Kx_N+Ky_N;       Mat_rcnr[4][5]=-sx-Kx_N;       Mat_rcnr[4][6]=-sy-Ky_N;       Mat_rcnr[4][7]=0.0;
-    Mat_rcnr[5][0]=Mat_rcnr[0][5]; Mat_rcnr[5][1]=Mat_rcnr[0][4]; Mat_rcnr[5][2]=0.0;            Mat_rcnr[5][3]=Mat_rcnr[0][6]; Mat_rcnr[5][4]=Mat_rcnr[4][5];        Mat_rcnr[5][5]=Mat_rcnr[4][4]; Mat_rcnr[5][6]=0.0;            Mat_rcnr[5][7]=Mat_rcnr[4][6];
-    Mat_rcnr[6][0]=Mat_rcnr[0][6]; Mat_rcnr[6][1]=0.0;            Mat_rcnr[6][2]=Mat_rcnr[0][4]; Mat_rcnr[6][3]=Mat_rcnr[0][5]; Mat_rcnr[6][4]=Mat_rcnr[4][6];        Mat_rcnr[6][5]=0.0;            Mat_rcnr[6][6]=Mat_rcnr[4][4]; Mat_rcnr[6][7]=Mat_rcnr[4][5];
-    Mat_rcnr[7][0]=0.0;            Mat_rcnr[7][1]=Mat_rcnr[0][6]; Mat_rcnr[7][2]=Mat_rcnr[0][5]; Mat_rcnr[7][3]=Mat_rcnr[0][4]; Mat_rcnr[7][4]=0.0;                   Mat_rcnr[7][5]=Mat_rcnr[4][6]; Mat_rcnr[7][6]=Mat_rcnr[4][5]; Mat_rcnr[7][7]=Mat_rcnr[4][4];
+    Mat_rcnr[0][0] = tx + ty + KxN + KyN;  Mat_rcnr[0][1] = -sx - KxN;        Mat_rcnr[0][2] = -sy - KyN;        Mat_rcnr[0][3] = 0.0;            Mat_rcnr[0][4] = koeff_x + koeff_y - tx - ty; Mat_rcnr[0][5] = sx - koeff_x;     Mat_rcnr[0][6] = sy - koeff_y;     Mat_rcnr[0][7] = 0.0;
+    Mat_rcnr[1][0] = Mat_rcnr[0][1]; Mat_rcnr[1][1] = Mat_rcnr[0][0]; Mat_rcnr[1][2] = 0.0;            Mat_rcnr[1][3] = Mat_rcnr[0][2]; Mat_rcnr[1][4] = Mat_rcnr[0][5];        Mat_rcnr[1][5] = Mat_rcnr[0][4]; Mat_rcnr[1][6] = 0.0;            Mat_rcnr[1][7] = Mat_rcnr[0][6];
+    Mat_rcnr[2][0] = Mat_rcnr[0][2]; Mat_rcnr[2][1] = 0.0;            Mat_rcnr[2][2] = Mat_rcnr[0][0]; Mat_rcnr[2][3] = Mat_rcnr[0][1]; Mat_rcnr[2][4] = Mat_rcnr[0][6];        Mat_rcnr[2][5] = 0.0;            Mat_rcnr[2][6] = Mat_rcnr[0][4]; Mat_rcnr[2][7] = Mat_rcnr[0][5];
+    Mat_rcnr[3][0] = 0.0;            Mat_rcnr[3][1] = Mat_rcnr[0][2]; Mat_rcnr[3][2] = Mat_rcnr[0][1]; Mat_rcnr[3][3] = Mat_rcnr[0][0]; Mat_rcnr[3][4] = 0.0;                   Mat_rcnr[3][5] = Mat_rcnr[0][6]; Mat_rcnr[3][6] = Mat_rcnr[0][5]; Mat_rcnr[3][7] = Mat_rcnr[0][4];
+    Mat_rcnr[4][0] = Mat_rcnr[0][4]; Mat_rcnr[4][1] = Mat_rcnr[0][5]; Mat_rcnr[4][2] = Mat_rcnr[0][6]; Mat_rcnr[4][3] = 0.0;            Mat_rcnr[4][4] = tx + ty + Kx_N + Ky_N;       Mat_rcnr[4][5] = -sx - Kx_N;       Mat_rcnr[4][6] = -sy - Ky_N;       Mat_rcnr[4][7] = 0.0;
+    Mat_rcnr[5][0] = Mat_rcnr[0][5]; Mat_rcnr[5][1] = Mat_rcnr[0][4]; Mat_rcnr[5][2] = 0.0;            Mat_rcnr[5][3] = Mat_rcnr[0][6]; Mat_rcnr[5][4] = Mat_rcnr[4][5];        Mat_rcnr[5][5] = Mat_rcnr[4][4]; Mat_rcnr[5][6] = 0.0;            Mat_rcnr[5][7] = Mat_rcnr[4][6];
+    Mat_rcnr[6][0] = Mat_rcnr[0][6]; Mat_rcnr[6][1] = 0.0;            Mat_rcnr[6][2] = Mat_rcnr[0][4]; Mat_rcnr[6][3] = Mat_rcnr[0][5]; Mat_rcnr[6][4] = Mat_rcnr[4][6];        Mat_rcnr[6][5] = 0.0;            Mat_rcnr[6][6] = Mat_rcnr[4][4]; Mat_rcnr[6][7] = Mat_rcnr[4][5];
+    Mat_rcnr[7][0] = 0.0;            Mat_rcnr[7][1] = Mat_rcnr[0][6]; Mat_rcnr[7][2] = Mat_rcnr[0][5]; Mat_rcnr[7][3] = Mat_rcnr[0][4]; Mat_rcnr[7][4] = 0.0;                   Mat_rcnr[7][5] = Mat_rcnr[4][6]; Mat_rcnr[7][6] = Mat_rcnr[4][5]; Mat_rcnr[7][7] = Mat_rcnr[4][4];
 
+#pragma endregion
 
-    for (int i=0; i<m_x; i++)
+    for (int i=0; i<m_x; i++)// горизонтальна€ ось
     {
-        for (int j=0; j<m_y; j++)
+        for (int j=0; j<m_y; j++)// вертикальна€ ось
         {
             switch(m_pMatrix[i][j])
             {
@@ -235,13 +247,6 @@ void CRCGNRStructure::FillGlobalMatrix(complex<double> **Ym, double w)
                 int u6 = m_pCircuitNodes[1][i + 1][j];
                 int u7 = m_pCircuitNodes[1][i][j + 1];
                 int u8 = m_pCircuitNodes[1][i + 1][j + 1];
-
-                /* удалить */
-                if (u1 < 0 || u2 < 0 || u3 < 0 || u4 < 0 || u5 < 0 || u6 < 0 || u7 < 0 || u8 < 0)
-                {
-                    int t = 25;
-                }
-                /* удалить */
 
                 AddToMatrix(Ym, u1, u1, Element[0][0], false);
                 AddToMatrix(Ym, u1, u2, Element[0][1], true);
@@ -300,13 +305,6 @@ void CRCGNRStructure::FillGlobalMatrix(complex<double> **Ym, double w)
                 int u6 = m_pCircuitNodes[1][i + 1][j];
                 int u7 = m_pCircuitNodes[1][i][j + 1];
                 int u8 = m_pCircuitNodes[1][i + 1][j + 1];
-
-                /* удалить */
-                if (u1 < 0 || u2 < 0 || u3 < 0 || u4 < 0 || u5 < 0 || u6 < 0 || u7 < 0 || u8 < 0 )
-                {
-                    int t = 25;
-                }
-                /* удалить */
 
                 AddToMatrix(Ym, u1, u1, Element[0][0], false);
                 AddToMatrix(Ym, u1, u2, Element[0][1], true);
@@ -368,13 +366,6 @@ void CRCGNRStructure::FillGlobalMatrix(complex<double> **Ym, double w)
                 int u7 = m_pCircuitNodes[1][i][j + 1];
                 int u8 = m_pCircuitNodes[1][i + 1][j + 1];
 
-                /* удалить */
-                if (u1 < 0 || u2 < 0 || u3 < 0 || u4 < 0 || u5 < 0 || u6 < 0 || u7 < 0 || u8 < 0)
-                {
-                    int t = 25;
-                }
-                /* удалить */
-
                 AddToMatrix(Ym, u1, u1, Element[0][0], false);
                 AddToMatrix(Ym, u1, u2, Element[0][1], true);
                 AddToMatrix(Ym, u1, u3, Element[0][2], true);
@@ -432,13 +423,6 @@ void CRCGNRStructure::FillGlobalMatrix(complex<double> **Ym, double w)
                 int u6 = m_pCircuitNodes[1][i + 1][j];
                 int u7 = m_pCircuitNodes[1][i][j + 1];
                 int u8 = m_pCircuitNodes[1][i + 1][j + 1];
-
-                /* удалить */
-                if (u1 < 0 || u2 < 0 || u3 < 0 || u4 < 0 || u5 < 0 || u6 < 0 || u7 < 0 || u8 < 0)
-                {
-                    int t = 25;
-                }
-                /* удалить */
 
                 AddToMatrix(Ym, u1, u1, Element[0][0], false);
                 AddToMatrix(Ym, u1, u2, Element[0][1], true);
@@ -498,13 +482,6 @@ void CRCGNRStructure::FillGlobalMatrix(complex<double> **Ym, double w)
                 int u7 = m_pCircuitNodes[1][i][j + 1];
                 int u8 = m_pCircuitNodes[1][i + 1][j + 1];
 
-                /* удалить */
-                if (u1 < 0 || u2 < 0 || u3 < 0 || u4 < 0 || u5 < 0 || u6 < 0 || u7 < 0 || u8 < 0)
-                {
-                    int t = 25;
-                }
-                /* удалить */
-
                 AddToMatrix(Ym, u1, u1, Element[0][0], false);
                 AddToMatrix(Ym, u1, u2, Element[0][1], true);
                 AddToMatrix(Ym, u1, u3, Element[0][2], true);
@@ -562,13 +539,6 @@ void CRCGNRStructure::FillGlobalMatrix(complex<double> **Ym, double w)
                 int u6 = m_pCircuitNodes[1][i + 1][j];
                 int u7 = m_pCircuitNodes[1][i][j + 1];
                 int u8 = m_pCircuitNodes[1][i + 1][j + 1];
-
-                /* удалить */
-                if (u1 < 0 || u2 < 0 || u3 < 0 || u4 < 0 || u5 < 0 || u6 < 0 || u7 < 0 || u8 < 0)
-                {
-                    int t = 25;
-                }
-                /* удалить */
 
                 AddToMatrix(Ym, u1, u1, Element[0][0], false);
                 AddToMatrix(Ym, u1, u2, Element[0][1], true);
