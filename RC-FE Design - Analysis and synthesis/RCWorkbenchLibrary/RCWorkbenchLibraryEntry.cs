@@ -42,5 +42,8 @@ namespace FractalElementDesigner.RCWorkbenchLibrary
 
         [DllImport(@"RCWorkbenchLibrary", ExactSpelling = false, EntryPoint = "GetFrequences", CallingConvention = CallingConvention.StdCall)]
         public static extern void GetFrequences([In, Out] double[] frequences);
+
+        [DllImport(@"RCWorkbenchLibrary", ExactSpelling = false, EntryPoint = "GetNodesNumeration", CallingConvention = CallingConvention.StdCall)]
+        public static extern void GetNodesNumeration([In, Out] int[] numeration);
     }
 }

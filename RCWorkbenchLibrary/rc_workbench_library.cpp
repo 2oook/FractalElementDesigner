@@ -89,3 +89,22 @@ extern void __stdcall GetFrequences(double* frequences)
         frequences[i] = mainClassInstance->pAnalyseParameters->m_pT->m_w[i];
     }
 };
+
+extern void __stdcall GetNodesNumeration(int* numeration)
+{  
+    mainClassInstance->Structure5->ElementsToNodes();
+
+    int counter = 0;
+
+    for (size_t i = 0; i < mainClassInstance->Structure5->m_Layers; i++)
+    {
+        for (size_t j = 0; j < mainClassInstance->Structure5->m_x + 1; j++)
+        {
+            for (size_t k = 0; k < mainClassInstance->Structure5->m_y + 1; k++)
+            {
+                numeration[counter] = mainClassInstance->Structure5->m_pCircuitNodes[i][j][k];    
+                counter++;
+            }                    
+        }
+    }
+};

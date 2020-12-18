@@ -16,3 +16,4 @@ extern "C" RCWORKBENCH_LIBRARY_API  void __cdecl CalculateYParameters(double res
 extern "C" RCWORKBENCH_LIBRARY_API  int __stdcall GetCPQuantity();
 extern "C" RCWORKBENCH_LIBRARY_API  void __stdcall ClearCPNumbers();
 extern "C" RCWORKBENCH_LIBRARY_API  void __stdcall GetFrequences(double* frequences);
+extern "C" RCWORKBENCH_LIBRARY_API  void __stdcall GetNodesNumeration(int* numeration);

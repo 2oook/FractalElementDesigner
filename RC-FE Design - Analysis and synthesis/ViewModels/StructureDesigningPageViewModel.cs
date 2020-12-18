@@ -760,7 +760,39 @@ namespace FractalElementDesigner.ViewModels
 
                     }
 
-                    var structure = structureInProject.Items.Where(x => x is RCStructureBase).Single() as RCStructureBase;
+                    var structure = structureInProject.Items.Where(x => x is RCStructureBase).Single() as RCStructure;
+
+                    // извлечь число ячеек по горизонтали структуры
+                    structure.StructureProperties.TryGetValue("HorizontalCellsCount", out var horizontalStructureDimension);
+                    var horizontalStructureDimensionValue = (int)horizontalStructureDimension.Value;
+                    // извлечь число ячеек по вертикали структуры
+                    structure.StructureProperties.TryGetValue("VerticalCellsCount", out var verticalStructureDimension);
+                    var verticalStructureDimensionValue = (int)verticalStructureDimension.Value;
+
+                    var layerCount = 2;
+                    var horizontalRange = (horizontalStructureDimensionValue + 1);
+                    var verticalRange = (verticalStructureDimensionValue + 1);
+                    var arrayDimension = layerCount * horizontalRange * verticalRange;
+                    var nodesNumerationFlat = new int[arrayDimension];
+
+                    RCWorkbenchLibraryEntry.GetNodesNumeration(nodesNumerationFlat);
+
+                    var nodesNumeration = new int[layerCount, horizontalRange, verticalRange];
+
+                    // восстановить массив нумерации узлов
+                    int counter = 0;
+
+                    for (int i = 0; i < layerCount; i++)
+                    {
+                        for (int j = 0; j < horizontalRange; j++)
+                        {
+                            for (int k = 0; k < verticalRange; k++)
+                            {
+                                nodesNumeration[i, j, k] = nodesNumerationFlat[counter];
+                                counter++;
+                            }
+                        }
+                    }
 
                     // анализ структуры
                     int first_dimension = structure.SynthesisParameters.PointsCountAtFrequencyAxle;

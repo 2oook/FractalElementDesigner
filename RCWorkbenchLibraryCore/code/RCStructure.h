@@ -148,7 +148,7 @@ class CRCStructure
 {
   friend class CPlanarStructure;
 
-protected:
+public:
   double m_R;
   double m_C;
   EnumRCStructureType m_RCStructureType; // тип структуры
@@ -179,7 +179,7 @@ protected:
   void AddToMatrix(complex<double> **Ym, int u0, int u1, const complex<double>& value, bool f);
   void KPResizer(int new_size, int old_size, TMasKP *new_KP, TMasKP *old_KP);
 
-public:
+
   CRCStructure(double R, double C, int x, int y, double Kf, EnumRCStructureType RCStructureType=RCAbstract, int Layers=0);
   CRCStructure() {}
   CRCStructure(const CRCStructure& S);
