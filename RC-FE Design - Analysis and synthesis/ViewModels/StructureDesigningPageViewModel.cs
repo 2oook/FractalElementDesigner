@@ -657,18 +657,20 @@ namespace FractalElementDesigner.ViewModels
             // 2x2
             // изменение ячеек слоёв структуры
             // установить КП
+            var colsCnt = newStructureWindowViewModel.CurrentStructure.Segments.First().Count;
+
             RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 2, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, colsCnt, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
 
             RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(1, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(1, 2, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(1, colsCnt, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
 
             // пронумеровать КП
             RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 2, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, colsCnt, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
 
             RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(1, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(1, 2, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(1, colsCnt, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
 
             // быстрый тест
             // быстрый тест
@@ -769,7 +771,7 @@ namespace FractalElementDesigner.ViewModels
                     structure.StructureProperties.TryGetValue("VerticalCellsCount", out var verticalStructureDimension);
                     var verticalStructureDimensionValue = (int)verticalStructureDimension.Value;
 
-                    var layerCount = 2;
+                    var layerCount = structure.StructureLayers.Count;
                     var horizontalRange = (horizontalStructureDimensionValue + 1);
                     var verticalRange = (verticalStructureDimensionValue + 1);
                     var arrayDimension = layerCount * horizontalRange * verticalRange;
@@ -777,22 +779,14 @@ namespace FractalElementDesigner.ViewModels
 
                     RCWorkbenchLibraryEntry.GetNodesNumeration(nodesNumerationFlat);
 
-                    var nodesNumeration = new int[layerCount, horizontalRange, verticalRange];
+                    // получить количество узлов
+                    var nodesCount = RCWorkbenchLibraryEntry.GetNodesQuantity();
 
-                    // восстановить массив нумерации узлов
-                    int counter = 0;
+                    // восстановить плоский массив нумерации узлов
+                    var nodesNumeration = RCWorkbenchIntercommunicationHelper.UnflatNumerationArray(layerCount, horizontalRange, verticalRange, nodesNumerationFlat);
 
-                    for (int i = 0; i < layerCount; i++)
-                    {
-                        for (int j = 0; j < horizontalRange; j++)
-                        {
-                            for (int k = 0; k < verticalRange; k++)
-                            {
-                                nodesNumeration[i, j, k] = nodesNumerationFlat[counter];
-                                counter++;
-                            }
-                        }
-                    }
+                    var calculator = new StructurePhaseResponseCalculator();
+                    calculator.FillGlobalMatrix(structure, nodesCount, nodesNumeration, 10);
 
                     // анализ структуры
                     int first_dimension = structure.SynthesisParameters.PointsCountAtFrequencyAxle;

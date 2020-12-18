@@ -33,6 +33,11 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
         public (int x, int y) Position;
 
         /// <summary>
+        /// Тип сегмента
+        /// </summary>
+        public StructureSegmentTypeEnum SegmentType = StructureSegmentTypeEnum.R_C_NR;
+
+        /// <summary>
         /// Словарь ячеек сегмента по слоям (1 ячейка на слой)
         /// </summary>
         public Dictionary<Layer, Cell> CellsInLayer { get; set; } = new Dictionary<Layer, Cell>();

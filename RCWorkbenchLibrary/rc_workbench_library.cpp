@@ -108,3 +108,8 @@ extern void __stdcall GetNodesNumeration(int* numeration)
         }
     }
 };
+
+extern int __stdcall GetNodesQuantity() 
+{
+    return mainClassInstance->Structure5->m_Nodes;
+};

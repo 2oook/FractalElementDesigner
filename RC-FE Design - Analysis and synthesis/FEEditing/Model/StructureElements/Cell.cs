@@ -39,6 +39,165 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
             get => cellType;
             set
             {
+                // установить тип сегмента структуры в зависимости от устанавливаемого типа ячейки
+                switch (MainCell.SegmentType)// предыдущий тип ячейки
+                {
+                    case StructureSegmentTypeEnum.R_C_NR:
+                        switch (value)
+                        {
+                            case CellType.Cut:
+                                if (Layer.Number == 0)// верхний
+                                {
+                                    MainCell.SegmentType = StructureSegmentTypeEnum.Rn;
+                                }
+                                else
+                                {
+                                    MainCell.SegmentType = StructureSegmentTypeEnum.Rv;
+                                }
+                                break;
+                            case CellType.Rk:
+                                MainCell.SegmentType = StructureSegmentTypeEnum.Rk_C_NR;
+                                break;
+                            case CellType.NRk:
+                                MainCell.SegmentType = StructureSegmentTypeEnum.R_C_NRk;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case StructureSegmentTypeEnum.Rv:
+                        switch (value)
+                        {
+                            case CellType.Cut:
+                                if (Layer.Number == 0)// верхний
+                                {
+                                    MainCell.SegmentType = StructureSegmentTypeEnum.EMPTY;
+                                }
+                                break;
+                            case CellType.RC:
+                                break;
+                            case CellType.R:
+                                if (Layer.Number == 1)// нижний
+                                {
+                                    MainCell.SegmentType = StructureSegmentTypeEnum.Rk_C_NR;
+                                }
+                                break;
+                            case CellType.Rk:
+                                break;
+                            case CellType.NRk:
+                                MainCell.SegmentType = StructureSegmentTypeEnum.R_C_NRk;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case StructureSegmentTypeEnum.Rn:
+                        switch (value)
+                        {
+                            case CellType.Cut:
+                                if (Layer.Number == 1)// нижний
+                                {
+                                    MainCell.SegmentType = StructureSegmentTypeEnum.EMPTY;
+                                }
+                                break;
+                            case CellType.RC:
+                                break;
+                            case CellType.R:
+                                if (Layer.Number == 0)// верхний
+                                {
+                                    MainCell.SegmentType = StructureSegmentTypeEnum.R_C_NR;
+                                }
+                                break;
+                            case CellType.Rk:
+                                MainCell.SegmentType = StructureSegmentTypeEnum.Rk_C_NR;
+                                break;
+                            case CellType.NRk:
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case StructureSegmentTypeEnum.Rk_C_NRk:
+                        switch (value)
+                        {
+                            case CellType.Cut:
+                                break;
+                            case CellType.RC:
+                                break;
+                            case CellType.R:
+                                if (Layer.Number == 0)// верхний
+                                {
+                                    MainCell.SegmentType = StructureSegmentTypeEnum.R_C_NRk;
+                                }
+                                else
+                                {
+                                    MainCell.SegmentType = StructureSegmentTypeEnum.Rk_C_NR;
+                                }
+                                break;
+                            case CellType.Rk:
+                                break;
+                            case CellType.NRk:
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case StructureSegmentTypeEnum.R_C_NRk:
+                        switch (value)
+                        {
+                            case CellType.Cut:
+                                if (Layer.Number == 1)// нижний
+                                {
+                                    MainCell.SegmentType = StructureSegmentTypeEnum.Rv;
+                                }
+                                break;
+                            case CellType.RC:
+                                break;
+                            case CellType.R:
+                                if (Layer.Number == 1)// нижний
+                                {
+                                    MainCell.SegmentType = StructureSegmentTypeEnum.R_C_NR;
+                                }
+                                break;
+                            case CellType.Rk:
+                                MainCell.SegmentType = StructureSegmentTypeEnum.Rk_C_NRk;
+                                break;
+                            case CellType.NRk:
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case StructureSegmentTypeEnum.Rk_C_NR:
+                        switch (value)
+                        {
+                            case CellType.Cut:
+                                if (Layer.Number == 0)// верхний
+                                {
+                                    MainCell.SegmentType = StructureSegmentTypeEnum.Rn;
+                                }
+                                break;
+                            case CellType.RC:
+                                break;
+                            case CellType.R:
+                                if (Layer.Number == 0)// верхний
+                                {
+                                    MainCell.SegmentType = StructureSegmentTypeEnum.R_C_NR;
+                                }
+                                break;
+                            case CellType.Rk:
+                                break;
+                            case CellType.NRk:
+                                MainCell.SegmentType = StructureSegmentTypeEnum.Rk_C_NRk;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
                 cellType = value;
                 RaisePropertyChanged(nameof(CellType));
             }

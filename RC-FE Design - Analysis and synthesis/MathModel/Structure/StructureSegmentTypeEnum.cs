@@ -11,6 +11,7 @@ namespace FractalElementDesigner.MathModel.Structure
     /// </summary>
     public enum StructureSegmentTypeEnum
     {
+        EMPTY, // вырез с обоих слоях
         R_C_NR, // нормальная структура
         Rv, // вырез снизу
         Rn, // вырез сверху

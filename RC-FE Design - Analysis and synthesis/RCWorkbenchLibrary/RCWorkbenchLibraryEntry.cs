@@ -45,5 +45,8 @@ namespace FractalElementDesigner.RCWorkbenchLibrary
 
         [DllImport(@"RCWorkbenchLibrary", ExactSpelling = false, EntryPoint = "GetNodesNumeration", CallingConvention = CallingConvention.StdCall)]
         public static extern void GetNodesNumeration([In, Out] int[] numeration);
+
+        [DllImport(@"RCWorkbenchLibrary", ExactSpelling = false, EntryPoint = "GetNodesQuantity", CallingConvention = CallingConvention.StdCall)]
+        public static extern int GetNodesQuantity();
     }
 }
