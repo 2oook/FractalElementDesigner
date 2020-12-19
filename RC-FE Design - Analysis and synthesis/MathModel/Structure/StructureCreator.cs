@@ -61,6 +61,209 @@ namespace FractalElementDesigner.MathModel.Structure
             return made_structure;
         }
 
+        // Метод для определения типов сегментов по типам ячеек в слоях
+        public static void ResolveSegmentsTypes(RCStructure structure) 
+        {
+            foreach (var row in structure.Segments)
+            {
+                foreach (var mainCell in row)
+                {
+                    CellType upperLayerCellType = CellType.None;
+                    CellType lowerLayerCellType = CellType.None;
+
+                    foreach (var layer in structure.StructureLayers)
+                    {
+                        // верхний слой
+                        if (layer.Number == 0)
+                        {
+                            upperLayerCellType = mainCell.CellsInLayer[layer].CellType;
+                        }
+                        else if (layer.Number == 1)// нижний
+                        {
+                            lowerLayerCellType = mainCell.CellsInLayer[layer].CellType;
+                        }
+                    }
+
+                    switch (upperLayerCellType)
+                    {
+                        case CellType.None:
+                            {
+                                switch (lowerLayerCellType)
+                                {
+                                    case CellType.None:
+                                        {
+                                            mainCell.SegmentType = StructureSegmentTypeEnum.EMPTY;
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        case CellType.Cut:
+                            {
+                                switch (lowerLayerCellType)
+                                {
+                                    case CellType.Cut:
+                                        {
+                                            mainCell.SegmentType = StructureSegmentTypeEnum.EMPTY;
+                                        }
+                                        break;
+                                    case CellType.R:
+                                        {
+                                            mainCell.SegmentType = StructureSegmentTypeEnum.Rn;
+                                        }
+                                        break;
+                                    case CellType.NRk:
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        case CellType.RC:
+                            break;
+                        case CellType.R:
+                            {
+                                switch (lowerLayerCellType)
+                                {
+                                    case CellType.Cut:
+                                        {
+                                            mainCell.SegmentType = StructureSegmentTypeEnum.Rv;
+                                        }
+                                        break;
+                                    case CellType.R:
+                                        {
+                                            mainCell.SegmentType = StructureSegmentTypeEnum.R_C_NR;
+                                        }
+                                        break;
+                                    case CellType.NRk:
+                                        {
+                                            mainCell.SegmentType = StructureSegmentTypeEnum.R_C_NRk;
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        case CellType.Rk:
+                            {
+                                switch (lowerLayerCellType)
+                                {
+                                    case CellType.Cut:
+                                        break;
+                                    case CellType.R:
+                                        {
+                                            mainCell.SegmentType = StructureSegmentTypeEnum.Rk_C_NR;
+                                        }
+                                        break;
+                                    case CellType.NRk:
+                                        {
+                                            mainCell.SegmentType = StructureSegmentTypeEnum.Rk_C_NRk;
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        default:
+                            mainCell.SegmentType = StructureSegmentTypeEnum.EMPTY;
+                            break;
+                    }
+
+                    switch (lowerLayerCellType)
+                    {
+                        case CellType.None:
+                            {
+                                switch (upperLayerCellType)
+                                {
+                                    case CellType.None:
+                                        {
+                                            mainCell.SegmentType = StructureSegmentTypeEnum.EMPTY;
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        case CellType.Cut:
+                            {
+                                switch (upperLayerCellType)
+                                {
+                                    case CellType.Cut:
+                                        {
+                                            mainCell.SegmentType = StructureSegmentTypeEnum.EMPTY;
+                                        }
+                                        break;
+                                    case CellType.RC:
+                                        {
+                                            mainCell.SegmentType = StructureSegmentTypeEnum.Rv;
+                                        }
+                                        break;
+                                    case CellType.NRk:
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        case CellType.R:
+                            {
+                                switch (upperLayerCellType)
+                                {
+                                    case CellType.Cut:
+                                        {
+                                            mainCell.SegmentType = StructureSegmentTypeEnum.Rn;
+                                        }
+                                        break;
+                                    case CellType.RC:
+                                        {
+                                            mainCell.SegmentType = StructureSegmentTypeEnum.R_C_NR;
+                                        }
+                                        break;
+                                    case CellType.Rk:
+                                        {
+                                            mainCell.SegmentType = StructureSegmentTypeEnum.Rk_C_NR;
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        case CellType.NRk:
+                            {
+                                switch (upperLayerCellType)
+                                {
+                                    case CellType.Cut:
+                                        break;
+                                    case CellType.RC:
+                                        {
+                                            mainCell.SegmentType = StructureSegmentTypeEnum.R_C_NRk;
+                                        }
+                                        break;
+                                    case CellType.Rk:
+                                        {
+                                            mainCell.SegmentType = StructureSegmentTypeEnum.Rk_C_NRk;
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        default:
+                            mainCell.SegmentType = StructureSegmentTypeEnum.EMPTY;
+                            break;
+                    }
+                }
+            }
+        }
+
+        // Метод для вставки слоя
         public static void InsertVisual(RCStructure structure, FEControl structureEditorControl) 
         {
             // вставить слои

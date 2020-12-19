@@ -764,12 +764,13 @@ namespace FractalElementDesigner.ViewModels
 
                     var structure = structureInProject.Items.Where(x => x is RCStructureBase).Single() as RCStructure;
 
-                    // извлечь число ячеек по горизонтали структуры
-                    structure.StructureProperties.TryGetValue("HorizontalCellsCount", out var horizontalStructureDimension);
-                    var horizontalStructureDimensionValue = (int)horizontalStructureDimension.Value;
-                    // извлечь число ячеек по вертикали структуры
-                    structure.StructureProperties.TryGetValue("VerticalCellsCount", out var verticalStructureDimension);
-                    var verticalStructureDimensionValue = (int)verticalStructureDimension.Value;
+                    // определить типы сегментов структуры по типам ячеек в слоях
+                    StructureCreator.ResolveSegmentsTypes(structure);
+
+                    // число ячеек по горизонтали структуры
+                    var horizontalStructureDimensionValue = structure.Segments.First().Count;
+                    // число ячеек по вертикали структуры
+                    var verticalStructureDimensionValue = structure.Segments.Count;
 
                     var layerCount = structure.StructureLayers.Count;
                     var horizontalRange = (horizontalStructureDimensionValue + 1);
@@ -786,6 +787,7 @@ namespace FractalElementDesigner.ViewModels
                     var nodesNumeration = RCWorkbenchIntercommunicationHelper.UnflatNumerationArray(layerCount, horizontalRange, verticalRange, nodesNumerationFlat);
 
                     var calculator = new StructurePhaseResponseCalculator();
+
                     calculator.FillGlobalMatrix(structure, nodesCount, nodesNumeration, 10);
 
                     // анализ структуры
