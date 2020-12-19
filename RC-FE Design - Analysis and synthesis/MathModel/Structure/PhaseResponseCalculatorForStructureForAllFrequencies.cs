@@ -10,7 +10,8 @@ namespace FractalElementDesigner.MathModel.Structure
     class PhaseResponseCalculatorForStructureForAllFrequencies
     {
         // Метод для расчёта ФЧХ схемы
-        public static List<(double frequency, double phase)> CalculatePhaseResponseInStructure(double minFrequencyLn, double maxFrequencyLn, double pointsCount, RCStructureBase structure)
+        public static List<(double frequency, double phase)> CalculatePhaseResponseInStructure(double minFrequencyLn, double maxFrequencyLn, double pointsCount, RCStructureBase structure,
+            StructurePhaseResponseCalculator сalculator)
         {
             var points = new List<(double frequency, double phase)>();
 
@@ -22,7 +23,7 @@ namespace FractalElementDesigner.MathModel.Structure
             // цикл по частотам
             for (int i = 0; i <= pointsCount; i++)
             {
-                var phase = StructurePhaseResponseCalculator.CalculatePhase(structure, frequency);
+                var phase = сalculator.CalculatePhase(structure, frequency);
 
                 points.Add((frequency, phase));
 

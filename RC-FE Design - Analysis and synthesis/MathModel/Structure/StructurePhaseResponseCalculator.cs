@@ -1,5 +1,6 @@
 ﻿using FractalElementDesigner.FEEditing.Model;
 using MathNet.Numerics.LinearAlgebra;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 
@@ -10,6 +11,35 @@ namespace FractalElementDesigner.MathModel.Structure
     /// </summary>
     class StructurePhaseResponseCalculator
     {
+        public StructurePhaseResponseCalculator(int x, int y, int nodesCount, int[,,] nodesNumeration)
+        {
+            NodesCount = nodesCount;
+            NodesNumeration = nodesNumeration;
+
+            Horizontal_X = x;
+            Vertical_Y = y;
+        }
+
+        /// <summary>
+        /// Количество ячеек по горизонтали (без учета контактных)
+        /// </summary>
+        int Horizontal_X;
+
+        /// <summary>
+        /// Количество ячеек по вертикали (без учета контактных)
+        /// </summary>
+        int Vertical_Y;
+
+        /// <summary>
+        /// Число узлов
+        /// </summary>
+        int NodesCount;
+
+        /// <summary>
+        /// Нумерация узлов
+        /// </summary>
+        int[,,] NodesNumeration;
+
         /// <summary>
         /// Глобальная матрица проводимости
         /// </summary>
@@ -17,16 +47,14 @@ namespace FractalElementDesigner.MathModel.Structure
 
         public void FillGlobalMatrix(RCStructureBase structure, int nodesCount, int[,,] nodesNumeration, double w) 
         {
-            var x = structure.Segments.First().Count - 2;
-            var y = structure.Segments.Count - 2;
+            var x = Horizontal_X;
+            var y = Vertical_Y;
 
             var R = structure.SynthesisParameters.FESections.First().SectionParameters.R;
             var N = structure.SynthesisParameters.FESections.First().SectionParameters.N;
             var C = structure.SynthesisParameters.FESections.First().SectionParameters.C;
             var G = structure.SynthesisParameters.FESections.First().SectionParameters.G;
             var H = 100;//???????
-
-            w = w * 2.0 * System.Math.PI;
 
             #region Mat_r
 
@@ -629,10 +657,134 @@ namespace FractalElementDesigner.MathModel.Structure
             } 
         }
 
-        // Метод для расчёта фазы
-        public static double CalculatePhase(RCStructureBase structure, double frequency)
+        // Метод для поиска номеров заземлённых выводов
+        private (List<int> pe, List<(int i, int j)> conn) FindPEPinsAndConnectedPinsIndices(RCStructureBase structure)
         {
-            int pinsCount = structure.PinsCountOfSegment;
+            // номера заземлённых выводов
+            var peVector = new List<int>();
+
+            // номера соединённых выводов
+            var connVector = new List<(int i, int j)>();
+
+            for (int i = 1; i <= Horizontal_X; i++)// горизонтальная ось
+            {
+                for (int j = 0; j < Vertical_Y; j++)// вертикальная ось
+                {
+                    switch (structure.Segments[j][i].SegmentType)
+                    {
+                        case StructureSegmentTypeEnum.EMPTY:
+                            break;
+                        case StructureSegmentTypeEnum.R_C_NR:
+                            break;
+                        case StructureSegmentTypeEnum.Rv:
+                            break;
+                        case StructureSegmentTypeEnum.Rn:
+                            break;
+                        case StructureSegmentTypeEnum.Rk_C_NRk:
+                            {
+                                int u1 = NodesNumeration[0, i, j];
+                                int u2 = NodesNumeration[0, i + 1, j];
+                                int u3 = NodesNumeration[0, i, j + 1];
+                                int u4 = NodesNumeration[0, i + 1, j + 1];
+                                int u5 = NodesNumeration[1, i, j];
+                                int u6 = NodesNumeration[1, i + 1, j];
+                                int u7 = NodesNumeration[1, i, j + 1];
+                                int u8 = NodesNumeration[1, i + 1, j + 1];
+
+                                connVector.Add((u1, u5));
+                                connVector.Add((u2, u6));
+                                connVector.Add((u3, u7));
+                                connVector.Add((u4, u8));
+                            }
+                            break;
+                        case StructureSegmentTypeEnum.R_C_NRk:
+                            {
+                                int u5 = NodesNumeration[1, i, j];
+                                int u6 = NodesNumeration[1, i + 1, j];
+                                int u7 = NodesNumeration[1, i, j + 1];
+                                int u8 = NodesNumeration[1, i + 1, j + 1];
+
+                                peVector.Add(u5);
+                                peVector.Add(u6);
+                                peVector.Add(u7);
+                                peVector.Add(u8);
+                            }
+                            break;
+                        case StructureSegmentTypeEnum.Rk_C_NR:
+                            {
+                                int u1 = NodesNumeration[0, i, j];
+                                int u2 = NodesNumeration[0, i + 1, j];
+                                int u3 = NodesNumeration[0, i, j + 1];
+                                int u4 = NodesNumeration[0, i + 1, j + 1];
+
+                                peVector.Add(u1);
+                                peVector.Add(u2);
+                                peVector.Add(u3);
+                                peVector.Add(u4);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            peVector.Sort();
+
+            return (peVector, connVector);
+        }
+
+        // метод для сложения столбцов и строк соединённых выводов
+        private void AddRowsAndColsInYMatrix(ref Matrix<Complex> matrix, List<(int i, int j)> connections)
+        {
+            var indicesForRemove = new List<int>();
+
+            foreach (var connection in connections)
+            {
+                int _i = connection.i;
+                int _j = connection.j;
+
+                // i всегда меньше
+                if (connection.i > connection.j)
+                {
+                    _i = connection.j;
+                    _j = connection.i;
+                }
+
+                var firstRow = matrix.Row(_i);
+                var secondRow = matrix.Row(_j);
+                var rowSum = firstRow.Add(secondRow);
+
+                matrix.SetRow(_i, rowSum);
+
+                var firstCol = matrix.Column(_i);
+                var secondCol = matrix.Column(_j);
+                var colSum = firstCol.Add(secondCol);
+
+                matrix.SetColumn(_i, colSum);
+
+                if (!indicesForRemove.Contains(_j))
+                {
+                    indicesForRemove.Add(_j);
+                }
+            }
+
+            indicesForRemove.Sort();
+
+            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref matrix, indicesForRemove);
+        }
+
+        // Метод для расчёта фазы
+        public double CalculatePhase(RCStructureBase structure, double frequency)
+        {
+            frequency = frequency * 2.0 * System.Math.PI;
+
+            FillGlobalMatrix(structure, NodesCount, NodesNumeration, frequency);
+
+            var data = FindPEPinsAndConnectedPinsIndices(structure);
+
+            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref GlobalY, data.pe);
+            AddRowsAndColsInYMatrix(ref GlobalY, data.conn);
 
 
 

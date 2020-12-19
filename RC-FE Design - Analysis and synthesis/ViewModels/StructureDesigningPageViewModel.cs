@@ -786,9 +786,13 @@ namespace FractalElementDesigner.ViewModels
                     // восстановить плоский массив нумерации узлов
                     var nodesNumeration = RCWorkbenchIntercommunicationHelper.UnflatNumerationArray(layerCount, horizontalRange, verticalRange, nodesNumerationFlat);
 
-                    var calculator = new StructurePhaseResponseCalculator();
+                    var calculator = new StructurePhaseResponseCalculator(horizontalStructureDimensionValue - 2, verticalStructureDimensionValue - 2, nodesCount, nodesNumeration);
 
-                    calculator.FillGlobalMatrix(structure, nodesCount, nodesNumeration, 10);
+                    PhaseResponseCalculatorForStructureForAllFrequencies.CalculatePhaseResponseInStructure(
+                        structure.SynthesisParameters.MinFrequencyLn, structure.SynthesisParameters.MaxFrequencyLn, structure.SynthesisParameters.PointsCountAtFrequencyAxle, structure, calculator);
+
+                    // тест
+                    //calculator.FillGlobalMatrix(structure, nodesCount, nodesNumeration, 10);
 
                     // анализ структуры
                     int first_dimension = structure.SynthesisParameters.PointsCountAtFrequencyAxle;
