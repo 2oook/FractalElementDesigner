@@ -63,14 +63,14 @@ namespace FractalElementDesigner.MathModel
         }
 
         // Метод для поиска номеров заземлённых внешних выводов 
-        private static List<int> FindGroundedOuterPinsNumbers(FESchemeModel scheme) 
+        public static List<int> FindGroundedOuterPinsNumbers(FESchemeModel scheme) 
         {
             var grounded_pins = scheme.OuterPins.Select((x, i) => new { index = i, pin = x }).Where(x => x.pin.State == OuterPinState.Gnd).Select(x => x.index).ToList();
             return grounded_pins;
         }
 
         // Метод для поиска номеров соединенных внешних выводов 
-        private static Matrix<float> FindConnectedOuterPinsNumbers(FESchemeModel scheme, Matrix<Complex> matrix)
+        public static Matrix<float> FindConnectedOuterPinsNumbers(FESchemeModel scheme, Matrix<Complex> matrix)
         {
             var connected_pins = scheme.OuterPins.Select((x, i) => new { index = i , pin = x }).Where(x => x.pin.State == OuterPinState.Con).Select(x => x.index).ToList();
 

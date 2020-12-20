@@ -41,6 +41,11 @@ namespace FractalElementDesigner.FEEditing.Model
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
+        /// Ссылка на схему
+        /// </summary>
+        public MathModel.FElementScheme Scheme { get; set; } = null;
+
+        /// <summary>
         /// Число выводов сегмента конструкции
         /// </summary>
         public int PinsCountOfSegment;
@@ -130,7 +135,7 @@ namespace FractalElementDesigner.FEEditing.Model
         }
 
         // Метод для инициализации структуры по схеме
-        public void InitializeByScheme(int verticalStructureDimensionValue, int horizontalStructureDimensionValue, MathModel.FElementScheme scheme)
+        public void InitializeByScheme(int verticalStructureDimensionValue, int horizontalStructureDimensionValue)
         {
             // число выводов слоя сегмента
             var pins_count_in_layer = 4;

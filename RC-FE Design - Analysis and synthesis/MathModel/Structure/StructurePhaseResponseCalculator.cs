@@ -1,5 +1,6 @@
 ﻿using FractalElementDesigner.FEEditing.Model;
 using MathNet.Numerics.LinearAlgebra;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -777,18 +778,31 @@ namespace FractalElementDesigner.MathModel.Structure
         // Метод для расчёта фазы
         public double CalculatePhase(RCStructureBase structure, double frequency)
         {
-            frequency = frequency * 2.0 * System.Math.PI;
+            //frequency = frequency * 2.0 * System.Math.PI;
 
             FillGlobalMatrix(structure, NodesCount, NodesNumeration, frequency);
 
+            // получить номера узлов для сложения и удаления  строк и столбцов глобальной матрицы
             var data = FindPEPinsAndConnectedPinsIndices(structure);
 
+            // удалить строки и столбцы
             SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref GlobalY, data.pe);
+            // сложить строки и столбцы
             AddRowsAndColsInYMatrix(ref GlobalY, data.conn);
+            // понизить порядок глобальной матрицы до числа внешних выводов
+            SchemePhaseResponseCalculator.ReduceMatrix(ref GlobalY, structure.Scheme.Model.OuterPins.Count);
 
+            var groundedOuterPins = SchemePhaseResponseCalculator.FindGroundedOuterPinsNumbers(structure.Scheme.Model);
+            var connectedOuterPinsMatrix = SchemePhaseResponseCalculator.FindConnectedOuterPinsNumbers(structure.Scheme.Model, GlobalY);
 
+            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref GlobalY, groundedOuterPins);
+            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref connectedOuterPinsMatrix, groundedOuterPins);
 
-            var phase = 0;
+            SchemePhaseResponseCalculator.AddRowsAndColsInYMatrix(ref GlobalY, ref connectedOuterPinsMatrix);
+
+            SchemePhaseResponseCalculator.ReduceMatrix(ref GlobalY, 1);
+
+            var phase = -GlobalY[GlobalY.RowCount - 1, GlobalY.ColumnCount - 1].Phase * 180 / Math.PI;
 
             return phase;
         }

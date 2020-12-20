@@ -284,7 +284,7 @@ namespace FractalElementDesigner.MathModel.Structure
             var upperLayer = structure.StructureLayers.First();
             var lowerLayer = structure.StructureLayers.Last();
 
-            int rowCount = 12;
+            int rowCount = 5;// 12;
 
             AddColumnToStructure(upperLayer, rowCount, CellType.Contact, CellType.None, CellType.None);
             AddColumnToStructure(lowerLayer, rowCount, CellType.Contact, CellType.None, CellType.None);
@@ -296,7 +296,7 @@ namespace FractalElementDesigner.MathModel.Structure
             {
                 var columns = FElementScheme.AllowablePinsConnectionsOnLayer[(schemeModel.InnerConnections[c].ConnectionType, schemeModel.InnerConnections[c].PEType)];
 
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 2/*5*/; i++)
                 {
                     AddColumnToStructure(upperLayer, rowCount, CellType.RC, CellType.Forbid, CellType.Forbid);
                     AddColumnToStructure(lowerLayer, rowCount, CellType.R, CellType.Forbid, CellType.Forbid);
@@ -309,7 +309,7 @@ namespace FractalElementDesigner.MathModel.Structure
                 }
             }
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 2/*5*/; i++)
             {
                 AddColumnToStructure(upperLayer, rowCount, CellType.RC, CellType.Forbid, CellType.Forbid);
                 AddColumnToStructure(lowerLayer, rowCount, CellType.R, CellType.Forbid, CellType.Forbid);
@@ -461,9 +461,11 @@ namespace FractalElementDesigner.MathModel.Structure
         // Метод для инициализации структуры по схеме
         public static RCStructure InitializeStructureByScheme(FElementScheme scheme, RCStructure structure)
         {
+            structure.Scheme = scheme;
+
             var first_layer = structure.StructureLayers.First();
 
-            structure.InitializeByScheme(first_layer.Cells.Count, first_layer.Cells.First().Count, scheme);
+            structure.InitializeByScheme(first_layer.Cells.Count, first_layer.Cells.First().Count);
 
             return structure;
         }

@@ -788,52 +788,55 @@ namespace FractalElementDesigner.ViewModels
 
                     var calculator = new StructurePhaseResponseCalculator(horizontalStructureDimensionValue - 2, verticalStructureDimensionValue - 2, nodesCount, nodesNumeration);
 
-                    PhaseResponseCalculatorForStructureForAllFrequencies.CalculatePhaseResponseInStructure(
+                    var points = PhaseResponseCalculatorForStructureForAllFrequencies.CalculatePhaseResponseInStructure(
                         structure.SynthesisParameters.MinFrequencyLn, structure.SynthesisParameters.MaxFrequencyLn, structure.SynthesisParameters.PointsCountAtFrequencyAxle, structure, calculator);
 
-                    // тест
-                    //calculator.FillGlobalMatrix(structure, nodesCount, nodesNumeration, 10);
+                    structure.PhaseResponsePoints = points;
 
-                    // анализ структуры
-                    int first_dimension = structure.SynthesisParameters.PointsCountAtFrequencyAxle;
-                    int second_dimension = 36;
+                    #region RC Workbench
 
-                    double[] frequences = new double[first_dimension];
-                    RCWorkbenchLibraryEntry.GetFrequences(frequences);
+                    //// анализ структуры
+                    //int first_dimension = structure.SynthesisParameters.PointsCountAtFrequencyAxle;
+                    //int second_dimension = 36;
 
-                    double[,] y_parameters_double = new double[first_dimension, second_dimension];
-                    RCWorkbenchLibraryEntry.CalculateYParameters(y_parameters_double, first_dimension, second_dimension);
+                    //double[] frequences = new double[first_dimension];
+                    //RCWorkbenchLibraryEntry.GetFrequences(frequences);
 
-                    int outer_pins_count = RCWorkbenchLibraryEntry.GetCPQuantity();
+                    //double[,] y_parameters_double = new double[first_dimension, second_dimension];
+                    //RCWorkbenchLibraryEntry.CalculateYParameters(y_parameters_double, first_dimension, second_dimension);
 
-                    var matrices = MatrixHelper.GetYParametersMatricesFromRCWorkbenchArray(y_parameters_double, outer_pins_count);
+                    //int outer_pins_count = RCWorkbenchLibraryEntry.GetCPQuantity();
 
-                    // применить синтезированную схему !!!
-                    // для схемы №5 !!!!
-                    // для схемы №5 !!!!
+                    //var matrices = MatrixHelper.GetYParametersMatricesFromRCWorkbenchArray(y_parameters_double, outer_pins_count);
 
-                    var I = Matrix<float>.Build.DenseOfArray(new float[4, 4]);
-                    // установить диагональ
-                    I.SetDiagonal(Vector<float>.Build.Dense(4, 1));
+                    //// применить синтезированную схему !!!
+                    //// для схемы №5 !!!!
+                    //// для схемы №5 !!!!
 
-                    I[2, 3] = 1;
-                    I[3, 2] = 1;
+                    //var I = Matrix<float>.Build.DenseOfArray(new float[4, 4]);
+                    //// установить диагональ
+                    //I.SetDiagonal(Vector<float>.Build.Dense(4, 1));
 
-                    var pe = new List<int>();
+                    //I[2, 3] = 1;
+                    //I[3, 2] = 1;
 
-                    // для схемы №5 !!!!
-                    // для схемы №5 !!!!
+                    //var pe = new List<int>();
 
-                    structure.PhaseResponsePoints.Clear();
+                    //// для схемы №5 !!!!
+                    //// для схемы №5 !!!!
 
-                    for (int i = 0; i < matrices.Count; i++)
-                    {
-                        var matrix = matrices[i];
+                    //structure.PhaseResponsePoints.Clear();
 
-                        var phase = SchemePhaseResponseCalculator.ConsiderOuterScheme(ref matrix, ref I, pe);
+                    //for (int i = 0; i < matrices.Count; i++)
+                    //{
+                    //    var matrix = matrices[i];
 
-                        structure.PhaseResponsePoints.Add((frequences[i], phase));
-                    }
+                    //    var phase = SchemePhaseResponseCalculator.ConsiderOuterScheme(ref matrix, ref I, pe);
+
+                    //    structure.PhaseResponsePoints.Add((frequences[i], phase));
+                    //}
+
+                    #endregion
 
                     var plot = structureInProject.Items.Where(x => x is PRPlot).Single() as PRPlot;
 
