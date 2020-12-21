@@ -537,6 +537,9 @@ namespace FractalElementDesigner.ViewModels
         private bool TestingBool = false;
         private void Test() 
         {
+            TestingBool = true;
+            return;
+
             //RCWorkbenchLibraryEntry.InitiateLibrary();
 
             //// симулировать pAnalyseParameters // СХЕМА №
@@ -676,7 +679,7 @@ namespace FractalElementDesigner.ViewModels
             // быстрый тест
             // быстрый тест
 
-            //TestingBool = true;
+            TestingBool = true;
             //CreateNewProject();          
         }
         // удалить
@@ -757,26 +760,89 @@ namespace FractalElementDesigner.ViewModels
                 if (SelectedProjectTreeItem is StructureInProjectTree structureInProject) 
                 {
                     // проверка возможности анализа структуры
-                    if (true)
-                    {
-
-                    }
+                    // TODO
 
                     var structure = structureInProject.Items.Where(x => x is RCStructureBase).Single() as RCStructure;
+
+                    if (structure == null)
+                    {
+                        _dialogCoordinator.ShowMessageAsync(this, "", "Конструкция не определена");
+                        return;
+                    }
+
+                    if (structure.Scheme == null)
+                    {
+                        #region RC Workbench
+
+                        // анализ структуры
+                        int first_dimension = structure.SynthesisParameters.PointsCountAtFrequencyAxle;
+                        int second_dimension = 36;
+
+                        double[] frequences = new double[first_dimension];
+                        RCWorkbenchLibraryEntry.GetFrequences(frequences);
+
+                        double[,] y_parameters_double = new double[first_dimension, second_dimension];
+                        RCWorkbenchLibraryEntry.CalculateYParameters(y_parameters_double, first_dimension, second_dimension);
+
+                        int _outer_pins_count = RCWorkbenchLibraryEntry.GetCPQuantity();
+
+                        var matrices = MatrixHelper.GetYParametersMatricesFromRCWorkbenchArray(y_parameters_double, _outer_pins_count);
+
+                        // применить синтезированную схему !!!
+                        // для схемы №5 !!!!
+                        // для схемы №5 !!!!
+
+                        var I = Matrix<float>.Build.DenseOfArray(new float[4, 4]);
+                        // установить диагональ
+                        I.SetDiagonal(Vector<float>.Build.Dense(4, 1));
+
+                        I[2, 3] = 1;
+                        I[3, 2] = 1;
+
+                        var pe = new List<int>();
+
+                        // для схемы №5 !!!!
+                        // для схемы №5 !!!!
+
+                        structure.PhaseResponsePoints.Clear();
+
+                        for (int i = 0; i < matrices.Count; i++)
+                        {
+                            var matrix = matrices[i];
+
+                            var phase = SchemePhaseResponseCalculator.ConsiderOuterScheme(ref matrix, ref I, pe);
+
+                            structure.PhaseResponsePoints.Add((frequences[i], phase));
+                        }
+
+                        var _plot = structureInProject.Items.Where(x => x is PRPlot).Single() as PRPlot;
+
+                        _plot.InitializatePhaseResponsePlot(structure.PhaseResponsePoints);
+
+                        _Page.plotControl.DataContext = _plot.Clone();
+                        _Page.structureEditorControl.structurePlot.DataContext = _plot.Clone();
+
+                        return;
+
+                        #endregion
+                    }
 
                     // определить типы сегментов структуры по типам ячеек в слоях
                     StructureCreator.ResolveSegmentsTypes(structure);
 
                     // число ячеек по горизонтали структуры
-                    var horizontalStructureDimensionValue = structure.Segments.First().Count;
+                    var horizontalStructureDimensionValue = structure.Segments.First().Count -2;
                     // число ячеек по вертикали структуры
-                    var verticalStructureDimensionValue = structure.Segments.Count;
+                    var verticalStructureDimensionValue = structure.Segments.Count -2;
 
                     var layerCount = structure.StructureLayers.Count;
                     var horizontalRange = (horizontalStructureDimensionValue + 1);
                     var verticalRange = (verticalStructureDimensionValue + 1);
                     var arrayDimension = layerCount * horizontalRange * verticalRange;
                     var nodesNumerationFlat = new int[arrayDimension];
+
+                    // проверка
+                    int outer_pins_count = RCWorkbenchLibraryEntry.GetCPQuantity();
 
                     RCWorkbenchLibraryEntry.GetNodesNumeration(nodesNumerationFlat);
 
@@ -786,57 +852,12 @@ namespace FractalElementDesigner.ViewModels
                     // восстановить плоский массив нумерации узлов
                     var nodesNumeration = RCWorkbenchIntercommunicationHelper.UnflatNumerationArray(layerCount, horizontalRange, verticalRange, nodesNumerationFlat);
 
-                    var calculator = new StructurePhaseResponseCalculator(horizontalStructureDimensionValue - 2, verticalStructureDimensionValue - 2, nodesCount, nodesNumeration);
+                    var calculator = new StructurePhaseResponseCalculator(structure, horizontalStructureDimensionValue, verticalStructureDimensionValue, nodesCount, nodesNumeration);
 
                     var points = PhaseResponseCalculatorForStructureForAllFrequencies.CalculatePhaseResponseInStructure(
                         structure.SynthesisParameters.MinFrequencyLn, structure.SynthesisParameters.MaxFrequencyLn, structure.SynthesisParameters.PointsCountAtFrequencyAxle, structure, calculator);
 
                     structure.PhaseResponsePoints = points;
-
-                    #region RC Workbench
-
-                    //// анализ структуры
-                    //int first_dimension = structure.SynthesisParameters.PointsCountAtFrequencyAxle;
-                    //int second_dimension = 36;
-
-                    //double[] frequences = new double[first_dimension];
-                    //RCWorkbenchLibraryEntry.GetFrequences(frequences);
-
-                    //double[,] y_parameters_double = new double[first_dimension, second_dimension];
-                    //RCWorkbenchLibraryEntry.CalculateYParameters(y_parameters_double, first_dimension, second_dimension);
-
-                    //int outer_pins_count = RCWorkbenchLibraryEntry.GetCPQuantity();
-
-                    //var matrices = MatrixHelper.GetYParametersMatricesFromRCWorkbenchArray(y_parameters_double, outer_pins_count);
-
-                    //// применить синтезированную схему !!!
-                    //// для схемы №5 !!!!
-                    //// для схемы №5 !!!!
-
-                    //var I = Matrix<float>.Build.DenseOfArray(new float[4, 4]);
-                    //// установить диагональ
-                    //I.SetDiagonal(Vector<float>.Build.Dense(4, 1));
-
-                    //I[2, 3] = 1;
-                    //I[3, 2] = 1;
-
-                    //var pe = new List<int>();
-
-                    //// для схемы №5 !!!!
-                    //// для схемы №5 !!!!
-
-                    //structure.PhaseResponsePoints.Clear();
-
-                    //for (int i = 0; i < matrices.Count; i++)
-                    //{
-                    //    var matrix = matrices[i];
-
-                    //    var phase = SchemePhaseResponseCalculator.ConsiderOuterScheme(ref matrix, ref I, pe);
-
-                    //    structure.PhaseResponsePoints.Add((frequences[i], phase));
-                    //}
-
-                    #endregion
 
                     var plot = structureInProject.Items.Where(x => x is PRPlot).Single() as PRPlot;
 
@@ -848,7 +869,7 @@ namespace FractalElementDesigner.ViewModels
             }
             catch (Exception ex)
             {
-
+                _dialogCoordinator.ShowMessageAsync(this, "", "Ошибка выполнения анализа" + Environment.NewLine + ex.Message);
             }
         }
 
@@ -1277,7 +1298,7 @@ namespace FractalElementDesigner.ViewModels
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
 
-            //Test();
+            Test();
 
             if (TestingBool)
             {
@@ -1291,6 +1312,23 @@ namespace FractalElementDesigner.ViewModels
                     var plot = new PRPlot();
 
                     var schemePrototype = new FElementScheme(new StructureSchemeSynthesisParameters()) { Name = "Схема", Elements = { plot } };
+
+                    // равномерная однородная структура
+                    /**/
+                    /**/
+                    foreach (var item in schemePrototype.Model.InnerConnections)
+                    {
+                        item.ConnectionType = 7;
+                        item.PEType = 1;
+                    }
+                    /**/
+                    /**/
+
+                    // учесть внешнюю схему //для схемы №5 !!!!
+                    schemePrototype.Model.OuterPins[0].State = OuterPinState.In;
+                    schemePrototype.Model.OuterPins[1].State = OuterPinState.Float;
+                    schemePrototype.Model.OuterPins[2].State = OuterPinState.Con;
+                    schemePrototype.Model.OuterPins[3].State = OuterPinState.Con;
 
                     schemePrototype.Model.PhaseResponsePoints = SchemePhaseResponseCalculatorByFrequencies.CalculatePhaseResponseInScheme(1, 3, 50, schemePrototype.Model);
 
@@ -1329,26 +1367,26 @@ namespace FractalElementDesigner.ViewModels
                         schemePrototype.IsLocked = true;
 
                         // создать конструкцию элемента
-                        var structure = StructureCreator.Create(_structure);
+                        //var structure = StructureCreator.Create(_structure);
 
                         // создать структуру на стороне библиотеки
-                        ByRCWorkbenchStructureCreator.CreateStructure(schemePrototype, _structure);
+                        //ByRCWorkbenchStructureCreator.CreateStructure(schemePrototype, _structure);
 
-                        var structure_in_project = new StructureInProjectTree() { Name = structure.Name };
-                        structure_in_project.Items.Add(structure);
-                        structure_in_project.Items.Add(new PRPlot());
+                        //var structure_in_project = new StructureInProjectTree() { Name = structure.Name };
+                        //structure_in_project.Items.Add(structure);
+                        //structure_in_project.Items.Add(new PRPlot());
 
-                        DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                        {
-                            StructureCreator.InsertVisual(structure, _Page.structureEditorControl.FEControl);
-                            project.Items.Add(structure_in_project);
-                        });
+                        //DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                        //{
+                        //    StructureCreator.InsertVisual(structure, _Page.structureEditorControl.FEControl);
+                        //    project.Items.Add(structure_in_project);
+                        //});
+
+                        CreateStructureAsync(project, schemePrototype, _structure, true);
+
 
                         // тест
                         // тест
-
-                        // TODO выполнить по выбору пользователя // ПОМЕСТИТЬ В КОМАНДУ // ТЕСТОВЫЙ ВЫЗОВ
-                        //StartStructureSynthesisAsync(structureSchemeSynthesisParametersViewModel.StructureSchemeSynthesisParametersInstance, currentProject, structure);
                     }
                     catch (Exception ex)
                     {

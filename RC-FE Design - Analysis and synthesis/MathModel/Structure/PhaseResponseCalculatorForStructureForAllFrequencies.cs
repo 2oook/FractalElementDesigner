@@ -23,7 +23,7 @@ namespace FractalElementDesigner.MathModel.Structure
             // цикл по частотам
             for (int i = 0; i <= pointsCount; i++)
             {
-                var phase = сalculator.CalculatePhase(structure, frequency);
+                var phase = сalculator.CalculatePhase(frequency);
 
                 points.Add((frequency, phase));
 

@@ -12,24 +12,37 @@ namespace FractalElementDesigner.MathModel.Structure
     /// </summary>
     class StructurePhaseResponseCalculator
     {
-        public StructurePhaseResponseCalculator(int x, int y, int nodesCount, int[,,] nodesNumeration)
+        public StructurePhaseResponseCalculator(RCStructureBase structure, int horizontalDimension, int verticalDimension, int nodesCount, int[,,] nodesNumeration)
         {
+            Structure = structure;
+
             NodesCount = nodesCount;
             NodesNumeration = nodesNumeration;
 
-            Horizontal_X = x;
-            Vertical_Y = y;
+            HorizontalDimension = horizontalDimension;
+            VerticalDimension = verticalDimension;
+
+            // получить номера узлов для сложения и удаления  строк и столбцов глобальной матрицы
+            PEPinsAndConnectedPinsIndices = FindPEPinsAndConnectedPinsIndices(Structure);
+
+            GroundedOuterPins = SchemePhaseResponseCalculator.FindGroundedOuterPinsNumbers(Structure.Scheme.Model);
+            ConnectedOuterPinsMatrix = SchemePhaseResponseCalculator.FindConnectedOuterPinsNumbers(Structure.Scheme.Model, Structure.Scheme.Model.OuterPins.Count, Structure.Scheme.Model.OuterPins.Count);
         }
+
+        /// <summary>
+        /// Ссылка на конструкцию
+        /// </summary>
+        RCStructureBase Structure;
 
         /// <summary>
         /// Количество ячеек по горизонтали (без учета контактных)
         /// </summary>
-        int Horizontal_X;
+        int HorizontalDimension;
 
         /// <summary>
         /// Количество ячеек по вертикали (без учета контактных)
         /// </summary>
-        int Vertical_Y;
+        int VerticalDimension;
 
         /// <summary>
         /// Число узлов
@@ -46,10 +59,26 @@ namespace FractalElementDesigner.MathModel.Structure
         /// </summary>
         Matrix<Complex> GlobalY;
 
+        /// <summary>
+        /// Заземленные и соединённые выводы
+        /// </summary>
+        (List<int> PE, Matrix<float> I) PEPinsAndConnectedPinsIndices;
+
+        /// <summary>
+        /// Заземлённые внешние выводы
+        /// </summary>
+        List<int> GroundedOuterPins;
+
+        /// <summary>
+        /// Соединённые внешние выводы
+        /// </summary>
+        Matrix<float> ConnectedOuterPinsMatrix;
+
+        // Метод для заполнения глобальной матрицы проводимости
         public void FillGlobalMatrix(RCStructureBase structure, int nodesCount, int[,,] nodesNumeration, double w) 
         {
-            var x = Horizontal_X;
-            var y = Vertical_Y;
+            var x = HorizontalDimension;
+            var y = VerticalDimension;
 
             var R = structure.SynthesisParameters.FESections.First().SectionParameters.R;
             var N = structure.SynthesisParameters.FESections.First().SectionParameters.N;
@@ -645,31 +674,34 @@ namespace FractalElementDesigner.MathModel.Structure
                 if (u1 > u0)
                 {
                     GlobalY[u0, u1] += value;
+                    GlobalY[u1, u0] += value;
                 }
                 else
                 {
                     GlobalY[u1, u0] += value;
+                    GlobalY[u0, u1] += value;
 
                     if (f && u1 == u0)  // когда номера узлов u1 и u0 одинаковы, но эти узлы не относятся к собственному узлу,
                     {
                         GlobalY[u1, 0] += value; // то проводимость между этими узлами надо прибавлять дважды
+                        GlobalY[0, u1] += value;
                     }
                 }
             } 
         }
 
-        // Метод для поиска номеров заземлённых выводов
-        private (List<int> pe, List<(int i, int j)> conn) FindPEPinsAndConnectedPinsIndices(RCStructureBase structure)
+        // Метод для поиска номеров заземлённых и соединённых выводов
+        private (List<int> PE, Matrix<float> I) FindPEPinsAndConnectedPinsIndices(RCStructureBase structure)
         {
             // номера заземлённых выводов
             var peVector = new List<int>();
 
-            // номера соединённых выводов
-            var connVector = new List<(int i, int j)>();
+            // матрица соединений (инцидентности)
+            var I = Matrix<float>.Build.DenseOfArray(new float[NodesCount, NodesCount]);
 
-            for (int i = 1; i <= Horizontal_X; i++)// горизонтальная ось
+            for (int i = 0; i < HorizontalDimension; i++)// горизонтальная ось
             {
-                for (int j = 0; j < Vertical_Y; j++)// вертикальная ось
+                for (int j = 0; j < VerticalDimension; j++)// вертикальная ось
                 {
                     switch (structure.Segments[j][i].SegmentType)
                     {
@@ -692,10 +724,42 @@ namespace FractalElementDesigner.MathModel.Structure
                                 int u7 = NodesNumeration[1, i, j + 1];
                                 int u8 = NodesNumeration[1, i + 1, j + 1];
 
-                                connVector.Add((u1, u5));
-                                connVector.Add((u2, u6));
-                                connVector.Add((u3, u7));
-                                connVector.Add((u4, u8));
+                                // меньший номер идёт первым индексом , так как заполняется верхний треугольник матрицы
+                                if (u1 > u5)
+                                {
+                                    I[u5, u1] = 1;
+                                }
+                                else
+                                {
+                                    I[u1, u5] = 1;
+                                }
+
+                                if (u2 > u6)
+                                {
+                                    I[u6, u2] = 1;
+                                }
+                                else
+                                {
+                                    I[u2, u6] = 1;
+                                }
+
+                                if (u3 > u7)
+                                {
+                                    I[u7, u3] = 1;
+                                }
+                                else
+                                {
+                                    I[u3, u7] = 1;
+                                }
+
+                                if (u4 > u8)
+                                {
+                                    I[u8, u4] = 1;
+                                }
+                                else
+                                {
+                                    I[u4, u8] = 1;
+                                }
                             }
                             break;
                         case StructureSegmentTypeEnum.R_C_NRk:
@@ -730,75 +794,29 @@ namespace FractalElementDesigner.MathModel.Structure
                 }
             }
 
-            peVector.Sort();
+            peVector = peVector.Distinct().OrderBy(x => x).ToList();
 
-            return (peVector, connVector);
-        }
-
-        // метод для сложения столбцов и строк соединённых выводов
-        private void AddRowsAndColsInYMatrix(ref Matrix<Complex> matrix, List<(int i, int j)> connections)
-        {
-            var indicesForRemove = new List<int>();
-
-            foreach (var connection in connections)
-            {
-                int _i = connection.i;
-                int _j = connection.j;
-
-                // i всегда меньше
-                if (connection.i > connection.j)
-                {
-                    _i = connection.j;
-                    _j = connection.i;
-                }
-
-                var firstRow = matrix.Row(_i);
-                var secondRow = matrix.Row(_j);
-                var rowSum = firstRow.Add(secondRow);
-
-                matrix.SetRow(_i, rowSum);
-
-                var firstCol = matrix.Column(_i);
-                var secondCol = matrix.Column(_j);
-                var colSum = firstCol.Add(secondCol);
-
-                matrix.SetColumn(_i, colSum);
-
-                if (!indicesForRemove.Contains(_j))
-                {
-                    indicesForRemove.Add(_j);
-                }
-            }
-
-            indicesForRemove.Sort();
-
-            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref matrix, indicesForRemove);
+            return (peVector, I);
         }
 
         // Метод для расчёта фазы
-        public double CalculatePhase(RCStructureBase structure, double frequency)
+        public double CalculatePhase(double frequency)
         {
             //frequency = frequency * 2.0 * System.Math.PI;
 
-            FillGlobalMatrix(structure, NodesCount, NodesNumeration, frequency);
-
-            // получить номера узлов для сложения и удаления  строк и столбцов глобальной матрицы
-            var data = FindPEPinsAndConnectedPinsIndices(structure);
+            FillGlobalMatrix(Structure, NodesCount, NodesNumeration, frequency);
 
             // удалить строки и столбцы
-            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref GlobalY, data.pe);
+            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref GlobalY, PEPinsAndConnectedPinsIndices.PE);
             // сложить строки и столбцы
-            AddRowsAndColsInYMatrix(ref GlobalY, data.conn);
+            SchemePhaseResponseCalculator.AddRowsAndColsInYMatrix(ref GlobalY, ref PEPinsAndConnectedPinsIndices.I);
             // понизить порядок глобальной матрицы до числа внешних выводов
-            SchemePhaseResponseCalculator.ReduceMatrix(ref GlobalY, structure.Scheme.Model.OuterPins.Count);
+            SchemePhaseResponseCalculator.ReduceMatrix(ref GlobalY, Structure.Scheme.Model.OuterPins.Count);
 
-            var groundedOuterPins = SchemePhaseResponseCalculator.FindGroundedOuterPinsNumbers(structure.Scheme.Model);
-            var connectedOuterPinsMatrix = SchemePhaseResponseCalculator.FindConnectedOuterPinsNumbers(structure.Scheme.Model, GlobalY);
+            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref GlobalY, GroundedOuterPins);
+            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref ConnectedOuterPinsMatrix, GroundedOuterPins);
 
-            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref GlobalY, groundedOuterPins);
-            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref connectedOuterPinsMatrix, groundedOuterPins);
-
-            SchemePhaseResponseCalculator.AddRowsAndColsInYMatrix(ref GlobalY, ref connectedOuterPinsMatrix);
+            SchemePhaseResponseCalculator.AddRowsAndColsInYMatrix(ref GlobalY, ref ConnectedOuterPinsMatrix);
 
             SchemePhaseResponseCalculator.ReduceMatrix(ref GlobalY, 1);
 

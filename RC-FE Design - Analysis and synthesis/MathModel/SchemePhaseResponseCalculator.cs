@@ -48,7 +48,7 @@ namespace FractalElementDesigner.MathModel
             ReduceMatrix(ref Y, 4);
 
             var groundedOuterPins = FindGroundedOuterPinsNumbers(scheme);
-            var connectedOuterPinsMatrix = FindConnectedOuterPinsNumbers(scheme, Y);
+            var connectedOuterPinsMatrix = FindConnectedOuterPinsNumbers(scheme, Y.ColumnCount, Y.RowCount);
 
             RemoveRowAndColsFromMatrix(ref Y, groundedOuterPins);
             RemoveRowAndColsFromMatrix(ref connectedOuterPinsMatrix, groundedOuterPins);
@@ -70,11 +70,11 @@ namespace FractalElementDesigner.MathModel
         }
 
         // Метод для поиска номеров соединенных внешних выводов 
-        public static Matrix<float> FindConnectedOuterPinsNumbers(FESchemeModel scheme, Matrix<Complex> matrix)
+        public static Matrix<float> FindConnectedOuterPinsNumbers(FESchemeModel scheme, int columnCount, int rowCount)
         {
             var connected_pins = scheme.OuterPins.Select((x, i) => new { index = i , pin = x }).Where(x => x.pin.State == OuterPinState.Con).Select(x => x.index).ToList();
 
-            var connected_pins_mattrix = Matrix<float>.Build.DenseOfArray(new float[matrix.ColumnCount, matrix.RowCount]);
+            var connected_pins_mattrix = Matrix<float>.Build.DenseOfArray(new float[columnCount, rowCount]);
 
             if (connected_pins.Count == 2)
             {
@@ -114,7 +114,7 @@ namespace FractalElementDesigner.MathModel
 
                 // проверка знаменателя на 0
                 if (matrix[i, i].IsZero())
-                    matrix[i, i] = 1;
+                    matrix[i, i] = 0.000001;//1;//??????????????????????????
 
                 matrix = temp - (column * (1 / matrix[i, i]) * row);
             }

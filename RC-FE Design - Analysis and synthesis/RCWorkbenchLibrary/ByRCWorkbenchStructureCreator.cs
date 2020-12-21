@@ -93,8 +93,8 @@ namespace FractalElementDesigner.RCWorkbenchLibrary
                     {
                         if (cell.CellType == CellType.Rk | cell.CellType == CellType.NRk)
                         {
-                            RCWorkbenchLibraryEntry.SetElementTypeDirectlyToStructureCell(layer.Number, cell.MainCell.Position.x - 1, cell.MainCell.Position.y - 1,
-                                CellTypeToRCWorkbenchConverter.Convert(cell.CellType));
+                            //RCWorkbenchLibraryEntry.SetElementTypeDirectlyToStructureCell(layer.Number, cell.MainCell.Position.x - 1, cell.MainCell.Position.y - 1,
+                                //CellTypeToRCWorkbenchConverter.Convert(cell.CellType));
                         }
                         else
                         {

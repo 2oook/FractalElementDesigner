@@ -284,13 +284,13 @@ namespace FractalElementDesigner.MathModel.Structure
             var upperLayer = structure.StructureLayers.First();
             var lowerLayer = structure.StructureLayers.Last();
 
-            int rowCount = 5;// 12;
+            int rowCount = 5;//12;
 
             AddColumnToStructure(upperLayer, rowCount, CellType.Contact, CellType.None, CellType.None);
             AddColumnToStructure(lowerLayer, rowCount, CellType.Contact, CellType.None, CellType.None);
 
-            AddColumnToStructure(upperLayer, rowCount, CellType.Rk, CellType.Forbid, CellType.Forbid);
-            AddColumnToStructure(lowerLayer, rowCount, CellType.NRk, CellType.Forbid, CellType.Forbid);
+            AddColumnToStructure(upperLayer, rowCount, CellType.Rk, CellType.PlaceForContact, CellType.PlaceForContact);
+            AddColumnToStructure(lowerLayer, rowCount, CellType.NRk, CellType.PlaceForContact, CellType.PlaceForContact);
 
             for (int c = 0; c < schemeModel.InnerConnections.Count; c++)
             {
@@ -298,25 +298,25 @@ namespace FractalElementDesigner.MathModel.Structure
 
                 for (int i = 0; i < 2/*5*/; i++)
                 {
-                    AddColumnToStructure(upperLayer, rowCount, CellType.RC, CellType.Forbid, CellType.Forbid);
-                    AddColumnToStructure(lowerLayer, rowCount, CellType.R, CellType.Forbid, CellType.Forbid);
+                    AddColumnToStructure(upperLayer, rowCount, CellType.RC, CellType.PlaceForContact, CellType.PlaceForContact);
+                    AddColumnToStructure(lowerLayer, rowCount, CellType.R, CellType.PlaceForContact, CellType.PlaceForContact);
                 }
 
                 foreach (var column in columns)
                 {
-                    AddColumnToStructure(upperLayer, rowCount, column.cellsTypes[0], CellType.Forbid, CellType.Forbid);
-                    AddColumnToStructure(lowerLayer, rowCount, column.cellsTypes[1], CellType.Forbid, CellType.Forbid);
+                    AddColumnToStructure(upperLayer, rowCount, column.cellsTypes[0], CellType.PlaceForContact, CellType.PlaceForContact);
+                    AddColumnToStructure(lowerLayer, rowCount, column.cellsTypes[1], CellType.PlaceForContact, CellType.PlaceForContact);
                 }
             }
 
             for (int i = 0; i < 2/*5*/; i++)
             {
-                AddColumnToStructure(upperLayer, rowCount, CellType.RC, CellType.Forbid, CellType.Forbid);
-                AddColumnToStructure(lowerLayer, rowCount, CellType.R, CellType.Forbid, CellType.Forbid);
+                AddColumnToStructure(upperLayer, rowCount, CellType.RC, CellType.PlaceForContact, CellType.PlaceForContact);
+                AddColumnToStructure(lowerLayer, rowCount, CellType.R, CellType.PlaceForContact, CellType.PlaceForContact);
             }
 
-            AddColumnToStructure(upperLayer, rowCount, CellType.Rk, CellType.Forbid, CellType.Forbid);
-            AddColumnToStructure(lowerLayer, rowCount, CellType.NRk, CellType.Forbid, CellType.Forbid);
+            AddColumnToStructure(upperLayer, rowCount, CellType.Rk, CellType.PlaceForContact, CellType.PlaceForContact);
+            AddColumnToStructure(lowerLayer, rowCount, CellType.NRk, CellType.PlaceForContact, CellType.PlaceForContact);
 
             AddColumnToStructure(upperLayer, rowCount, CellType.Contact, CellType.None, CellType.None);
             AddColumnToStructure(lowerLayer, rowCount, CellType.Contact, CellType.None, CellType.None);

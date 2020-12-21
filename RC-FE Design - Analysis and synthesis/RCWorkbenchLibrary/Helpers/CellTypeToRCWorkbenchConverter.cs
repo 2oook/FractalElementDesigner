@@ -19,7 +19,7 @@ namespace FractalElementDesigner.RCWorkbenchLibrary.Helpers
                 case CellType.None:
                     return -1;
                 case CellType.PlaceForContact:
-                    throw new NotImplementedException();
+                    return -1;//?????
                 case CellType.Contact:
                     return 8;
                 case CellType.Cut:
