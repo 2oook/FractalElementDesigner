@@ -55,11 +55,6 @@ namespace FractalElementDesigner.MathModel.Structure
         int[,,] NodesNumeration;
 
         /// <summary>
-        /// Глобальная матрица проводимости
-        /// </summary>
-        Matrix<Complex> GlobalY;
-
-        /// <summary>
         /// Заземленные и соединённые выводы
         /// </summary>
         (List<int> PE, Matrix<float> I) PEPinsAndConnectedPinsIndices;
@@ -75,7 +70,7 @@ namespace FractalElementDesigner.MathModel.Structure
         Matrix<float> ConnectedOuterPinsMatrix;
 
         // Метод для заполнения глобальной матрицы проводимости
-        public void FillGlobalMatrix(RCStructureBase structure, int nodesCount, int[,,] nodesNumeration, double w) 
+        public Matrix<Complex> FillGlobalMatrix(RCStructureBase structure, int nodesCount, int[,,] nodesNumeration, double w) 
         {
             var x = HorizontalDimension;
             var y = VerticalDimension;
@@ -179,7 +174,7 @@ namespace FractalElementDesigner.MathModel.Structure
             double Z_y_Rk_C_NR = R * 2.0 * (1.0 + N);
 
             Complex p_Rk_C_NR = new Complex(0.0, w);
-            Complex temp_Rk_C_NR = 1.0 / H + p_Rk_C_NRk * R * C;
+            Complex temp_Rk_C_NR = 1.0 / H + p_Rk_C_NR * R * C;
             Complex Y_Rk_C_NR = temp_Rk_C_NR / ((1.0 + G * temp_Rk_C_NR) * ((double)(4 * x * y)) * R);
 
             Complex tetta_x_Rk_C_NR = Complex.Sqrt(Z_x_Rk_C_NR * Y_Rk_C_NR);
@@ -301,13 +296,13 @@ namespace FractalElementDesigner.MathModel.Structure
             #endregion
 
             // глобальная матрица y-параметров
-            GlobalY = Matrix<Complex>.Build.DenseOfArray(new Complex[nodesCount, nodesCount]);
+            var _Y = Matrix<Complex>.Build.DenseOfArray(new Complex[nodesCount, nodesCount]);
 
             for (int i = 0; i < x; i++)// горизонтальная ось
             {
                 for (int j = 0; j < y; j++)// вертикальная ось
                 {
-                    switch (structure.Segments[j][i].SegmentType)
+                    switch (structure.Segments[j+1][i+1].SegmentType)
                     {
                         case StructureSegmentTypeEnum.EMPTY:
                             break;
@@ -324,49 +319,49 @@ namespace FractalElementDesigner.MathModel.Structure
                                 int u7 = nodesNumeration[1, i, j + 1];
                                 int u8 = nodesNumeration[1, i + 1, j + 1];
 
-                                AddNodeToGlobalMatrix(u1, u1, Element[0, 0], false);
-                                AddNodeToGlobalMatrix(u1, u2, Element[0, 1], true);
-                                AddNodeToGlobalMatrix(u1, u3, Element[0, 2], true);
-                                AddNodeToGlobalMatrix(u1, u4, Element[0, 3], true);
-                                AddNodeToGlobalMatrix(u1, u5, Element[0, 4], true);
-                                AddNodeToGlobalMatrix(u1, u6, Element[0, 5], true);
-                                AddNodeToGlobalMatrix(u1, u7, Element[0, 6], true);
-                                AddNodeToGlobalMatrix(u1, u8, Element[0, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u1, Element[0, 0], false);
+                                AddNodeToGlobalMatrix(_Y, u1, u2, Element[0, 1], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u3, Element[0, 2], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u4, Element[0, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u5, Element[0, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u6, Element[0, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u7, Element[0, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u8, Element[0, 7], true);
 
-                                AddNodeToGlobalMatrix(u2, u2, Element[1, 1], false);
-                                AddNodeToGlobalMatrix(u2, u3, Element[1, 2], true);
-                                AddNodeToGlobalMatrix(u2, u4, Element[1, 3], true);
-                                AddNodeToGlobalMatrix(u2, u5, Element[1, 4], true);
-                                AddNodeToGlobalMatrix(u2, u6, Element[1, 5], true);
-                                AddNodeToGlobalMatrix(u2, u7, Element[1, 6], true);
-                                AddNodeToGlobalMatrix(u2, u8, Element[1, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u2, Element[1, 1], false);
+                                AddNodeToGlobalMatrix(_Y, u2, u3, Element[1, 2], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u4, Element[1, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u5, Element[1, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u6, Element[1, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u7, Element[1, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u8, Element[1, 7], true);
 
-                                AddNodeToGlobalMatrix(u3, u3, Element[2, 2], false);
-                                AddNodeToGlobalMatrix(u3, u4, Element[2, 3], true);
-                                AddNodeToGlobalMatrix(u3, u5, Element[2, 4], true);
-                                AddNodeToGlobalMatrix(u3, u6, Element[2, 5], true);
-                                AddNodeToGlobalMatrix(u3, u7, Element[2, 6], true);
-                                AddNodeToGlobalMatrix(u3, u8, Element[2, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u3, Element[2, 2], false);
+                                AddNodeToGlobalMatrix(_Y, u3, u4, Element[2, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u5, Element[2, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u6, Element[2, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u7, Element[2, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u8, Element[2, 7], true);
 
-                                AddNodeToGlobalMatrix(u4, u4, Element[3, 3], false);
-                                AddNodeToGlobalMatrix(u4, u5, Element[3, 4], true);
-                                AddNodeToGlobalMatrix(u4, u6, Element[3, 5], true);
-                                AddNodeToGlobalMatrix(u4, u7, Element[3, 6], true);
-                                AddNodeToGlobalMatrix(u4, u8, Element[3, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u4, Element[3, 3], false);
+                                AddNodeToGlobalMatrix(_Y, u4, u5, Element[3, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u6, Element[3, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u7, Element[3, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u8, Element[3, 7], true);
 
-                                AddNodeToGlobalMatrix(u5, u5, Element[4, 4], false);
-                                AddNodeToGlobalMatrix(u5, u6, Element[4, 5], true);
-                                AddNodeToGlobalMatrix(u5, u7, Element[4, 6], true);
-                                AddNodeToGlobalMatrix(u5, u8, Element[4, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u5, Element[4, 4], false);
+                                AddNodeToGlobalMatrix(_Y, u5, u6, Element[4, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u7, Element[4, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u8, Element[4, 7], true);
 
-                                AddNodeToGlobalMatrix(u6, u6, Element[5, 5], false);
-                                AddNodeToGlobalMatrix(u6, u7, Element[5, 6], true);
-                                AddNodeToGlobalMatrix(u6, u8, Element[5, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u6, u6, Element[5, 5], false);
+                                AddNodeToGlobalMatrix(_Y, u6, u7, Element[5, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u6, u8, Element[5, 7], true);
 
-                                AddNodeToGlobalMatrix(u7, u7, Element[6, 6], false);
-                                AddNodeToGlobalMatrix(u7, u8, Element[6, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u7, u7, Element[6, 6], false);
+                                AddNodeToGlobalMatrix(_Y, u7, u8, Element[6, 7], true);
 
-                                AddNodeToGlobalMatrix(u8, u8, Element[7, 7], false);
+                                AddNodeToGlobalMatrix(_Y, u8, u8, Element[7, 7], false);
                             }
                             break;
                         case StructureSegmentTypeEnum.Rv:
@@ -382,49 +377,49 @@ namespace FractalElementDesigner.MathModel.Structure
                                 int u7 = nodesNumeration[1, i, j + 1];
                                 int u8 = nodesNumeration[1, i + 1, j + 1];
 
-                                AddNodeToGlobalMatrix(u1, u1, Element[0, 0], false);
-                                AddNodeToGlobalMatrix(u1, u2, Element[0, 1], true);
-                                AddNodeToGlobalMatrix(u1, u3, Element[0, 2], true);
-                                AddNodeToGlobalMatrix(u1, u4, Element[0, 3], true);
-                                AddNodeToGlobalMatrix(u1, u5, Element[0, 4], true);
-                                AddNodeToGlobalMatrix(u1, u6, Element[0, 5], true);
-                                AddNodeToGlobalMatrix(u1, u7, Element[0, 6], true);
-                                AddNodeToGlobalMatrix(u1, u8, Element[0, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u1, Element[0, 0], false);
+                                AddNodeToGlobalMatrix(_Y, u1, u2, Element[0, 1], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u3, Element[0, 2], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u4, Element[0, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u5, Element[0, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u6, Element[0, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u7, Element[0, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u8, Element[0, 7], true);
 
-                                AddNodeToGlobalMatrix(u2, u2, Element[1, 1], false);
-                                AddNodeToGlobalMatrix(u2, u3, Element[1, 2], true);
-                                AddNodeToGlobalMatrix(u2, u4, Element[1, 3], true);
-                                AddNodeToGlobalMatrix(u2, u5, Element[1, 4], true);
-                                AddNodeToGlobalMatrix(u2, u6, Element[1, 5], true);
-                                AddNodeToGlobalMatrix(u2, u7, Element[1, 6], true);
-                                AddNodeToGlobalMatrix(u2, u8, Element[1, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u2, Element[1, 1], false);
+                                AddNodeToGlobalMatrix(_Y, u2, u3, Element[1, 2], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u4, Element[1, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u5, Element[1, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u6, Element[1, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u7, Element[1, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u8, Element[1, 7], true);
 
-                                AddNodeToGlobalMatrix(u3, u3, Element[2, 2], false);
-                                AddNodeToGlobalMatrix(u3, u4, Element[2, 3], true);
-                                AddNodeToGlobalMatrix(u3, u5, Element[2, 4], true);
-                                AddNodeToGlobalMatrix(u3, u6, Element[2, 5], true);
-                                AddNodeToGlobalMatrix(u3, u7, Element[2, 6], true);
-                                AddNodeToGlobalMatrix(u3, u8, Element[2, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u3, Element[2, 2], false);
+                                AddNodeToGlobalMatrix(_Y, u3, u4, Element[2, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u5, Element[2, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u6, Element[2, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u7, Element[2, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u8, Element[2, 7], true);
 
-                                AddNodeToGlobalMatrix(u4, u4, Element[3, 3], false);
-                                AddNodeToGlobalMatrix(u4, u5, Element[3, 4], true);
-                                AddNodeToGlobalMatrix(u4, u6, Element[3, 5], true);
-                                AddNodeToGlobalMatrix(u4, u7, Element[3, 6], true);
-                                AddNodeToGlobalMatrix(u4, u8, Element[3, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u4, Element[3, 3], false);
+                                AddNodeToGlobalMatrix(_Y, u4, u5, Element[3, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u6, Element[3, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u7, Element[3, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u8, Element[3, 7], true);
 
-                                AddNodeToGlobalMatrix(u5, u5, Element[4, 4], false);
-                                AddNodeToGlobalMatrix(u5, u6, Element[4, 5], true);
-                                AddNodeToGlobalMatrix(u5, u7, Element[4, 6], true);
-                                AddNodeToGlobalMatrix(u5, u8, Element[4, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u5, Element[4, 4], false);
+                                AddNodeToGlobalMatrix(_Y, u5, u6, Element[4, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u7, Element[4, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u8, Element[4, 7], true);
 
-                                AddNodeToGlobalMatrix(u6, u6, Element[5, 5], false);
-                                AddNodeToGlobalMatrix(u6, u7, Element[5, 6], true);
-                                AddNodeToGlobalMatrix(u6, u8, Element[5, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u6, u6, Element[5, 5], false);
+                                AddNodeToGlobalMatrix(_Y, u6, u7, Element[5, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u6, u8, Element[5, 7], true);
 
-                                AddNodeToGlobalMatrix(u7, u7, Element[6, 6], false);
-                                AddNodeToGlobalMatrix(u7, u8, Element[6, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u7, u7, Element[6, 6], false);
+                                AddNodeToGlobalMatrix(_Y, u7, u8, Element[6, 7], true);
 
-                                AddNodeToGlobalMatrix(u8, u8, Element[7, 7], false);
+                                AddNodeToGlobalMatrix(_Y, u8, u8, Element[7, 7], false);
                             }
                             break;
                         case StructureSegmentTypeEnum.Rn:
@@ -440,49 +435,49 @@ namespace FractalElementDesigner.MathModel.Structure
                                 int u7 = nodesNumeration[1, i, j + 1];
                                 int u8 = nodesNumeration[1, i + 1, j + 1];
 
-                                AddNodeToGlobalMatrix(u1, u1, Element[0, 0], false);
-                                AddNodeToGlobalMatrix(u1, u2, Element[0, 1], true);
-                                AddNodeToGlobalMatrix(u1, u3, Element[0, 2], true);
-                                AddNodeToGlobalMatrix(u1, u4, Element[0, 3], true);
-                                AddNodeToGlobalMatrix(u1, u5, Element[0, 4], true);
-                                AddNodeToGlobalMatrix(u1, u6, Element[0, 5], true);
-                                AddNodeToGlobalMatrix(u1, u7, Element[0, 6], true);
-                                AddNodeToGlobalMatrix(u1, u8, Element[0, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u1, Element[0, 0], false);
+                                AddNodeToGlobalMatrix(_Y, u1, u2, Element[0, 1], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u3, Element[0, 2], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u4, Element[0, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u5, Element[0, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u6, Element[0, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u7, Element[0, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u8, Element[0, 7], true);
 
-                                AddNodeToGlobalMatrix(u2, u2, Element[1, 1], false);
-                                AddNodeToGlobalMatrix(u2, u3, Element[1, 2], true);
-                                AddNodeToGlobalMatrix(u2, u4, Element[1, 3], true);
-                                AddNodeToGlobalMatrix(u2, u5, Element[1, 4], true);
-                                AddNodeToGlobalMatrix(u2, u6, Element[1, 5], true);
-                                AddNodeToGlobalMatrix(u2, u7, Element[1, 6], true);
-                                AddNodeToGlobalMatrix(u2, u8, Element[1, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u2, Element[1, 1], false);
+                                AddNodeToGlobalMatrix(_Y, u2, u3, Element[1, 2], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u4, Element[1, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u5, Element[1, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u6, Element[1, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u7, Element[1, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u8, Element[1, 7], true);
 
-                                AddNodeToGlobalMatrix(u3, u3, Element[2, 2], false);
-                                AddNodeToGlobalMatrix(u3, u4, Element[2, 3], true);
-                                AddNodeToGlobalMatrix(u3, u5, Element[2, 4], true);
-                                AddNodeToGlobalMatrix(u3, u6, Element[2, 5], true);
-                                AddNodeToGlobalMatrix(u3, u7, Element[2, 6], true);
-                                AddNodeToGlobalMatrix(u3, u8, Element[2, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u3, Element[2, 2], false);
+                                AddNodeToGlobalMatrix(_Y, u3, u4, Element[2, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u5, Element[2, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u6, Element[2, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u7, Element[2, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u8, Element[2, 7], true);
 
-                                AddNodeToGlobalMatrix(u4, u4, Element[3, 3], false);
-                                AddNodeToGlobalMatrix(u4, u5, Element[3, 4], true);
-                                AddNodeToGlobalMatrix(u4, u6, Element[3, 5], true);
-                                AddNodeToGlobalMatrix(u4, u7, Element[3, 6], true);
-                                AddNodeToGlobalMatrix(u4, u8, Element[3, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u4, Element[3, 3], false);
+                                AddNodeToGlobalMatrix(_Y, u4, u5, Element[3, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u6, Element[3, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u7, Element[3, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u8, Element[3, 7], true);
 
-                                AddNodeToGlobalMatrix(u5, u5, Element[4, 4], false);
-                                AddNodeToGlobalMatrix(u5, u6, Element[4, 5], true);
-                                AddNodeToGlobalMatrix(u5, u7, Element[4, 6], true);
-                                AddNodeToGlobalMatrix(u5, u8, Element[4, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u5, Element[4, 4], false);
+                                AddNodeToGlobalMatrix(_Y, u5, u6, Element[4, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u7, Element[4, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u8, Element[4, 7], true);
 
-                                AddNodeToGlobalMatrix(u6, u6, Element[5, 5], false);
-                                AddNodeToGlobalMatrix(u6, u7, Element[5, 6], true);
-                                AddNodeToGlobalMatrix(u6, u8, Element[5, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u6, u6, Element[5, 5], false);
+                                AddNodeToGlobalMatrix(_Y, u6, u7, Element[5, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u6, u8, Element[5, 7], true);
 
-                                AddNodeToGlobalMatrix(u7, u7, Element[6, 6], false);
-                                AddNodeToGlobalMatrix(u7, u8, Element[6, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u7, u7, Element[6, 6], false);
+                                AddNodeToGlobalMatrix(_Y, u7, u8, Element[6, 7], true);
 
-                                AddNodeToGlobalMatrix(u8, u8, Element[7, 7], false);
+                                AddNodeToGlobalMatrix(_Y, u8, u8, Element[7, 7], false);
                             }
                             break;
                         case StructureSegmentTypeEnum.Rk_C_NRk:
@@ -498,49 +493,49 @@ namespace FractalElementDesigner.MathModel.Structure
                                 int u7 = nodesNumeration[1, i, j + 1];
                                 int u8 = nodesNumeration[1, i + 1, j + 1];
 
-                                AddNodeToGlobalMatrix(u1, u1, Element[0, 0], false);
-                                AddNodeToGlobalMatrix(u1, u2, Element[0, 1], true);
-                                AddNodeToGlobalMatrix(u1, u3, Element[0, 2], true);
-                                AddNodeToGlobalMatrix(u1, u4, Element[0, 3], true);
-                                AddNodeToGlobalMatrix(u1, u5, Element[0, 4], true);
-                                AddNodeToGlobalMatrix(u1, u6, Element[0, 5], true);
-                                AddNodeToGlobalMatrix(u1, u7, Element[0, 6], true);
-                                AddNodeToGlobalMatrix(u1, u8, Element[0, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u1, Element[0, 0], false);
+                                AddNodeToGlobalMatrix(_Y, u1, u2, Element[0, 1], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u3, Element[0, 2], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u4, Element[0, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u5, Element[0, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u6, Element[0, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u7, Element[0, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u8, Element[0, 7], true);
 
-                                AddNodeToGlobalMatrix(u2, u2, Element[1, 1], false);
-                                AddNodeToGlobalMatrix(u2, u3, Element[1, 2], true);
-                                AddNodeToGlobalMatrix(u2, u4, Element[1, 3], true);
-                                AddNodeToGlobalMatrix(u2, u5, Element[1, 4], true);
-                                AddNodeToGlobalMatrix(u2, u6, Element[1, 5], true);
-                                AddNodeToGlobalMatrix(u2, u7, Element[1, 6], true);
-                                AddNodeToGlobalMatrix(u2, u8, Element[1, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u2, Element[1, 1], false);
+                                AddNodeToGlobalMatrix(_Y, u2, u3, Element[1, 2], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u4, Element[1, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u5, Element[1, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u6, Element[1, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u7, Element[1, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u8, Element[1, 7], true);
 
-                                AddNodeToGlobalMatrix(u3, u3, Element[2, 2], false);
-                                AddNodeToGlobalMatrix(u3, u4, Element[2, 3], true);
-                                AddNodeToGlobalMatrix(u3, u5, Element[2, 4], true);
-                                AddNodeToGlobalMatrix(u3, u6, Element[2, 5], true);
-                                AddNodeToGlobalMatrix(u3, u7, Element[2, 6], true);
-                                AddNodeToGlobalMatrix(u3, u8, Element[2, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u3, Element[2, 2], false);
+                                AddNodeToGlobalMatrix(_Y, u3, u4, Element[2, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u5, Element[2, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u6, Element[2, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u7, Element[2, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u8, Element[2, 7], true);
 
-                                AddNodeToGlobalMatrix(u4, u4, Element[3, 3], false);
-                                AddNodeToGlobalMatrix(u4, u5, Element[3, 4], true);
-                                AddNodeToGlobalMatrix(u4, u6, Element[3, 5], true);
-                                AddNodeToGlobalMatrix(u4, u7, Element[3, 6], true);
-                                AddNodeToGlobalMatrix(u4, u8, Element[3, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u4, Element[3, 3], false);
+                                AddNodeToGlobalMatrix(_Y, u4, u5, Element[3, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u6, Element[3, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u7, Element[3, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u8, Element[3, 7], true);
 
-                                AddNodeToGlobalMatrix(u5, u5, Element[4, 4], false);
-                                AddNodeToGlobalMatrix(u5, u6, Element[4, 5], true);
-                                AddNodeToGlobalMatrix(u5, u7, Element[4, 6], true);
-                                AddNodeToGlobalMatrix(u5, u8, Element[4, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u5, Element[4, 4], false);
+                                AddNodeToGlobalMatrix(_Y, u5, u6, Element[4, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u7, Element[4, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u8, Element[4, 7], true);
 
-                                AddNodeToGlobalMatrix(u6, u6, Element[5, 5], false);
-                                AddNodeToGlobalMatrix(u6, u7, Element[5, 6], true);
-                                AddNodeToGlobalMatrix(u6, u8, Element[5, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u6, u6, Element[5, 5], false);
+                                AddNodeToGlobalMatrix(_Y, u6, u7, Element[5, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u6, u8, Element[5, 7], true);
 
-                                AddNodeToGlobalMatrix(u7, u7, Element[6, 6], false);
-                                AddNodeToGlobalMatrix(u7, u8, Element[6, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u7, u7, Element[6, 6], false);
+                                AddNodeToGlobalMatrix(_Y, u7, u8, Element[6, 7], true);
 
-                                AddNodeToGlobalMatrix(u8, u8, Element[7, 7], false);
+                                AddNodeToGlobalMatrix(_Y, u8, u8, Element[7, 7], false);
                             }
                             break;
                         case StructureSegmentTypeEnum.R_C_NRk:
@@ -556,49 +551,49 @@ namespace FractalElementDesigner.MathModel.Structure
                                 int u7 = nodesNumeration[1, i, j + 1];
                                 int u8 = nodesNumeration[1, i + 1, j + 1];
 
-                                AddNodeToGlobalMatrix(u1, u1, Element[0, 0], false);
-                                AddNodeToGlobalMatrix(u1, u2, Element[0, 1], true);
-                                AddNodeToGlobalMatrix(u1, u3, Element[0, 2], true);
-                                AddNodeToGlobalMatrix(u1, u4, Element[0, 3], true);
-                                AddNodeToGlobalMatrix(u1, u5, Element[0, 4], true);
-                                AddNodeToGlobalMatrix(u1, u6, Element[0, 5], true);
-                                AddNodeToGlobalMatrix(u1, u7, Element[0, 6], true);
-                                AddNodeToGlobalMatrix(u1, u8, Element[0, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u1, Element[0, 0], false);
+                                AddNodeToGlobalMatrix(_Y, u1, u2, Element[0, 1], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u3, Element[0, 2], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u4, Element[0, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u5, Element[0, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u6, Element[0, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u7, Element[0, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u8, Element[0, 7], true);
 
-                                AddNodeToGlobalMatrix(u2, u2, Element[1, 1], false);
-                                AddNodeToGlobalMatrix(u2, u3, Element[1, 2], true);
-                                AddNodeToGlobalMatrix(u2, u4, Element[1, 3], true);
-                                AddNodeToGlobalMatrix(u2, u5, Element[1, 4], true);
-                                AddNodeToGlobalMatrix(u2, u6, Element[1, 5], true);
-                                AddNodeToGlobalMatrix(u2, u7, Element[1, 6], true);
-                                AddNodeToGlobalMatrix(u2, u8, Element[1, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u2, Element[1, 1], false);
+                                AddNodeToGlobalMatrix(_Y, u2, u3, Element[1, 2], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u4, Element[1, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u5, Element[1, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u6, Element[1, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u7, Element[1, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u8, Element[1, 7], true);
 
-                                AddNodeToGlobalMatrix(u3, u3, Element[2, 2], false);
-                                AddNodeToGlobalMatrix(u3, u4, Element[2, 3], true);
-                                AddNodeToGlobalMatrix(u3, u5, Element[2, 4], true);
-                                AddNodeToGlobalMatrix(u3, u6, Element[2, 5], true);
-                                AddNodeToGlobalMatrix(u3, u7, Element[2, 6], true);
-                                AddNodeToGlobalMatrix(u3, u8, Element[2, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u3, Element[2, 2], false);
+                                AddNodeToGlobalMatrix(_Y, u3, u4, Element[2, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u5, Element[2, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u6, Element[2, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u7, Element[2, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u8, Element[2, 7], true);
 
-                                AddNodeToGlobalMatrix(u4, u4, Element[3, 3], false);
-                                AddNodeToGlobalMatrix(u4, u5, Element[3, 4], true);
-                                AddNodeToGlobalMatrix(u4, u6, Element[3, 5], true);
-                                AddNodeToGlobalMatrix(u4, u7, Element[3, 6], true);
-                                AddNodeToGlobalMatrix(u4, u8, Element[3, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u4, Element[3, 3], false);
+                                AddNodeToGlobalMatrix(_Y, u4, u5, Element[3, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u6, Element[3, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u7, Element[3, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u8, Element[3, 7], true);
 
-                                AddNodeToGlobalMatrix(u5, u5, Element[4, 4], false);
-                                AddNodeToGlobalMatrix(u5, u6, Element[4, 5], true);
-                                AddNodeToGlobalMatrix(u5, u7, Element[4, 6], true);
-                                AddNodeToGlobalMatrix(u5, u8, Element[4, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u5, Element[4, 4], false);
+                                AddNodeToGlobalMatrix(_Y, u5, u6, Element[4, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u7, Element[4, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u8, Element[4, 7], true);
 
-                                AddNodeToGlobalMatrix(u6, u6, Element[5, 5], false);
-                                AddNodeToGlobalMatrix(u6, u7, Element[5, 6], true);
-                                AddNodeToGlobalMatrix(u6, u8, Element[5, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u6, u6, Element[5, 5], false);
+                                AddNodeToGlobalMatrix(_Y, u6, u7, Element[5, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u6, u8, Element[5, 7], true);
 
-                                AddNodeToGlobalMatrix(u7, u7, Element[6, 6], false);
-                                AddNodeToGlobalMatrix(u7, u8, Element[6, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u7, u7, Element[6, 6], false);
+                                AddNodeToGlobalMatrix(_Y, u7, u8, Element[6, 7], true);
 
-                                AddNodeToGlobalMatrix(u8, u8, Element[7, 7], false);
+                                AddNodeToGlobalMatrix(_Y, u8, u8, Element[7, 7], false);
                             }
                             break;
                         case StructureSegmentTypeEnum.Rk_C_NR:
@@ -614,49 +609,49 @@ namespace FractalElementDesigner.MathModel.Structure
                                 int u7 = nodesNumeration[1, i, j + 1];
                                 int u8 = nodesNumeration[1, i + 1, j + 1];
 
-                                AddNodeToGlobalMatrix(u1, u1, Element[0, 0], false);
-                                AddNodeToGlobalMatrix(u1, u2, Element[0, 1], true);
-                                AddNodeToGlobalMatrix(u1, u3, Element[0, 2], true);
-                                AddNodeToGlobalMatrix(u1, u4, Element[0, 3], true);
-                                AddNodeToGlobalMatrix(u1, u5, Element[0, 4], true);
-                                AddNodeToGlobalMatrix(u1, u6, Element[0, 5], true);
-                                AddNodeToGlobalMatrix(u1, u7, Element[0, 6], true);
-                                AddNodeToGlobalMatrix(u1, u8, Element[0, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u1, Element[0, 0], false);
+                                AddNodeToGlobalMatrix(_Y, u1, u2, Element[0, 1], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u3, Element[0, 2], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u4, Element[0, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u5, Element[0, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u6, Element[0, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u7, Element[0, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u1, u8, Element[0, 7], true);
 
-                                AddNodeToGlobalMatrix(u2, u2, Element[1, 1], false);
-                                AddNodeToGlobalMatrix(u2, u3, Element[1, 2], true);
-                                AddNodeToGlobalMatrix(u2, u4, Element[1, 3], true);
-                                AddNodeToGlobalMatrix(u2, u5, Element[1, 4], true);
-                                AddNodeToGlobalMatrix(u2, u6, Element[1, 5], true);
-                                AddNodeToGlobalMatrix(u2, u7, Element[1, 6], true);
-                                AddNodeToGlobalMatrix(u2, u8, Element[1, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u2, Element[1, 1], false);
+                                AddNodeToGlobalMatrix(_Y, u2, u3, Element[1, 2], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u4, Element[1, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u5, Element[1, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u6, Element[1, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u7, Element[1, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u2, u8, Element[1, 7], true);
 
-                                AddNodeToGlobalMatrix(u3, u3, Element[2, 2], false);
-                                AddNodeToGlobalMatrix(u3, u4, Element[2, 3], true);
-                                AddNodeToGlobalMatrix(u3, u5, Element[2, 4], true);
-                                AddNodeToGlobalMatrix(u3, u6, Element[2, 5], true);
-                                AddNodeToGlobalMatrix(u3, u7, Element[2, 6], true);
-                                AddNodeToGlobalMatrix(u3, u8, Element[2, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u3, Element[2, 2], false);
+                                AddNodeToGlobalMatrix(_Y, u3, u4, Element[2, 3], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u5, Element[2, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u6, Element[2, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u7, Element[2, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u3, u8, Element[2, 7], true);
 
-                                AddNodeToGlobalMatrix(u4, u4, Element[3, 3], false);
-                                AddNodeToGlobalMatrix(u4, u5, Element[3, 4], true);
-                                AddNodeToGlobalMatrix(u4, u6, Element[3, 5], true);
-                                AddNodeToGlobalMatrix(u4, u7, Element[3, 6], true);
-                                AddNodeToGlobalMatrix(u4, u8, Element[3, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u4, Element[3, 3], false);
+                                AddNodeToGlobalMatrix(_Y, u4, u5, Element[3, 4], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u6, Element[3, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u7, Element[3, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u4, u8, Element[3, 7], true);
 
-                                AddNodeToGlobalMatrix(u5, u5, Element[4, 4], false);
-                                AddNodeToGlobalMatrix(u5, u6, Element[4, 5], true);
-                                AddNodeToGlobalMatrix(u5, u7, Element[4, 6], true);
-                                AddNodeToGlobalMatrix(u5, u8, Element[4, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u5, Element[4, 4], false);
+                                AddNodeToGlobalMatrix(_Y, u5, u6, Element[4, 5], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u7, Element[4, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u5, u8, Element[4, 7], true);
 
-                                AddNodeToGlobalMatrix(u6, u6, Element[5, 5], false);
-                                AddNodeToGlobalMatrix(u6, u7, Element[5, 6], true);
-                                AddNodeToGlobalMatrix(u6, u8, Element[5, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u6, u6, Element[5, 5], false);
+                                AddNodeToGlobalMatrix(_Y, u6, u7, Element[5, 6], true);
+                                AddNodeToGlobalMatrix(_Y, u6, u8, Element[5, 7], true);
 
-                                AddNodeToGlobalMatrix(u7, u7, Element[6, 6], false);
-                                AddNodeToGlobalMatrix(u7, u8, Element[6, 7], true);
+                                AddNodeToGlobalMatrix(_Y, u7, u7, Element[6, 6], false);
+                                AddNodeToGlobalMatrix(_Y, u7, u8, Element[6, 7], true);
 
-                                AddNodeToGlobalMatrix(u8, u8, Element[7, 7], false);
+                                AddNodeToGlobalMatrix(_Y, u8, u8, Element[7, 7], false);
                             }
                             break;
                         default:
@@ -664,27 +659,29 @@ namespace FractalElementDesigner.MathModel.Structure
                     }
                 }
             }
+
+            return _Y;
         }
 
         // Метод для добавления проводимости узла к глобальной матрице проводимостей
-        private void AddNodeToGlobalMatrix(int u0, int u1, Complex value, bool f) 
+        private void AddNodeToGlobalMatrix(Matrix<Complex> Ym, int u0, int u1, Complex value, bool f) 
         {
             if (u0 >= 0 && u1 >= 0 && value != 0.0)
             {
                 if (u1 > u0)
                 {
-                    GlobalY[u0, u1] += value;
-                    GlobalY[u1, u0] += value;
+                    Ym[u0, u1] += value;
+                    Ym[u1, u0] += value;
                 }
                 else
                 {
-                    GlobalY[u1, u0] += value;
-                    GlobalY[u0, u1] += value;
+                    Ym[u1, u0] += value;
+                    Ym[u0, u1] += value;
 
                     if (f && u1 == u0)  // когда номера узлов u1 и u0 одинаковы, но эти узлы не относятся к собственному узлу,
                     {
-                        GlobalY[u1, 0] += value; // то проводимость между этими узлами надо прибавлять дважды
-                        GlobalY[0, u1] += value;
+                        Ym[u1, 0] += value; // то проводимость между этими узлами надо прибавлять дважды
+                        Ym[0, u1] += value;
                     }
                 }
             } 
@@ -699,11 +696,11 @@ namespace FractalElementDesigner.MathModel.Structure
             // матрица соединений (инцидентности)
             var I = Matrix<float>.Build.DenseOfArray(new float[NodesCount, NodesCount]);
 
-            for (int i = 0; i < HorizontalDimension; i++)// горизонтальная ось
+            for (int i = 1; i <= HorizontalDimension; i++)// горизонтальная ось // исключаются из обхода Rk C NRk элементы около контактных площадок
             {
                 for (int j = 0; j < VerticalDimension; j++)// вертикальная ось
                 {
-                    switch (structure.Segments[j][i].SegmentType)
+                    switch (structure.Segments[j+1][i+1].SegmentType)
                     {
                         case StructureSegmentTypeEnum.EMPTY:
                             break;
@@ -802,25 +799,38 @@ namespace FractalElementDesigner.MathModel.Structure
         // Метод для расчёта фазы
         public double CalculatePhase(double frequency)
         {
-            //frequency = frequency * 2.0 * System.Math.PI;
+            frequency = frequency * 2.0 * Math.PI;// при расчёте тета берется также в реализации схемы
 
-            FillGlobalMatrix(Structure, NodesCount, NodesNumeration, frequency);
+            var Y = FillGlobalMatrix(Structure, NodesCount, NodesNumeration, frequency);
+
+            // клонировать матрицу соединённых выводов
+            var I = PEPinsAndConnectedPinsIndices.I.Clone();
 
             // удалить строки и столбцы
-            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref GlobalY, PEPinsAndConnectedPinsIndices.PE);
+            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref Y, PEPinsAndConnectedPinsIndices.PE);
+            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref I, PEPinsAndConnectedPinsIndices.PE);
+
             // сложить строки и столбцы
-            SchemePhaseResponseCalculator.AddRowsAndColsInYMatrix(ref GlobalY, ref PEPinsAndConnectedPinsIndices.I);
+            SchemePhaseResponseCalculator.AddRowsAndColsInYMatrix(ref Y, ref I);
+
             // понизить порядок глобальной матрицы до числа внешних выводов
-            SchemePhaseResponseCalculator.ReduceMatrix(ref GlobalY, Structure.Scheme.Model.OuterPins.Count);
+            SchemePhaseResponseCalculator.ReduceMatrix(ref Y, Structure.Scheme.Model.OuterPins.Count);
 
-            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref GlobalY, GroundedOuterPins);
-            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref ConnectedOuterPinsMatrix, GroundedOuterPins);
+            // учесть внешнюю схему
 
-            SchemePhaseResponseCalculator.AddRowsAndColsInYMatrix(ref GlobalY, ref ConnectedOuterPinsMatrix);
+            // клонировать матрицу соединённых выводов
+            var connectedOuterPinsMatrix = ConnectedOuterPinsMatrix.Clone();
 
-            SchemePhaseResponseCalculator.ReduceMatrix(ref GlobalY, 1);
+            // удалить строки и столбцы
+            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref Y, GroundedOuterPins);
+            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref connectedOuterPinsMatrix, GroundedOuterPins);
 
-            var phase = -GlobalY[GlobalY.RowCount - 1, GlobalY.ColumnCount - 1].Phase * 180 / Math.PI;
+            // сложить строки и столбцы
+            SchemePhaseResponseCalculator.AddRowsAndColsInYMatrix(ref Y, ref connectedOuterPinsMatrix);
+
+            SchemePhaseResponseCalculator.ReduceMatrix(ref Y, 1);
+
+            var phase = -Y[Y.RowCount - 1, Y.ColumnCount - 1].Phase * 180 / Math.PI;
 
             return phase;
         }

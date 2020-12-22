@@ -629,7 +629,7 @@ namespace FractalElementDesigner.ViewModels
 
             CreateStructureAsync(project, sch, newStructureWindowViewModel.CurrentStructure, false);
 
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
 
             // 10x10
             // изменение ячеек слоёв структуры
@@ -792,17 +792,28 @@ namespace FractalElementDesigner.ViewModels
                         // для схемы №5 !!!!
                         // для схемы №5 !!!!
 
+                        //var I = Matrix<float>.Build.DenseOfArray(new float[4, 4]);
+                        //// установить диагональ
+                        //I.SetDiagonal(Vector<float>.Build.Dense(4, 1));
+
+                        //I[2, 3] = 1;
+                        //I[3, 2] = 1;
+
+                        //var pe = new List<int>();
+
+                        // для схемы №5 !!!!
+                        // для схемы №5 !!!!
+
+                        // для схемы №17 !!!!
+                        // для схемы №17 !!!!
+
                         var I = Matrix<float>.Build.DenseOfArray(new float[4, 4]);
                         // установить диагональ
                         I.SetDiagonal(Vector<float>.Build.Dense(4, 1));
+                        var pe = new List<int>() { 1, 2, 3 };
 
-                        I[2, 3] = 1;
-                        I[3, 2] = 1;
-
-                        var pe = new List<int>();
-
-                        // для схемы №5 !!!!
-                        // для схемы №5 !!!!
+                        // для схемы №17 !!!!
+                        // для схемы №17 !!!!
 
                         structure.PhaseResponsePoints.Clear();
 
@@ -1324,13 +1335,13 @@ namespace FractalElementDesigner.ViewModels
                     /**/
                     /**/
 
-                    // учесть внешнюю схему //для схемы №5 !!!!
+                    // учесть внешнюю схему //для схемы №17 !!!!
                     schemePrototype.Model.OuterPins[0].State = OuterPinState.In;
-                    schemePrototype.Model.OuterPins[1].State = OuterPinState.Float;
-                    schemePrototype.Model.OuterPins[2].State = OuterPinState.Con;
-                    schemePrototype.Model.OuterPins[3].State = OuterPinState.Con;
+                    schemePrototype.Model.OuterPins[1].State = OuterPinState.Gnd;
+                    schemePrototype.Model.OuterPins[2].State = OuterPinState.Gnd;
+                    schemePrototype.Model.OuterPins[3].State = OuterPinState.Gnd;
 
-                    schemePrototype.Model.PhaseResponsePoints = SchemePhaseResponseCalculatorByFrequencies.CalculatePhaseResponseInScheme(1, 3, 50, schemePrototype.Model);
+                    schemePrototype.Model.PhaseResponsePoints = SchemePhaseResponseCalculatorByFrequencies.CalculatePhaseResponseInScheme(0, 3, 100, schemePrototype.Model);
 
                     plot.InitializatePhaseResponsePlot(schemePrototype.Model.PhaseResponsePoints);
 
