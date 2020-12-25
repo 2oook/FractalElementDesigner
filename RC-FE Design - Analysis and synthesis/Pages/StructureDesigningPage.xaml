@@ -117,6 +117,7 @@
 
                                                 <ContextMenu x:Key="projectTreeFElementStructureWrapperContextMenu">
                                                     <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Пересчитать" Command="{Binding Path=RecalculateStructureCommand}"/>
+                                                    <MenuItem DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}" Header="Синтез" Command="{Binding Path=SynthesisCommand}"/>
                                                 </ContextMenu>
 
                                                 <ContextMenu x:Key="projectTreeFElementStructureContextMenu">
@@ -227,7 +228,7 @@
 
                             <DockPanel Grid.Row="1" Grid.Column="2">
                                 <Button DockPanel.Dock="Left" Content="Пересчитать"  Command="{Binding RecalculateStructureCommand}" Padding="5"  Margin="5" FontSize="14"/>
-                                <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Синтез"  Command="{Binding SchemeSynthesisCommand}" Padding="5"  Margin="5" FontSize="14"/>
+                                <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="Синтез"  Command="{Binding SynthesisCommand}" Padding="5"  Margin="5" FontSize="14"/>
                                 <Button Content="Тест"  Command="{Binding TestCommand}" Padding="5"  Margin="5" FontSize="14"/>
                             </DockPanel>
 

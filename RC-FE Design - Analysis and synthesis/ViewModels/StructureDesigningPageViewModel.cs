@@ -349,17 +349,17 @@ namespace FractalElementDesigner.ViewModels
             }
         }
 
-        private ICommand schemeSynthesisCommand;
+        private ICommand synthesisCommand;
         /// <summary>
-        /// Команда для синтеза схемы
+        /// Команда для синтеза
         /// </summary>
-        public ICommand SchemeSynthesisCommand
+        public ICommand SynthesisCommand
         {
-            get { return schemeSynthesisCommand; }
+            get { return synthesisCommand; }
             set
             {
-                schemeSynthesisCommand = value;
-                RaisePropertyChanged(nameof(SchemeSynthesisCommand));
+                synthesisCommand = value;
+                RaisePropertyChanged(nameof(SynthesisCommand));
             }
         }
 
@@ -526,7 +526,7 @@ namespace FractalElementDesigner.ViewModels
 
             ChoiceOfSchemeCommand = new RelayCommand(ChoiceOfScheme, IsChoiceOfSchemePossible);
 
-            SchemeSynthesisCommand = new RelayCommand(SynthesizeScheme, IsSchemeSynthesisPossible);
+            SynthesisCommand = new RelayCommand(SynthesizeScheme, IsSchemeSynthesisPossible);
             CreateStructureCommand = new RelayCommand(CreateStructure, IsStructureCreatingPossible);
             RecalculateStructureCommand = new RelayCommand(RecalculateStructure, IsStructureRecalculatingPossible);
 
@@ -951,7 +951,7 @@ namespace FractalElementDesigner.ViewModels
         }
 
         /// <summary>
-        /// Метод определяющий возможность синтеза схемы
+        /// Метод определяющий возможность синтеза
         /// </summary>
         /// <returns>Разрешающий флаг</returns>
         private bool IsSchemeSynthesisPossible() 
@@ -969,6 +969,11 @@ namespace FractalElementDesigner.ViewModels
                 {
                     return true;
                 }              
+            }
+
+            if (SelectedProjectTreeItem is StructureInProjectTree structureInProject)
+            {
+                return true;
             }
 
             return false;
@@ -1007,6 +1012,13 @@ namespace FractalElementDesigner.ViewModels
                 project.Items.Clear();
 
                 StartSchemeSynthesisAsync(project, scheme);
+            }
+
+            if (SelectedProjectTreeItem is StructureInProjectTree structureInProject)
+            {
+                var structure = structureInProject.Items.Where(x => x is RCStructureBase).Single() as RCStructure;
+
+                StartStructureSynthesisAsync(structure.SynthesisParameters, structure);
             }
         }
 
@@ -1208,7 +1220,7 @@ namespace FractalElementDesigner.ViewModels
         }
 
         // Метод для запуска синтеза конструкции асинхронно
-        private async void StartStructureSynthesisAsync(StructureSchemeSynthesisParameters structureSchemeSynthesisParametersInstance, Project currentProject, RCStructureBase structure)
+        private async void StartStructureSynthesisAsync(StructureSchemeSynthesisParameters structureSchemeSynthesisParametersInstance, RCStructureBase structure)
         {
             await Task.Run(() =>
             {
@@ -1311,7 +1323,7 @@ namespace FractalElementDesigner.ViewModels
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
 
-            Test();
+            //Test();
 
             if (TestingBool)
             {
