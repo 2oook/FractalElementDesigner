@@ -838,6 +838,8 @@ namespace FractalElementDesigner.ViewModels
                         #endregion
                     }
 
+                    StructureCreator.NumerateContactPlatesByScheme(structure);
+
                     // определить типы сегментов структуры по типам ячеек в слоях
                     StructureCreator.ResolveSegmentsTypes(structure);
 

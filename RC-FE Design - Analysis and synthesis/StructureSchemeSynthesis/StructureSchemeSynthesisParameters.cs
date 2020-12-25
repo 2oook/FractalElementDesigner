@@ -39,7 +39,7 @@ namespace FractalElementDesigner.StructureSchemeSynthesis
                 C = 0.000_000_000_2,
                 R = 118_718,
                 N = 13.1,
-                L = 1,
+                L = 13,
                 G = 3,
                 Rk = Rk,
                 Rp = Rp

@@ -4,6 +4,8 @@ using FractalElementDesigner.FEEditing.Controls;
 using FractalElementDesigner.FEEditing.Model;
 using FractalElementDesigner.FEEditing.Model.StructureElements;
 using FractalElementDesigner.MathModel.Structure;
+using FractalElementDesigner.RCWorkbenchLibrary;
+using FractalElementDesigner.RCWorkbenchLibrary.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -275,6 +277,86 @@ namespace FractalElementDesigner.MathModel.Structure
                 layer.Editor = editor;
 
                 Insert.StructureLayer(editor.Context.CurrentCanvas as FECanvas, structure, layer);
+            }
+        }
+
+        // Метод для нумерования контактных площадок
+        public static void NumerateContactPlatesByScheme(RCStructure structure) 
+        {
+            var in_pins = structure.Scheme.Model.OuterPins.Select((x, i) => new { index = i, pin = x }).Where(x => x.pin.State == OuterPinState.In).Select(x => x.index).ToList();
+            var grounded_pins = structure.Scheme.Model.OuterPins.Select((x, i) => new { index = i, pin = x }).Where(x => x.pin.State == OuterPinState.Gnd).Select(x => x.index).ToList();
+            var connected_pins = structure.Scheme.Model.OuterPins.Select((x, i) => new { index = i, pin = x }).Where(x => x.pin.State == OuterPinState.Con).Select(x => x.index).ToList();
+            var float_pins = structure.Scheme.Model.OuterPins.Select((x, i) => new { index = i, pin = x }).Where(x => x.pin.State == OuterPinState.Float).Select(x => x.index).ToList();
+
+            // первым нумеруется in затем остальные выводы
+            foreach (var pinNumber in in_pins)
+            {
+                var pinNumberOnX = ConvertPinNumberToXPositionInStructure(pinNumber);
+                var layerNumber = GetLayerByPinNunber(pinNumber);
+
+                RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(layerNumber, pinNumberOnX, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+            }
+
+            foreach (var pinNumber in grounded_pins)
+            {
+                var pinNumberOnX = ConvertPinNumberToXPositionInStructure(pinNumber);
+                var layerNumber = GetLayerByPinNunber(pinNumber);
+
+                RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(layerNumber, pinNumberOnX, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+            }
+
+            foreach (var pinNumber in connected_pins)
+            {
+                var pinNumberOnX = ConvertPinNumberToXPositionInStructure(pinNumber);
+                var layerNumber = GetLayerByPinNunber(pinNumber);
+
+                RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(layerNumber, pinNumberOnX, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+            }
+
+            foreach (var pinNumber in float_pins)
+            {
+                var pinNumberOnX = ConvertPinNumberToXPositionInStructure(pinNumber);
+                var layerNumber = GetLayerByPinNunber(pinNumber);
+
+                RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(layerNumber, pinNumberOnX, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
+            }
+
+            int ConvertPinNumberToXPositionInStructure(int _pinNumber) 
+            {
+                int result = -2;
+
+                switch (_pinNumber)
+                {
+                    case 0: // сверху-слева
+                        result = -1;
+                        break;
+                    case 1: // сверху-справа
+                        result = structure.Segments.First().Count;
+                        break;
+
+                    case 2: // снизу-справа
+                        result = structure.Segments.First().Count;
+                        break;
+                    case 3: // снизу-слева
+                        result = -1;
+                        break;
+                    default:
+                        break;
+                }
+
+                return result;
+            }
+
+            int GetLayerByPinNunber(int _pinNumber) 
+            {
+                if (_pinNumber == 0 | _pinNumber == 1)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 1;
+                }
             }
         }
 

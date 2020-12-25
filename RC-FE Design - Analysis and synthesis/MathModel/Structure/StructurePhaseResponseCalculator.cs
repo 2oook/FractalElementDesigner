@@ -380,14 +380,14 @@ namespace FractalElementDesigner.MathModel.Structure
             Complex[,] Mat_rcnr = new Complex[8, 8]; // Y - параметры RCNR - ячейки
 
             var thetaFunc = FESection.ThetaFunctions.Single(_x => _x.Key == FESectionTypeEnum.R_C_NR).Value;
-            var theta = thetaFunc(R, N, C, 0, 0, G, /*L*/ 1 * 4 * x * y, w);
+            var theta = thetaFunc(R * x * y, N, C, 0, 0, G, /*L*/ 1, w);
 
             Complex tx = theta / Complex.Tanh(theta);
             Complex sx = theta / Complex.Sinh(theta);
             Complex ty = theta / Complex.Tanh(theta);
             Complex sy = theta / Complex.Sinh(theta);
 
-            var coeficient = 1 / ((1 + N) * R * /*L*/ 1 * 4*x*y);
+            var coeficient = 1 / ((1 + N) * R * /*L*/ 1);
 
             tx *= coeficient;
             sx *= coeficient;
