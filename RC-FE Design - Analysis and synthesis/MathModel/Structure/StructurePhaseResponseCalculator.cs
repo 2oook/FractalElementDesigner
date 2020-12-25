@@ -79,7 +79,7 @@ namespace FractalElementDesigner.MathModel.Structure
             var N = structure.SynthesisParameters.FESections.First().SectionParameters.N;
             var C = structure.SynthesisParameters.FESections.First().SectionParameters.C;
             var G = structure.SynthesisParameters.FESections.First().SectionParameters.G;
-            var H = 100;//???????
+            var H = 1;//??????? 100
 
             #region Mat_r
 
@@ -125,37 +125,66 @@ namespace FractalElementDesigner.MathModel.Structure
 
             #region RkCNRk
 
-            Complex[,] Mat_Rk_C_NRk = new Complex[8,8]; // Y - параметры Rk_C_NRk - ячейки
+            // Реализация RC Workbench
+            // Реализация RC Workbench
 
-            double Z_x_Rk_C_NRk = R * 2.0 * (1.0 + N);
-            double Z_y_Rk_C_NRk = R * 2.0 * (1.0 + N);
+            //Complex[,] Mat_Rk_C_NRk = new Complex[8,8]; // Y - параметры Rk_C_NRk - ячейки
 
-            Complex p_Rk_C_NRk = new Complex(0.0, w);
-            Complex temp_Rk_C_NRk = 1.0 / H + p_Rk_C_NRk * R * C;
-            Complex Y_Rk_C_NRk = temp_Rk_C_NRk / ((1.0 + G * temp_Rk_C_NRk) * ((double)(4 * x * y)) * R);
+            //double Z_x_Rk_C_NRk = R * 2.0 * (1.0 + N);
+            //double Z_y_Rk_C_NRk = R * 2.0 * (1.0 + N);
 
-            Complex tetta_x_Rk_C_NRk = Complex.Sqrt(Z_x_Rk_C_NRk * Y_Rk_C_NRk);
-            Complex tetta_y_Rk_C_NRk = Complex.Sqrt(Z_y_Rk_C_NRk * Y_Rk_C_NRk);
+            //Complex p_Rk_C_NRk = new Complex(0.0, w);
+            //Complex temp_Rk_C_NRk = 1.0 / H + p_Rk_C_NRk * R * C;
+            //Complex Y_Rk_C_NRk = temp_Rk_C_NRk / ((1.0 + G * temp_Rk_C_NRk) * ((double)(4 * x * y)) * R);
 
-            double koeff_x_Rk_C_NRk = 1.0 / Z_x_Rk_C_NRk;
-            double koeff_y_Rk_C_NRk = 1.0 / Z_y_Rk_C_NRk;
+            //Complex tetta_x_Rk_C_NRk = Complex.Sqrt(Z_x_Rk_C_NRk * Y_Rk_C_NRk);
+            //Complex tetta_y_Rk_C_NRk = Complex.Sqrt(Z_y_Rk_C_NRk * Y_Rk_C_NRk);
 
-            Complex tx_Rk_C_NRk = tetta_x_Rk_C_NRk / Complex.Tanh(tetta_x_Rk_C_NRk);
-            Complex sx_Rk_C_NRk = tetta_x_Rk_C_NRk / Complex.Sinh(tetta_x_Rk_C_NRk);
-            Complex ty_Rk_C_NRk = tetta_y_Rk_C_NRk / Complex.Tanh(tetta_y_Rk_C_NRk);
-            Complex sy_Rk_C_NRk = tetta_y_Rk_C_NRk / Complex.Sinh(tetta_y_Rk_C_NRk);
+            //double koeff_x_Rk_C_NRk = 1.0 / Z_x_Rk_C_NRk;
+            //double koeff_y_Rk_C_NRk = 1.0 / Z_y_Rk_C_NRk;
 
-            tx_Rk_C_NRk *= koeff_x_Rk_C_NRk;
-            sx_Rk_C_NRk *= koeff_x_Rk_C_NRk;
-            ty_Rk_C_NRk *= koeff_y_Rk_C_NRk;
-            sy_Rk_C_NRk *= koeff_y_Rk_C_NRk;
+            //Complex tx_Rk_C_NRk = tetta_x_Rk_C_NRk / Complex.Tanh(tetta_x_Rk_C_NRk);
+            //Complex sx_Rk_C_NRk = tetta_x_Rk_C_NRk / Complex.Sinh(tetta_x_Rk_C_NRk);
+            //Complex ty_Rk_C_NRk = tetta_y_Rk_C_NRk / Complex.Tanh(tetta_y_Rk_C_NRk);
+            //Complex sy_Rk_C_NRk = tetta_y_Rk_C_NRk / Complex.Sinh(tetta_y_Rk_C_NRk);
 
-            double KxN_Rk_C_NRk = koeff_x_Rk_C_NRk * N;
-            double KyN_Rk_C_NRk = koeff_y_Rk_C_NRk * N;
-            double Kx_N_Rk_C_NRk = koeff_x_Rk_C_NRk / N;
-            double Ky_N_Rk_C_NRk = koeff_y_Rk_C_NRk / N;
+            //tx_Rk_C_NRk *= koeff_x_Rk_C_NRk;
+            //sx_Rk_C_NRk *= koeff_x_Rk_C_NRk;
+            //ty_Rk_C_NRk *= koeff_y_Rk_C_NRk;
+            //sy_Rk_C_NRk *= koeff_y_Rk_C_NRk;
 
-            Mat_Rk_C_NRk[0,0] = tx_Rk_C_NRk + ty_Rk_C_NRk + KxN_Rk_C_NRk + KyN_Rk_C_NRk; Mat_Rk_C_NRk[0,1] = -sx_Rk_C_NRk - KxN_Rk_C_NRk; Mat_Rk_C_NRk[0,2] = -sy_Rk_C_NRk - KyN_Rk_C_NRk; Mat_Rk_C_NRk[0,3] = 0.0; Mat_Rk_C_NRk[0,4] = koeff_x_Rk_C_NRk + koeff_y_Rk_C_NRk - tx_Rk_C_NRk - ty_Rk_C_NRk; Mat_Rk_C_NRk[0,5] = sx_Rk_C_NRk - koeff_x_Rk_C_NRk; Mat_Rk_C_NRk[0,6] = sy_Rk_C_NRk - koeff_y_Rk_C_NRk; Mat_Rk_C_NRk[0,7] = 0.0;
+            //double KxN_Rk_C_NRk = koeff_x_Rk_C_NRk * N;
+            //double KyN_Rk_C_NRk = koeff_y_Rk_C_NRk * N;
+            //double Kx_N_Rk_C_NRk = koeff_x_Rk_C_NRk / N;
+            //double Ky_N_Rk_C_NRk = koeff_y_Rk_C_NRk / N;
+
+            // Реализация RC Workbench
+            // Реализация RC Workbench
+
+            Complex[,] Mat_Rk_C_NRk = new Complex[8, 8]; // Y - параметры Rk_C_NRk - ячейки
+
+            var thetaFunc_Rk_C_NRk = FESection.ThetaFunctions.Single(_x => _x.Key == FESectionTypeEnum.R_C_NR).Value;
+            var theta_Rk_C_NRk = thetaFunc_Rk_C_NRk(R, N, C, 0, 0, G, /*L*/ 1, w);
+
+            Complex tx_Rk_C_NRk = theta_Rk_C_NRk / Complex.Tanh(theta_Rk_C_NRk);
+            Complex sx_Rk_C_NRk = theta_Rk_C_NRk / Complex.Sinh(theta_Rk_C_NRk);
+            Complex ty_Rk_C_NRk = theta_Rk_C_NRk / Complex.Tanh(theta_Rk_C_NRk);
+            Complex sy_Rk_C_NRk = theta_Rk_C_NRk / Complex.Sinh(theta_Rk_C_NRk);
+
+            var coeficient_Rk_C_NRk = 1 / ((1 + N) * R * /*L*/ 1);
+
+            tx_Rk_C_NRk *= coeficient_Rk_C_NRk;
+            sx_Rk_C_NRk *= coeficient_Rk_C_NRk;
+            ty_Rk_C_NRk *= coeficient_Rk_C_NRk;
+            sy_Rk_C_NRk *= coeficient_Rk_C_NRk;
+
+            double KxN_Rk_C_NRk = coeficient_Rk_C_NRk * N;
+            double KyN_Rk_C_NRk = coeficient_Rk_C_NRk * N;
+            double Kx_N_Rk_C_NRk = coeficient_Rk_C_NRk / N;
+            double Ky_N_Rk_C_NRk = coeficient_Rk_C_NRk / N;
+
+            Mat_Rk_C_NRk[0, 0] = tx_Rk_C_NRk + ty_Rk_C_NRk + KxN_Rk_C_NRk + KyN_Rk_C_NRk; Mat_Rk_C_NRk[0, 1] = -sx_Rk_C_NRk - KxN_Rk_C_NRk; Mat_Rk_C_NRk[0, 2] = -sy_Rk_C_NRk - KyN_Rk_C_NRk; Mat_Rk_C_NRk[0, 3] = 0.0; Mat_Rk_C_NRk[0, 4] = coeficient_Rk_C_NRk + coeficient_Rk_C_NRk - tx_Rk_C_NRk - ty_Rk_C_NRk; Mat_Rk_C_NRk[0, 5] = sx_Rk_C_NRk - coeficient_Rk_C_NRk; Mat_Rk_C_NRk[0, 6] = sy_Rk_C_NRk - coeficient_Rk_C_NRk; Mat_Rk_C_NRk[0, 7] = 0.0;
+            //Mat_Rk_C_NRk[0,0] = tx_Rk_C_NRk + ty_Rk_C_NRk + KxN_Rk_C_NRk + KyN_Rk_C_NRk; Mat_Rk_C_NRk[0,1] = -sx_Rk_C_NRk - KxN_Rk_C_NRk; Mat_Rk_C_NRk[0,2] = -sy_Rk_C_NRk - KyN_Rk_C_NRk; Mat_Rk_C_NRk[0,3] = 0.0; Mat_Rk_C_NRk[0,4] = koeff_x_Rk_C_NRk + koeff_y_Rk_C_NRk - tx_Rk_C_NRk - ty_Rk_C_NRk; Mat_Rk_C_NRk[0,5] = sx_Rk_C_NRk - koeff_x_Rk_C_NRk; Mat_Rk_C_NRk[0,6] = sy_Rk_C_NRk - koeff_y_Rk_C_NRk; Mat_Rk_C_NRk[0,7] = 0.0;
             Mat_Rk_C_NRk[1,0] = Mat_Rk_C_NRk[0,1]; Mat_Rk_C_NRk[1,1] = Mat_Rk_C_NRk[0,0]; Mat_Rk_C_NRk[1,2] = 0.0; Mat_Rk_C_NRk[1,3] = Mat_Rk_C_NRk[0,2]; Mat_Rk_C_NRk[1,4] = Mat_Rk_C_NRk[0,5]; Mat_Rk_C_NRk[1,5] = Mat_Rk_C_NRk[0,4]; Mat_Rk_C_NRk[1,6] = 0.0; Mat_Rk_C_NRk[1,7] = Mat_Rk_C_NRk[0,6];
             Mat_Rk_C_NRk[2,0] = Mat_Rk_C_NRk[0,2]; Mat_Rk_C_NRk[2,1] = 0.0; Mat_Rk_C_NRk[2,2] = Mat_Rk_C_NRk[0,0]; Mat_Rk_C_NRk[2,3] = Mat_Rk_C_NRk[0,1]; Mat_Rk_C_NRk[2,4] = Mat_Rk_C_NRk[0,6]; Mat_Rk_C_NRk[2,5] = 0.0; Mat_Rk_C_NRk[2,6] = Mat_Rk_C_NRk[0,4]; Mat_Rk_C_NRk[2,7] = Mat_Rk_C_NRk[0,5];
             Mat_Rk_C_NRk[3,0] = 0.0; Mat_Rk_C_NRk[3,1] = Mat_Rk_C_NRk[0,2]; Mat_Rk_C_NRk[3,2] = Mat_Rk_C_NRk[0,1]; Mat_Rk_C_NRk[3,3] = Mat_Rk_C_NRk[0,0]; Mat_Rk_C_NRk[3,4] = 0.0; Mat_Rk_C_NRk[3,5] = Mat_Rk_C_NRk[0,6]; Mat_Rk_C_NRk[3,6] = Mat_Rk_C_NRk[0,5]; Mat_Rk_C_NRk[3,7] = Mat_Rk_C_NRk[0,4];
@@ -168,37 +197,66 @@ namespace FractalElementDesigner.MathModel.Structure
 
             #region RkCNR
 
-            Complex[,] Mat_Rk_C_NR = new Complex[8,8]; // Y - параметры Rk_C_NR - ячейки
+            // Реализация RC Workbench
+            // Реализация RC Workbench
 
-            double Z_x_Rk_C_NR = R * 2.0 * (1.0 + N);
-            double Z_y_Rk_C_NR = R * 2.0 * (1.0 + N);
+            //Complex[,] Mat_Rk_C_NR = new Complex[8,8]; // Y - параметры Rk_C_NR - ячейки
 
-            Complex p_Rk_C_NR = new Complex(0.0, w);
-            Complex temp_Rk_C_NR = 1.0 / H + p_Rk_C_NR * R * C;
-            Complex Y_Rk_C_NR = temp_Rk_C_NR / ((1.0 + G * temp_Rk_C_NR) * ((double)(4 * x * y)) * R);
+            //double Z_x_Rk_C_NR = R * 2.0 * (1.0 + N);
+            //double Z_y_Rk_C_NR = R * 2.0 * (1.0 + N);
 
-            Complex tetta_x_Rk_C_NR = Complex.Sqrt(Z_x_Rk_C_NR * Y_Rk_C_NR);
-            Complex tetta_y_Rk_C_NR = Complex.Sqrt(Z_y_Rk_C_NR * Y_Rk_C_NR);
+            //Complex p_Rk_C_NR = new Complex(0.0, w);
+            //Complex temp_Rk_C_NR = 1.0 / H + p_Rk_C_NR * R * C;
+            //Complex Y_Rk_C_NR = temp_Rk_C_NR / ((1.0 + G * temp_Rk_C_NR) * ((double)(4 * x * y)) * R);
 
-            double koeff_x_Rk_C_NR = 1.0 / Z_x_Rk_C_NR;
-            double koeff_y_Rk_C_NR = 1.0 / Z_y_Rk_C_NR;
+            //Complex tetta_x_Rk_C_NR = Complex.Sqrt(Z_x_Rk_C_NR * Y_Rk_C_NR);
+            //Complex tetta_y_Rk_C_NR = Complex.Sqrt(Z_y_Rk_C_NR * Y_Rk_C_NR);
 
-            Complex tx_Rk_C_NR = tetta_x_Rk_C_NR / Complex.Tanh(tetta_x_Rk_C_NR);
-            Complex sx_Rk_C_NR = tetta_x_Rk_C_NR / Complex.Sinh(tetta_x_Rk_C_NR);
-            Complex ty_Rk_C_NR = tetta_y_Rk_C_NR / Complex.Tanh(tetta_y_Rk_C_NR);
-            Complex sy_Rk_C_NR = tetta_y_Rk_C_NR / Complex.Sinh(tetta_y_Rk_C_NR);
+            //double koeff_x_Rk_C_NR = 1.0 / Z_x_Rk_C_NR;
+            //double koeff_y_Rk_C_NR = 1.0 / Z_y_Rk_C_NR;
 
-            tx_Rk_C_NR *= koeff_x_Rk_C_NR;
-            sx_Rk_C_NR *= koeff_x_Rk_C_NR;
-            ty_Rk_C_NR *= koeff_y_Rk_C_NR;
-            sy_Rk_C_NR *= koeff_y_Rk_C_NR;
+            //Complex tx_Rk_C_NR = tetta_x_Rk_C_NR / Complex.Tanh(tetta_x_Rk_C_NR);
+            //Complex sx_Rk_C_NR = tetta_x_Rk_C_NR / Complex.Sinh(tetta_x_Rk_C_NR);
+            //Complex ty_Rk_C_NR = tetta_y_Rk_C_NR / Complex.Tanh(tetta_y_Rk_C_NR);
+            //Complex sy_Rk_C_NR = tetta_y_Rk_C_NR / Complex.Sinh(tetta_y_Rk_C_NR);
 
-            double KxN_Rk_C_NR = koeff_x_Rk_C_NR * N;
-            double KyN_Rk_C_NR = koeff_y_Rk_C_NR * N;
-            double Kx_N_Rk_C_NR = koeff_x_Rk_C_NR / N;
-            double Ky_N_Rk_C_NR = koeff_y_Rk_C_NR / N;
+            //tx_Rk_C_NR *= koeff_x_Rk_C_NR;
+            //sx_Rk_C_NR *= koeff_x_Rk_C_NR;
+            //ty_Rk_C_NR *= koeff_y_Rk_C_NR;
+            //sy_Rk_C_NR *= koeff_y_Rk_C_NR;
 
-            Mat_Rk_C_NR[0,0] = tx_Rk_C_NR + ty_Rk_C_NR + KxN_Rk_C_NR + KyN_Rk_C_NR; Mat_Rk_C_NR[0,1] = -sx_Rk_C_NR - KxN_Rk_C_NR; Mat_Rk_C_NR[0,2] = -sy_Rk_C_NR - KyN_Rk_C_NR; Mat_Rk_C_NR[0,3] = 0.0; Mat_Rk_C_NR[0,4] = koeff_x_Rk_C_NR + koeff_y_Rk_C_NR - tx_Rk_C_NR - ty_Rk_C_NR; Mat_Rk_C_NR[0,5] = sx_Rk_C_NR - koeff_x_Rk_C_NR; Mat_Rk_C_NR[0,6] = sy_Rk_C_NR - koeff_y_Rk_C_NR; Mat_Rk_C_NR[0,7] = 0.0;
+            //double KxN_Rk_C_NR = koeff_x_Rk_C_NR * N;
+            //double KyN_Rk_C_NR = koeff_y_Rk_C_NR * N;
+            //double Kx_N_Rk_C_NR = koeff_x_Rk_C_NR / N;
+            //double Ky_N_Rk_C_NR = koeff_y_Rk_C_NR / N;
+
+            // Реализация RC Workbench
+            // Реализация RC Workbench
+
+            Complex[,] Mat_Rk_C_NR = new Complex[8, 8]; // Y - параметры Rk_C_NR - ячейки
+
+            var thetaFunc_Rk_C_NR = FESection.ThetaFunctions.Single(_x => _x.Key == FESectionTypeEnum.R_C_NR).Value;
+            var theta_Rk_C_NR = thetaFunc_Rk_C_NR(R, N, C, 0, 0, G, /*L*/ 1, w);
+
+            Complex tx_Rk_C_NR = theta_Rk_C_NR / Complex.Tanh(theta_Rk_C_NR);
+            Complex sx_Rk_C_NR = theta_Rk_C_NR / Complex.Sinh(theta_Rk_C_NR);
+            Complex ty_Rk_C_NR = theta_Rk_C_NR / Complex.Tanh(theta_Rk_C_NR);
+            Complex sy_Rk_C_NR = theta_Rk_C_NR / Complex.Sinh(theta_Rk_C_NR);
+
+            var coeficient_Rk_C_NR = 1 / ((1 + N) * R * /*L*/ 1);
+
+            tx_Rk_C_NR *= coeficient_Rk_C_NR;
+            sx_Rk_C_NR *= coeficient_Rk_C_NR;
+            ty_Rk_C_NR *= coeficient_Rk_C_NR;
+            sy_Rk_C_NR *= coeficient_Rk_C_NR;
+
+            double KxN_Rk_C_NR = coeficient_Rk_C_NR * N;
+            double KyN_Rk_C_NR = coeficient_Rk_C_NR * N;
+            double Kx_N_Rk_C_NR = coeficient_Rk_C_NR / N;
+            double Ky_N_Rk_C_NR = coeficient_Rk_C_NR / N;
+
+            Mat_Rk_C_NR[0, 0] = tx_Rk_C_NR + ty_Rk_C_NR + KxN_Rk_C_NR + KyN_Rk_C_NR; Mat_Rk_C_NR[0, 1] = -sx_Rk_C_NR - KxN_Rk_C_NR; Mat_Rk_C_NR[0, 2] = -sy_Rk_C_NR - KyN_Rk_C_NR; Mat_Rk_C_NR[0, 3] = 0.0; Mat_Rk_C_NR[0, 4] = coeficient_Rk_C_NR + coeficient_Rk_C_NR - tx_Rk_C_NR - ty_Rk_C_NR; Mat_Rk_C_NR[0, 5] = sx_Rk_C_NR - coeficient_Rk_C_NR; Mat_Rk_C_NR[0, 6] = sy_Rk_C_NR - coeficient_Rk_C_NR; Mat_Rk_C_NR[0, 7] = 0.0;
+            //Mat_Rk_C_NR[0,0] = tx_Rk_C_NR + ty_Rk_C_NR + KxN_Rk_C_NR + KyN_Rk_C_NR; Mat_Rk_C_NR[0,1] = -sx_Rk_C_NR - KxN_Rk_C_NR; Mat_Rk_C_NR[0,2] = -sy_Rk_C_NR - KyN_Rk_C_NR; Mat_Rk_C_NR[0,3] = 0.0; Mat_Rk_C_NR[0,4] = koeff_x_Rk_C_NR + koeff_y_Rk_C_NR - tx_Rk_C_NR - ty_Rk_C_NR; Mat_Rk_C_NR[0,5] = sx_Rk_C_NR - koeff_x_Rk_C_NR; Mat_Rk_C_NR[0,6] = sy_Rk_C_NR - koeff_y_Rk_C_NR; Mat_Rk_C_NR[0,7] = 0.0;
             Mat_Rk_C_NR[1,0] = Mat_Rk_C_NR[0,1]; Mat_Rk_C_NR[1,1] = Mat_Rk_C_NR[0,0]; Mat_Rk_C_NR[1,2] = 0.0; Mat_Rk_C_NR[1,3] = Mat_Rk_C_NR[0,2]; Mat_Rk_C_NR[1,4] = Mat_Rk_C_NR[0,5]; Mat_Rk_C_NR[1,5] = Mat_Rk_C_NR[0,4]; Mat_Rk_C_NR[1,6] = 0.0; Mat_Rk_C_NR[1,7] = Mat_Rk_C_NR[0,6];
             Mat_Rk_C_NR[2,0] = Mat_Rk_C_NR[0,2]; Mat_Rk_C_NR[2,1] = 0.0; Mat_Rk_C_NR[2,2] = Mat_Rk_C_NR[0,0]; Mat_Rk_C_NR[2,3] = Mat_Rk_C_NR[0,1]; Mat_Rk_C_NR[2,4] = Mat_Rk_C_NR[0,6]; Mat_Rk_C_NR[2,5] = 0.0; Mat_Rk_C_NR[2,6] = Mat_Rk_C_NR[0,4]; Mat_Rk_C_NR[2,7] = Mat_Rk_C_NR[0,5];
             Mat_Rk_C_NR[3,0] = 0.0; Mat_Rk_C_NR[3,1] = Mat_Rk_C_NR[0,2]; Mat_Rk_C_NR[3,2] = Mat_Rk_C_NR[0,1]; Mat_Rk_C_NR[3,3] = Mat_Rk_C_NR[0,0]; Mat_Rk_C_NR[3,4] = 0.0; Mat_Rk_C_NR[3,5] = Mat_Rk_C_NR[0,6]; Mat_Rk_C_NR[3,6] = Mat_Rk_C_NR[0,5]; Mat_Rk_C_NR[3,7] = Mat_Rk_C_NR[0,4];
@@ -211,37 +269,66 @@ namespace FractalElementDesigner.MathModel.Structure
 
             #region RCNRk
 
-            Complex[,] Mat_R_C_NRk = new Complex[8,8]; // Y - параметры R_C_NRk - ячейки
+            // Реализация RC Workbench
+            // Реализация RC Workbench
 
-            double Z_x_R_C_NRk = R * 2.0 * (1.0 + N);
-            double Z_y_R_C_NRk = R * 2.0 * (1.0 + N);
+            //Complex[,] Mat_R_C_NRk = new Complex[8,8]; // Y - параметры R_C_NRk - ячейки
 
-            Complex p_R_C_NRk = new Complex(0.0, w);
-            Complex temp_R_C_NRk = 1.0 / H + p_R_C_NRk * R * C;
-            Complex Y_R_C_NRk = temp_R_C_NRk / ((1.0 + G * temp_R_C_NRk) * ((double)(4 * x * y)) * R);
+            //double Z_x_R_C_NRk = R * 2.0 * (1.0 + N);
+            //double Z_y_R_C_NRk = R * 2.0 * (1.0 + N);
 
-            Complex tetta_x_R_C_NRk = Complex.Sqrt(Z_x_R_C_NRk * Y_R_C_NRk);
-            Complex tetta_y_R_C_NRk = Complex.Sqrt(Z_y_R_C_NRk * Y_R_C_NRk);
+            //Complex p_R_C_NRk = new Complex(0.0, w);
+            //Complex temp_R_C_NRk = 1.0 / H + p_R_C_NRk * R * C;
+            //Complex Y_R_C_NRk = temp_R_C_NRk / ((1.0 + G * temp_R_C_NRk) * ((double)(4 * x * y)) * R);
 
-            double koeff_x_R_C_NRk = 1.0 / Z_x_R_C_NRk;
-            double koeff_y_R_C_NRk = 1.0 / Z_y_R_C_NRk;
+            //Complex tetta_x_R_C_NRk = Complex.Sqrt(Z_x_R_C_NRk * Y_R_C_NRk);
+            //Complex tetta_y_R_C_NRk = Complex.Sqrt(Z_y_R_C_NRk * Y_R_C_NRk);
 
-            Complex tx_R_C_NRk = tetta_x_R_C_NRk / Complex.Tanh(tetta_x_R_C_NRk);
-            Complex sx_R_C_NRk = tetta_x_R_C_NRk / Complex.Sinh(tetta_x_R_C_NRk);
-            Complex ty_R_C_NRk = tetta_y_R_C_NRk / Complex.Tanh(tetta_y_R_C_NRk);
-            Complex sy_R_C_NRk = tetta_y_R_C_NRk / Complex.Sinh(tetta_y_R_C_NRk);
+            //double koeff_x_R_C_NRk = 1.0 / Z_x_R_C_NRk;
+            //double koeff_y_R_C_NRk = 1.0 / Z_y_R_C_NRk;
 
-            tx_R_C_NRk *= koeff_x_R_C_NRk;
-            sx_R_C_NRk *= koeff_x_R_C_NRk;
-            ty_R_C_NRk *= koeff_y_R_C_NRk;
-            sy_R_C_NRk *= koeff_y_R_C_NRk;
+            //Complex tx_R_C_NRk = tetta_x_R_C_NRk / Complex.Tanh(tetta_x_R_C_NRk);
+            //Complex sx_R_C_NRk = tetta_x_R_C_NRk / Complex.Sinh(tetta_x_R_C_NRk);
+            //Complex ty_R_C_NRk = tetta_y_R_C_NRk / Complex.Tanh(tetta_y_R_C_NRk);
+            //Complex sy_R_C_NRk = tetta_y_R_C_NRk / Complex.Sinh(tetta_y_R_C_NRk);
 
-            double KxN_R_C_NRk = koeff_x_R_C_NRk * N;
-            double KyN_R_C_NRk = koeff_y_R_C_NRk * N;
-            double Kx_N_R_C_NRk = koeff_x_R_C_NRk / N;
-            double Ky_N_R_C_NRk = koeff_y_R_C_NRk / N;
+            //tx_R_C_NRk *= koeff_x_R_C_NRk;
+            //sx_R_C_NRk *= koeff_x_R_C_NRk;
+            //ty_R_C_NRk *= koeff_y_R_C_NRk;
+            //sy_R_C_NRk *= koeff_y_R_C_NRk;
 
-            Mat_R_C_NRk[0,0] = tx_R_C_NRk + ty_R_C_NRk + KxN_R_C_NRk + KyN_R_C_NRk; Mat_R_C_NRk[0,1] = -sx_R_C_NRk - KxN_R_C_NRk; Mat_R_C_NRk[0,2] = -sy_R_C_NRk - KyN_R_C_NRk; Mat_R_C_NRk[0,3] = 0.0; Mat_R_C_NRk[0,4] = koeff_x_R_C_NRk + koeff_y_R_C_NRk - tx_R_C_NRk - ty_R_C_NRk; Mat_R_C_NRk[0,5] = sx_R_C_NRk - koeff_x_R_C_NRk; Mat_R_C_NRk[0,6] = sy_R_C_NRk - koeff_y_R_C_NRk; Mat_R_C_NRk[0,7] = 0.0;
+            //double KxN_R_C_NRk = koeff_x_R_C_NRk * N;
+            //double KyN_R_C_NRk = koeff_y_R_C_NRk * N;
+            //double Kx_N_R_C_NRk = koeff_x_R_C_NRk / N;
+            //double Ky_N_R_C_NRk = koeff_y_R_C_NRk / N;
+
+            // Реализация RC Workbench
+            // Реализация RC Workbench
+
+            Complex[,] Mat_R_C_NRk = new Complex[8, 8]; // Y - параметры R_C_NRk - ячейки
+
+            var thetaFunc_R_C_NRk = FESection.ThetaFunctions.Single(_x => _x.Key == FESectionTypeEnum.R_C_NR).Value;
+            var theta_R_C_NRk = thetaFunc_R_C_NRk(R, N, C, 0, 0, G, /*L*/ 1, w);
+
+            Complex tx_R_C_NRk = theta_R_C_NRk / Complex.Tanh(theta_R_C_NRk);
+            Complex sx_R_C_NRk = theta_R_C_NRk / Complex.Sinh(theta_R_C_NRk);
+            Complex ty_R_C_NRk = theta_R_C_NRk / Complex.Tanh(theta_R_C_NRk);
+            Complex sy_R_C_NRk = theta_R_C_NRk / Complex.Sinh(theta_R_C_NRk);
+
+            var coeficient_R_C_NRk = 1 / ((1 + N) * R * /*L*/ 1);
+
+            tx_R_C_NRk *= coeficient_R_C_NRk;
+            sx_R_C_NRk *= coeficient_R_C_NRk;
+            ty_R_C_NRk *= coeficient_R_C_NRk;
+            sy_R_C_NRk *= coeficient_R_C_NRk;
+
+            double KxN_R_C_NRk = coeficient_R_C_NRk * N;
+            double KyN_R_C_NRk = coeficient_R_C_NRk * N;
+            double Kx_N_R_C_NRk = coeficient_R_C_NRk / N;
+            double Ky_N_R_C_NRk = coeficient_R_C_NRk / N;
+
+            Mat_R_C_NRk[0, 0] = tx_R_C_NRk + ty_R_C_NRk + KxN_R_C_NRk + KyN_R_C_NRk; Mat_R_C_NRk[0, 1] = -sx_R_C_NRk - KxN_R_C_NRk; Mat_R_C_NRk[0, 2] = -sy_R_C_NRk - KyN_R_C_NRk; Mat_R_C_NRk[0, 3] = 0.0; Mat_R_C_NRk[0, 4] = coeficient_R_C_NRk + coeficient_R_C_NRk - tx_R_C_NRk - ty_R_C_NRk; Mat_R_C_NRk[0, 5] = sx_R_C_NRk - coeficient_R_C_NRk; Mat_R_C_NRk[0, 6] = sy_R_C_NRk - coeficient_R_C_NRk; Mat_R_C_NRk[0, 7] = 0.0;
+            //Mat_R_C_NRk[0,0] = tx_R_C_NRk + ty_R_C_NRk + KxN_R_C_NRk + KyN_R_C_NRk; Mat_R_C_NRk[0,1] = -sx_R_C_NRk - KxN_R_C_NRk; Mat_R_C_NRk[0,2] = -sy_R_C_NRk - KyN_R_C_NRk; Mat_R_C_NRk[0,3] = 0.0; Mat_R_C_NRk[0,4] = koeff_x_R_C_NRk + koeff_y_R_C_NRk - tx_R_C_NRk - ty_R_C_NRk; Mat_R_C_NRk[0,5] = sx_R_C_NRk - koeff_x_R_C_NRk; Mat_R_C_NRk[0,6] = sy_R_C_NRk - koeff_y_R_C_NRk; Mat_R_C_NRk[0,7] = 0.0;
             Mat_R_C_NRk[1,0] = Mat_R_C_NRk[0,1]; Mat_R_C_NRk[1,1] = Mat_R_C_NRk[0,0]; Mat_R_C_NRk[1,2] = 0.0; Mat_R_C_NRk[1,3] = Mat_R_C_NRk[0,2]; Mat_R_C_NRk[1,4] = Mat_R_C_NRk[0,5]; Mat_R_C_NRk[1,5] = Mat_R_C_NRk[0,4]; Mat_R_C_NRk[1,6] = 0.0; Mat_R_C_NRk[1,7] = Mat_R_C_NRk[0,6];
             Mat_R_C_NRk[2,0] = Mat_R_C_NRk[0,2]; Mat_R_C_NRk[2,1] = 0.0; Mat_R_C_NRk[2,2] = Mat_R_C_NRk[0,0]; Mat_R_C_NRk[2,3] = Mat_R_C_NRk[0,1]; Mat_R_C_NRk[2,4] = Mat_R_C_NRk[0,6]; Mat_R_C_NRk[2,5] = 0.0; Mat_R_C_NRk[2,6] = Mat_R_C_NRk[0,4]; Mat_R_C_NRk[2,7] = Mat_R_C_NRk[0,5];
             Mat_R_C_NRk[3,0] = 0.0; Mat_R_C_NRk[3,1] = Mat_R_C_NRk[0,2]; Mat_R_C_NRk[3,2] = Mat_R_C_NRk[0,1]; Mat_R_C_NRk[3,3] = Mat_R_C_NRk[0,0]; Mat_R_C_NRk[3,4] = 0.0; Mat_R_C_NRk[3,5] = Mat_R_C_NRk[0,6]; Mat_R_C_NRk[3,6] = Mat_R_C_NRk[0,5]; Mat_R_C_NRk[3,7] = Mat_R_C_NRk[0,4];
@@ -254,37 +341,66 @@ namespace FractalElementDesigner.MathModel.Structure
 
             #region RCNR
 
-            Complex[,] Mat_rcnr = new Complex[8,8]; // Y - параметры RCNR - ячейки
+            // Реализация RC Workbench
+            // Реализация RC Workbench
 
-            double Z_x = R * 2.0 * (1.0 + N);
-            double Z_y = R * 2.0 * (1.0 + N);
+            //Complex[,] Mat_rcnr = new Complex[8, 8]; // Y - параметры RCNR - ячейки
 
-            Complex p = new Complex(0.0, w);
-            Complex temp = 1.0 / H + p * R * C;
-            Complex Y = temp / ((1.0 + G * temp) * ((double)(4 * x * y)) * R);
+            //double Z_x = R * 2.0 * (1.0 + N);
+            //double Z_y = R * 2.0 * (1.0 + N);
 
-            Complex tetta_x = Complex.Sqrt(Z_x * Y);
-            Complex tetta_y = Complex.Sqrt(Z_y * Y);
+            //Complex p = new Complex(0.0, w);
+            //Complex temp = 1.0 / H + p * R * C;
+            //Complex Y = temp / ((1.0 + G * temp) * ((double)(4 * x * y)) * R);
 
-            double koeff_x = 1.0 / Z_x;
-            double koeff_y = 1.0 / Z_y;
+            //Complex tetta_x = Complex.Sqrt(Z_x * Y);
+            //Complex tetta_y = Complex.Sqrt(Z_y * Y);
 
-            Complex tx = tetta_x / Complex.Tanh(tetta_x);
-            Complex sx = tetta_x / Complex.Sinh(tetta_x);
-            Complex ty = tetta_y / Complex.Tanh(tetta_y);
-            Complex sy = tetta_y / Complex.Sinh(tetta_y);
+            //double koeff_x = 1.0 / Z_x;
+            //double koeff_y = 1.0 / Z_y;
 
-            tx *= koeff_x;
-            sx *= koeff_x;
-            ty *= koeff_y;
-            sy *= koeff_y;
+            //Complex tx = tetta_x / Complex.Tanh(tetta_x);
+            //Complex sx = tetta_x / Complex.Sinh(tetta_x);
+            //Complex ty = tetta_y / Complex.Tanh(tetta_y);
+            //Complex sy = tetta_y / Complex.Sinh(tetta_y);
 
-            double KxN = koeff_x * N;
-            double KyN = koeff_y * N;
-            double Kx_N = koeff_x / N;
-            double Ky_N = koeff_y / N;
+            //tx *= koeff_x;
+            //sx *= koeff_x;
+            //ty *= koeff_y;
+            //sy *= koeff_y;
 
-            Mat_rcnr[0,0] = tx + ty + KxN + KyN; Mat_rcnr[0,1] = -sx - KxN; Mat_rcnr[0,2] = -sy - KyN; Mat_rcnr[0,3] = 0.0; Mat_rcnr[0,4] = koeff_x + koeff_y - tx - ty; Mat_rcnr[0,5] = sx - koeff_x; Mat_rcnr[0,6] = sy - koeff_y; Mat_rcnr[0,7] = 0.0;
+            //double KxN = koeff_x * N;
+            //double KyN = koeff_y * N;
+            //double Kx_N = koeff_x / N;
+            //double Ky_N = koeff_y / N;
+
+            // Реализация RC Workbench
+            // Реализация RC Workbench
+
+            Complex[,] Mat_rcnr = new Complex[8, 8]; // Y - параметры RCNR - ячейки
+
+            var thetaFunc = FESection.ThetaFunctions.Single(_x => _x.Key == FESectionTypeEnum.R_C_NR).Value;
+            var theta = thetaFunc(R, N, C, 0, 0, G, /*L*/ 1 * 4 * x * y, w);
+
+            Complex tx = theta / Complex.Tanh(theta);
+            Complex sx = theta / Complex.Sinh(theta);
+            Complex ty = theta / Complex.Tanh(theta);
+            Complex sy = theta / Complex.Sinh(theta);
+
+            var coeficient = 1 / ((1 + N) * R * /*L*/ 1 * 4*x*y);
+
+            tx *= coeficient;
+            sx *= coeficient;
+            ty *= coeficient;
+            sy *= coeficient;
+
+            double KxN = coeficient * N;
+            double KyN = coeficient * N;
+            double Kx_N = coeficient / N;
+            double Ky_N = coeficient / N;
+
+            Mat_rcnr[0,0] = tx + ty + KxN + KyN; Mat_rcnr[0,1] = -sx - KxN; Mat_rcnr[0,2] = -sy - KyN; Mat_rcnr[0,3] = 0.0; Mat_rcnr[0,4] = coeficient + coeficient - tx - ty; Mat_rcnr[0,5] = sx - coeficient; Mat_rcnr[0,6] = sy - coeficient; Mat_rcnr[0,7] = 0.0;
+            //Mat_rcnr[0, 0] = tx + ty + KxN + KyN; Mat_rcnr[0, 1] = -sx - KxN; Mat_rcnr[0, 2] = -sy - KyN; Mat_rcnr[0, 3] = 0.0; Mat_rcnr[0, 4] = koeff_x + koeff_y - tx - ty; Mat_rcnr[0, 5] = sx - koeff_x; Mat_rcnr[0, 6] = sy - koeff_y; Mat_rcnr[0, 7] = 0.0;
             Mat_rcnr[1,0] = Mat_rcnr[0,1]; Mat_rcnr[1,1] = Mat_rcnr[0,0]; Mat_rcnr[1,2] = 0.0; Mat_rcnr[1,3] = Mat_rcnr[0,2]; Mat_rcnr[1,4] = Mat_rcnr[0,5]; Mat_rcnr[1,5] = Mat_rcnr[0,4]; Mat_rcnr[1,6] = 0.0; Mat_rcnr[1,7] = Mat_rcnr[0,6];
             Mat_rcnr[2,0] = Mat_rcnr[0,2]; Mat_rcnr[2,1] = 0.0; Mat_rcnr[2,2] = Mat_rcnr[0,0]; Mat_rcnr[2,3] = Mat_rcnr[0,1]; Mat_rcnr[2,4] = Mat_rcnr[0,6]; Mat_rcnr[2,5] = 0.0; Mat_rcnr[2,6] = Mat_rcnr[0,4]; Mat_rcnr[2,7] = Mat_rcnr[0,5];
             Mat_rcnr[3,0] = 0.0; Mat_rcnr[3,1] = Mat_rcnr[0,2]; Mat_rcnr[3,2] = Mat_rcnr[0,1]; Mat_rcnr[3,3] = Mat_rcnr[0,0]; Mat_rcnr[3,4] = 0.0; Mat_rcnr[3,5] = Mat_rcnr[0,6]; Mat_rcnr[3,6] = Mat_rcnr[0,5]; Mat_rcnr[3,7] = Mat_rcnr[0,4];

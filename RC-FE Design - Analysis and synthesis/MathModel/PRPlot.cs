@@ -130,7 +130,7 @@ namespace FractalElementDesigner.MathModel
         {
             Points = points;
 
-            var series = new LineSeries() { InterpolationAlgorithm = InterpolationAlgorithms.CatmullRomSpline };
+            var series = new LineSeries() { InterpolationAlgorithm = /*InterpolationAlgorithms.CatmullRomSpline*/ null };
 
             foreach (var point in points)
             {

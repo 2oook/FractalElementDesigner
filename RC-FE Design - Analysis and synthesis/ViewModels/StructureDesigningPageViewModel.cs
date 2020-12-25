@@ -1341,7 +1341,7 @@ namespace FractalElementDesigner.ViewModels
                     schemePrototype.Model.OuterPins[2].State = OuterPinState.Gnd;
                     schemePrototype.Model.OuterPins[3].State = OuterPinState.Gnd;
 
-                    schemePrototype.Model.PhaseResponsePoints = SchemePhaseResponseCalculatorByFrequencies.CalculatePhaseResponseInScheme(0, 3, 100, schemePrototype.Model);
+                    schemePrototype.Model.PhaseResponsePoints = SchemePhaseResponseCalculatorByFrequencies.CalculatePhaseResponseInScheme(0, 4, 100, schemePrototype.Model);
 
                     plot.InitializatePhaseResponsePlot(schemePrototype.Model.PhaseResponsePoints);
 

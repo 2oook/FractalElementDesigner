@@ -37,6 +37,20 @@ namespace FractalElementDesigner.MathModel
 
                     return theta;
                 } 
+
+                // RC Workbench реализация
+                //FESectionTypeEnum.R_C_NR,
+                //(double R, double N, double C, double Rp, double Rk, double G, double L, double w) =>
+                //{
+                //    w = 2 * Math.PI * w;
+
+                //    var compl_f = new Complex(0, w);
+                //    var temp = (1.0 / /*H */ 1) + compl_f * R * C;
+
+                //    Complex theta = Complex.Sqrt( temp / ((1 + G *temp) * 2 * 4 * R ));
+
+                //    return theta;
+                //}
             },
             {
                 FESectionTypeEnum.O_R_C_NR_O,
