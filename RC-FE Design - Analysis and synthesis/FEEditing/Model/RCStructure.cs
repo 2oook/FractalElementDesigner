@@ -1,9 +1,13 @@
 ﻿using FractalElementDesigner.FEEditing.Model;
 using FractalElementDesigner.FEEditing.Model.StructureElements;
+using FractalElementDesigner.MathModel;
+using FractalElementDesigner.MathModel.Structure;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,7 +30,8 @@ namespace FractalElementDesigner.FEEditing.Model
     /// <summary>
     /// Класс структуры
     /// </summary>
-    class RCStructure : RCStructureBase
+    [Serializable]
+    class RCStructure : RCStructureBase, IRCStructurePrototype
     {
         /// <summary>
         /// Статический конструктор класса структуры
@@ -241,7 +246,13 @@ namespace FractalElementDesigner.FEEditing.Model
         /// <summary>
         /// Словарь свойств структуры
         /// </summary>
-        public Dictionary<string, StructureProperty> StructureProperties { get; set; } = new Dictionary<string, StructureProperty>();   
+        [field: NonSerialized]
+        public Dictionary<string, StructureProperty> StructureProperties { get; set; } = new Dictionary<string, StructureProperty>();
+
+        /// <summary>
+        /// Информация об особи
+        /// </summary>
+        public StateOfIndividual StateInGA { get; set; } = new StateOfIndividual();
 
         /// <summary>
         /// Метод для инициализации свойств структуры в соответствии с шаблоном
@@ -259,6 +270,28 @@ namespace FractalElementDesigner.FEEditing.Model
 
                 StructureProperties.Add(property.Key, temp);
             }
+        }
+
+        // Метод для клонирования модели схемы
+        public IRCStructurePrototype DeepClone()
+        {
+            RCStructure structure;
+
+            var formatter = new BinaryFormatter();
+
+            using (var stream = new MemoryStream())
+            {
+                formatter.Serialize(stream, this);
+                stream.Seek(0, SeekOrigin.Begin);
+                structure = formatter.Deserialize(stream) as RCStructure;
+
+                if (structure == null)
+                {
+                    throw new Exception("Ошибка сериализации объекта конструкции!");
+                }
+            }
+
+            return structure;
         }
     }
 

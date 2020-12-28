@@ -35,6 +35,7 @@ namespace FractalElementDesigner.FEEditing.Model
         /// </summary>
         public ObservableCollection<ObservableCollection<Cell>> Cells { get; set; } = new ObservableCollection<ObservableCollection<Cell>>();
 
+        [NonSerialized]
         private Editor editor;
         /// <summary>
         /// Редактор

@@ -63,7 +63,7 @@ namespace FractalElementDesigner.MathModel.Structure
             return made_structure;
         }
 
-        // Метод для определения типов сегментов по типам ячеек в слоях
+        // Метод для определения типов СЕГМЕНТОВ по типам ячеек в слоях (для ячеек структуры без КП)
         public static void ResolveSegmentsTypes(RCStructure structure) 
         {
             foreach (var row in structure.Segments)

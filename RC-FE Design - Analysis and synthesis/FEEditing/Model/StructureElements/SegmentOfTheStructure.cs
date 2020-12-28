@@ -15,6 +15,7 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
     /// <summary>
     /// Сегмент конструкции ФРЭ
     /// </summary>
+    [Serializable]
     class SegmentOfTheStructure 
     {
         public SegmentOfTheStructure(string number)
@@ -41,10 +42,5 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
         /// Словарь ячеек сегмента по слоям (1 ячейка на слой)
         /// </summary>
         public Dictionary<Layer, Cell> CellsInLayer { get; set; } = new Dictionary<Layer, Cell>();
-
-        /// <summary>
-        /// Матрица проводимости ячейки
-        /// </summary>
-        public Matrix<Complex> YParametersMatrix { get; set; }
     }
 }

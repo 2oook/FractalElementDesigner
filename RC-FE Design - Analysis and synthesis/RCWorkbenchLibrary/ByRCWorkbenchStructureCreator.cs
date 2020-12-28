@@ -79,11 +79,27 @@ namespace FractalElementDesigner.RCWorkbenchLibrary
                 100,
                 scheme.Model.FESections.First().SectionParameters.N);
 
-            ApplyCellTypesToRCWorkbenchStrructure(structure);
+            ApplyCellTypesToRCWorkbenchStructure(structure);
         }
 
-        // Метод для применения типов ячеек к структуре на стороне RCWorkbench
-        private static void ApplyCellTypesToRCWorkbenchStrructure(RCStructure structure) 
+        public static void CreateStructureStraightByScheme(FElementScheme scheme, RCStructure structure)
+        {
+            // создать структуру
+            RCWorkbenchLibraryEntry.CreateRCGNRStructureStraight(
+                scheme.Model.FESections.First().SectionParameters.R,
+                scheme.Model.FESections.First().SectionParameters.C,
+                structure.Segments.First().Count - 2,
+                structure.Segments.Count - 2,
+                1.0,
+                scheme.Model.FESections.First().SectionParameters.G,
+                100,
+                scheme.Model.FESections.First().SectionParameters.N);
+
+            ApplyCellTypesToRCWorkbenchStructure(structure);
+        }
+
+        // Метод для применения типов ЯЧЕЕК к структуре на стороне RCWorkbench
+        private static void ApplyCellTypesToRCWorkbenchStructure(RCStructure structure) 
         {
             foreach (var layer in structure.StructureLayers)
             {

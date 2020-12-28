@@ -13,6 +13,7 @@ namespace FractalElementDesigner.FEEditing.Model.StructureElements
     /// <summary>
     /// Ячейка
     /// </summary>
+    [Serializable]
     class Cell : INotifyPropertyChanged
     {
         /// <summary>

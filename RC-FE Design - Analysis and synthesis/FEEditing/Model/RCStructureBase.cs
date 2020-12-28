@@ -19,6 +19,7 @@ namespace FractalElementDesigner.FEEditing.Model
     /// <summary>
     /// Базовый класс структуры 
     /// </summary>
+    [Serializable]
     class RCStructureBase : INotifyPropertyChanged, IProjectTreeItem
     {
         /// <summary>
@@ -43,6 +44,7 @@ namespace FractalElementDesigner.FEEditing.Model
         /// <summary>
         /// Ссылка на схему
         /// </summary>
+        [field: NonSerialized]
         public MathModel.FElementScheme Scheme { get; set; } = null;
 
         /// <summary>
@@ -118,8 +120,6 @@ namespace FractalElementDesigner.FEEditing.Model
                         pins_counter += cell_in_layer.Pins.Count;
                     }
 
-                    cell.YParametersMatrix = Matrix<Complex>.Build.DenseOfArray(new Complex[pins_counter, pins_counter]);
-
                     row.Add(cell);
                 }
 
@@ -171,8 +171,6 @@ namespace FractalElementDesigner.FEEditing.Model
 
                         pins_counter += cell_in_layer.Pins.Count;
                     }
-
-                    cell.YParametersMatrix = Matrix<Complex>.Build.DenseOfArray(new Complex[pins_counter, pins_counter]);
 
                     row.Add(cell);
                 }

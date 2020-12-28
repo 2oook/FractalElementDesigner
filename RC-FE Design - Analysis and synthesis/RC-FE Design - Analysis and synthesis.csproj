@@ -185,8 +185,10 @@
     <Compile Include="MathModel\AllowablePinsConnection.cs" />
     <Compile Include="MathModel\PRPlot.cs" />
     <Compile Include="MathModel\SchemeSynthesizer.cs" />
+    <Compile Include="MathModel\Structure\IRCStructurePrototype.cs" />
     <Compile Include="MathModel\Structure\RCWorkbenchIntercommunicationHelper.cs" />
     <Compile Include="MathModel\Structure\StructureFromStructureTemplateInitializer.cs" />
+    <Compile Include="MathModel\Structure\StructureGeneticAlgorithm.cs" />
     <Compile Include="MathModel\Structure\StructureSegmentTypeEnum.cs" />
     <Compile Include="MathModel\Structure\StructureCreator.cs" />
     <Compile Include="MathModel\Structure\PhaseResponseCalculatorForStructureForAllFrequencies.cs" />

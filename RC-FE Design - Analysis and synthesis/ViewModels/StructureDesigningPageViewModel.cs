@@ -774,6 +774,9 @@ namespace FractalElementDesigner.ViewModels
                     {
                         #region RC Workbench
 
+                        // создать структуру на стороне библиотеки
+                        //ByRCWorkbenchStructureCreator.CreateStructure(scheme, structure); // Переделать! 
+
                         // анализ структуры
                         int first_dimension = structure.SynthesisParameters.PointsCountAtFrequencyAxle;
                         int second_dimension = 36;
@@ -838,6 +841,10 @@ namespace FractalElementDesigner.ViewModels
                         #endregion
                     }
 
+                    // создать структуру на стороне библиотеки
+                    ByRCWorkbenchStructureCreator.CreateStructureStraightByScheme(structure.Scheme, structure);
+
+                    // пронумеровать контактные площадки 
                     StructureCreator.NumerateContactPlatesByScheme(structure);
 
                     // определить типы сегментов структуры по типам ячеек в слоях
@@ -861,6 +868,8 @@ namespace FractalElementDesigner.ViewModels
 
                     // получить количество узлов
                     var nodesCount = RCWorkbenchLibraryEntry.GetNodesQuantity();
+
+                    RCWorkbenchLibraryEntry.DeleteStructureStraight();
 
                     // восстановить плоский массив нумерации узлов
                     var nodesNumeration = RCWorkbenchIntercommunicationHelper.UnflatNumerationArray(layerCount, horizontalRange, verticalRange, nodesNumerationFlat);
@@ -1180,14 +1189,10 @@ namespace FractalElementDesigner.ViewModels
                     if (by_scheme)
                     {
                         structure = StructureCreator.CreateStructureByScheme(scheme, structure);
-                        // создать структуру на стороне библиотеки
-                        ByRCWorkbenchStructureCreator.CreateStructureByScheme(scheme, structure);
                     }
                     else
                     {
                         structure = StructureCreator.Create(structure);
-                        // создать структуру на стороне библиотеки
-                        ByRCWorkbenchStructureCreator.CreateStructure(scheme, structure);
                     }
 
                     var structure_in_project = new StructureInProjectTree() { Name = structure.Name };
@@ -1220,7 +1225,7 @@ namespace FractalElementDesigner.ViewModels
         }
 
         // Метод для запуска синтеза конструкции асинхронно
-        private async void StartStructureSynthesisAsync(StructureSchemeSynthesisParameters structureSchemeSynthesisParametersInstance, RCStructureBase structure)
+        private async void StartStructureSynthesisAsync(StructureSchemeSynthesisParameters structureSchemeSynthesisParametersInstance, RCStructure structure)
         {
             await Task.Run(() =>
             {
@@ -1323,7 +1328,7 @@ namespace FractalElementDesigner.ViewModels
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
 
-            //Test();
+            Test();
 
             if (TestingBool)
             {

@@ -46,6 +46,12 @@ namespace FractalElementDesigner.RCWorkbenchLibrary
         [DllImport(@"RCWorkbenchLibrary", ExactSpelling = false, EntryPoint = "GetNodesNumeration", CallingConvention = CallingConvention.StdCall)]
         public static extern void GetNodesNumeration([In, Out] int[] numeration);
 
+        [DllImport(@"RCWorkbenchLibrary", ExactSpelling = false, EntryPoint = "CreateRCGNRStructureStraight", CallingConvention = CallingConvention.StdCall)]
+        public static extern void CreateRCGNRStructureStraight(double R, double C, int x, int y, double Kf, double G, double H, double N);
+
+        [DllImport(@"RCWorkbenchLibrary", ExactSpelling = false, EntryPoint = "DeleteStructureStraight", CallingConvention = CallingConvention.StdCall)]
+        public static extern void DeleteStructureStraight();
+
         [DllImport(@"RCWorkbenchLibrary", ExactSpelling = false, EntryPoint = "GetNodesQuantity", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetNodesQuantity();
     }
