@@ -2,6 +2,7 @@
 using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 
@@ -919,32 +920,39 @@ namespace FractalElementDesigner.MathModel.Structure
 
             var Y = FillGlobalMatrix(Structure, NodesCount, NodesNumeration, frequency);
 
-            // клонировать матрицу соединённых выводов
-            var I = PEPinsAndConnectedPinsIndices.I.Clone();
+            try
+            {
+                // клонировать матрицу соединённых выводов
+                var I = PEPinsAndConnectedPinsIndices.I.Clone();
 
-            // удалить строки и столбцы
-            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref Y, PEPinsAndConnectedPinsIndices.PE);
-            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref I, PEPinsAndConnectedPinsIndices.PE);
+                // удалить строки и столбцы
+                SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref Y, PEPinsAndConnectedPinsIndices.PE);
+                SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref I, PEPinsAndConnectedPinsIndices.PE);
 
-            // сложить строки и столбцы
-            SchemePhaseResponseCalculator.AddRowsAndColsInYMatrix(ref Y, ref I);
+                // сложить строки и столбцы
+                SchemePhaseResponseCalculator.AddRowsAndColsInYMatrix(ref Y, ref I);
 
-            // понизить порядок глобальной матрицы до числа внешних выводов
-            SchemePhaseResponseCalculator.ReduceMatrix(ref Y, Structure.Scheme.Model.OuterPins.Count);
+                // понизить порядок глобальной матрицы до числа внешних выводов
+                SchemePhaseResponseCalculator.ReduceMatrix(ref Y, Structure.Scheme.Model.OuterPins.Count);
 
-            // учесть внешнюю схему
+                // учесть внешнюю схему
 
-            // клонировать матрицу соединённых выводов
-            var connectedOuterPinsMatrix = ConnectedOuterPinsMatrix.Clone();
+                // клонировать матрицу соединённых выводов
+                var connectedOuterPinsMatrix = ConnectedOuterPinsMatrix.Clone();
 
-            // удалить строки и столбцы
-            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref Y, GroundedOuterPins);
-            SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref connectedOuterPinsMatrix, GroundedOuterPins);
+                // удалить строки и столбцы
+                SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref Y, GroundedOuterPins);
+                SchemePhaseResponseCalculator.RemoveRowAndColsFromMatrix(ref connectedOuterPinsMatrix, GroundedOuterPins);
 
-            // сложить строки и столбцы
-            SchemePhaseResponseCalculator.AddRowsAndColsInYMatrix(ref Y, ref connectedOuterPinsMatrix);
+                // сложить строки и столбцы
+                SchemePhaseResponseCalculator.AddRowsAndColsInYMatrix(ref Y, ref connectedOuterPinsMatrix);
 
-            SchemePhaseResponseCalculator.ReduceMatrix(ref Y, 1);
+                SchemePhaseResponseCalculator.ReduceMatrix(ref Y, 1);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
 
             var phase = -Y[Y.RowCount - 1, Y.ColumnCount - 1].Phase * 180 / Math.PI;
 

@@ -40,6 +40,9 @@ namespace FractalElementDesigner.MathModel.Structure
 
             var made_structure = InitializeStructure(structure);
 
+            // определить типы сегментов структуры по типам ячеек в слоях
+            ResolveSegmentsTypes(structure);
+
             OnDoWork(100);
             OnStateChange("");
 
@@ -56,6 +59,9 @@ namespace FractalElementDesigner.MathModel.Structure
             OnDoWork(50);
 
             var made_structure = InitializeStructureByScheme(scheme, structure);
+
+            // определить типы сегментов структуры по типам ячеек в слоях
+            ResolveSegmentsTypes(structure);
 
             OnDoWork(100);
             OnStateChange("");
@@ -597,6 +603,52 @@ namespace FractalElementDesigner.MathModel.Structure
                 }
 
                 return _layerType;
+            }
+        }
+
+        // Метод для преобразования типа сегмента в типы ячеек в слоях
+        public static void GetCellTypesFromStructureTypes(RCStructure structure)
+        {
+            for (int i = 1; i < structure.Segments.Count - 1; i++)
+            {
+                var row = structure.Segments[i];
+
+                for (int j = 1; j < row.Count - 1; j++)
+                {
+                    var segment = row[j];
+
+                    switch (segment.SegmentType)
+                    {
+                        case StructureSegmentTypeEnum.EMPTY:
+                            structure.StructureLayers[0].Cells[i][j].CellType = CellType.Cut;
+                            structure.StructureLayers[1].Cells[i][j].CellType = CellType.Cut;
+                            break;
+                        case StructureSegmentTypeEnum.R_C_NR:
+                            structure.StructureLayers[0].Cells[i][j].CellType = CellType.RC;
+                            structure.StructureLayers[1].Cells[i][j].CellType = CellType.R;
+                            break;
+                        case StructureSegmentTypeEnum.Rv:
+                            structure.StructureLayers[0].Cells[i][j].CellType = CellType.RC;
+                            structure.StructureLayers[1].Cells[i][j].CellType = CellType.Cut;
+                            break;
+                        case StructureSegmentTypeEnum.Rn:
+                            structure.StructureLayers[0].Cells[i][j].CellType = CellType.Cut;
+                            structure.StructureLayers[1].Cells[i][j].CellType = CellType.R;
+                            break;
+                        case StructureSegmentTypeEnum.Rk_C_NRk:
+                            structure.StructureLayers[0].Cells[i][j].CellType = CellType.Rk;
+                            structure.StructureLayers[1].Cells[i][j].CellType = CellType.NRk;
+                            break;
+                        case StructureSegmentTypeEnum.R_C_NRk:
+                            structure.StructureLayers[0].Cells[i][j].CellType = CellType.RC;
+                            structure.StructureLayers[1].Cells[i][j].CellType = CellType.NRk;
+                            break;
+                        case StructureSegmentTypeEnum.Rk_C_NR:
+                            structure.StructureLayers[0].Cells[i][j].CellType = CellType.Rk;
+                            structure.StructureLayers[1].Cells[i][j].CellType = CellType.R;
+                            break;
+                    }
+                }
             }
         }
     }

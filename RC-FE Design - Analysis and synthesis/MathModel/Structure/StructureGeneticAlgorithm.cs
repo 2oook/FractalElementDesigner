@@ -19,6 +19,7 @@ namespace FractalElementDesigner.MathModel.Structure
         public StructureGeneticAlgorithm(int populationCount, StructureSchemeSynthesisParameters synthesisParameters, RCStructure structure)
         {
             StructurePrototype = structure;
+            Scheme = structure.Scheme;
 
             PopulationCount = populationCount;
             PopulationCountToMutate = (int)(populationCount * MutateCoefficient);
@@ -167,6 +168,11 @@ namespace FractalElementDesigner.MathModel.Structure
         private RCStructure StructurePrototype;
 
         /// <summary>
+        /// Схема
+        /// </summary>
+        private FElementScheme Scheme;
+
+        /// <summary>
         /// Метод для инициализации популяции
         /// </summary>
         public void InitiatePopulation(RCStructure structurePrototype) 
@@ -181,15 +187,54 @@ namespace FractalElementDesigner.MathModel.Structure
                 var newStructure = structurePrototype.DeepClone() as RCStructure;
 
                 structures.Add(newStructure);
-                InitiateIndividual(newStructure);
+                MutateIndividual(newStructure);
             }
 
             Population = structures;
         }
 
-        public void InitiateIndividual(RCStructure structure) 
+        public void MutateIndividual(RCStructure structure) 
         {
+            // конструкция подлежащая мутации
+            var structureToMutate = structure;
 
+            var mutateSegmentsCount = random.Next(1, (int)(SegmentsCountToMutate * 0.15)); // максимальное число мутируемых сегментов составляет 60 процентов 
+
+            // выбор сегментов для мутации
+            for (int k = 0; k <= mutateSegmentsCount; k++)
+            {
+                for (int z = 0; z < mutateSegmentsCount; z++)
+                {
+                    var _r = random.Next(1, structureToMutate.Segments.Count() - 1);
+                    var _c = random.Next(1, structureToMutate.Segments.First().Count - 1);
+
+                    if (structureToMutate.Segments[_r][_c].SegmentType == StructureSegmentTypeEnum.EMPTY ||
+                        structureToMutate.Segments[_r][_c].SegmentType == StructureSegmentTypeEnum.R_C_NR ||
+                        structureToMutate.Segments[_r][_c].SegmentType == StructureSegmentTypeEnum.Rv ||
+                        structureToMutate.Segments[_r][_c].SegmentType == StructureSegmentTypeEnum.Rn)
+                    {
+                        var structureTypeNumber = random.Next(0, 3);
+
+                        switch (structureTypeNumber)
+                        {
+                            case 0:
+                                structureToMutate.Segments[_r][_c].SegmentType = StructureSegmentTypeEnum.EMPTY;
+                                break;
+                            case 1:
+                                structureToMutate.Segments[_r][_c].SegmentType = StructureSegmentTypeEnum.R_C_NR;
+                                break;
+                            case 2:
+                                structureToMutate.Segments[_r][_c].SegmentType = StructureSegmentTypeEnum.Rv;
+                                break;
+                            case 3:
+                                structureToMutate.Segments[_r][_c].SegmentType = StructureSegmentTypeEnum.Rn;
+                                break;
+                        }
+                    }
+                }
+            }
+
+            StructureCreator.GetCellTypesFromStructureTypes(structureToMutate);
         }
 
         // Метод для мутации популяции
@@ -199,44 +244,9 @@ namespace FractalElementDesigner.MathModel.Structure
             {
                 var structureIndexToMutate = random.Next(i, PopulationCount - 1);
 
-                var mutateSegmentsCount = random.Next(1, (int)(SegmentsCountToMutate * 0.6)); // максимальное число мутируемых сегментов составляет 60 процентов 
+                var structureToMutate = Population[structureIndexToMutate];
 
-                // выбор сегментов для мутации
-                for (int k = 0; k <= mutateSegmentsCount; k++)
-                {
-                    // конструкция подлежащая мутации
-                    var structureToMutate = Population[structureIndexToMutate];
-
-                    for (int z = 0; z < mutateSegmentsCount; z++)
-                    {
-                        var _r = random.Next(1, structureToMutate.Segments.Count()-1);
-                        var _c = random.Next(1, structureToMutate.Segments.First().Count-1);
-
-                        if (structureToMutate.Segments[_r][_c].SegmentType == StructureSegmentTypeEnum.EMPTY || 
-                            structureToMutate.Segments[_r][_c].SegmentType == StructureSegmentTypeEnum.R_C_NR ||
-                            structureToMutate.Segments[_r][_c].SegmentType == StructureSegmentTypeEnum.Rv ||
-                            structureToMutate.Segments[_r][_c].SegmentType == StructureSegmentTypeEnum.Rn)
-                        {
-                            var structureTypeNumber = random.Next(0, 3);
-
-                            switch (structureTypeNumber)
-                            {
-                                case 0:
-                                    structureToMutate.Segments[_r][_c].SegmentType = StructureSegmentTypeEnum.EMPTY;
-                                    break;
-                                case 1:
-                                    structureToMutate.Segments[_r][_c].SegmentType = StructureSegmentTypeEnum.R_C_NR;
-                                    break;
-                                case 2:
-                                    structureToMutate.Segments[_r][_c].SegmentType = StructureSegmentTypeEnum.Rv;
-                                    break;
-                                case 3:
-                                    structureToMutate.Segments[_r][_c].SegmentType = StructureSegmentTypeEnum.Rn;
-                                    break;
-                            }
-                        }                     
-                    }
-                }
+                MutateIndividual(structureToMutate);
             }
         }
 
@@ -286,6 +296,14 @@ namespace FractalElementDesigner.MathModel.Structure
             var verticalRange = (verticalStructureDimensionValue + 1);
             var arrayDimension = layerCount * horizontalRange * verticalRange;
             var nodesNumerationFlat = new int[arrayDimension];
+
+            // создать структуру на стороне библиотеки
+            ByRCWorkbenchStructureCreator.CreateStructureStraightByScheme(Scheme, structure);
+
+            structure.Scheme = Scheme;
+
+            // пронумеровать контактные площадки 
+            StructureCreator.NumerateContactPlatesByScheme(structure);
 
             // проверка
             int outer_pins_count = RCWorkbenchLibraryEntry.GetCPQuantity();
@@ -343,7 +361,7 @@ namespace FractalElementDesigner.MathModel.Structure
         // Метод для отбора популяции
         public void SelectPopulation()
         {
-            var newPopulation = Population.OrderByDescending(x => x.StateInGA.Rate).Take(100).ToList();
+            var newPopulation = Population.OrderByDescending(x => x.StateInGA.Rate).Take(PopulationCount).ToList();
 
             Population = newPopulation;
         }

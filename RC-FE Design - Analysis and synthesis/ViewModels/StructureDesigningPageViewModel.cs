@@ -1232,8 +1232,31 @@ namespace FractalElementDesigner.ViewModels
                 try
                 {
                     // синтезировать конструкцию
-                    StructureSynthesizer.Synthesize(structureSchemeSynthesisParametersInstance, structure);
+                    var structures = StructureSynthesizer.Synthesize(structureSchemeSynthesisParametersInstance, structure);
 
+                    for (int i = 0; i < structures.Count; i++)
+                    {
+                        var _structure = structures[i];
+                        _structure.Name = "Конструкция №" + (i + 1);
+
+                        // преобразовать типы сегментов в типы ячеек
+
+                        var structure_in_project = new StructureInProjectTree() { Name = _structure.Name };
+                        structure_in_project.Items.Add(_structure);
+                        structure_in_project.Items.Add(new PRPlot());
+
+                        var project = Projects.SingleOrDefault(x => x.Items.Contains(structure.Scheme));
+
+                        // Инициализировать график
+                        var plot = structure_in_project.Items.Where(x => x is PRPlot).SingleOrDefault() as PRPlot;
+                        plot.InitializatePhaseResponsePlot(_structure.PhaseResponsePoints);
+
+                        DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                        {
+                            StructureCreator.InsertVisual(_structure, _Page.structureEditorControl.FEControl);
+                            project.Items.Add(structure_in_project);
+                        });
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1328,7 +1351,7 @@ namespace FractalElementDesigner.ViewModels
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
 
-            Test();
+            //Test();
 
             if (TestingBool)
             {

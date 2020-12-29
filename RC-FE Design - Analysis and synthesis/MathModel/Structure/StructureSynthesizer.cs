@@ -24,17 +24,19 @@ namespace FractalElementDesigner.MathModel.Structure
         public static event Action<string> OnStateChange;
 
         // Метод для синтезирования схемы включения элемента
-        public static void Synthesize(StructureSchemeSynthesisParameters synthesisParameters, RCStructure structure)
+        public static List<RCStructure> Synthesize(StructureSchemeSynthesisParameters synthesisParameters, RCStructure structure)
         {
             OnStateChange("Выполнение синтеза");
 
-            var ga = new StructureGeneticAlgorithm(100, synthesisParameters, structure);
+            var ga = new StructureGeneticAlgorithm(4, synthesisParameters, structure);
 
             StructureGeneticAlgorithm.OnDoWork += GeneticAlgorithm_OnDoWork;
 
             ga.Start();
 
             OnStateChange("");
+
+            return ga.GetPopulation();
         }
 
         private static void GeneticAlgorithm_OnDoWork(double obj)

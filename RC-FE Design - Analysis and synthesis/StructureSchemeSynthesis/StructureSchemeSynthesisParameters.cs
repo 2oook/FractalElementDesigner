@@ -252,7 +252,7 @@ namespace FractalElementDesigner.StructureSchemeSynthesis
         /// <summary>
         /// Максимальная частота
         /// </summary>
-        public double MaxFrequencyLn { get; set; } = 4;
+        public double MaxFrequencyLn { get; set; } = 3;
 
         /// <summary>
         /// Нижний предел диапазона изменения частот
