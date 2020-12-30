@@ -1351,7 +1351,7 @@ namespace FractalElementDesigner.ViewModels
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
             //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
 
-            //Test();
+            Test();
 
             if (TestingBool)
             {

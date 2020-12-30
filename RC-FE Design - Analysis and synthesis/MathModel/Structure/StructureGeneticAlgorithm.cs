@@ -3,6 +3,7 @@ using FractalElementDesigner.RCWorkbenchLibrary;
 using FractalElementDesigner.StructureSchemeSynthesis;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -76,6 +77,10 @@ namespace FractalElementDesigner.MathModel.Structure
                 UpperCharacteristicBound = MaxLevelOfFrequencyCharacteristic + PositiveDeviationOfTheFrequencyCharacteristic;
             }
         }
+
+
+        // Число потоков
+        private int ThreadCount = Environment.ProcessorCount;
 
         /// <summary>
         /// Число сегментов для мутации
@@ -321,9 +326,6 @@ namespace FractalElementDesigner.MathModel.Structure
             var structurePhaseResponseCalculator = new StructurePhaseResponseCalculator(structure, horizontalStructureDimensionValue, verticalStructureDimensionValue, nodesCount, nodesNumeration);
 
 
-
-            // TODO // Распаралеллить
-
             var points = new List<(double frequency, double phase)>();
 
             int rate = 0;
@@ -349,12 +351,161 @@ namespace FractalElementDesigner.MathModel.Structure
             structure.PhaseResponsePoints = points;
         }
 
+        public void ParallelFit(RCStructure structure)
+        {
+            // число ячеек по горизонтали структуры
+            var horizontalStructureDimensionValue = structure.Segments.First().Count - 2;
+            // число ячеек по вертикали структуры
+            var verticalStructureDimensionValue = structure.Segments.Count - 2;
+
+            var layerCount = structure.StructureLayers.Count;
+            var horizontalRange = (horizontalStructureDimensionValue + 1);
+            var verticalRange = (verticalStructureDimensionValue + 1);
+            var arrayDimension = layerCount * horizontalRange * verticalRange;
+            var nodesNumerationFlat = new int[arrayDimension];
+
+            // создать структуру на стороне библиотеки
+            ByRCWorkbenchStructureCreator.CreateStructureStraightByScheme(Scheme, structure);
+
+            structure.Scheme = Scheme;
+
+            // пронумеровать контактные площадки 
+            StructureCreator.NumerateContactPlatesByScheme(structure);
+
+            // проверка
+            int outer_pins_count = RCWorkbenchLibraryEntry.GetCPQuantity();
+
+            RCWorkbenchLibraryEntry.GetNodesNumeration(nodesNumerationFlat);
+
+            // получить количество узлов
+            var nodesCount = RCWorkbenchLibraryEntry.GetNodesQuantity();
+
+            RCWorkbenchLibraryEntry.DeleteStructureStraight();
+
+            // восстановить плоский массив нумерации узлов
+            var nodesNumeration = RCWorkbenchIntercommunicationHelper.UnflatNumerationArray(layerCount, horizontalRange, verticalRange, nodesNumerationFlat);
+
+            var structurePhaseResponseCalculator = new StructurePhaseResponseCalculator(structure, horizontalStructureDimensionValue, verticalStructureDimensionValue, nodesCount, nodesNumeration);
+
+            var points = new List<(double frequency, double phase)>();
+
+            int rate = 0;
+
+            Func<object, int> action = (object obj) =>
+            {
+                // Объект с параметрами для потоков
+                var to = (ThreadParameters)obj;
+
+                var calculator = new StructurePhaseResponseCalculator(structure, horizontalStructureDimensionValue, verticalStructureDimensionValue, nodesCount, nodesNumeration);
+
+
+                // Установить начальный индекс
+                int i = to.startIndex;
+
+                // Верхний предел цикла
+                int count = i + to.indexesPool;
+
+                double frequency = MinFrequency + (FrequencyIncrement * (i + 1));
+
+                for (int j = (i + 1); j <= count; j++) 
+                {
+                    var phase = calculator.CalculatePhase(frequency);
+
+                    // если точка попадает в окно
+                    if (phase > LowerCharacteristicBound & phase < UpperCharacteristicBound)
+                    {
+                        to.rate++;
+                    }
+
+                    to.points.Add((frequency, phase));
+
+                    frequency += FrequencyIncrement;
+                }
+
+                return 0;
+            };
+
+            // Если точек меньше чем количества потоков
+            if (PointsCountAtFrequencyAxle < ThreadCount)
+            {
+                ThreadCount = 1;
+            }
+
+            // Пул индексов одного потока
+            int indexesPool = (int)Math.Floor((double)PointsCountAtFrequencyAxle / ThreadCount);
+            // Остаток индексов
+            int lastIndexes = PointsCountAtFrequencyAxle - (indexesPool * ThreadCount);
+
+            // Пока оставшиеся индексы больше чем пул индексов потока
+            while (lastIndexes > indexesPool)
+            {
+                lastIndexes -= indexesPool;
+                ThreadCount++;
+            }
+
+            // Список потоков
+            var tasks = new List<Task<int>>();
+            var tos = new List<ThreadParameters>();
+
+            // Создать потоки
+            for (int t = 0; t < ThreadCount; t++)
+            {
+                var to = new ThreadParameters();
+
+                // Если это последний блок итераций
+                if (t == ThreadCount - 1)
+                {
+                    to.indexesPool = indexesPool + lastIndexes;
+                }
+                else
+                {
+                    to.indexesPool = indexesPool;
+                }
+
+                to.startIndex = t * indexesPool;
+
+                // Добавить задачу в список задач и запустить её на выполнение в отдельном потоке
+                tasks.Add(Task<int>.Factory.StartNew(action, to));
+                tos.Add(to);
+            }
+
+            try
+            {
+                // Подождать все задачи
+                Task.WaitAll(tasks.ToArray());
+
+                foreach (var to in tos)
+                {
+                    points = points.Union(to.points).ToList();
+                    rate += to.rate;
+                }
+
+                points = points.OrderBy(x => x.frequency).ToList();
+
+                Debug.WriteLine("WaitAll() has not thrown exceptions.");
+            }
+            catch (AggregateException e)
+            {
+                Debug.WriteLine("The following exceptions have been thrown by WaitAll()");
+
+                for (int j = 0; j < e.InnerExceptions.Count; j++)
+                {
+                    Debug.WriteLine("\n-------------------------------------------------\n{0}", e.InnerExceptions[j].ToString());
+                }
+
+                throw e;
+            }
+
+            structure.StateInGA.Rate = rate;
+            structure.PhaseResponsePoints = points;
+        }
+
         // Метод для оценки популяции
         public void RatePopulation()
         {
             foreach (var structure in Population)
             {
-                Fit(structure);
+                ParallelFit(structure);
             }
         }
 
@@ -391,5 +542,24 @@ namespace FractalElementDesigner.MathModel.Structure
                 SelectPopulation();
             }
         }
+    }
+
+    public class ThreadParameters
+    {
+        /// <summary>
+        /// Номер блока итераций
+        /// </summary>
+        public int startIndex;
+
+        /// <summary>
+        /// Блок индексов для итераций
+        /// </summary>
+        public int indexesPool;
+
+
+        public int rate = 0;
+
+
+        public List<(double frequency, double phase)> points = new List<(double frequency, double phase)>();
     }
 }
