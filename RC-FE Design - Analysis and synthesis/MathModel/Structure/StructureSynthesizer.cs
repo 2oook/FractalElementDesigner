@@ -28,7 +28,7 @@ namespace FractalElementDesigner.MathModel.Structure
         {
             OnStateChange("Выполнение синтеза");
 
-            var ga = new StructureGeneticAlgorithm(20, synthesisParameters, structure);
+            var ga = new StructureGeneticAlgorithm(8, synthesisParameters, structure);
 
             StructureGeneticAlgorithm.OnDoWork += GeneticAlgorithm_OnDoWork;
 

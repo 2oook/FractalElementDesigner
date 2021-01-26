@@ -7,12 +7,10 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using FractalElementDesigner.IO;
 using FractalElementDesigner.MathModel;
 using System.Threading.Tasks;
 using FractalElementDesigner.StructureSchemeSynthesis;
 using GalaSoft.MvvmLight.Threading;
-using FractalElementDesigner.FEEditing.Controls;
 using FractalElementDesigner.SchemeEditing;
 using FractalElementDesigner.MathModel.Structure;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -23,15 +21,10 @@ using FractalElementDesigner.FEEditing.Model.StructureElements;
 using FractalElementDesigner.Navigating.Interfaces;
 using FractalElementDesigner.Pages;
 using FractalElementDesigner.Windows;
-using Microsoft.WindowsAPICodePack.Dialogs;
 using FractalElementDesigner.RCWorkbenchLibrary;
 using FractalElementDesigner.RCWorkbenchLibrary.Helpers;
-using System.Runtime.InteropServices;
-using System.Numerics;
 using MathNet.Numerics.LinearAlgebra;
-using OxyPlot;
 using FractalElementDesigner.ProjectTree;
-using System.Threading;
 
 namespace FractalElementDesigner.ViewModels
 {
@@ -517,13 +510,6 @@ namespace FractalElementDesigner.ViewModels
         private void InitializeCommands()
         {
             NewProjectCommand = new RelayCommand(CreateNewProject);
-            LoadProjectCommand = new RelayCommand(LoadProject);
-            SaveProjectCommand = new RelayCommand(SaveProject);
-
-            // удалить
-            TestCommand = new RelayCommand(Test);
-            // удалить
-
             ChoiceOfSchemeCommand = new RelayCommand(ChoiceOfScheme, IsChoiceOfSchemePossible);
 
             SynthesisCommand = new RelayCommand(SynthesizeScheme, IsSchemeSynthesisPossible);
@@ -532,159 +518,6 @@ namespace FractalElementDesigner.ViewModels
 
             CellApplyToolCommand = new RelayCommand<Cell>(ApplyToolForElementCell);
         }
-
-        // удалить
-        private bool TestingBool = false;
-        private void Test() 
-        {
-            TestingBool = true;
-            return;
-
-            //RCWorkbenchLibraryEntry.InitiateLibrary();
-
-            //// симулировать pAnalyseParameters // СХЕМА №
-            //RCWorkbenchLibraryEntry.CreateCAnalyseParameters(5, 3, 0.98, 0.1, false, 100);
-
-            //// установить диапазон частот
-            //RCWorkbenchLibraryEntry.SetFrequencyRange(0.0, 100.0, 100);
-
-            //// создать структуру
-            //RCWorkbenchLibraryEntry.CreateRCGNRStructure(1.0, 1.0, 10, 10, 1.0, 0.001, 100, 0.218);
-
-            //// изменение ячеек слоёв структуры
-            //// установить КП
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
-
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
-
-            //// пронумеровать КП
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-            //// изменение ячеек слоёв структуры
-
-            //int first_dimension = 100;
-            //int second_dimension = 36;
-
-            //double[] frequences = new double[first_dimension];
-            //RCWorkbenchLibraryEntry.GetFrequences(frequences);
-
-            //double[,] y_parameters_double = new double[first_dimension, second_dimension];
-            //RCWorkbenchLibraryEntry.CalculateYParameters(y_parameters_double, first_dimension, second_dimension);
-
-            //int outer_pins_count = RCWorkbenchLibraryEntry.GetCPQuantity();
-
-            //var matrix = MatrixHelper.GetYParametersMatricesFromRCWorkbenchArray(y_parameters_double, outer_pins_count);
-
-
-            // быстрый тест
-            // быстрый тест
-            // быстрый тест
-            var prj = new Project() { Name="ТЕСТОВЫЙ ПРОЕКТ" };
-
-            Projects.Add(prj);
-
-            var params_ = new StructureSchemeSynthesisParameters();
-
-            var sch = new FElementScheme(params_);
-            sch.Name = "ТЕСТОВАЯ СХЕМА";
-            prj.Items.Add(sch);
-
-            var canvas = _Page.schemeEditorControl.SchemeControl.CreateSchemeCanvas();
-
-            if (canvas == null)
-                return;
-
-            var editor = _Page.schemeEditorControl.InitializeNewEditor(canvas);
-            sch.Editor = editor;
-
-            SelectedProjectTreeItem = sch;
-
-            // создать окно
-            var window = new NewStructureWindow();
-            // создать vm для окна создания новой структуры
-            var newStructureWindowViewModel = new NewStructureWindowViewModel(window, sch.SynthesisParameters);
-            // вывести окно ввода параметров структуры
-            window.DataContext = newStructureWindowViewModel;
-            var dialogResult = window.ShowDialog();
-
-            // если не было подтверждения выйти
-            if (dialogResult.HasValue == false)
-            {
-                return;
-            }
-            else
-            {
-                if (dialogResult.Value == false)
-                {
-                    return;
-                }
-            }
-
-            var project = Projects.SingleOrDefault(x => x.Items.Contains(sch));
-
-            CreateStructureAsync(project, sch, newStructureWindowViewModel.CurrentStructure, false);
-
-            Thread.Sleep(3000);
-
-            // 10x10
-            // изменение ячеек слоёв структуры
-            // установить КП
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
-
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
-
-            //// пронумеровать КП
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-            //RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, 10, 2, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-
-            //// rk c nr
-            //RCWorkbenchLibraryEntry.SetElementTypeDirectlyToStructureCell(0, 1, 1, CellTypeToRCWorkbenchConverter.Convert(CellType.Rk));
-
-            //// rk c nrk
-            //RCWorkbenchLibraryEntry.SetElementTypeDirectlyToStructureCell(0, 2, 1, CellTypeToRCWorkbenchConverter.Convert(CellType.Rk));
-            //RCWorkbenchLibraryEntry.SetElementTypeDirectlyToStructureCell(1, 2, 1, CellTypeToRCWorkbenchConverter.Convert(CellType.NRk));
-
-            //// r c nrk
-            //RCWorkbenchLibraryEntry.SetElementTypeDirectlyToStructureCell(1, 3, 1, CellTypeToRCWorkbenchConverter.Convert(CellType.NRk));
-
-            // 2x2
-            // изменение ячеек слоёв структуры
-            // установить КП
-            var colsCnt = newStructureWindowViewModel.CurrentStructure.Segments.First().Count;
-
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, colsCnt, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
-
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(1, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(1, colsCnt, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.Contact));
-
-            // пронумеровать КП
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(0, colsCnt, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(1, -1, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-            RCWorkbenchLibraryEntry.SetElementTypeToStructureCell(1, colsCnt, 0, CellTypeToRCWorkbenchConverter.Convert(CellType.None));
-
-            // быстрый тест
-            // быстрый тест
-            // быстрый тест
-
-            TestingBool = true;
-            //CreateNewProject();          
-        }
-        // удалить
-
-
 
         /// <summary>
         /// Метод для применения инструмента к ячейке элемента
@@ -791,32 +624,10 @@ namespace FractalElementDesigner.ViewModels
 
                         var matrices = MatrixHelper.GetYParametersMatricesFromRCWorkbenchArray(y_parameters_double, _outer_pins_count);
 
-                        // применить синтезированную схему !!!
-                        // для схемы №5 !!!!
-                        // для схемы №5 !!!!
-
-                        //var I = Matrix<float>.Build.DenseOfArray(new float[4, 4]);
-                        //// установить диагональ
-                        //I.SetDiagonal(Vector<float>.Build.Dense(4, 1));
-
-                        //I[2, 3] = 1;
-                        //I[3, 2] = 1;
-
-                        //var pe = new List<int>();
-
-                        // для схемы №5 !!!!
-                        // для схемы №5 !!!!
-
-                        // для схемы №17 !!!!
-                        // для схемы №17 !!!!
-
                         var I = Matrix<float>.Build.DenseOfArray(new float[4, 4]);
                         // установить диагональ
                         I.SetDiagonal(Vector<float>.Build.Dense(4, 1));
                         var pe = new List<int>() { 1, 2, 3 };
-
-                        // для схемы №17 !!!!
-                        // для схемы №17 !!!!
 
                         structure.PhaseResponsePoints.Clear();
 
@@ -1031,100 +842,6 @@ namespace FractalElementDesigner.ViewModels
             }
         }
 
-        // Метод для сохранения проекта
-        private void SaveProject() 
-        {
-            try
-            {
-                //var project = SelectedProject;
-
-                //if (SelectedProject == null)
-                //{
-                //    _dialogCoordinator.ShowMessageAsync(this, "", "Не выбран проект для сохранения");
-                //    return;
-                //}
-                //else
-                //{
-                //    var dialog = new CommonSaveFileDialog();
-                //    ConfigureDialogForProjectSaving(ref dialog);
-                //    CommonFileDialogResult result = dialog.ShowDialog();
-
-                //    if (result == CommonFileDialogResult.Ok)
-                //    {
-                //        var savingProject = ProjectConverter.Convert(project);
-                //        ProjectSaver.SaveProject(savingProject, dialog.FileName);
-                //    }
-                //}
-            }
-            catch (Exception ex)
-            {
-                _dialogCoordinator.ShowMessageAsync(this, "Ошибка", "Проект не сохранён" + Environment.NewLine + ex.Message);
-            }
-
-            void ConfigureDialogForProjectSaving(ref CommonSaveFileDialog dialog) 
-            {
-                dialog.Title = "Выберите путь для сохранения проекта";
-                dialog.InitialDirectory = Environment.CurrentDirectory;
-                dialog.DefaultFileName = "Project1" + "." + "feproj";
-                dialog.DefaultExtension = "feproj";
-            }
-        }
-
-        // Метод для загрузки проекта
-        private void LoadProject() 
-        {
-            try
-            {
-                var dialog = new CommonOpenFileDialog();
-                ConfigureDialogForProjectOpening(ref dialog);
-                CommonFileDialogResult result = dialog.ShowDialog();
-
-                if (result == CommonFileDialogResult.Ok)
-                {               
-                    var savingProject = ProjectSaver.LoadProject(dialog.FileName);
-                    var project = ProjectConverter.ConvertBack(savingProject);
-
-                    Projects.Add(project);
-
-                    var _structures = project.Items.Where(x => x is RCStructureBase).Select(x => x as RCStructureBase).ToList();
-
-                    foreach (var structure in _structures)
-                    {
-                        foreach (var layer in structure.StructureLayers)
-                        {
-                            var editor = new Editor() { Context = new FEEditing.Context() };
-                            editor.Context.CurrentCanvas = _Page.structureEditorControl.FEControl.CreateFECanvas();
-
-                            layer.Editor = editor;
-
-                            Insert.ExistingStructureLayer(editor.Context.CurrentCanvas as FECanvas, structure, layer);
-                        }
-                    }
-
-                    // показать область проектирования, если она скрыта
-                    if (StructureEditorVisibility != Visibility.Visible)
-                    {
-                        StructureEditorVisibility = Visibility.Visible;
-                    }
-
-                    //_Page.FEControl.Editor = project.Structures.First().StructureLayers.First().Editor;
-
-                    _Page.structureEditorControl.FEControl.ZoomToFit();
-                }
-            }
-            catch (Exception ex)
-            {
-                _dialogCoordinator.ShowMessageAsync(this, "Ошибка", "Проект не может быть открыт" + Environment.NewLine + ex.Message);
-            }
-
-            void ConfigureDialogForProjectOpening(ref CommonOpenFileDialog dialog)
-            {
-                dialog.Title = "Выберите проект для открытия";
-                dialog.InitialDirectory = Environment.CurrentDirectory;
-                dialog.DefaultExtension = "feproj";
-            }
-        }
-
         // Метод для создания нового проекта
         private void CreateNewProject()
         {
@@ -1295,22 +1012,6 @@ namespace FractalElementDesigner.ViewModels
                             currentProject.Items.Add(_scheme);
                         });               
                     }
-
-                    //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
-                    //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
-                    //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
-                    if (TestingBool) 
-                    {
-                        DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                        {
-                            SelectedProjectTreeItem = schemes[0];
-                            ChoiceOfScheme();
-                            CreateStructure();
-                        });
-                    }
-                    //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
-                    //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
-                    //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
                 }
                 catch (Exception ex)
                 {
@@ -1346,116 +1047,6 @@ namespace FractalElementDesigner.ViewModels
         public void SetPage(Page page)
         {
             _Page = (StructureDesigningPage)page;
-
-            //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
-            //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
-            //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
-
-            Test();
-
-            if (TestingBool)
-            {
-                _Page.schemeEditorControl.SchemeControl.Loaded += (object sender, RoutedEventArgs e) =>
-                {
-                    // создать проект
-                    var project = new Project() { Name = "Проект №1" };
-
-                    Projects.Add(project);
-
-                    var plot = new PRPlot();
-
-                    var schemePrototype = new FElementScheme(new StructureSchemeSynthesisParameters()) { Name = "Схема", Elements = { plot } };
-
-                    // равномерная однородная структура
-                    /**/
-                    /**/
-                    foreach (var item in schemePrototype.Model.InnerConnections)
-                    {
-                        item.ConnectionType = 7;
-                        item.PEType = 1;
-                    }
-                    /**/
-                    /**/
-
-                    // учесть внешнюю схему //для схемы №17 !!!!
-                    schemePrototype.Model.OuterPins[0].State = OuterPinState.In;
-                    schemePrototype.Model.OuterPins[1].State = OuterPinState.Gnd;
-                    schemePrototype.Model.OuterPins[2].State = OuterPinState.Gnd;
-                    schemePrototype.Model.OuterPins[3].State = OuterPinState.Gnd;
-
-                    schemePrototype.Model.PhaseResponsePoints = SchemePhaseResponseCalculatorByFrequencies.CalculatePhaseResponseInScheme(0, 4, 100, schemePrototype.Model);
-
-                    plot.InitializatePhaseResponsePlot(schemePrototype.Model.PhaseResponsePoints);
-
-                    // Создать отображение схемы из полученной модели
-                    CreateSchemeInEditor(schemePrototype);
-
-                    project.Items.Add(schemePrototype);
-
-                    // создать окно
-                    var window = new NewStructureWindow();
-                    // создать vm для окна создания новой структуры
-                    var newStructureWindowViewModel = new NewStructureWindowViewModel(window, schemePrototype.SynthesisParameters);
-                    // вывести окно ввода параметров структуры
-                    window.DataContext = newStructureWindowViewModel;
-                    var dialogResult = window.ShowDialog();
-
-                    // если не было подтверждения выйти
-                    if (dialogResult.HasValue == false)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        if (dialogResult.Value == false)
-                        {
-                            return;
-                        }
-                    }
-
-                    var _structure = newStructureWindowViewModel.CurrentStructure;
-
-                    try
-                    {
-                        schemePrototype.IsLocked = true;
-
-                        // создать конструкцию элемента
-                        //var structure = StructureCreator.Create(_structure);
-
-                        // создать структуру на стороне библиотеки
-                        //ByRCWorkbenchStructureCreator.CreateStructure(schemePrototype, _structure);
-
-                        //var structure_in_project = new StructureInProjectTree() { Name = structure.Name };
-                        //structure_in_project.Items.Add(structure);
-                        //structure_in_project.Items.Add(new PRPlot());
-
-                        //DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                        //{
-                        //    StructureCreator.InsertVisual(structure, _Page.structureEditorControl.FEControl);
-                        //    project.Items.Add(structure_in_project);
-                        //});
-
-                        CreateStructureAsync(project, schemePrototype, _structure, true);
-
-
-                        // тест
-                        // тест
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine(ex.Message);
-
-                        _dialogCoordinator.ShowMessageAsync(this, "", "Ошибка создания конструкции" + Environment.NewLine + ex.Message);
-                    }
-                    finally
-                    {
-                        schemePrototype.IsLocked = false;
-                    }
-                };
-            }
-            //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
-            //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
-            //для теста!!!!!!!!!!!!!!!!!!!!!!//удалить
         }
 
         #endregion

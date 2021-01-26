@@ -159,12 +159,6 @@
     <Compile Include="FEEditing\ToolCreator.cs" />
     <Compile Include="FEEditing\Tools\Tool.cs" />
     <Compile Include="FEEditing\Tools\ToolType.cs" />
-    <Compile Include="IO\ProjectConverter.cs" />
-    <Compile Include="IO\ProjectSaveModel\SavingLayer.cs" />
-    <Compile Include="IO\ProjectSaveModel\SavingProject.cs" />
-    <Compile Include="IO\ProjectSaveModel\SavingRCStructureBase.cs" />
-    <Compile Include="IO\ProjectSaveModel\SavingStructureCellBase.cs" />
-    <Compile Include="IO\ProjectSaver.cs" />
     <Compile Include="MathModel\Connection.cs" />
     <Compile Include="MathModel\FESchemeModel.cs" />
     <Compile Include="MathModel\IFElementSchemePrototype.cs" />
@@ -433,9 +427,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\button0.png" />
     <Resource Include="Resources\button1.png" />
